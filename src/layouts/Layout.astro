@@ -90,10 +90,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.gu
           <span class="nav-icon" aria-hidden="true">🍽</span>
           <span>Φαγητό</span>
         </a>
-        <a href={`${base}villages`}   class="nav-link" data-navlink>
-          <span class="nav-icon" aria-hidden="true">🏘</span>
-          <span>Χωριά</span>
-        </a>
         <a href={`${base}activities`} class="nav-link nav-link--soon" data-navlink aria-disabled="true" tabindex="-1">
           <span class="nav-icon" aria-hidden="true">🚤</span>
           <span>Boat Tours</span>
@@ -287,6 +283,10 @@ nav ul, nav ol {
   list-style: none;
 }
 
+::selection {
+  color:var(--aegean);
+  background-color:var(--sand-dark);
+}
 
 /* ════════════════════════════════════════
    SKIP LINK
