@@ -296,6 +296,53 @@ const topBeaches = [...beachesData]
     </div>
   </section>
 
+  <!-- ══ FEATURED TAVERNS ══ -->
+  {
+    featuredTaverns.length > 0 && (
+      <section class="sec sec-white">
+        <div class="container">
+          <div class="sec-hdr-row">
+            <div>
+              <span class="label">Φαγητό</span>
+              <h2 class="sec-title">Επιλεγμένα εστιατόρια</h2>
+            </div>
+            <a href={`${base}eat`} class="see-all">
+              Όλα τα εστιατόρια →
+            </a>
+          </div>
+          <div class="tav-grid">
+            {featuredTaverns.map((tavern) => (
+              <a href={`${base}eat/${tavern.slug}`} class="tav-card">
+                {tavern.photoRef ? (
+                  <img
+                    src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
+                    alt={tavern.name}
+                    class="tav-img"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="tav-ph">🍽</div>
+                )}
+                <div class="tav-body">
+                  <div class="tav-top">
+                    <span class="tav-badge">⭐ Featured</span>
+                    <span class="tav-price">{tavern.priceRange}</span>
+                  </div>
+                  <h3 class="tav-name">{tavern.name}</h3>
+                  <p class="tav-loc">◉ {tavern.location.area}</p>
+                  <div class="tav-foot">
+                    <span class="tav-rating">⭐ {tavern.rating} / 5</span>
+                    <span class="tav-cuisine">{tavern.cuisine?.[0]}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <!-- ══ BEACHES BY TYPE ══ -->
   <section class="sec sec-white">
     <div class="container">
@@ -510,53 +557,6 @@ const topBeaches = [...beachesData]
       </p>
     </div>
   </section>
-
-  <!-- ══ FEATURED TAVERNS ══ -->
-  {
-    featuredTaverns.length > 0 && (
-      <section class="sec sec-white">
-        <div class="container">
-          <div class="sec-hdr-row">
-            <div>
-              <span class="label">Φαγητό</span>
-              <h2 class="sec-title">Επιλεγμένα εστιατόρια</h2>
-            </div>
-            <a href={`${base}eat`} class="see-all">
-              Όλα τα εστιατόρια →
-            </a>
-          </div>
-          <div class="tav-grid">
-            {featuredTaverns.map((tavern) => (
-              <a href={`${base}eat/${tavern.slug}`} class="tav-card">
-                {tavern.photoRef ? (
-                  <img
-                    src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
-                    alt={tavern.name}
-                    class="tav-img"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="tav-ph">🍽</div>
-                )}
-                <div class="tav-body">
-                  <div class="tav-top">
-                    <span class="tav-badge">⭐ Featured</span>
-                    <span class="tav-price">{tavern.priceRange}</span>
-                  </div>
-                  <h3 class="tav-name">{tavern.name}</h3>
-                  <p class="tav-loc">◉ {tavern.location.area}</p>
-                  <div class="tav-foot">
-                    <span class="tav-rating">⭐ {tavern.rating} / 5</span>
-                    <span class="tav-cuisine">{tavern.cuisine?.[0]}</span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
 </Layout>
 
 <style>
@@ -1136,18 +1136,14 @@ const topBeaches = [...beachesData]
   .month-item:last-child {
     border-right: none;
   }
-  .month-item--best {
-    background: var(--deep-blue);
-  }
+
   .month-name {
     font-family: var(--font-serif);
     font-size: 1.1rem;
     color: var(--ink);
     margin-bottom: 0.5rem;
   }
-  .month-item--best .month-name {
-    color: #fff;
-  }
+
   .month-tag {
     display: inline-block;
     font-size: 0.6rem;
@@ -1162,7 +1158,7 @@ const topBeaches = [...beachesData]
   }
   .month-item--best .month-tag {
     background: rgba(58, 155, 201, 0.25);
-    color: var(--sky);
+    color: var(--aegean);
   }
   .month-item--warn .month-tag {
     background: rgba(217, 119, 6, 0.12);
@@ -1173,9 +1169,7 @@ const topBeaches = [...beachesData]
     color: var(--muted);
     line-height: 1.55;
   }
-  .month-item--best .month-desc {
-    color: rgba(255, 255, 255, 0.6);
-  }
+
   .meltemia-note {
     margin-top: 1.25rem;
     font-size: 0.82rem;

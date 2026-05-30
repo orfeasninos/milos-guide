@@ -1,0 +1,394 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import villagesData from '../../data/villages.json';
+
+const base = import.meta.env.BASE_URL;
+
+const typeLabels: Record<string, { label: string; icon: string }> = {
+  capital:  { label: 'Πρωτεύουσα', icon: '👑' },
+  historic: { label: 'Ιστορικό',   icon: '🏛' },
+  fishing:  { label: 'Ψαροχώρι',   icon: '🎣' },
+  port:     { label: 'Λιμάνι',     icon: '⚓' },
+  syrmata:  { label: 'Σύρματα',    icon: '🏠' },
+  village:  { label: 'Χωριό',      icon: '🏘' },
+};
+
+const types = [...new Set(villagesData.map(v => v.type))];
+---
+
+<Layout
+  title="Χωριά της Μήλου"
+  description={`Γνωρίστε τα ${villagesData.length} χωριά της Μήλου — Πλάκα, Κλήμα, Τρυπητή, Πολλώνια και άλλα. Ιστορία, αρχιτεκτονική και αυθεντική ζωή.`}
+>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <p class="page-label">Εξερεύνηση</p>
+    <h1 class="page-title">Χωριά της Μήλου</h1>
+    <p class="page-desc">
+      Η Μήλος δεν είναι μόνο παραλίες. Πλάκα, Κλήμα, Τρυπητή, Πολλώνια —
+      κάθε χωριό έχει τη δική του ψυχή και ιστορία.
+    </p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="container filters-inner">
+    <div class="filter-chips" id="type-chips">
+      <button class="chip chip--active" data-type="all">Όλα</button>
+      {types.map(type => {
+        const t = typeLabels[type] ?? { label: type, icon: '📍' };
+        return (
+          <button class="chip" data-type={type}>
+            {t.icon} {t.label}
+          </button>
+        );
+      })}
+    </div>
+    <span class="results-count" id="results-count">{villagesData.length} χωριά</span>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="villages-grid" id="villages-grid">
+      {villagesData.map((village, i) => {
+        const t = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
+        return (
+          <a
+            href={`${base}villages/${village.slug}`}
+            class="vc"
+            data-type={village.type}
+          >
+            <div class="vc-num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </div>
+            <div class="vc-body">
+              <div class="vc-top">
+                <span class="vc-type">{t.icon} {t.label}</span>
+                <span class="vc-area">{village.area}</span>
+              </div>
+              <h2 class="vc-name">{village.name}</h2>
+              <p class="vc-tagline">{village.tagline}</p>
+              <p class="vc-desc">{village.description.slice(0, 120)}…</p>
+              <div class="vc-highlights">
+                {village.highlights.slice(0, 3).map(h => (
+                  <span class="vc-highlight">{h}</span>
+                ))}
+              </div>
+            </div>
+            <span class="vc-arrow">→</span>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p class="empty-icon">🏘</p>
+      <p class="empty-text">Δεν βρέθηκαν χωριά με αυτό το φίλτρο.</p>
+      <button class="btn-dark" id="reset-filters">Εμφάνιση όλων</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAP TEASER -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="map-inner">
+      <div>
+        <span class="label">Γεωγραφία</span>
+        <h2 class="sec-title">Πού βρίσκονται τα χωριά;</h2>
+        <p class="sec-sub" style="margin-top:.5rem">
+          Τα περισσότερα χωριά είναι στο κεντρικό και βόρειο τμήμα του νησιού,
+          με τον Αδάμαντα στο νότο ως κύριο λιμάνι.
+        </p>
+      </div>
+      <div class="area-list">
+        {[
+          { area: 'Κεντρική Μήλος', villages: ['Πλάκα', 'Τρυπητή', 'Τριοβάσαλος'] },
+          { area: 'Βόρεια Μήλος',   villages: ['Πολλώνια', 'Μανδράκια', 'Φυροπόταμος'] },
+          { area: 'Δυτική Μήλος',   villages: ['Κλήμα'] },
+          { area: 'Νότια Μήλος',    villages: ['Αδάμαντας'] },
+        ].map(g => (
+          <div class="area-group">
+            <p class="area-group-name">{g.area}</p>
+            <div class="area-group-villages">
+              {g.villages.map(v => (
+                <span class="area-village">{v}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+
+<style>
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* ── FILTERS ── */
+.filters-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.filter-chips { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.chip {
+  padding: 0.32rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
+.chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+.results-count { font-size: 0.78rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+/* ── VILLAGE CARDS (editorial rows) ── */
+.villages-grid { display: flex; flex-direction: column; }
+
+.vc {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  color: inherit;
+  position: relative;
+  transition: padding-left 0.3s var(--ease);
+}
+.vc::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--deep-blue);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.3s var(--ease);
+}
+.vc:hover { padding-left: 1rem; }
+.vc:hover::before { width: 3px; }
+
+.vc-num {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: rgba(0,0,0,0.08);
+  line-height: 1;
+  user-select: none;
+  transition: color 0.3s;
+  text-align: center;
+}
+.vc:hover .vc-num { color: var(--deep-blue); }
+
+.vc-body { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+
+.vc-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.vc-type {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+.vc-area {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.vc-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 0;
+  transition: color 0.3s;
+}
+.vc:hover .vc-name { color: var(--deep-blue); }
+
+.vc-tagline {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.vc-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 580px;
+}
+
+.vc-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+.vc-highlight {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 100px;
+  background: var(--sand-dark);
+  color: var(--muted);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.vc-arrow {
+  font-size: 1.4rem;
+  color: rgba(0,0,0,0.12);
+  transition: color 0.3s, transform 0.3s;
+  flex-shrink: 0;
+}
+.vc:hover .vc-arrow { color: var(--deep-blue); transform: translateX(6px); }
+
+/* ── EMPTY ── */
+.empty-state { text-align: center; padding: 5rem 0; }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+/* ── MAP TEASER ── */
+.map-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.area-list { display: flex; flex-direction: column; gap: 1rem; }
+.area-group {
+  padding: 1.1rem 1.25rem;
+  background: var(--sand);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--sand-dark);
+}
+.area-group-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.area-group-villages { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.area-village {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--deep-blue);
+  padding: 2px 10px;
+  background: var(--white);
+  border-radius: 100px;
+  border: 1px solid var(--border);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .vc { grid-template-columns: 48px 1fr; gap: 1rem; }
+  .vc-arrow { display: none; }
+  .vc-num { font-size: 1.8rem; }
+  .vc-name { font-size: 1.5rem; }
+  .vc-desc { display: none; }
+  .map-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+</style>
+
+
+<script>
+const grid   = document.getElementById('villages-grid');
+const empty  = document.getElementById('empty-state');
+const counter = document.getElementById('results-count');
+const reset  = document.getElementById('reset-filters');
+
+let activeType = 'all';
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.vc') ?? [];
+  let visible = 0;
+  cards.forEach(card => {
+    const type = card.dataset.type ?? '';
+    const show = activeType === 'all' || type === activeType;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (counter) counter.textContent = `${visible} χωριά`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
+}
+
+document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeType = chip.dataset.type ?? 'all';
+    applyFilters();
+  });
+});
+
+reset?.addEventListener('click', () => {
+  activeType = 'all';
+  document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#type-chips .chip')?.classList.add('chip--active');
+  applyFilters();
+});
+</script>

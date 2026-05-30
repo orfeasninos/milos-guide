@@ -1,0 +1,517 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import villagesData from '../../data/villages.json';
+import tavernsData from '../../data/taverns.json';
+import beachesData from '../../data/beaches.json';
+
+export function getStaticPaths() {
+  return villagesData.map((village) => ({
+    params: { slug: village.slug },
+    props:  { village },
+  }));
+}
+
+const { village } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const typeLabels: Record<string, { label: string; icon: string }> = {
+  capital:  { label: 'Πρωτεύουσα', icon: '👑' },
+  historic: { label: 'Ιστορικό',   icon: '🏛' },
+  fishing:  { label: 'Ψαροχώρι',   icon: '🎣' },
+  port:     { label: 'Λιμάνι',     icon: '⚓' },
+  syrmata:  { label: 'Σύρματα',    icon: '🏠' },
+  village:  { label: 'Χωριό',      icon: '🏘' },
+};
+const typeInfo = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
+
+// Linked taverns & beaches from JSON
+const linkedTaverns = tavernsData.filter(t => village.nearbyTaverns.includes(t.slug));
+const linkedBeaches = beachesData.filter(b => village.nearbyBeaches.includes(b.slug));
+
+// Other villages for related
+const otherVillages = villagesData
+  .filter(v => v.slug !== village.slug)
+  .slice(0, 3);
+---
+
+<Layout
+  title={`${village.name} — Χωριό στη Μήλο`}
+  description={`${village.name}: ${village.tagline}. ${village.description.slice(0, 120)}…`}
+>
+
+<!-- HERO -->
+<div class="v-hero">
+  <div class="v-hero-bg"></div>
+  <div class="v-hero-overlay">
+    <div class="container v-hero-inner">
+      <a href={`${base}villages`} class="back-link">← Όλα τα χωριά</a>
+      <div class="v-hero-meta">
+        <span class="v-type-badge">{typeInfo.icon} {typeInfo.label}</span>
+        <h1 class="v-hero-name">{village.name}</h1>
+        <p class="v-hero-tagline">{village.tagline}</p>
+        <div class="v-hero-chips">
+          <span class="v-chip">📍 {village.area}</span>
+          {village.population && <span class="v-chip">👥 {village.population} κάτοικοι</span>}
+          {village.elevation && village.elevation !== 'sea level' && (
+            <span class="v-chip">⛰ {village.elevation}</span>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CONTENT -->
+<div class="container v-layout">
+
+  <!-- MAIN -->
+  <main class="v-main">
+
+    <p class="v-desc">{village.description}</p>
+
+    <!-- Must See -->
+    {village.mustSee.length > 0 && (
+      <div class="v-block">
+        <h2 class="block-title">Must see</h2>
+        <div class="must-grid">
+          {village.mustSee.map((item, i) => (
+            <div class="must-item">
+              <span class="must-num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="must-text">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Highlights -->
+    {village.highlights.length > 0 && (
+      <div class="v-block">
+        <h2 class="block-title">Χαρακτηριστικά</h2>
+        <div class="highlights-grid">
+          {village.highlights.map(h => (
+            <div class="highlight-item">
+              <span class="highlight-check">✓</span>
+              <span>{h}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Nearby Taverns -->
+    {linkedTaverns.length > 0 && (
+      <div class="v-block">
+        <div class="block-hdr">
+          <h2 class="block-title">Φαγητό στη {village.name}</h2>
+          <a href={`${base}eat`} class="see-all">Όλα τα εστιατόρια →</a>
+        </div>
+        <div class="nearby-list">
+          {linkedTaverns.map(t => (
+            <a href={`${base}eat/${t.slug}`} class="nearby-item">
+              <div class="nearby-img-wrap">
+                {t.photoRef ? (
+                  <img
+                    src={`https://places.googleapis.com/v1/${t.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=200`}
+                    alt={t.name}
+                    class="nearby-img"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="nearby-ph">🍽</div>
+                )}
+              </div>
+              <div class="nearby-body">
+                <p class="nearby-name">{t.name}</p>
+                {t.rating > 0 && <p class="nearby-rating">★ {t.rating}</p>}
+              </div>
+              <span class="nearby-arrow">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Nearby Beaches -->
+    {linkedBeaches.length > 0 && (
+      <div class="v-block">
+        <div class="block-hdr">
+          <h2 class="block-title">Παραλίες κοντά</h2>
+          <a href={`${base}beaches`} class="see-all">Όλες οι παραλίες →</a>
+        </div>
+        <div class="nearby-list">
+          {linkedBeaches.map(b => (
+            <a href={`${base}beaches/${b.slug}`} class="nearby-item">
+              <div class="nearby-img-wrap">
+                {b.photoRef ? (
+                  <img
+                    src={`https://places.googleapis.com/v1/${b.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=200`}
+                    alt={b.name}
+                    class="nearby-img"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="nearby-ph">🏖</div>
+                )}
+              </div>
+              <div class="nearby-body">
+                <p class="nearby-name">{b.name}</p>
+                {b.rating > 0 && <p class="nearby-rating">★ {b.rating}</p>}
+              </div>
+              <span class="nearby-arrow">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="v-sidebar">
+
+    <!-- Quick info -->
+    <div class="s-card">
+      <p class="s-card-label">Πληροφορίες</p>
+      <ul class="s-info-list">
+        <li class="s-info-row">
+          <span class="s-info-key">Τύπος</span>
+          <span class="s-info-val">{typeInfo.icon} {typeInfo.label}</span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Περιοχή</span>
+          <span class="s-info-val">{village.area}</span>
+        </li>
+        {village.population && (
+          <li class="s-info-row">
+            <span class="s-info-key">Πληθυσμός</span>
+            <span class="s-info-val">{village.population}</span>
+          </li>
+        )}
+        {village.elevation && (
+          <li class="s-info-row">
+            <span class="s-info-key">Υψόμετρο</span>
+            <span class="s-info-val">
+              {village.elevation === 'sea level' ? 'Επίπεδο θάλασσας' : village.elevation}
+            </span>
+          </li>
+        )}
+        {linkedTaverns.length > 0 && (
+          <li class="s-info-row">
+            <span class="s-info-key">Εστιατόρια</span>
+            <span class="s-info-val">{linkedTaverns.length}</span>
+          </li>
+        )}
+        {linkedBeaches.length > 0 && (
+          <li class="s-info-row">
+            <span class="s-info-key">Παραλίες</span>
+            <span class="s-info-val">{linkedBeaches.length}</span>
+          </li>
+        )}
+      </ul>
+    </div>
+
+    <!-- Maps CTA -->
+    {village.googleMapsUri && (
+      <a
+        href={village.googleMapsUri}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="s-btn s-btn--maps"
+      >
+        <span>📍</span> Google Maps ↗
+      </a>
+    )}
+
+    <!-- Other villages -->
+    <div class="s-card">
+      <p class="s-card-label">Άλλα χωριά</p>
+      <div class="s-villages-list">
+        {otherVillages.map(v => (
+          <a href={`${base}villages/${v.slug}`} class="s-village-link">
+            <span class="s-village-name">{v.name}</span>
+            <span class="s-village-type">{typeLabels[v.type]?.icon}</span>
+          </a>
+        ))}
+        <a href={`${base}villages`} class="s-village-all">Όλα τα χωριά →</a>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+</Layout>
+
+
+<style>
+/* ── HERO ── */
+.v-hero {
+  position: relative;
+  height: 460px;
+  overflow: hidden;
+}
+.v-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, #0a2040 0%, #0d2b4e 30%, #1a5c8a 70%, #2a7faa 100%);
+}
+/* SVG pattern overlay for texture */
+.v-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 70% 30%, rgba(58,155,201,.2) 0%, transparent 55%),
+                    radial-gradient(circle at 15% 70%, rgba(13,43,78,.4) 0%, transparent 45%);
+}
+.v-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.v-hero-inner { padding-bottom: 2.5rem; }
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  padding: .35rem .85rem;
+  border-radius: 100px;
+  transition: background .15s;
+}
+.back-link:hover { background: rgba(0,0,0,.55); }
+
+.v-type-badge {
+  display: inline-block;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: .5rem;
+  backdrop-filter: blur(6px);
+}
+.v-hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  color: #fff;
+  line-height: .95;
+  margin: 0 0 .35rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.v-hero-tagline {
+  font-size: 1rem;
+  color: rgba(255,255,255,.65);
+  font-style: italic;
+  margin: 0 0 .85rem;
+}
+.v-hero-chips {
+  display: flex;
+  gap: .45rem;
+  flex-wrap: wrap;
+}
+.v-chip {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0,0,0,.3);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+/* ── LAYOUT ── */
+.v-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+  align-items: start;
+}
+
+/* ── MAIN ── */
+.v-desc {
+  font-size: 1.05rem;
+  line-height: 1.82;
+  color: var(--ink);
+  margin-bottom: 2.5rem;
+}
+
+.v-block { margin-bottom: 2.5rem; }
+
+.block-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.block-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Must see */
+.must-grid { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.must-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .85rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  transition: background .15s;
+}
+.must-item:last-child { border-bottom: none; }
+.must-item:nth-child(even) { background: var(--sand); }
+.must-num {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: rgba(0,0,0,.12);
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+}
+.must-text { font-size: .9rem; color: var(--ink); font-weight: 500; }
+
+/* Highlights */
+.highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  font-size: .875rem;
+  color: var(--ink);
+  padding: .6rem .85rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.highlight-check { color: var(--sea); font-weight: 700; flex-shrink: 0; }
+
+/* Nearby list */
+.nearby-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.nearby-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  transition: background .15s, padding-left .15s;
+}
+.nearby-item:last-child { border-bottom: none; }
+.nearby-item:hover { background: var(--sand); padding-left: 1.25rem; }
+.nearby-img-wrap { width: 44px; height: 44px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--sand); }
+.nearby-img { width: 100%; height: 100%; object-fit: cover; }
+.nearby-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: var(--sand-dark); }
+.nearby-body { flex: 1; min-width: 0; }
+.nearby-name { font-size: .9rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nearby-rating { font-size: .75rem; color: #d97706; margin-top: .1rem; }
+.nearby-arrow { color: var(--muted); font-size: 1rem; flex-shrink: 0; }
+
+/* ── SIDEBAR ── */
+.v-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+.s-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.s-card-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+.s-info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+.s-info-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: .875rem; gap: .5rem; }
+.s-info-key { font-weight: 600; color: var(--muted); flex-shrink: 0; }
+.s-info-val { color: var(--ink); text-align: right; }
+
+.s-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  font-weight: 600;
+  transition: transform .15s, opacity .15s;
+}
+.s-btn:hover { transform: translateY(-1px); opacity: .9; }
+.s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+
+.s-villages-list { display: flex; flex-direction: column; gap: 0; }
+.s-village-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .55rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .875rem;
+  color: var(--ink);
+  transition: color .15s, padding-left .15s;
+}
+.s-village-link:hover { color: var(--aegean); padding-left: .3rem; }
+.s-village-link:last-of-type { border-bottom: none; }
+.s-village-name { font-weight: 500; }
+.s-village-type { font-size: .9rem; }
+.s-village-all {
+  display: block;
+  margin-top: .75rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--aegean);
+  border-bottom: 1.5px solid var(--sea);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: color .15s;
+}
+.s-village-all:hover { color: var(--sea); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .v-hero { height: 360px; }
+  .v-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .v-sidebar { position: static; }
+  .highlights-grid { grid-template-columns: 1fr; }
+  .v-hero-name { font-size: 2.5rem; }
+}
+@media (max-width: 480px) {
+  .v-hero { height: 280px; }
+  .v-hero-name { font-size: 2rem; }
+}
+</style>
