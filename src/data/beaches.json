@@ -1,0 +1,320 @@
+[
+  {
+    "slug": "sarakiniko",
+    "name": "Σαρακήνικο",
+    "description": "Ανακαλύψτε την παραλία Σαρακήνικο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Sarakiniko",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=6736049203591420954&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJ0WiZqZngmBQRGpyewQ9Be10/photos/Ab43m-sTmo7hoGwb9E9p3dkVH1KoLuBusE-tnJMibIy69sIMxDk4yMLqpPhUTbON6XGJdc90j6zm5kYjlgi4nJhkUUb5Ku8R0JqPUJUu8QhxCPdNH3yMSvkv4Yyz4HVrXAzE3t6hd-RdKxOXt-UUYloLpg2F6JrZNBHK5pncvN7kdSRIVix4Biqzh16KFuZSUPXfbgy5-Cp87xrHorGjcmpM6i0oeqnAfcITHONgiQgV7Z_SM1t-Sh2gQlAolq6lgpKH2OCmSNVFV3sDN1mU3jtxkwRVu-xZfEv2SHcmdga0YId5BTnEdWl3APHX8wtx9nCqlCOJZPKKQWZVhl18mWXABGdyrrsQRced-b6-2vsDcZaZcbpDeQzMZjBoJRt-HI4vSIVGGQ3-Xx7Ej_3r2Vz0W8yV61hQOuB1OHGHtvC4lGtufqoG",
+    "image": "places/ChIJ0WiZqZngmBQRGpyewQ9Be10/photos/Ab43m-sTmo7hoGwb9E9p3dkVH1KoLuBusE-tnJMibIy69sIMxDk4yMLqpPhUTbON6XGJdc90j6zm5kYjlgi4nJhkUUb5Ku8R0JqPUJUu8QhxCPdNH3yMSvkv4Yyz4HVrXAzE3t6hd-RdKxOXt-UUYloLpg2F6JrZNBHK5pncvN7kdSRIVix4Biqzh16KFuZSUPXfbgy5-Cp87xrHorGjcmpM6i0oeqnAfcITHONgiQgV7Z_SM1t-Sh2gQlAolq6lgpKH2OCmSNVFV3sDN1mU3jtxkwRVu-xZfEv2SHcmdga0YId5BTnEdWl3APHX8wtx9nCqlCOJZPKKQWZVhl18mWXABGdyrrsQRced-b6-2vsDcZaZcbpDeQzMZjBoJRt-HI4vSIVGGQ3-Xx7Ej_3r2Vz0W8yV61hQOuB1OHGHtvC4lGtufqoG",
+    "website": null,
+    "coordinates": {
+      "lat": 36.742697199999995,
+      "lng": 24.458423
+    },
+    "rating": 4.8,
+    "accessType": "road",
+    "facilities": [
+      "parking"
+    ]
+  },
+  {
+    "slug": "tsigrado",
+    "name": "Παραλία Τσιγκράδο",
+    "description": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJM8fbsgMhmRQRCTwmcIrrbKw/photos/Ab43m-voWigOg63MAbOKLds8VDHtYTbRKM_pn9deNOK3Qrjyd9IrYgaeswtcZD9JzZhyAI7wfyb3AvBdJnfPPtMKVV6ZZRpgLZpnVIJs8ch_MAUg0SEHxRnuZL-q3LGOd1JPN__mecsVPvWMPFE_IWcr_c1N2HJK-k9tvpYlsKiLdP52WTx49YLtW5QkYZEIS85kRizI8O2FydvcmTPSrJAk2E-lfuLCxa608vAuQgT8rk48RNIluTwQyKgfVryx2bODe1USnMKEHVy2zNqk66Hjcy1DBznVpv6ebGLTandeYdpx8nZSBF9RQXBaa677k4GpJtkaDfGH7W0zICKvxqvDIfM2T3hNCuXHa5IcwWezx0AiDGv0BziyK8abZZHaAg81jOuYeNTscF0PDVHUVyr0OdNI3z5z0j5KvFRahf8i0CJe2g",
+    "image": "places/ChIJM8fbsgMhmRQRCTwmcIrrbKw/photos/Ab43m-voWigOg63MAbOKLds8VDHtYTbRKM_pn9deNOK3Qrjyd9IrYgaeswtcZD9JzZhyAI7wfyb3AvBdJnfPPtMKVV6ZZRpgLZpnVIJs8ch_MAUg0SEHxRnuZL-q3LGOd1JPN__mecsVPvWMPFE_IWcr_c1N2HJK-k9tvpYlsKiLdP52WTx49YLtW5QkYZEIS85kRizI8O2FydvcmTPSrJAk2E-lfuLCxa608vAuQgT8rk48RNIluTwQyKgfVryx2bODe1USnMKEHVy2zNqk66Hjcy1DBznVpv6ebGLTandeYdpx8nZSBF9RQXBaa677k4GpJtkaDfGH7W0zICKvxqvDIfM2T3hNCuXHa5IcwWezx0AiDGv0BziyK8abZZHaAg81jOuYeNTscF0PDVHUVyr0OdNI3z5z0j5KvFRahf8i0CJe2g",
+    "website": null,
+    "coordinates": {
+      "lat": 36.661895799999996,
+      "lng": 24.4693335
+    },
+    "rating": 4.6,
+    "accessType": "hike",
+    "facilities": []
+  },
+  {
+    "slug": "fyriplaka",
+    "name": "Παραλία Φυριπλάκα",
+    "description": "Ανακαλύψτε την παραλία Παραλία Φυριπλάκα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Φυριπλάκα, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=14239057168020895437&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJYXSITf0gmRQRzXZddA1Lm8U/photos/Ab43m-uqfpZZ6Otryxfg_rSkpKko4QJMdUKsnTbkKM661oKHvsy5-IYxXy4KX_mf9aiFNFzP6QL13E5OaqqIsleaCq-Ra8ZWewGub_nAAVk4cDMpPQYrTRdQclHx4z2AtoCJdwnE1DFDzoKf8cUlflifoSMMQK85SyGJ9gtHdU7L9faUapwDf9fW5UNMt28iPWqZ9bfSEav-FDBukhoGDL5jC9I2ozOIoCeEBHxb6yf2_nkkvak9wf7wdhf7kdZZzDuvL5Vlt83JsNhJp7N7PrKjhXbBXXJEpSeGuqipDYlVHYdq9XiK9tC33RI9cxPdhg4lP07kM0B6ZgjnPqnIIW6q--Q3A0N0QD8jDx8Vgettn9e3b9yEPHM0xPBwcw0Xha_z--CK9_sVxeJ6H1ayclzz5EMmXCaCaPOtuq2JLc4mUm0--Rdx",
+    "image": "places/ChIJYXSITf0gmRQRzXZddA1Lm8U/photos/Ab43m-uqfpZZ6Otryxfg_rSkpKko4QJMdUKsnTbkKM661oKHvsy5-IYxXy4KX_mf9aiFNFzP6QL13E5OaqqIsleaCq-Ra8ZWewGub_nAAVk4cDMpPQYrTRdQclHx4z2AtoCJdwnE1DFDzoKf8cUlflifoSMMQK85SyGJ9gtHdU7L9faUapwDf9fW5UNMt28iPWqZ9bfSEav-FDBukhoGDL5jC9I2ozOIoCeEBHxb6yf2_nkkvak9wf7wdhf7kdZZzDuvL5Vlt83JsNhJp7N7PrKjhXbBXXJEpSeGuqipDYlVHYdq9XiK9tC33RI9cxPdhg4lP07kM0B6ZgjnPqnIIW6q--Q3A0N0QD8jDx8Vgettn9e3b9yEPHM0xPBwcw0Xha_z--CK9_sVxeJ6H1ayclzz5EMmXCaCaPOtuq2JLc4mUm0--Rdx",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6662272,
+      "lng": 24.4651858
+    },
+    "rating": 4.7,
+    "accessType": "road",
+    "facilities": [
+      "sunbeds",
+      "snack bar",
+      "parking"
+    ]
+  },
+  {
+    "slug": "paleochori",
+    "name": "Παραλία Παλαιοχώρι",
+    "description": "Ανακαλύψτε την παραλία Παραλία Παλαιοχώρι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Paleochori",
+      "address": "Παραλία Παλαιοχώρι, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=1111336641246794871&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJV017TR8gmRQRdxRkf8lCbA8/photos/Ab43m-uuZZeBmkQKLeWjsb64FVVLho2t_JyLTTpos95TAChPP3rLvXV6ODlofTC3lLIECOqxQmqAJBkembfSHLcC6betl5m_UQupHZb0-Ee_u47wnubuy8aXpOwj9E6eAJTWDPfSp-V713_szvnK-TnLdnymAeVrFX4xSddaHSaYOHY9vLGowPW-TAB8T0HBfo0Ttifas_zwoqApczy26cXDaoYSGbW0_fXTh8vSd9-oaqhLNuit6AWOdQs77dgOgQUJlqZSa54aT46IlZKAA6-uIWz3XJAsw_g9-yYHgq4PCpjkXeJQVhd10Tenq4bf95INA_yLLp2zJi8rOHmmPQcRXYzCRtsmPs6eZixQgV6qyuL64BwQmT-BPXY9ejuIdKaC4akKjHw0BRTTW4FWjaqAURth0_uMPwbIxnmpCO0wIcSEWnL1",
+    "image": "places/ChIJV017TR8gmRQRdxRkf8lCbA8/photos/Ab43m-uuZZeBmkQKLeWjsb64FVVLho2t_JyLTTpos95TAChPP3rLvXV6ODlofTC3lLIECOqxQmqAJBkembfSHLcC6betl5m_UQupHZb0-Ee_u47wnubuy8aXpOwj9E6eAJTWDPfSp-V713_szvnK-TnLdnymAeVrFX4xSddaHSaYOHY9vLGowPW-TAB8T0HBfo0Ttifas_zwoqApczy26cXDaoYSGbW0_fXTh8vSd9-oaqhLNuit6AWOdQs77dgOgQUJlqZSa54aT46IlZKAA6-uIWz3XJAsw_g9-yYHgq4PCpjkXeJQVhd10Tenq4bf95INA_yLLp2zJi8rOHmmPQcRXYzCRtsmPs6eZixQgV6qyuL64BwQmT-BPXY9ejuIdKaC4akKjHw0BRTTW4FWjaqAURth0_uMPwbIxnmpCO0wIcSEWnL1",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6750374,
+      "lng": 24.5184634
+    },
+    "rating": 4.5,
+    "accessType": "road",
+    "facilities": [
+      "sunbeds",
+      "snack bar",
+      "parking"
+    ]
+  },
+  {
+    "slug": "provatas",
+    "name": "Παραλία Προβατάς",
+    "description": "Ανακαλύψτε την παραλία Παραλία Προβατάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Προβατάς, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=17988838379679377165&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJm1vPWN8gmRQRDeezhjIxpfk/photos/Ab43m-upiQFPYYuDp9Adn1FK_kHMSEMVhtREuI3eaN3x9hdW6Tf1mSCSrH-YUt-nOgjm_8PyGIdrBmSRdefhzfd_8iiuzEQA_EmwR1jEfGuDE-loAZwWRlW2gmcFIBEFqGbNexRLHxnmdUtq-IhAQdNTzoysXcYk-1O5VoqAVKT3v5jsZipBEQNQOrXnW32D5_jx5LGf4pskqw1svGiNl1ZTD4qXCfQlHblYcxZXp8LhVw7vDm_FZT8P1PtZpkmISwA2GkBxJjPBXddtoBL2_a-vMy6bD_LTQbCRjlKZmXwGpWAfPkNvwTg6QSh-DFhUccNg3QLXCpvcvZFei-ViFmfvUveHa8KA6fA9Z_r92VrLJVBnZoZy0ngMCmPwoQ01_UkvxckU3g8q_XqyGaMcC_cSixUvv-OCxcGzsd3aEDr98mY-xI63VrMWEzOLKGIx4BDh",
+    "image": "places/ChIJm1vPWN8gmRQRDeezhjIxpfk/photos/Ab43m-upiQFPYYuDp9Adn1FK_kHMSEMVhtREuI3eaN3x9hdW6Tf1mSCSrH-YUt-nOgjm_8PyGIdrBmSRdefhzfd_8iiuzEQA_EmwR1jEfGuDE-loAZwWRlW2gmcFIBEFqGbNexRLHxnmdUtq-IhAQdNTzoysXcYk-1O5VoqAVKT3v5jsZipBEQNQOrXnW32D5_jx5LGf4pskqw1svGiNl1ZTD4qXCfQlHblYcxZXp8LhVw7vDm_FZT8P1PtZpkmISwA2GkBxJjPBXddtoBL2_a-vMy6bD_LTQbCRjlKZmXwGpWAfPkNvwTg6QSh-DFhUccNg3QLXCpvcvZFei-ViFmfvUveHa8KA6fA9Z_r92VrLJVBnZoZy0ngMCmPwoQ01_UkvxckU3g8q_XqyGaMcC_cSixUvv-OCxcGzsd3aEDr98mY-xI63VrMWEzOLKGIx4BDh",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6695517,
+      "lng": 24.4481058
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": [
+      "sunbeds",
+      "snack bar",
+      "parking"
+    ]
+  },
+  {
+    "slug": "papafragas",
+    "name": "Παραλία Παπαφράγκας",
+    "description": "Ανακαλύψτε την παραλία Παραλία Παπαφράγκας στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Παπαφράγκας, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16457249977587360413&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJO2wQzTjemBQRnWLmDanlY-Q/photos/Ab43m-tTSZ-B-6sZcjNeyFLiOpbqWqYBPiHK43tDHRMa4ojEO1uSrDcv8yZEvKkpT3GSrThnvSpXO2RvyJByFAENWdAJrJCHIC95gFjyd48zAnFLtbUe8ljUaa64V7XV7WX-smY4NyNYBTgIsC3GRQp-lxqqiuormcLS_e297zgosiXHa5UOEtWlROsRlU6J4bh3d3KS_7nRBuhS-lLOfL4EpoaERjC6toPa2EMFnSSRO5ceTNNF-vdU2ow2M2tmlgIm03faJYVaqVj9QLS8Is1Ijt4OX4qBdcICO5279-NEHrEuFZlemIR0GX_cfwJrYI03LZrRr7bubebCVp0CJT-PkCcEDq6qLFDI8pCNzx6FqHrtZJbKtOMcD9GsVwuX9nUPGFB-vFbn7E6rGKbr6_Zepf5s3pCzQx4-Nc1_lItog6EpTg",
+    "image": "places/ChIJO2wQzTjemBQRnWLmDanlY-Q/photos/Ab43m-tTSZ-B-6sZcjNeyFLiOpbqWqYBPiHK43tDHRMa4ojEO1uSrDcv8yZEvKkpT3GSrThnvSpXO2RvyJByFAENWdAJrJCHIC95gFjyd48zAnFLtbUe8ljUaa64V7XV7WX-smY4NyNYBTgIsC3GRQp-lxqqiuormcLS_e297zgosiXHa5UOEtWlROsRlU6J4bh3d3KS_7nRBuhS-lLOfL4EpoaERjC6toPa2EMFnSSRO5ceTNNF-vdU2ow2M2tmlgIm03faJYVaqVj9QLS8Is1Ijt4OX4qBdcICO5279-NEHrEuFZlemIR0GX_cfwJrYI03LZrRr7bubebCVp0CJT-PkCcEDq6qLFDI8pCNzx6FqHrtZJbKtOMcD9GsVwuX9nUPGFB-vFbn7E6rGKbr6_Zepf5s3pCzQx4-Nc1_lItog6EpTg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.753791,
+      "lng": 24.502596
+    },
+    "rating": 4.5,
+    "accessType": "hike",
+    "facilities": []
+  },
+  {
+    "slug": "kleftiko",
+    "name": "Παραλία Κλέφτικο",
+    "description": "Ανακαλύψτε την παραλία Παραλία Κλέφτικο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5166588780249035937&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJm4ngzlUvmRQRoTRDMx9ps0c/photos/Ab43m-u9YDDRcI14_kzbiT8sCQSp9D4B7jes5aGDnNPd_ZAywJ5ctAJalBEJCOR-495LA0VpdOJEjYjttLiuA-5ixNQH9PcxCKkSiOfwIx35JCLaN4kOq0MQ97XSNJFyK36Tblr_p6brOaDuq6lu2rr4ULCPwiDK-2ajX1dIhJlEZHBMco70vzEikHpFBBaeRhM8-qQolg3G7Q9scahPlsCIxEQIeU8CbuIR4JJGmHTU2LUvuDU3nZ1je1PKrnigZfq3a8ubtycvFQBsJrbK9yNOidTaoDkKQ1N_7N0wxQfUUHQkDIiI2LbfwEuxQL2oLDDWyI_lSprIqqU9luIlwphOLkwG9Yp2xvqBA6Qn1NAhCaxMIJ5m3RGy0vzZtN5pA1maWEXV5QmxQXbvyfc30wPEascPxA2Y6oe5pHnSpyfyA4ykLA",
+    "image": "places/ChIJm4ngzlUvmRQRoTRDMx9ps0c/photos/Ab43m-u9YDDRcI14_kzbiT8sCQSp9D4B7jes5aGDnNPd_ZAywJ5ctAJalBEJCOR-495LA0VpdOJEjYjttLiuA-5ixNQH9PcxCKkSiOfwIx35JCLaN4kOq0MQ97XSNJFyK36Tblr_p6brOaDuq6lu2rr4ULCPwiDK-2ajX1dIhJlEZHBMco70vzEikHpFBBaeRhM8-qQolg3G7Q9scahPlsCIxEQIeU8CbuIR4JJGmHTU2LUvuDU3nZ1je1PKrnigZfq3a8ubtycvFQBsJrbK9yNOidTaoDkKQ1N_7N0wxQfUUHQkDIiI2LbfwEuxQL2oLDDWyI_lSprIqqU9luIlwphOLkwG9Yp2xvqBA6Qn1NAhCaxMIJ5m3RGy0vzZtN5pA1maWEXV5QmxQXbvyfc30wPEascPxA2Y6oe5pHnSpyfyA4ykLA",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6506578,
+      "lng": 24.3324547
+    },
+    "rating": 4.9,
+    "accessType": "boat",
+    "facilities": []
+  },
+  {
+    "slug": "agia-kyriaki",
+    "name": "Παραλία Αγιά Κυριάκη",
+    "description": "Ανακαλύψτε την παραλία Παραλία Αγιά Κυριάκη στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Αγιά Κυριάκη, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12563802863523468162&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJ-xX-rkcgmRQRghNadCOYW64/photos/Ab43m-uaotCa6aWfudUyHG9MoZ7xdzIXI6eWzZAr0NNRGVpSFjLkGgHxNuhsOf80D2j-UOTCSpNox8AXK4-MWozsA-m8ENjYit8ybPCylz5wXACt8bnMlb8xRnqjl5hdw_KApsren2Bkbd48sf6h8Hnp8bR0mmmA4-3p5TMRZTcFHLCFltiMXGVwYHW0pa1ldARyvrqNjMDPdk2BksqE-TO23V0cHZ2onaehmoflrZmdS5rjKgQJ7z63lsgrm6_-45GoSAQpHjRywkxVv89FZkt-gkILJhl680CMztc0-EdfMDh5Sed15KxbBkg3qU2D2O4UpUXvXua421QXQyB31PNk0WF_I90kzVVXtg5DZbdBYjFp1o7bs4cDTOpQHr9NRqZI2ZyYi-g-DTJcxvAnEhuXK01xVQLlkzIsZv95b3HTbFtEY5vA",
+    "image": "places/ChIJ-xX-rkcgmRQRghNadCOYW64/photos/Ab43m-uaotCa6aWfudUyHG9MoZ7xdzIXI6eWzZAr0NNRGVpSFjLkGgHxNuhsOf80D2j-UOTCSpNox8AXK4-MWozsA-m8ENjYit8ybPCylz5wXACt8bnMlb8xRnqjl5hdw_KApsren2Bkbd48sf6h8Hnp8bR0mmmA4-3p5TMRZTcFHLCFltiMXGVwYHW0pa1ldARyvrqNjMDPdk2BksqE-TO23V0cHZ2onaehmoflrZmdS5rjKgQJ7z63lsgrm6_-45GoSAQpHjRywkxVv89FZkt-gkILJhl680CMztc0-EdfMDh5Sed15KxbBkg3qU2D2O4UpUXvXua421QXQyB31PNk0WF_I90kzVVXtg5DZbdBYjFp1o7bs4cDTOpQHr9NRqZI2ZyYi-g-DTJcxvAnEhuXK01xVQLlkzIsZv95b3HTbFtEY5vA",
+    "website": null,
+    "coordinates": {
+      "lat": 36.670763199999996,
+      "lng": 24.498369099999998
+    },
+    "rating": 4.5,
+    "accessType": "road",
+    "facilities": [
+      "sunbeds"
+    ]
+  },
+  {
+    "slug": "gerontas",
+    "name": "Παραλία Γέροντας",
+    "description": "Ανακαλύψτε την παραλία Παραλία Γέροντας στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Γέροντας, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=13878709327457272823&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJrcfgG3AmmRQR98P9y5kUm8A/photos/Ab43m-uwIBiJ1Sg-l00tfv1hj9Mn8Xzygle_sSGTHrXCg9R7D0gsT6sHnXMQAVf5zqP3uQofVPna8wnRdOGgYqa_H1zi5HiEKrOzsZTi_P8SDQGRoXXIjyaxpaxgJog53htiSgLiTkDZSDdKBIO3KIi0fYicNDIgdMa--2f2YtacIkMOHmDpV8zv0VpX6DaarK1bcBm_Ua7SuqBXONQ_-jSukgkC_7vKIaIOoc-PigAZeBSMMHiCzM4kkcfjroECHSYJyRiNVWNgTrDx3E9xcZWf4OeK8J9UCXFeZayrugE-ITq601noXOj0FDRKGhwcyi2UFJ3085uwhOTinfcGK2JEU44bb658cGJXLrOW7Mvzkxaqh0nNgmt5YEWtZ0dWa2Jbp5cX1nUCDfVtqvAWBPsW5mn4Q-s6cLwsedK-0Jdh6TxMONaAQsVqWxxUnndwX29F",
+    "image": "places/ChIJrcfgG3AmmRQR98P9y5kUm8A/photos/Ab43m-uwIBiJ1Sg-l00tfv1hj9Mn8Xzygle_sSGTHrXCg9R7D0gsT6sHnXMQAVf5zqP3uQofVPna8wnRdOGgYqa_H1zi5HiEKrOzsZTi_P8SDQGRoXXIjyaxpaxgJog53htiSgLiTkDZSDdKBIO3KIi0fYicNDIgdMa--2f2YtacIkMOHmDpV8zv0VpX6DaarK1bcBm_Ua7SuqBXONQ_-jSukgkC_7vKIaIOoc-PigAZeBSMMHiCzM4kkcfjroECHSYJyRiNVWNgTrDx3E9xcZWf4OeK8J9UCXFeZayrugE-ITq601noXOj0FDRKGhwcyi2UFJ3085uwhOTinfcGK2JEU44bb658cGJXLrOW7Mvzkxaqh0nNgmt5YEWtZ0dWa2Jbp5cX1nUCDfVtqvAWBPsW5mn4Q-s6cLwsedK-0Jdh6TxMONaAQsVqWxxUnndwX29F",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6558418,
+      "lng": 24.3687032
+    },
+    "rating": 4.5,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "triades",
+    "name": "Triades Beach",
+    "description": "Ανακαλύψτε την παραλία Triades Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Triades Beach, Plaka 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=3285991828450010782&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJk0GaVNgnmRQRnmaZdSgwmi0/photos/Ab43m-sDMyryee7mQ4HUjH1-9HwlRXPCHjOQBIzZfaXs-VdvkT8vAMI5T1r3SA7SjNaPfbKMkajshOyNnd9wBYgzzpajVmm26xErPKlbHpE9iWLt5zSC0F2gnPA9dW4Fv7vDMIwj8XRfWoH3R2P7F7iC68FnqBce21FxcIyoqROP3RYt0FbrnfU4lVLHkYXPz414X4keSRH8THLGCnX3yvVoAO1Z0H3R97TR4O7BUhID17RJ_WjaF0UL8j4Z0yEIe8Ct3ajWsLg8o6pJlsOa00qNPi8LkhPLtuez1ccq7by3_hOZJH03ig1Iui5-r0fY5W9vSIAOjORnTqpWYfWKXPyaYrvq0ymin1rHf16Sf1MKadNNTmd6tcmRZJv2jFn5zIRe03GAWccLzZ9tChHSqR4ArSqyKqt1LBiPme5cTgoh-aoDEQ",
+    "image": "places/ChIJk0GaVNgnmRQRnmaZdSgwmi0/photos/Ab43m-sDMyryee7mQ4HUjH1-9HwlRXPCHjOQBIzZfaXs-VdvkT8vAMI5T1r3SA7SjNaPfbKMkajshOyNnd9wBYgzzpajVmm26xErPKlbHpE9iWLt5zSC0F2gnPA9dW4Fv7vDMIwj8XRfWoH3R2P7F7iC68FnqBce21FxcIyoqROP3RYt0FbrnfU4lVLHkYXPz414X4keSRH8THLGCnX3yvVoAO1Z0H3R97TR4O7BUhID17RJ_WjaF0UL8j4Z0yEIe8Ct3ajWsLg8o6pJlsOa00qNPi8LkhPLtuez1ccq7by3_hOZJH03ig1Iui5-r0fY5W9vSIAOjORnTqpWYfWKXPyaYrvq0ymin1rHf16Sf1MKadNNTmd6tcmRZJv2jFn5zIRe03GAWccLzZ9tChHSqR4ArSqyKqt1LBiPme5cTgoh-aoDEQ",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.7064471,
+      "lng": 24.3368601
+    },
+    "rating": 4.7,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "patakonas",
+    "name": "Παραλία Τσιγκράδο",
+    "description": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJM8fbsgMhmRQRCTwmcIrrbKw/photos/Ab43m-uKmKpWPO_gmzSDPq_fUeOWX92sodJwPdlpIKReUF7TpmkqwsKqm9CBIIkCVR7SyfDa-NhAHwnA8YQw2aScuUw9K6pvzYAlC5Ku1XbQs7XRt4h8ZYP3n7cA2_ngfOBMMB0yVB8izt4NuKrmRhfTlrUvwhlbipzOi3dGfHj4NGQyXECongcNmKHsbEeDNLRqtncyRauYCSDMgRlb7Cliu-8wRh-INePLVJor8bnv94YL3d-nBytGwq-jZ0OhJaV4CjuNrUJ3fxGg5hD9gkBvaBUGPs0zEg2jHfO1H0D3AwDgz3GMXIZJwX2GdfZR_j72EP8yAsspmRaFqk4tEO5RvNTHRe7Ip81Zu9aeCNl8prQz_MwIVvjTLa2tn1Ghj8MKuUQqAJdU4tYI-Um_5QRTVPeTx9fCpv_XqG_Ly3n4G0BSzA",
+    "image": "places/ChIJM8fbsgMhmRQRCTwmcIrrbKw/photos/Ab43m-uKmKpWPO_gmzSDPq_fUeOWX92sodJwPdlpIKReUF7TpmkqwsKqm9CBIIkCVR7SyfDa-NhAHwnA8YQw2aScuUw9K6pvzYAlC5Ku1XbQs7XRt4h8ZYP3n7cA2_ngfOBMMB0yVB8izt4NuKrmRhfTlrUvwhlbipzOi3dGfHj4NGQyXECongcNmKHsbEeDNLRqtncyRauYCSDMgRlb7Cliu-8wRh-INePLVJor8bnv94YL3d-nBytGwq-jZ0OhJaV4CjuNrUJ3fxGg5hD9gkBvaBUGPs0zEg2jHfO1H0D3AwDgz3GMXIZJwX2GdfZR_j72EP8yAsspmRaFqk4tEO5RvNTHRe7Ip81Zu9aeCNl8prQz_MwIVvjTLa2tn1Ghj8MKuUQqAJdU4tYI-Um_5QRTVPeTx9fCpv_XqG_Ly3n4G0BSzA",
+    "website": null,
+    "coordinates": {
+      "lat": 36.661895799999996,
+      "lng": 24.4693335
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "rivari",
+    "name": "Λιμνοθάλασσα Ριβάρι",
+    "description": "Ανακαλύψτε την παραλία Λιμνοθάλασσα Ριβάρι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16528970865676859546&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJy-vvY2snmRQRmjhzl22zYuU/photos/Ab43m-sIC_OW_AFB75dbtMGnHq8xF_RsqlFvd22pYfuEjGTWvIYudvvY2eeuvZyWqLfYCOeY_ApF9_ZP7zXlhEDtf0Zq7l-N2jWAS5eIZiqQobN7S_IPhxd-WWm8gimtgcOvAF30gH_PgnK76LStpiHU5u5IX7kLNhN_JQMepx3HjVUTJKVc7oNjfI2NepYgL9-ieKYRcFGLGvCWsEyHTRF8G8U892h9z1DPIVncY5FVHsy6-9Upqa3fJ10EqvFFUlHmyPdsxoa8IxOqb4pU3SRWGJE5xkM39gk7E2sbCDWh2B1-fcyqdMiwT0kuozdmdRhnT_FiqwFlBEXNTmdBmLz4AW_zVNWG0YlwAoPayOUKw-uK5-uVJBaD6fFRKHUG-_LKHpROBzcCq6eZhAhnB9mElsEPyLN3mO5G8FJPina3BZuI2w",
+    "image": "places/ChIJy-vvY2snmRQRmjhzl22zYuU/photos/Ab43m-sIC_OW_AFB75dbtMGnHq8xF_RsqlFvd22pYfuEjGTWvIYudvvY2eeuvZyWqLfYCOeY_ApF9_ZP7zXlhEDtf0Zq7l-N2jWAS5eIZiqQobN7S_IPhxd-WWm8gimtgcOvAF30gH_PgnK76LStpiHU5u5IX7kLNhN_JQMepx3HjVUTJKVc7oNjfI2NepYgL9-ieKYRcFGLGvCWsEyHTRF8G8U892h9z1DPIVncY5FVHsy6-9Upqa3fJ10EqvFFUlHmyPdsxoa8IxOqb4pU3SRWGJE5xkM39gk7E2sbCDWh2B1-fcyqdMiwT0kuozdmdRhnT_FiqwFlBEXNTmdBmLz4AW_zVNWG0YlwAoPayOUKw-uK5-uVJBaD6fFRKHUG-_LKHpROBzcCq6eZhAhnB9mElsEPyLN3mO5G8FJPina3BZuI2w",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.7022094,
+      "lng": 24.401958399999998
+    },
+    "rating": 4.5,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "ammoudaki",
+    "name": "Παραλία Αμμουδαρακι",
+    "description": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=1855296920998415868&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJ1wFU49UnmRQR_I38SLhWvxk/photos/Ab43m-vv6Qz8cZU4_JtPUKN7Jydu5DuEHLrhRzS4nBmyJsKXyUC5zOWuLF7k-FnIXZfkHGqleuO_kYodsclu5oER460RdML01rOLvew8lFVhx8ipHaeMMOTi2XnyC6u6rHnz5H5J3cwqvap4eHNPvTaqzlIs_SfSR_3MYJTg0D4FW_4VX_41AjLnR5988G7eFdIYIpEQ8DX6TmDcdnBEBi4FXM5quf6Sks0dcsPL3Hx3VlX5rFxZptCHoUum7HxQq435gc_kIVWLErjahpfX_LEVDkareRyrMcuNebOn9g5Vy6Drsitcggw0AyA_wwemapBVsEoMUD-CGuXASN-a96VZaPE_4ZDuaWYdppEpAFbm9Xs57DcVs5YpwwgZ8XB9vu8QloY9T3BXY0PwHUtNqZY73EwQqVHcm1Dr_GwgVCQPmRt6BGlf",
+    "image": "places/ChIJ1wFU49UnmRQR_I38SLhWvxk/photos/Ab43m-vv6Qz8cZU4_JtPUKN7Jydu5DuEHLrhRzS4nBmyJsKXyUC5zOWuLF7k-FnIXZfkHGqleuO_kYodsclu5oER460RdML01rOLvew8lFVhx8ipHaeMMOTi2XnyC6u6rHnz5H5J3cwqvap4eHNPvTaqzlIs_SfSR_3MYJTg0D4FW_4VX_41AjLnR5988G7eFdIYIpEQ8DX6TmDcdnBEBi4FXM5quf6Sks0dcsPL3Hx3VlX5rFxZptCHoUum7HxQq435gc_kIVWLErjahpfX_LEVDkareRyrMcuNebOn9g5Vy6Drsitcggw0AyA_wwemapBVsEoMUD-CGuXASN-a96VZaPE_4ZDuaWYdppEpAFbm9Xs57DcVs5YpwwgZ8XB9vu8QloY9T3BXY0PwHUtNqZY73EwQqVHcm1Dr_GwgVCQPmRt6BGlf",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.6988005,
+      "lng": 24.3349092
+    },
+    "rating": 4.6,
+    "accessType": "hike",
+    "facilities": []
+  },
+  {
+    "slug": "sikia-cave",
+    "name": "Σπηλιά της Συκιάς",
+    "description": "Ανακαλύψτε την παραλία Σπηλιά της Συκιάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Sykia Cave 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=9559721524445213177&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJ30SVkboomRQR-XE2sBP0qoQ/photos/Ab43m-sEXJPqXFaW0ZDcfkOfFfWnV63RCTT2lVLLx04mxmh8qk1S2aUVgStgCNzSR4zbeeJ4RJumvd2I7gUz_1fz4RnxLoI8h4f0-ttB69xw4CJOkr1uKN3xPuEStgNwgdi0IgwTtZaZhlNTh1L32eO4c-gssu0uK2lYrITmzQlUFEHOT5HVN5Fa1eHxoGp0yx7B0vsKYyDtauJRSamM5pP8o2c_hDIRw0n_Ig88c3jIm7ppj50NYkIuNHSEUPEsAC-Or4Z2KnvIZwpTO3qT421gGDD9IkEi8Zln65hdeE9wzdaNpyDcT6QcfL_NHWfDna_eI_yZihnvRsEnRZWWGl9V2NLTJSd9E4Tv4_TJ-DkW82xuLyNB7zA8rfFdMIy_SFTKI-FTGNxJD7tYMHUR5IStcZanCQTUUc6qXxNDIVzbkS80IA",
+    "image": "places/ChIJ30SVkboomRQR-XE2sBP0qoQ/photos/Ab43m-sEXJPqXFaW0ZDcfkOfFfWnV63RCTT2lVLLx04mxmh8qk1S2aUVgStgCNzSR4zbeeJ4RJumvd2I7gUz_1fz4RnxLoI8h4f0-ttB69xw4CJOkr1uKN3xPuEStgNwgdi0IgwTtZaZhlNTh1L32eO4c-gssu0uK2lYrITmzQlUFEHOT5HVN5Fa1eHxoGp0yx7B0vsKYyDtauJRSamM5pP8o2c_hDIRw0n_Ig88c3jIm7ppj50NYkIuNHSEUPEsAC-Or4Z2KnvIZwpTO3qT421gGDD9IkEi8Zln65hdeE9wzdaNpyDcT6QcfL_NHWfDna_eI_yZihnvRsEnRZWWGl9V2NLTJSd9E4Tv4_TJ-DkW82xuLyNB7zA8rfFdMIy_SFTKI-FTGNxJD7tYMHUR5IStcZanCQTUUc6qXxNDIVzbkS80IA",
+    "website": null,
+    "coordinates": {
+      "lat": 36.667732699999995,
+      "lng": 24.320308999999998
+    },
+    "rating": 4.9,
+    "accessType": "boat",
+    "facilities": []
+  },
+  {
+    "slug": "plathiena",
+    "name": "Plathiena",
+    "description": "Ανακαλύψτε την παραλία Plathiena στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+    "location": {
+      "area": "Milos",
+      "address": "Plathiena, Plaka 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=7525840415301286467&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "photoRef": "places/ChIJjRquQtnYmBQRQ7pP7vsncWg/photos/Ab43m-sfSrEhsX-rPSLOCtoE8pkpU0K9eTOAe4c0ix5we7YisADLUGnK89XBDmFBsMxDP98gnUrQPFhUx1aDWWkQ4SSFfShbUkKCRsEG2_FPWezI8aK6619fSl8GFope6TkXdhEqR54c8XKyzP7qMSDiKkcUXudE_7WOY4EwLHkJYc9myArYslRtBTvjux-svl7UWvZmoHdilfBi7hZPFjIS56a6NDSE2fDIP9ifD8FjM7S2jzzYfiWIl0t8jRVcTFrZoDNakNYYraMsP9z1p7I8vJ_5uSNlknyJ0P3bZ8hj6_G8AOrno46vm31LQ8GYrKnYuvt_23F8eE4ZYRXZFIjD2n88LCRQQdN7OAbO7BSvhHJNEm7sNGs1O20LUsudHWnwQsop3XTDqjJIATfa087zGA7j3yWddOseixRM35dEGOE",
+    "image": "places/ChIJjRquQtnYmBQRQ7pP7vsncWg/photos/Ab43m-sfSrEhsX-rPSLOCtoE8pkpU0K9eTOAe4c0ix5we7YisADLUGnK89XBDmFBsMxDP98gnUrQPFhUx1aDWWkQ4SSFfShbUkKCRsEG2_FPWezI8aK6619fSl8GFope6TkXdhEqR54c8XKyzP7qMSDiKkcUXudE_7WOY4EwLHkJYc9myArYslRtBTvjux-svl7UWvZmoHdilfBi7hZPFjIS56a6NDSE2fDIP9ifD8FjM7S2jzzYfiWIl0t8jRVcTFrZoDNakNYYraMsP9z1p7I8vJ_5uSNlknyJ0P3bZ8hj6_G8AOrno46vm31LQ8GYrKnYuvt_23F8eE4ZYRXZFIjD2n88LCRQQdN7OAbO7BSvhHJNEm7sNGs1O20LUsudHWnwQsop3XTDqjJIATfa087zGA7j3yWddOseixRM35dEGOE",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.7540755,
+      "lng": 24.4127023
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": [
+      "sunbeds"
+    ]
+  }
+]

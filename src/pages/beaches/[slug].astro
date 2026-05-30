@@ -1,0 +1,306 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import beachesData from '../../data/beaches.json';
+
+export function getStaticPaths() {
+  return beachesData.map((beach) => ({
+    params: { slug: beach.slug },
+    props: { beach },
+  }));
+}
+
+const { beach } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+
+const accessLabel = {
+  road: "Προσβάσιμη με αυτοκίνητο",
+  hike: "Προσβάσιμη με πεζοπορία",
+  boat: "Προσβάσιμη μόνο με βάρκα",
+};
+
+const accessIcon = {
+  road: "🚗",
+  hike: "🥾",
+  boat: "⛵",
+};
+---
+
+<Layout title={`${beach.name} | Παραλίες Μήλου`} description={beach.description}>
+
+  <div class="hero">
+    {beach.photoRef ? (
+      <img
+        src={`https://places.googleapis.com/v1/${beach.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=1200`}
+        alt={`Φωτογραφία της παραλίας ${beach.name}`}
+        class="hero-image"
+      />
+    ) : (
+      <div class="hero-placeholder" aria-hidden="true">◈</div>
+    )}
+    <div class="hero-overlay">
+      <a href={`${base}beaches`} class="back-link">← Όλες οι παραλίες</a>
+      <h1>{beach.name}</h1>
+      <p class="hero-location">◉ {beach.location.area}</p>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="main">
+
+      <p class="description">{beach.description}</p>
+
+      <div class="chips">
+        <span class="chip chip--access">
+          {accessIcon[beach.accessType as keyof typeof accessIcon]}
+          {accessLabel[beach.accessType as keyof typeof accessLabel]}
+        </span>
+        {beach.rating > 0 && (
+          <span class="chip">⭐ {beach.rating} / 5</span>
+        )}
+        {beach.facilities.map((f) => (
+          <span class="chip chip--facility">{f}</span>
+        ))}
+      </div>
+
+    </div>
+
+    <aside class="sidebar">
+
+      {beach.rating > 0 && (
+        <div class="info-block">
+          <h2>Αξιολόγηση</h2>
+          <p class="rating-big">⭐ {beach.rating}<span>/5</span></p>
+        </div>
+      )}
+
+      <div class="info-block">
+        <h2>Πρόσβαση</h2>
+        <p>{accessIcon[beach.accessType as keyof typeof accessIcon]} {accessLabel[beach.accessType as keyof typeof accessLabel]}</p>
+      </div>
+
+      {beach.facilities.length > 0 && (
+        <div class="info-block">
+          <h2>Παροχές</h2>
+          <ul class="facilities-list">
+            {beach.facilities.map((f) => <li>{f}</li>)}
+          </ul>
+        </div>
+      )}
+
+      {beach.googleMapsUri && (
+        <a href={beach.googleMapsUri} target="_blank" rel="noopener noreferrer" class="maps-btn">
+          Άνοιγμα στο Google Maps ↗
+        </a>
+      )}
+
+    </aside>
+
+  </div>
+
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 420px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    background-color: var(--color-surface-alt, #eeece8);
+    color: var(--color-border, #dedad3);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem var(--container-px, 1.5rem);
+    color: white;
+  }
+
+  .back-link {
+    position: absolute;
+    top: 1.25rem;
+    left: var(--container-px, 1.5rem);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: white;
+    text-decoration: none;
+    background: rgba(0,0,0,0.35);
+    padding: 0.3rem 0.75rem;
+    border-radius: 100px;
+    backdrop-filter: blur(4px);
+    transition: background 200ms;
+  }
+
+  .back-link:hover {
+    background: rgba(0,0,0,0.55);
+  }
+
+  .hero-overlay h1 {
+    font-family: var(--font-display, serif);
+    font-size: 2.5rem;
+    margin: 0 0 0.25rem;
+    line-height: 1.1;
+  }
+
+  .hero-location {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+    margin: 0;
+  }
+
+  /* ── Layout ── */
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 2.5rem;
+    padding: 2.5rem var(--container-px, 1.5rem) 4rem;
+    max-width: 1100px;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 768px) {
+    .content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Main ── */
+  .description {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-text, #1a1916);
+    margin: 0 0 1.75rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .chip {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    background: var(--color-surface-alt, #eeece8);
+    color: var(--color-text, #1a1916);
+    border: 1px solid var(--color-border, #dedad3);
+  }
+
+  .chip--access {
+    background: var(--color-gold, #b08d57);
+    color: white;
+    border-color: transparent;
+  }
+
+  .chip--facility {
+    background: white;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-block {
+    padding: 1.25rem;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--color-border, #dedad3);
+  }
+
+  .info-block h2 {
+    font-family: var(--font-display, serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted, #6b6760);
+    margin: 0 0 0.6rem;
+  }
+
+  .info-block p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text, #1a1916);
+  }
+
+  .rating-big {
+    font-size: 1.75rem !important;
+    font-weight: 700;
+    color: var(--color-text, #1a1916);
+  }
+
+  .rating-big span {
+    font-size: 0.9rem;
+    color: var(--color-text-muted, #6b6760);
+    font-weight: 400;
+  }
+
+  .facilities-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .facilities-list li {
+    font-size: 0.9rem;
+    color: var(--color-text, #1a1916);
+  }
+
+  .facilities-list li::before {
+    content: "✓ ";
+    color: var(--color-gold, #b08d57);
+    font-weight: 700;
+  }
+
+  .maps-btn {
+    display: block;
+    text-align: center;
+    padding: 0.85rem 1rem;
+    background: var(--color-gold, #b08d57);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 200ms;
+  }
+
+  .maps-btn:hover {
+    opacity: 0.85;
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import tavernsData from '../data/taverns.json';
+import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
+
+// Προαιρετικό: Ταξινόμηση ώστε τα "Featured" να μπαίνουν πάντα πρώτα
+const sortedTaverns = [...tavernsData].sort((a, b) => {
+  if (a.isFeatured && !b.isFeatured) return -1;
+  if (!a.isFeatured && b.isFeatured) return 1;
+  return 0;
+});
+---
+
+<Layout title="Φαγητό στη Μήλο">
+  <h1>Home</h1>
+  
+
+</Layout>
+
