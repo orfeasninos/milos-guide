@@ -12,13 +12,13 @@ if (!API_KEY) {
 // ─── SEED DATA ───────────────────────────────────────────────────────────────
 
 const seedTaverns = [
-  { name: "Barko tavern restaurant", location: "Adamas", slug: "barko-tavern", isFeatured: true },
+  { name: "Barko tavern restaurant", location: "Adamas", slug: "barko-tavern", isFeatured: false },
   { name: "Sirocco Volcanic Restaurant", location: "Paleochori", slug: "sirocco-restaurant", isFeatured: false },
   { name: "Ενάλιον", location: "Pollonia", slug: "enalion-restaurant", isFeatured: false },
   { name: "O! Hamos!", location: "Papikinou", slug: "o-hamos-tavern", isFeatured: false },
   { name: "Avli-Milos", location: "Plaka", slug: "avli-milos", isFeatured: false },
   { name: "Mikros Apoplous - Seafood and more", location: "Adamas", slug: "mikros-apoplous", isFeatured: false },
-  { name: "τα γλαρονήσια", location: "Pollonia", slug: "glaronisia-milos", isFeatured: false },
+  { name: "τα γλαρονήσια", location: "Tripiti", slug: "glaronisia-milos", isFeatured: false },
   { name: "Barriello", location: "Triovassalos", slug: "barriello-milos", isFeatured: false },
   { name: "Gialos", location: "Pollonia", slug: "gialos-milos", isFeatured: false },
   { name: "Medusa Milos", location: "Mandrakia", slug: "medusa-milos", isFeatured: false },
@@ -37,7 +37,8 @@ const seedTaverns = [
   { name: "Alkis", location: "Pollonia", slug: "alkis-milos", isFeatured: false },
   { name: "Nama Milos", location: "Pollonia", slug: "nama-milos", isFeatured: false },
   { name: "Lyra Milos - The sound of taste", location: "Pollonia", slug: "lyra-milos", isFeatured: false },
-  { name: "Rifaki", location: "Pollonia", slug: "rifaki-milos", isFeatured: false }
+  { name: "Rifaki", location: "Pollonia", slug: "rifaki-milos", isFeatured: false },
+  { name: "ACS milos", location: "Adamas", slug: "acs-milos", isFeatured: false }
 ];
 
 const seedBeaches = [

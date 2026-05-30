@@ -2,175 +2,442 @@
 import Layout from '../../layouts/Layout.astro';
 import tavernsData from '../../data/taverns.json';
 
+const base = import.meta.env.BASE_URL;
+
+const areas = [...new Set(tavernsData.map(t => t.location.area).filter(Boolean))].sort();
+
 const sortedTaverns = [...tavernsData].sort((a, b) => {
   if (a.isFeatured && !b.isFeatured) return -1;
   if (!a.isFeatured && b.isFeatured) return 1;
-  return 0;
+  return b.rating - a.rating;
 });
 
-const base = import.meta.env.BASE_URL; // handles /milos-guide prefix automatically
+const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
 ---
 
-<Layout title="Φαγητό στη Μήλο" description="Τα καλύτερα εστιατόρια και ταβέρνες στη Μήλο.">
-  <h1>🍽️ Φαγητό στη Μήλο</h1>
+<Layout
+  title="Φαγητό στη Μήλο"
+  description={`Τα καλύτερα εστιατόρια και ταβέρνες στη Μήλο — ${tavernsData.length}+ επιλογές σε όλο το νησί.`}
+>
 
-  <div class="taverns-grid">
-    {sortedTaverns.map((tavern) => (
-      <a href={`${base}eat/${tavern.slug}`} class="tavern-card">
-
-        {tavern.photoRef ? (
-          <img
-            src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
-            alt={`Φωτογραφία του ${tavern.name}`}
-            class="tavern-image"
-            loading="lazy"
-          />
-        ) : (
-          <div class="tavern-image-placeholder" aria-hidden="true">◈</div>
-        )}
-
-        <div class="card-body">
-          {tavern.isFeatured && <span class="badge">Featured</span>}
-          <h3 class="card-name">{tavern.name}</h3>
-          <p class="card-location">◉ {tavern.location.area ?? tavern.location}</p>
-          {tavern.rating && (
-            <p class="card-rating">⭐ {tavern.rating}</p>
-          )}
-          <div class="card-footer">
-            <span class="card-cuisine">{tavern.cuisine?.[0]}</span>
-            <span class="card-price">{tavern.priceRange}</span>
-          </div>
-        </div>
-
-      </a>
-    ))}
+<!-- PAGE HEADER -->
+<section class="page-hero">
+  <div class="container">
+    <p class="page-label">Εξερεύνηση</p>
+    <h1 class="page-title">Φαγητό στη Μήλο</h1>
+    <p class="page-desc">
+      Ταβέρνες με αλιευμένη γεύση, ψητά σε ξυλόφουρνο, λευκό κρασί δίπλα στη θάλασσα.
+      {tavernsData.length}+ εστιατόρια — {featuredCount} επιλεγμένα.
+    </p>
   </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar" id="filters-bar">
+  <div class="container filters-inner">
+    <div class="filter-chips" id="filter-chips">
+      <button class="chip chip--active" data-area="all">Όλες οι περιοχές</button>
+      {areas.map(area => (
+        <button class="chip" data-area={area}>{area}</button>
+      ))}
+    </div>
+    <div class="filter-right">
+      <label class="toggle-label">
+        <input type="checkbox" id="featured-only" class="toggle-input"/>
+        <span class="toggle-track"></span>
+        <span class="toggle-text">Μόνο επιλεγμένα</span>
+      </label>
+      <span class="results-count" id="results-count">{tavernsData.length} εστιατόρια</span>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="taverns-grid" id="taverns-grid">
+      {sortedTaverns.map(tavern => (
+        <a
+          href={`${base}eat/${tavern.slug}`}
+          class={`tav-card${tavern.isFeatured ? ' tav-card--featured' : ''}`}
+          data-area={tavern.location.area}
+          data-featured={tavern.isFeatured ? 'true' : 'false'}
+        >
+          <div class="tav-img-wrap">
+            {tavern.photoRef ? (
+              <img
+                src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
+                alt={`Φωτογραφία ${tavern.name}`}
+                class="tav-img"
+                loading="lazy"
+              />
+            ) : (
+              <div class="tav-ph" aria-hidden="true">◈</div>
+            )}
+            {tavern.isFeatured && <span class="tav-featured-badge">Επιλεγμένο</span>}
+          </div>
+
+          <div class="tav-body">
+            <div class="tav-meta-top">
+              <span class="tav-area">{tavern.location.area}</span>
+              {tavern.priceRange && <span class="tav-price">{tavern.priceRange}</span>}
+            </div>
+            <h2 class="tav-name">{tavern.name}</h2>
+            <div class="tav-footer">
+              {tavern.rating > 0 && (
+                <span class="tav-rating">
+                  <span class="tav-rating-star">★</span>
+                  {tavern.rating}
+                </span>
+              )}
+              {tavern.cuisine?.[0] && (
+                <span class="tav-cuisine">{tavern.cuisine[0]}</span>
+              )}
+              {tavern.hours && (
+                <span class="tav-hours">{tavern.hours.split('–')[0].trim()}–{tavern.hours.split('–')[1]?.trim()}</span>
+              )}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p class="empty-icon">🍽</p>
+      <p class="empty-text">Δεν βρέθηκαν εστιατόρια με αυτά τα φίλτρα.</p>
+      <button class="btn-dark" id="reset-filters">Εμφάνιση όλων</button>
+    </div>
+  </div>
+</section>
+
 </Layout>
 
+
 <style>
-  a{
-    text-decoration: none;
-  }
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
 
-  h1 {
-    padding: 2rem var(--container-px, 1.5rem) 1rem;
-    font-family: var(--font-display, serif);
-    font-size: 2.25rem;
-  }
+/* ── FILTERS ── */
+.filters-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.filter-chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover {
+  background: var(--sand);
+  color: var(--ink);
+  border-color: var(--sand-dark);
+}
+.chip--active {
+  background: var(--deep-blue);
+  color: #fff;
+  border-color: var(--deep-blue);
+}
+.filter-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
+}
 
-  .taverns-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem var(--container-px, 1.5rem) 4rem;
-    margin-inline: auto;
-  }
+/* Toggle */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.toggle-input { display: none; }
+.toggle-track {
+  width: 36px;
+  height: 20px;
+  border-radius: 100px;
+  background: var(--sand-dark);
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.toggle-input:checked + .toggle-track { background: var(--aegean); }
+.toggle-input:checked + .toggle-track::after { transform: translateX(16px); }
+.toggle-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.results-count {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
 
-  /* ── Card — the whole thing is the link ── */
-  .tavern-card {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 10px;
-    border: 1px solid var(--color-border, #dedad3);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 200ms ease, box-shadow 200ms ease;
-  }
+/* ── GRID ── */
+.taverns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.25rem;
+}
 
-  .tavern-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-  }
+/* ── CARD ── */
+.tav-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.tav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.tav-card--featured {
+  border-color: rgba(26,92,138,0.25);
+}
 
-  /* ── Image ── */
-  .tavern-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-  }
+/* Image */
+.tav-img-wrap {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background: var(--sand);
+  flex-shrink: 0;
+}
+.tav-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.tav-card:hover .tav-img { transform: scale(1.05); }
+.tav-ph {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--sand-dark);
+  background: linear-gradient(140deg, var(--sand), var(--sand-dark));
+}
+.tav-featured-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: var(--aegean);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 100px;
+}
 
-  .tavern-image-placeholder {
-    width: 100%;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    color: var(--color-border, #dedad3);
-    background-color: var(--color-surface-alt, #eeece8);
-  }
+/* Body */
+.tav-body {
+  padding: 1.1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.3rem;
+}
+.tav-meta-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tav-area {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c0613a;
+}
+.tav-price {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #b08d57;
+}
+.tav-name {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+  line-height: 1.25;
+  margin: 0;
+}
+.tav-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.tav-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tav-rating-star { color: #d97706; }
+.tav-cuisine {
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.tav-hours {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-left: auto;
+}
 
-  /* ── Body ── */
-  .card-body {
-    padding: 1rem 1.25rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 0.25rem;
-  }
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 5rem 0;
+}
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
 
-  .badge {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background-color: var(--color-terracotta, #c0613a);
-    color: white;
-    padding: 2px 7px;
-    border-radius: 100px;
-    margin-bottom: 0.25rem;
-    width: fit-content;
-  }
-
-  .card-name {
-    font-family: var(--font-display, serif);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-text, #1a1916);
-    margin: 0;
-    line-height: 1.3;
-  }
-
-  .card-location {
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-terracotta, #c0613a);
-    margin: 0;
-  }
-
-  .card-rating {
-    font-size: 0.8rem;
-    color: var(--color-text-muted, #6b6760);
-    margin: 0;
-  }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--color-border, #dedad3);
-  }
-
-  .card-cuisine {
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: var(--color-text-light, #9e9b96);
-  }
-
-  .card-price {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-gold, #b08d57);
-    letter-spacing: 0.05em;
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 720px) {
+  .filters-inner { flex-direction: column; align-items: flex-start; }
+  .filter-right { width: 100%; justify-content: space-between; }
+  .taverns-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .tav-img-wrap { height: 160px; }
+}
+@media (max-width: 480px) {
+  .taverns-grid { grid-template-columns: 1fr; }
+}
 </style>
+
+
+<script>
+const grid    = document.getElementById('taverns-grid');
+const chips   = document.querySelectorAll<HTMLButtonElement>('.chip');
+const toggle  = document.getElementById('featured-only') as HTMLInputElement;
+const counter = document.getElementById('results-count');
+const empty   = document.getElementById('empty-state');
+const reset   = document.getElementById('reset-filters');
+
+let activeArea    = 'all';
+let featuredOnly  = false;
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.tav-card') ?? [];
+  let visible = 0;
+
+  cards.forEach(card => {
+    const area     = card.dataset.area ?? '';
+    const featured = card.dataset.featured === 'true';
+    const show = (activeArea === 'all' || area === activeArea) &&
+                 (!featuredOnly || featured);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  if (counter) counter.textContent = `${visible} εστιατόρια`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none'  : '';
+}
+
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeArea = chip.dataset.area ?? 'all';
+    applyFilters();
+  });
+});
+
+toggle?.addEventListener('change', () => {
+  featuredOnly = toggle.checked;
+  applyFilters();
+});
+
+reset?.addEventListener('click', () => {
+  activeArea   = 'all';
+  featuredOnly = false;
+  toggle && (toggle.checked = false);
+  chips.forEach(c => c.classList.remove('chip--active'));
+  chips[0]?.classList.add('chip--active');
+  applyFilters();
+});
+</script>

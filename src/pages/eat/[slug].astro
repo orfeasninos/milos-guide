@@ -5,406 +5,531 @@ import tavernsData from '../../data/taverns.json';
 export function getStaticPaths() {
   return tavernsData.map((tavern) => ({
     params: { slug: tavern.slug },
-    props: { tavern },
+    props:  { tavern },
   }));
 }
 
 const { tavern } = Astro.props;
 const base = import.meta.env.BASE_URL;
+
+// Today's day in Greek for highlighting
+const dayMap: Record<number, string> = {
+  0: 'Κυριακή', 1: 'Δευτέρα', 2: 'Τρίτη', 3: 'Τετάρτη',
+  4: 'Πέμπτη', 5: 'Παρασκευή', 6: 'Σάββατο',
+};
+const todayName = dayMap[new Date().getDay()];
+
+const showHours = tavern.openingHours?.length &&
+  tavern.openingHours[0] !== 'Δεν ανακοινώθηκε ωράριο';
+
+// Related taverns: same area, not this one, up to 3
+const related = tavernsData
+  .filter(t => t.slug !== tavern.slug && t.location.area === tavern.location.area)
+  .sort((a, b) => b.rating - a.rating)
+  .slice(0, 3);
 ---
 
-<Layout title={`${tavern.name} | Φαγητό στη Μήλο`} description={tavern.description}>
+<Layout
+  title={`${tavern.name} — Εστιατόριο στη Μήλο`}
+  description={`${tavern.name} στη${tavern.location.area ? ' ' + tavern.location.area : ''} Μήλο. ${tavern.cuisine?.[0] ?? 'Ελληνική κουζίνα'} · Αξιολόγηση ${tavern.rating}/5.`}
+>
 
-  <div class="hero">
-    {tavern.photoRef ? (
-      <img
-        src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=1200`}
-        alt={`Φωτογραφία του ${tavern.name}`}
-        class="hero-image"
-      />
-    ) : (
-      <div class="hero-placeholder" aria-hidden="true">◈</div>
-    )}
-    <div class="hero-overlay">
+<!-- HERO -->
+<div class="t-hero">
+  {tavern.photoRef ? (
+    <img
+      src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=1400`}
+      alt={`${tavern.name}`}
+      class="t-hero-img"
+      fetchpriority="high"
+    />
+  ) : (
+    <div class="t-hero-ph" aria-hidden="true"></div>
+  )}
+  <div class="t-hero-overlay">
+    <div class="container t-hero-inner">
       <a href={`${base}eat`} class="back-link">← Όλα τα εστιατόρια</a>
-      <div class="hero-meta">
-        {tavern.isFeatured && <span class="badge">Featured</span>}
-        <h1>{tavern.name}</h1>
-        <p class="hero-location">◉ {tavern.location.area}</p>
+      <div class="t-hero-meta">
+        {tavern.isFeatured && <span class="featured-badge">Επιλεγμένο</span>}
+        <h1 class="t-hero-name">{tavern.name}</h1>
+        <p class="t-hero-area">
+          <span class="area-dot">◉</span>
+          {tavern.location.area}
+          {tavern.cuisine?.[0] && <span class="area-sep">·</span>}
+          {tavern.cuisine?.[0]}
+        </p>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="content">
 
-    <div class="main">
-      <p class="description">{tavern.description}</p>
+<!-- CONTENT -->
+<div class="container t-layout">
 
-      <div class="chips">
-        {tavern.cuisine.map((c) => (
-          <span class="chip">{c}</span>
-        ))}
-        <span class="chip chip--price">{tavern.priceRange}</span>
-        {tavern.rating > 0 && (
-          <span class="chip">⭐ {tavern.rating} / 5</span>
-        )}
-      </div>
+  <!-- MAIN -->
+  <main class="t-main">
 
-      {tavern.openingHours && tavern.openingHours[0] !== "Δεν ανακοινώθηκε ωράριο" && (
-        <div class="hours-block">
-          <h2>Ωράριο</h2>
-          <ul class="hours-list">
-            {tavern.openingHours.map((line) => {
-              const [day, time] = line.split(": ");
-              return (
-                <li>
-                  <span class="day">{day}</span>
-                  <span class="time">{time}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-    </div>
-
-    <aside class="sidebar">
-
+    <!-- Quick info bar -->
+    <div class="quick-bar">
       {tavern.rating > 0 && (
-        <div class="info-block">
-          <h2>Αξιολόγηση</h2>
-          <p class="rating-big">⭐ {tavern.rating}<span>/5</span></p>
+        <div class="qb-item">
+          <span class="qb-icon">★</span>
+          <span class="qb-val">{tavern.rating}</span>
+          <span class="qb-label">/ 5</span>
         </div>
       )}
+      {tavern.priceRange && (
+        <div class="qb-item">
+          <span class="qb-val">{tavern.priceRange}</span>
+          <span class="qb-label">τιμές</span>
+        </div>
+      )}
+      {tavern.hours && (
+        <div class="qb-item">
+          <span class="qb-icon">🕐</span>
+          <span class="qb-val qb-hours">{tavern.hours}</span>
+        </div>
+      )}
+      {tavern.location.area && (
+        <div class="qb-item">
+          <span class="qb-icon">📍</span>
+          <span class="qb-val">{tavern.location.area}</span>
+        </div>
+      )}
+    </div>
 
-      <div class="info-block">
-        <h2>Πληροφορίες</h2>
-        <ul class="info-list">
-          <li>
-            <span class="info-label">Περιοχή</span>
-            <span>{tavern.location.area}</span>
-          </li>
-          <li>
-            <span class="info-label">Τιμές</span>
-            <span>{tavern.priceRange}</span>
-          </li>
-          {tavern.hours && (
-            <li>
-              <span class="info-label">Σήμερα</span>
-              <span>{tavern.hours}</span>
-            </li>
-          )}
-          {tavern.phone && (
-            <li>
-              <span class="info-label">Τηλέφωνο</span>
-              <a href={`tel:${tavern.phone}`} class="info-link">{tavern.phone}</a>
-            </li>
-          )}
-        </ul>
+    <!-- Description -->
+    <p class="t-desc">{tavern.description}</p>
+
+    <!-- Tags -->
+    <div class="t-tags">
+      {tavern.cuisine?.map(c => (
+        <span class="tag">{c}</span>
+      ))}
+      {tavern.servesCuisine && tavern.servesCuisine !== tavern.cuisine?.[0] && (
+        <span class="tag">{tavern.servesCuisine}</span>
+      )}
+    </div>
+
+    <!-- Opening Hours -->
+    {showHours && (
+      <div class="hours-block">
+        <h2 class="block-title">Ωράριο λειτουργίας</h2>
+        <div class="hours-grid">
+          {tavern.openingHours!.map(line => {
+            const [day, time] = line.split(': ');
+            const isToday = day === todayName;
+            return (
+              <div class={`hours-row${isToday ? ' hours-row--today' : ''}`}>
+                <span class="hours-day">{day}</span>
+                <span class="hours-time">{time ?? '—'}</span>
+                {isToday && <span class="hours-today-tag">Σήμερα</span>}
+              </div>
+            );
+          })}
+        </div>
       </div>
+    )}
 
-      <div class="cta-group">
-        {tavern.googleMapsUri && (
-          <a href={tavern.googleMapsUri} target="_blank" rel="noopener noreferrer" class="btn btn--primary">
-            Άνοιγμα στο Google Maps ↗
-          </a>
-        )}
-        {tavern.website && (
-          <a href={tavern.website} target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
-            Επίσκεψη ιστοσελίδας ↗
-          </a>
-        )}
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="t-sidebar">
+
+    <!-- Rating -->
+    {tavern.rating > 0 && (
+      <div class="s-card">
+        <p class="s-card-label">Αξιολόγηση</p>
+        <div class="s-rating">
+          <span class="s-rating-num">{tavern.rating}</span>
+          <div class="s-rating-right">
+            <span class="s-rating-stars">{'★'.repeat(Math.round(tavern.rating))}{'☆'.repeat(5 - Math.round(tavern.rating))}</span>
+            <span class="s-rating-sub">από 5</span>
+          </div>
+        </div>
       </div>
+    )}
 
-    </aside>
+    <!-- Info -->
+    <div class="s-card">
+      <p class="s-card-label">Πληροφορίες</p>
+      <ul class="s-info-list">
+        {tavern.location.area && (
+          <li class="s-info-row">
+            <span class="s-info-key">Περιοχή</span>
+            <span class="s-info-val">{tavern.location.area}</span>
+          </li>
+        )}
+        {tavern.priceRange && (
+          <li class="s-info-row">
+            <span class="s-info-key">Τιμές</span>
+            <span class="s-info-val s-info-price">{tavern.priceRange}</span>
+          </li>
+        )}
+        {tavern.hours && (
+          <li class="s-info-row">
+            <span class="s-info-key">Σήμερα</span>
+            <span class="s-info-val">{tavern.hours}</span>
+          </li>
+        )}
+        {tavern.phone && (
+          <li class="s-info-row">
+            <span class="s-info-key">Τηλέφωνο</span>
+            <a href={`tel:${tavern.phone}`} class="s-info-link">{tavern.phone}</a>
+          </li>
+        )}
+        {tavern.location.address && (
+          <li class="s-info-row">
+            <span class="s-info-key">Διεύθυνση</span>
+            <span class="s-info-val s-info-addr">{tavern.location.address}</span>
+          </li>
+        )}
+      </ul>
+    </div>
 
-  </div>
+    <!-- CTAs -->
+    <div class="s-ctas">
+      {tavern.googleMapsUri && (
+        <a href={tavern.googleMapsUri} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--maps">
+          <span>📍</span> Google Maps ↗
+        </a>
+      )}
+      {tavern.website && (
+        <a href={tavern.website} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--web">
+          <span>🌐</span> Ιστοσελίδα ↗
+        </a>
+      )}
+    </div>
+
+  </aside>
+
+</div>
+
+
+<!-- RELATED -->
+{related.length > 0 && (
+  <section class="sec sec-sand related-sec">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Ίδια περιοχή</span>
+          <h2 class="sec-title">Άλλα εστιατόρια στα {tavern.location.area}</h2>
+        </div>
+        <a href={`${base}eat`} class="see-all">Όλα τα εστιατόρια →</a>
+      </div>
+      <div class="related-grid">
+        {related.map(r => (
+          <a href={`${base}eat/${r.slug}`} class="rel-card">
+            <div class="rel-img-wrap">
+              {r.photoRef ? (
+                <img
+                  src={`https://places.googleapis.com/v1/${r.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=400`}
+                  alt={r.name}
+                  class="rel-img"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="rel-ph" aria-hidden="true">◈</div>
+              )}
+            </div>
+            <div class="rel-body">
+              <p class="rel-area">{r.location.area}</p>
+              <h3 class="rel-name">{r.name}</h3>
+              {r.rating > 0 && <p class="rel-rating">★ {r.rating}</p>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
 
 </Layout>
 
+
 <style>
-  /* ── Hero ── */
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 420px;
-  }
+/* ── HERO ── */
+.t-hero {
+  position: relative;
+  height: 480px;
+  background: var(--deep-blue);
+  overflow: hidden;
+}
+.t-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.t-hero-ph {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(140deg, #0d2b4e, #1a5c8a);
+}
+.t-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.15) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.t-hero-inner {
+  padding-bottom: 2.5rem;
+}
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  padding: .35rem .85rem;
+  border-radius: 100px;
+  transition: background .15s;
+}
+.back-link:hover { background: rgba(0,0,0,.55); }
+.featured-badge {
+  display: inline-block;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: var(--aegean);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: .5rem;
+}
+.t-hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #fff;
+  line-height: 1.05;
+  margin: 0 0 .4rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+.t-hero-area {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.75);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.area-dot { color: var(--sky); }
+.area-sep { opacity: .5; }
 
-  .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+/* ── LAYOUT ── */
+.t-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+  align-items: start;
+}
 
-  .hero-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    background-color: var(--color-surface-alt, #eeece8);
-    color: var(--color-border, #dedad3);
-  }
+/* ── QUICK BAR ── */
+.quick-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.qb-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .9rem 1.25rem;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.qb-item:last-child { border-right: none; }
+.qb-icon { font-size: .9rem; }
+.qb-val { font-size: .95rem; font-weight: 600; color: var(--ink); }
+.qb-label { font-size: .72rem; color: var(--muted); }
+.qb-hours { font-size: .82rem; }
 
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 2rem var(--container-px, 1.5rem);
-    color: white;
-  }
+/* ── MAIN ── */
+.t-desc {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.t-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: 2.5rem;
+}
+.tag {
+  font-size: .72rem;
+  font-weight: 500;
+  padding: .3rem .85rem;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--ink);
+  border: 1px solid var(--sand-dark);
+}
 
-  .back-link {
-    position: absolute;
-    top: 1.25rem;
-    left: var(--container-px, 1.5rem);
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: white;
-    text-decoration: none;
-    background: rgba(0,0,0,0.35);
-    padding: 0.3rem 0.75rem;
-    border-radius: 100px;
-    backdrop-filter: blur(4px);
-    transition: background 200ms;
-  }
+/* Hours */
+.hours-block { margin-bottom: 2rem; }
+.block-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+.hours-grid {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.hours-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: .875rem;
+}
+.hours-row:last-child { border-bottom: none; }
+.hours-row:nth-child(even) { background: var(--sand); }
+.hours-row--today { background: rgba(26,92,138,.06) !important; }
+.hours-day { font-weight: 500; width: 100px; flex-shrink: 0; }
+.hours-time { color: var(--muted); flex: 1; }
+.hours-today-tag {
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: var(--aegean);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
 
-  .back-link:hover {
-    background: rgba(0,0,0,0.55);
-  }
+/* ── SIDEBAR ── */
+.t-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+.s-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.s-card-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+.s-rating {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+}
+.s-rating-num {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  color: var(--ink);
+  line-height: 1;
+}
+.s-rating-right { display: flex; flex-direction: column; gap: .15rem; }
+.s-rating-stars { font-size: .9rem; color: #d97706; letter-spacing: .1em; }
+.s-rating-sub { font-size: .72rem; color: var(--muted); }
 
-  .badge {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    background: var(--color-terracotta, #c0613a);
-    color: white;
-    padding: 2px 8px;
-    border-radius: 100px;
-    margin-bottom: 0.4rem;
-    width: fit-content;
-  }
+.s-info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+.s-info-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: .875rem; gap: .5rem; }
+.s-info-key { font-weight: 600; color: var(--muted); flex-shrink: 0; }
+.s-info-val { color: var(--ink); text-align: right; }
+.s-info-price { font-weight: 700; color: #b08d57; }
+.s-info-addr { font-size: .78rem; color: var(--muted); text-align: right; line-height: 1.4; }
+.s-info-link { color: var(--aegean); font-weight: 500; }
+.s-info-link:hover { text-decoration: underline; }
 
-  .hero-overlay h1 {
-    font-family: var(--font-display, serif);
-    font-size: 2.5rem;
-    margin: 0 0 0.25rem;
-    line-height: 1.1;
-  }
+.s-ctas { display: flex; flex-direction: column; gap: .6rem; }
+.s-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  font-weight: 600;
+  text-align: center;
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.s-btn:hover { transform: translateY(-1px); opacity: .9; }
+.s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+.s-btn--web  { background: var(--white); color: var(--ink); border: 1px solid var(--border); }
 
-  .hero-location {
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    opacity: 0.85;
-    margin: 0;
-  }
+/* ── RELATED ── */
+.related-sec { margin-top: 0; }
+.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.rel-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.rel-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.rel-img-wrap { height: 140px; overflow: hidden; background: var(--sand); flex-shrink: 0; }
+.rel-img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+.rel-card:hover .rel-img { transform: scale(1.05); }
+.rel-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--sand-dark); background: linear-gradient(140deg, var(--sand), var(--sand-dark)); }
+.rel-body { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
+.rel-area { font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #c0613a; }
+.rel-name { font-family: var(--font-serif); font-size: 1rem; color: var(--ink); line-height: 1.25; }
+.rel-rating { font-size: .78rem; color: #d97706; font-weight: 600; margin-top: .15rem; }
 
-  /* ── Layout ── */
-  .content {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2.5rem;
-    padding: 2.5rem var(--container-px, 1.5rem) 4rem;
-    max-width: 1100px;
-    margin-inline: auto;
-  }
-
-  @media (max-width: 768px) {
-    .content {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ── Main ── */
-  .description {
-    font-size: 1.05rem;
-    line-height: 1.75;
-    color: var(--color-text, #1a1916);
-    margin: 0 0 1.75rem;
-  }
-
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .chip {
-    font-size: 0.75rem;
-    font-weight: 500;
-    padding: 0.3rem 0.8rem;
-    border-radius: 100px;
-    background: var(--color-surface-alt, #eeece8);
-    color: var(--color-text, #1a1916);
-    border: 1px solid var(--color-border, #dedad3);
-  }
-
-  .chip--price {
-    background: var(--color-gold, #b08d57);
-    color: white;
-    border-color: transparent;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
-  .hours-block h2 {
-    font-family: var(--font-display, serif);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-muted, #6b6760);
-    margin: 0 0 0.75rem;
-  }
-
-  .hours-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border: 1px solid var(--color-border, #dedad3);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .hours-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 0.85rem;
-    font-size: 0.875rem;
-    color: var(--color-text, #1a1916);
-    border-bottom: 1px solid var(--color-border, #dedad3);
-  }
-
-  .hours-list li:last-child {
-    border-bottom: none;
-  }
-
-  .hours-list li:nth-child(odd) {
-    background: var(--color-surface-alt, #eeece8);
-  }
-
-  .day {
-    font-weight: 500;
-  }
-
-  .time {
-    color: var(--color-text-muted, #6b6760);
-  }
-
-  /* ── Sidebar ── */
-  .sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .info-block {
-    padding: 1.25rem;
-    background: white;
-    border-radius: 10px;
-    border: 1px solid var(--color-border, #dedad3);
-  }
-
-  .info-block h2 {
-    font-family: var(--font-display, serif);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-muted, #6b6760);
-    margin: 0 0 0.75rem;
-  }
-
-  .rating-big {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--color-text, #1a1916);
-    margin: 0;
-  }
-
-  .rating-big span {
-    font-size: 0.9rem;
-    color: var(--color-text-muted, #6b6760);
-    font-weight: 400;
-  }
-
-  .info-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .info-list li {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.875rem;
-    color: var(--color-text, #1a1916);
-    gap: 0.5rem;
-  }
-
-  .info-label {
-    font-weight: 600;
-    color: var(--color-text-muted, #6b6760);
-    flex-shrink: 0;
-  }
-
-  .info-link {
-    color: var(--color-gold, #b08d57);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .info-link:hover {
-    text-decoration: underline;
-  }
-
-  .cta-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .btn {
-    display: block;
-    text-align: center;
-    padding: 0.85rem 1rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity 200ms;
-  }
-
-  .btn:hover {
-    opacity: 0.85;
-  }
-
-  .btn--primary {
-    background: var(--color-gold, #b08d57);
-    color: white;
-  }
-
-  .btn--secondary {
-    background: white;
-    color: var(--color-text, #1a1916);
-    border: 1px solid var(--color-border, #dedad3);
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .related-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .t-hero { height: 340px; }
+  .t-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .t-sidebar { position: static; }
+  .quick-bar { flex-wrap: wrap; }
+  .qb-item { border-bottom: 1px solid var(--border); width: 50%; }
+  .qb-item:nth-child(2n) { border-right: none; }
+  .related-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .t-hero { height: 260px; }
+  .t-hero-name { font-size: 1.75rem; }
+}
 </style>

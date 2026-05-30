@@ -1,171 +1,352 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import beachesData from "../../data/beaches.json";
+import Layout from '../../layouts/Layout.astro';
+import beachesData from '../../data/beaches.json';
 
 const base = import.meta.env.BASE_URL;
 
-const accessIcon = {
-  road: "🚗",
-  hike: "🥾",
-  boat: "⛵",
+const accessLabels: Record<string, { icon: string; label: string }> = {
+  road: { icon: '🚗', label: 'Οδικώς' },
+  hike: { icon: '🥾', label: 'Πεζοπορία' },
+  boat: { icon: '⛵', label: 'Βάρκα' },
 };
+
+const allFacilities = [...new Set(
+  beachesData.flatMap(b => b.facilities)
+)].filter(Boolean).sort();
+
+const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
 ---
 
-<Layout title="Παραλίες στη Μήλο" description="Οι καλύτερες παραλίες στη Μήλο.">
-  <h1>Παραλίες στη Μήλο</h1>
+<Layout
+  title="Παραλίες στη Μήλο"
+  description={`Οι καλύτερες παραλίες στη Μήλο — ${beachesData.length}+ επιλογές. Σαρακήνικο, Κλέφτικο, Τσιγκράδο και πολλές ακόμα.`}
+>
 
-  <div class="beaches-grid">
-    {
-      beachesData.map((beach) => (
-        <a href={`${base}beaches/${beach.slug}`} class="beach-card">
-          {beach.photoRef ? (
-            <img
-              src={`https://places.googleapis.com/v1/${beach.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
-              alt={`Φωτογραφία της παραλίας ${beach.name}`}
-              class="beach-image"
-              loading="lazy"
-            />
-          ) : (
-            <div class="beach-image-placeholder" aria-hidden="true">
-              ◈
-            </div>
-          )}
-
-          <div class="card-body">
-            <h3 class="card-name">{beach.name}</h3>
-            <p class="card-location">
-              ◉ {beach.location.area ?? beach.location}
-            </p>
-            {beach.rating > 0 && <p class="card-rating">⭐ {beach.rating}</p>}
-            <div class="card-footer">
-              <span class="card-access">
-                {accessIcon[beach.accessType as keyof typeof accessIcon] ??
-                  "📍"}{" "}
-                {beach.accessType}
-              </span>
-              {beach.facilities.length > 0 && (
-                <span class="card-facilities">
-                  {beach.facilities.join(" · ")}
-                </span>
-              )}
-            </div>
-          </div>
-        </a>
-      ))
-    }
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <p class="page-label">Εξερεύνηση</p>
+    <h1 class="page-title">Παραλίες στη Μήλο</h1>
+    <p class="page-desc">
+      Ηφαιστειακοί βράχοι, κρυστάλλινα νερά, κρυφά σπήλαια.
+      {beachesData.length}+ παραλίες — κάθε μία με τον δικό της χαρακτήρα.
+    </p>
   </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="container filters-inner">
+    <div class="filter-group">
+      <span class="filter-group-label">Πρόσβαση</span>
+      <div class="filter-chips" id="access-chips">
+        <button class="chip chip--active" data-access="all">Όλες</button>
+        <button class="chip" data-access="road">🚗 Οδικώς</button>
+        <button class="chip" data-access="hike">🥾 Πεζοπορία</button>
+        <button class="chip" data-access="boat">⛵ Βάρκα</button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Παροχές</span>
+      <div class="filter-chips" id="facility-chips">
+        <button class="chip chip--active" data-facility="all">Όλες</button>
+        {allFacilities.map(f => (
+          <button class="chip" data-facility={f}>{f}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-right">
+      <span class="results-count" id="results-count">{beachesData.length} παραλίες</span>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="beaches-grid" id="beaches-grid">
+      {sortedBeaches.map(beach => {
+        const access = accessLabels[beach.accessType] ?? { icon: '📍', label: beach.accessType };
+        return (
+          <a
+            href={`${base}beaches/${beach.slug}`}
+            class="bc"
+            data-access={beach.accessType}
+            data-facilities={JSON.stringify(beach.facilities)}
+          >
+            <div class="bc-img-wrap">
+              {beach.photoRef ? (
+                <img
+                  src={`https://places.googleapis.com/v1/${beach.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
+                  alt={beach.name}
+                  class="bc-img"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="bc-ph" aria-hidden="true"></div>
+              )}
+              <div class="bc-overlay">
+                <div class="bc-chips">
+                  <span class="bc-access-chip">{access.icon} {access.label}</span>
+                  {beach.rating > 0 && (
+                    <span class="bc-rating-chip">★ {beach.rating}</span>
+                  )}
+                </div>
+                <h2 class="bc-name">{beach.name}</h2>
+                {beach.facilities.length > 0 && (
+                  <p class="bc-facilities">{beach.facilities.join(' · ')}</p>
+                )}
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p class="empty-icon">🏖</p>
+      <p class="empty-text">Δεν βρέθηκαν παραλίες με αυτά τα φίλτρα.</p>
+      <button class="btn-dark" id="reset-filters">Εμφάνιση όλων</button>
+    </div>
+  </div>
+</section>
+
 </Layout>
 
+
 <style>
-  a {
-    text-decoration: none;
-  }
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
 
-  h1 {
-    padding: 2rem var(--container-px, 1.5rem) 1rem;
-    font-family: var(--font-display, serif);
-    font-size: 2.25rem;
-  }
+/* ── FILTERS ── */
+.filters-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.filter-group-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.filter-chips {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+.chip {
+  padding: 0.32rem 0.8rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
+.chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+.filter-right { margin-left: auto; flex-shrink: 0; }
+.results-count { font-size: 0.78rem; color: var(--muted); }
 
-  .beaches-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem var(--container-px, 1.5rem) 4rem;
-    margin-inline: auto;
-  }
+/* ── GRID ── */
+.beaches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
 
-  .beach-card {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 10px;
-    border: 1px solid var(--color-border, #dedad3);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    transition:
-      transform 200ms ease,
-      box-shadow 200ms ease;
-  }
+/* ── CARD ── */
+.bc {
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/3;
+  background: var(--sand-dark);
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+}
+.bc:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-  .beach-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
+.bc-img-wrap { position: absolute; inset: 0; }
+.bc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.bc:hover .bc-img { transform: scale(1.05); }
+.bc-ph {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(140deg, #1a5c8a, #3a9bc9);
+}
 
-  .beach-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-  }
+/* Overlay */
+.bc-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.08) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem 1.4rem;
+  color: #fff;
+}
+.bc-chips {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.bc-access-chip,
+.bc-rating-chip {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(6px);
+}
+.bc-name {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  line-height: 1.15;
+  margin: 0 0 0.2rem;
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
+}
+.bc-facilities {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,.65);
+  margin: 0;
+}
 
-  .beach-image-placeholder {
-    width: 100%;
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    color: var(--color-border, #dedad3);
-    background-color: var(--color-surface-alt, #eeece8);
-  }
+/* ── EMPTY ── */
+.empty-state { text-align: center; padding: 5rem 0; }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
 
-  .card-body {
-    padding: 1rem 1.25rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 0.25rem;
-  }
-
-  .card-name {
-    font-family: var(--font-display, serif);
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-text, #1a1916);
-    margin: 0;
-    line-height: 1.3;
-  }
-
-  .card-location {
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-terracotta, #c0613a);
-    margin: 0;
-  }
-
-  .card-rating {
-    font-size: 0.8rem;
-    color: var(--color-text-muted, #6b6760);
-    margin: 0;
-  }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--color-border, #dedad3);
-    gap: 0.5rem;
-  }
-
-  .card-access {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-muted, #6b6760);
-  }
-
-  .card-facilities {
-    font-size: 0.7rem;
-    color: var(--color-text-light, #9e9b96);
-    text-align: right;
-  }
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .filters-inner { gap: 0.75rem; }
+  .filter-group { gap: 0.4rem; }
+  .beaches-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .bc-name { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+  .beaches-grid { grid-template-columns: 1fr; }
+}
 </style>
+
+
+<script>
+const grid    = document.getElementById('beaches-grid');
+const empty   = document.getElementById('empty-state');
+const counter = document.getElementById('results-count');
+const reset   = document.getElementById('reset-filters');
+
+let activeAccess   = 'all';
+let activeFacility = 'all';
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.bc') ?? [];
+  let visible = 0;
+
+  cards.forEach(card => {
+    const access     = card.dataset.access ?? '';
+    const facilities = JSON.parse(card.dataset.facilities ?? '[]') as string[];
+    const show =
+      (activeAccess === 'all'   || access === activeAccess) &&
+      (activeFacility === 'all' || facilities.includes(activeFacility));
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  if (counter) counter.textContent = `${visible} παραλίες`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none'  : '';
+}
+
+document.querySelectorAll<HTMLButtonElement>('#access-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#access-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeAccess = chip.dataset.access ?? 'all';
+    applyFilters();
+  });
+});
+
+document.querySelectorAll<HTMLButtonElement>('#facility-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeFacility = chip.dataset.facility ?? 'all';
+    applyFilters();
+  });
+});
+
+reset?.addEventListener('click', () => {
+  activeAccess   = 'all';
+  activeFacility = 'all';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#access-chips .chip')?.classList.add('chip--active');
+  document.querySelector('#facility-chips .chip')?.classList.add('chip--active');
+  applyFilters();
+});
+</script>
