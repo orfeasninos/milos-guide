@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const isEl = Astro.url.pathname.startsWith('/el');
+---
+
+<Layout
+  lang={isEl ? 'el' : 'en'}
+  title={isEl ? 'Σελίδα δεν βρέθηκε' : 'Page not found'}
+  description={isEl ? 'Η σελίδα που ζητάτε δεν υπάρχει.' : 'The page you are looking for does not exist.'}
+>
+
+<section class="not-found">
+  <div class="container nf-inner">
+
+    <div class="nf-num" aria-hidden="true">404</div>
+
+    <div class="nf-content">
+      <p class="nf-label">{isEl ? 'Σελίδα δεν βρέθηκε' : 'Page not found'}</p>
+      <h1 class="nf-title">{isEl ? 'Χαθήκατε στο Αιγαίο;' : 'Lost at sea?'}</h1>
+      <p class="nf-desc">
+        {isEl
+          ? 'Η σελίδα που ψάχνετε δεν υπάρχει — ίσως μετακινήθηκε ή η διεύθυνση γράφτηκε λάθος. Επιστρέψτε στην αρχική για να συνεχίσετε.'
+          : 'The page you are looking for does not exist — it may have moved, or the URL may be incorrect. Head back to the homepage to continue.'}
+      </p>
+      <div class="nf-ctas">
+        <a href={isEl ? '/el' : '/'} class="btn-dark">← {isEl ? 'Αρχική' : 'Homepage'}</a>
+        <a href={isEl ? '/el/beaches'  : '/beaches'}  class="nf-link">{isEl ? 'Παραλίες' : 'Beaches'} →</a>
+        <a href={isEl ? '/el/eat'      : '/eat'}      class="nf-link">{isEl ? 'Φαγητό' : 'Food'} →</a>
+        <a href={isEl ? '/el/villages' : '/villages'} class="nf-link">{isEl ? 'Χωριά' : 'Villages'} →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.not-found {
+  min-height: calc(100vh - var(--header-h) - 5rem);
+  display: flex;
+  align-items: center;
+  background: var(--sand);
+  padding: 4rem 0;
+  overflow: hidden;
+  position: relative;
+}
+.nf-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.nf-num {
+  font-family: var(--font-serif);
+  font-size: clamp(8rem, 20vw, 18rem);
+  color: var(--deep-blue);
+  line-height: 1;
+  letter-spacing: -.04em;
+  opacity: 0.07;
+  user-select: none;
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.nf-content { grid-column: 2; }
+.nf-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.5rem;
+}
+.nf-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--deep-blue);
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+.nf-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 420px;
+  margin-bottom: 2.5rem;
+}
+.nf-ctas {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.nf-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--aegean);
+  border-bottom: 1.5px solid var(--sea);
+  padding-bottom: 2px;
+  transition: color 0.15s;
+}
+.nf-link:hover { color: var(--sea); }
+.not-found::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to top, var(--white), transparent);
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .nf-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .nf-content { grid-column: 1; }
+  .nf-num { font-size: 40vw; opacity: 0.05; left: 50%; transform: translate(-50%, -50%); }
+  .nf-ctas { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+</style>
