@@ -13,6 +13,9 @@ const featuredTaverns = [...tavernsData]
   .filter(t => t.isFeatured)
   .sort((a, b) => b.rating - a.rating)
   .slice(0, 3);
+
+const getName    = (t: Tavern) => typeof t.name === 'object' ? (t.name as any).el : t.name as string;
+const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArray(t.cuisine) ? (t.cuisine as any).el : (t.cuisine as any)?.[0] ?? '';
 ---
 
 <Layout
@@ -23,8 +26,10 @@ const featuredTaverns = [...tavernsData]
 
 <!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-bg"><div class="hero-radial"></div></div>
-  <div class="hero-ghost" aria-hidden="true">MILOS</div>
+  <div class="hero-bg">
+    <img src="/images/hero-beach.jpg" alt="Milos beach" class="hero-photo" fetchpriority="high" />
+    <div class="hero-photo-overlay"></div>
+  </div>
 
   <div class="hero-content container">
     <div class="hero-eyebrow">
@@ -374,9 +379,14 @@ const featuredTaverns = [...tavernsData]
 
 <style>
 .hero { position:relative; min-height:90vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
-.hero-bg { position:absolute; inset:0; z-index:0; background:linear-gradient(150deg,#0a2040 0%,#0d2b4e 25%,#1a5c8a 65%,#2a7faa 100%); }
-.hero-radial { position:absolute; inset:0; background:radial-gradient(ellipse 75% 55% at 72% 28%,rgba(58,155,201,.22) 0%,transparent 58%),radial-gradient(ellipse 45% 35% at 12% 72%,rgba(26,92,138,.35) 0%,transparent 48%); }
-.hero-ghost { position:absolute; inset:0; z-index:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-serif); font-size:clamp(6rem,22vw,20rem); color:rgba(255,255,255,.035); letter-spacing:.06em; pointer-events:none; user-select:none; white-space:nowrap; }
+.hero-bg { position:absolute; inset:0; z-index:0; background:#0a2040; }
+.hero-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 55%; display:block; }
+.hero-photo-overlay {
+  position:absolute; inset:0;
+  background:
+    linear-gradient(to right, rgba(5,18,38,.88) 0%, rgba(5,18,38,.75) 35%, rgba(5,18,38,.35) 65%, rgba(5,18,38,.15) 100%),
+    linear-gradient(to top, rgba(5,18,38,.65) 0%, transparent 40%);
+}
 .hero-content { position:relative; z-index:2; padding:4rem 0 2rem; }
 .hero-eyebrow { display:flex; align-items:center; gap:.6rem; font-size:.72rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.48); margin-bottom:1.25rem; animation:fadeUp .7s ease both; }
 .eyedot { width:6px; height:6px; border-radius:50%; background:var(--sea); animation:blink 2.5s infinite; }
