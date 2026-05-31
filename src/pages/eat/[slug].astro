@@ -36,9 +36,9 @@ const related = tavernsData
 
 <!-- HERO -->
 <div class="t-hero">
-  {tavern.photoRef ? (
+  {tavern.localPhoto ? (
     <img
-      src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=1400`}
+      src={tavern.localPhoto ?? `/images/taverns/${tavern.slug}.jpg`}
       alt={`${tavern.name}`}
       class="t-hero-img"
       fetchpriority="high"
@@ -214,7 +214,7 @@ const related = tavernsData
       <div class="sec-hdr-row">
         <div>
           <span class="label">Ίδια περιοχή</span>
-          <h2 class="sec-title">Άλλα εστιατόρια στα {tavern.location.area}</h2>
+          <h2 class="sec-title">Άλλα εστιατόρια στη {tavern.location.area}</h2>
         </div>
         <a href={`${base}eat`} class="see-all">Όλα τα εστιατόρια →</a>
       </div>
@@ -222,9 +222,9 @@ const related = tavernsData
         {related.map(r => (
           <a href={`${base}eat/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
-              {r.photoRef ? (
+              {r.localPhoto ? (
                 <img
-                  src={`https://places.googleapis.com/v1/${r.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=400`}
+                  src={r.localPhoto ?? `/images/taverns/${r.slug}.jpg`}
                   alt={r.name}
                   class="rel-img"
                   loading="lazy"

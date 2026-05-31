@@ -77,9 +77,9 @@ const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
             data-facilities={JSON.stringify(beach.facilities)}
           >
             <div class="bc-img-wrap">
-              {beach.photoRef ? (
+              {beach.localPhoto ? (
                 <img
-                  src={`https://places.googleapis.com/v1/${beach.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
+                  src={beach.localPhoto ?? `/images/beaches/${beach.slug}.jpg`}
                   alt={beach.name}
                   class="bc-img"
                   loading="lazy"

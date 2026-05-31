@@ -39,9 +39,9 @@ const related = beachesData
 
 <!-- HERO -->
 <div class="b-hero">
-  {beach.photoRef ? (
+  {beach.localPhoto ? (
     <img
-      src={`https://places.googleapis.com/v1/${beach.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=1400`}
+      src={beach.localPhoto ?? `/images/beaches/${beach.slug}.jpg`}
       alt={beach.name}
       class="b-hero-img"
       fetchpriority="high"
@@ -240,9 +240,9 @@ const related = beachesData
         {related.map(r => (
           <a href={`${base}beaches/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
-              {r.photoRef ? (
+              {r.localPhoto ? (
                 <img
-                  src={`https://places.googleapis.com/v1/${r.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=400`}
+                  src={r.localPhoto ?? `/images/beaches/${r.slug}.jpg`}
                   alt={r.name}
                   class="rel-img"
                   loading="lazy"

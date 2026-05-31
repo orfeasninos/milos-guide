@@ -1,16 +1,18 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import tavernsData from "../data/taverns.json";
-import beachesData from "../data/beaches.json";
+import Layout from '../layouts/Layout.astro';
+import tavernsRaw from '../data/taverns.json';
+import beachesRaw from '../data/beaches.json';
+
+type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
+type Beach  = typeof beachesRaw[number] & { localPhoto?: string | null };
+
+const tavernsData = tavernsRaw as Tavern[];
+const beachesData = beachesRaw as Beach[];
 
 const base = import.meta.env.BASE_URL;
 
 const featuredTaverns = [...tavernsData]
-  .filter((t) => t.isFeatured)
-  .sort((a, b) => b.rating - a.rating)
-  .slice(0, 3);
-
-const topBeaches = [...beachesData]
+  .filter(t => t.isFeatured)
   .sort((a, b) => b.rating - a.rating)
   .slice(0, 3);
 ---
@@ -19,1330 +21,488 @@ const topBeaches = [...beachesData]
   title="Ο Πλήρης Οδηγός για τη Μήλο"
   description="Παραλίες, εστιατόρια, χωριά, boat tours — ο πιο πλήρης οδηγός για τη Μήλο. Χωρίς διαφημίσεις."
 >
-  <!-- ══ HERO ══ -->
-  <section class="hero">
-    <div class="hero-bg"><div class="hero-radial"></div></div>
-    <div class="hero-ghost" aria-hidden="true">ΜΗΛΟΣ</div>
 
-    <div class="hero-content container">
-      <div class="hero-eyebrow">
-        <span class="eyedot"></span>
-        <span>Κυκλάδες · Ελλάδα · 151 km²</span>
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"><div class="hero-radial"></div></div>
+  <div class="hero-ghost" aria-hidden="true">ΜΗΛΟΣ</div>
+
+  <div class="hero-content container">
+    <div class="hero-eyebrow">
+      <span class="eyedot"></span>
+      <span>Κυκλάδες · Ελλάδα · 151 km²</span>
+    </div>
+    <div class="hero-title">
+      <span class="hero-title-main">Μήλος</span>
+      <span class="hero-title-sub">Ο πιο αυθεντικός οδηγός για το νησί</span>
+    </div>
+    <p class="hero-desc">
+      Ηφαιστειακό τοπίο, 70+ παραλίες, κρυφά σπήλαια, ταβέρνες με αλιευμένη γεύση.
+      Ό,τι χρειάζεσαι για να ζήσεις τη Μήλο σωστά — χωρίς διαφημίσεις.
+    </p>
+    <div class="hero-ctas">
+      <a href={`${base}beaches`} class="btn-primary">🏖 Παραλίες</a>
+      <a href={`${base}eat`} class="btn-secondary">🍽 Φαγητό</a>
+    </div>
+  </div>
+
+  <div class="hero-stats container">
+    <div class="stat-pill"><span class="stat-n">70+</span><span class="stat-l">Παραλίες</span></div>
+    <div class="stat-pill"><span class="stat-n">151</span><span class="stat-l">km²</span></div>
+    <div class="stat-pill"><span class="stat-n">125</span><span class="stat-l">km ακτογραμμή</span></div>
+    <div class="stat-pill"><span class="stat-n">~5.000</span><span class="stat-l">Κάτοικοι</span></div>
+  </div>
+
+  <div class="hero-waves" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,90 1080,0 1440,50 L1440,100 L0,100 Z" fill="#f5f0e8"/>
+    </svg>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>scroll</span><div class="scroll-line"></div>
+  </div>
+</section>
+
+
+<!-- ══ EXPLORE ══ -->
+<section class="sec sec-sand" style="padding-top:3.5rem">
+  <div class="container">
+    <div class="explore-head">
+      <span class="label" style="margin:0">Εξερεύνηση</span>
+      <span class="explore-head-title">Τι θες να ανακαλύψεις στη Μήλο;</span>
+    </div>
+    <div class="cat-list">
+      <a href={`${base}beaches`} class="cat-row">
+        <span class="cat-num">01</span>
+        <div class="cat-info">
+          <span class="cat-name">Παραλίες</span>
+          <span class="cat-desc">Από το ηφαιστειακό Σαρακήνικο ως τα κρυφά σπήλαια — {beachesData.length}+ ακτές για κάθε γούστο</span>
+        </div>
+        <span class="cat-count">{beachesData.length}+ παραλίες</span>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href={`${base}eat`} class="cat-row">
+        <span class="cat-num">02</span>
+        <div class="cat-info">
+          <span class="cat-name">Φαγητό</span>
+          <span class="cat-desc">Ταβέρνες με αλιευμένη γεύση, ψητά σε ξυλόφουρνο, λευκό κρασί δίπλα στη θάλασσα</span>
+        </div>
+        <span class="cat-count">{tavernsData.length}+ εστιατόρια</span>
+        <span class="cat-arrow">→</span>
+      </a>
+      <a href={`${base}villages`} class="cat-row">
+        <span class="cat-num">03</span>
+        <div class="cat-info">
+          <span class="cat-name">Χωριά</span>
+          <span class="cat-desc">Πλάκα, Κλήμα, Τρυπητή, Πολλώνια — το νησί πέρα από τις παραλίες</span>
+        </div>
+        <span class="cat-count">8 χωριά</span>
+        <span class="cat-arrow">→</span>
+      </a>
+      <div class="cat-row cat-row--dim">
+        <span class="cat-num">04</span>
+        <div class="cat-info">
+          <span class="cat-name">Boat Tours</span>
+          <span class="cat-desc">Κλέφτικο, Συκιά, γύρος νησιού — οι καλύτεροι καπετάνιοι στη Μήλο</span>
+        </div>
+        <span class="soon-tag">Σύντομα</span>
+        <span class="cat-arrow">→</span>
       </div>
-      <div class="hero-title">
-        <span class="hero-title-main">Μήλος</span>
-        <span class="hero-title-sub">Ο πιο αυθεντικός οδηγός για το νησί</span>
-      </div>
-      <p class="hero-desc">
-        Ηφαιστειακό τοπίο, 70+ παραλίες, κρυφά σπήλαια, ταβέρνες με αλιευμένη
-        γεύση. Ό,τι χρειάζεσαι για να ζήσεις τη Μήλο σωστά — χωρίς διαφημίσεις.
-      </p>
-      <div class="hero-ctas">
-        <a href={`${base}beaches`} class="btn-primary">🏖 Παραλίες</a>
-        <a href={`${base}eat`} class="btn-secondary">🍽 Φαγητό</a>
+      <div class="cat-row cat-row--dim">
+        <span class="cat-num">05</span>
+        <div class="cat-info">
+          <span class="cat-name">Ενοικιάσεις</span>
+          <span class="cat-desc">Αυτοκίνητα, μηχανάκια, ATV — εξερεύνησε με τους δικούς σου ρυθμούς</span>
+        </div>
+        <span class="soon-tag">Σύντομα</span>
+        <span class="cat-arrow">→</span>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="hero-stats container">
-      <div class="stat-pill">
-        <span class="stat-n">70+</span><span class="stat-l">Παραλίες</span>
-      </div>
-      <div class="stat-pill">
-        <span class="stat-n">151</span><span class="stat-l">km²</span>
-      </div>
-      <div class="stat-pill">
-        <span class="stat-n">125</span><span class="stat-l">km ακτογραμμή</span>
-      </div>
-      <div class="stat-pill">
-        <span class="stat-n">~5.000</span><span class="stat-l">Κάτοικοι</span>
+
+<!-- ══ NUMBERS ══ -->
+<section class="sec sec-dark">
+  <div class="container">
+    <div class="sec-hdr-row" style="margin-bottom:3rem">
+      <div>
+        <span class="label label-lt">Η Μήλος με αριθμούς</span>
+        <h2 class="sec-title sec-title-lt">Ένα νησί σε στοιχεία</h2>
       </div>
     </div>
-
-    <div class="hero-waves" aria-hidden="true">
-      <svg
-        viewBox="0 0 1440 100"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M0,40 C360,90 1080,0 1440,50 L1440,100 L0,100 Z" fill="#f5f0e8"
-        ></path>
-      </svg>
+    <div class="numbers-grid">
+      <div class="num-item"><div class="num-label">Παραλίες</div><div class="num-val">70+</div><div class="num-desc">Μία από τις πιο πλούσιες σε παραλίες Κυκλάδες</div></div>
+      <div class="num-item"><div class="num-label">Ακτογραμμή</div><div class="num-val">125 km</div><div class="num-desc">Έντονα διαρθρωμένη λόγω της ηφαιστειακής προέλευσης</div></div>
+      <div class="num-item"><div class="num-label">Έκταση</div><div class="num-val">151 km²</div><div class="num-desc">Η 7η μεγαλύτερη νήσος στις Κυκλάδες</div></div>
+      <div class="num-item"><div class="num-label">Από Πειραιά</div><div class="num-val">86 ν.μ.</div><div class="num-desc">Ταχύπλοο ~3.5 ώρες, κανονικό ~7 ώρες</div></div>
+      <div class="num-item"><div class="num-label">Λιμάνι</div><div class="num-val">Top 5</div><div class="num-desc">Ένα από τα μεγαλύτερα φυσικά λιμάνια της Μεσογείου</div></div>
+      <div class="num-item"><div class="num-label">Ηφαιστειακό τόξο</div><div class="num-val">3M χρόνια</div><div class="num-desc">Γεωλογική ιστορία που διαμόρφωσε κάθε βράχο</div></div>
     </div>
-    <div class="scroll-hint" aria-hidden="true">
-      <span>scroll</span><div class="scroll-line"></div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ══ EXPLORE ══ -->
-  <section class="sec sec-sand" style="padding-top:3.5rem">
-    <div class="container">
-      <div class="explore-head">
-        <span class="label" style="margin:0">Εξερεύνηση</span>
-        <span class="explore-head-title">Τι θες να ανακαλύψεις στη Μήλο;</span>
-      </div>
-      <div class="cat-list">
-        <a href={`${base}beaches`} class="cat-row">
-          <span class="cat-num">01</span>
-          <div class="cat-info">
-            <span class="cat-name">Παραλίες</span>
-            <span class="cat-desc"
-              >Από το ηφαιστειακό Σαρακήνικο ως τα κρυφά σπήλαια — {
-                beachesData.length
-              }+ ακτές για κάθε γούστο</span
-            >
-          </div>
-          <span class="cat-count">{beachesData.length}+ παραλίες</span>
-          <span class="cat-arrow">→</span>
-        </a>
-        <a href={`${base}eat`} class="cat-row">
-          <span class="cat-num">02</span>
-          <div class="cat-info">
-            <span class="cat-name">Φαγητό</span>
-            <span class="cat-desc"
-              >Ταβέρνες με αλιευμένη γεύση, ψητά σε ξυλόφουρνο, λευκό κρασί
-              δίπλα στη θάλασσα</span
-            >
-          </div>
-          <span class="cat-count">{tavernsData.length}+ εστιατόρια</span>
-          <span class="cat-arrow">→</span>
-        </a>
-        <a href={`${base}villages`} class="cat-row">
-          <span class="cat-num">03</span>
-          <div class="cat-info">
-            <span class="cat-name">Χωριά</span>
-            <span class="cat-desc"
-              >Πλάκα, Κλήμα, Τρυπητή, Πολλώνια — το νησί πέρα από τις παραλίες</span
-            >
-          </div>
-          <span class="cat-count">8 χωριά</span>
-          <span class="cat-arrow">→</span>
-        </a>
-        <div class="cat-row cat-row--dim">
-          <span class="cat-num">04</span>
-          <div class="cat-info">
-            <span class="cat-name">Boat Tours</span>
-            <span class="cat-desc"
-              >Κλέφτικο, Συκιά, γύρος νησιού — οι καλύτεροι καπετάνιοι στη Μήλο</span
-            >
-          </div>
-          <span class="soon-tag">Σύντομα</span>
-          <span class="cat-arrow">→</span>
-        </div>
-        <div class="cat-row cat-row--dim">
-          <span class="cat-num">05</span>
-          <div class="cat-info">
-            <span class="cat-name">Ενοικιάσεις</span>
-            <span class="cat-desc"
-              >Αυτοκίνητα, μηχανάκια, ATV — εξερεύνησε με τους δικούς σου
-              ρυθμούς</span
-            >
-          </div>
-          <span class="soon-tag">Σύντομα</span>
-          <span class="cat-arrow">→</span>
-        </div>
+
+<!-- ══ QUICK FACTS ══ -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Γρήγορες πληροφορίες</span>
+        <h2 class="sec-title">Quick Facts</h2>
       </div>
     </div>
-  </section>
+    <div class="facts-grid">
+      <div class="fact-item"><span class="fact-key">Περιφέρεια</span><span class="fact-val">Κυκλάδες</span></div>
+      <div class="fact-item"><span class="fact-key">Πρωτεύουσα</span><span class="fact-val">Πλάκα</span></div>
+      <div class="fact-item"><span class="fact-key">Λιμάνι</span><span class="fact-val">Αδάμαντας</span></div>
+      <div class="fact-item"><span class="fact-key">Πληθυσμός</span><span class="fact-val">~5.000</span></div>
+      <div class="fact-item"><span class="fact-key">Παραλίες</span><span class="fact-val">70+</span></div>
+      <div class="fact-item"><span class="fact-key">Έκταση</span><span class="fact-val">151 km²</span></div>
+      <div class="fact-item"><span class="fact-key">Ψηλότερη κορυφή</span><span class="fact-val">Προφήτης Ηλίας</span></div>
+      <div class="fact-item"><span class="fact-key">Διάσημο εύρημα</span><span class="fact-val">Αφροδίτη της Μήλου</span></div>
+    </div>
+  </div>
+</section>
 
-  <!-- ══ NUMBERS ══ -->
-  <section class="sec sec-dark">
-    <div class="container">
-      <div class="sec-hdr-row" style="margin-bottom:3rem">
-        <div>
-          <span class="label label-lt">Η Μήλος με αριθμούς</span>
-          <h2 class="sec-title sec-title-lt">Ένα νησί σε στοιχεία</h2>
-        </div>
-      </div>
-      <div class="numbers-grid">
-        <div class="num-item">
-          <div class="num-label">Παραλίες</div>
-          <div class="num-val">70+</div>
-          <div class="num-desc">
-            Μία από τις πιο πλούσιες σε παραλίες Κυκλάδες
-          </div>
-        </div>
-        <div class="num-item">
-          <div class="num-label">Ακτογραμμή</div>
-          <div class="num-val">125 km</div>
-          <div class="num-desc">
-            Έντονα διαρθρωμένη λόγω της ηφαιστειακής προέλευσης
-          </div>
-        </div>
-        <div class="num-item">
-          <div class="num-label">Έκταση</div>
-          <div class="num-val">151 km²</div>
-          <div class="num-desc">Η 7η μεγαλύτερη νήσος στις Κυκλάδες</div>
-        </div>
-        <div class="num-item">
-          <div class="num-label">Από Πειραιά</div>
-          <div class="num-val">86 ν.μ.</div>
-          <div class="num-desc">Ταχύπλοο ~3.5 ώρες, κανονικό ~7 ώρες</div>
-        </div>
-        <div class="num-item">
-          <div class="num-label">Λιμάνι</div>
-          <div class="num-val">Top 5</div>
-          <div class="num-desc">
-            Ένα από τα μεγαλύτερα φυσικά λιμάνια της Μεσογείου
-          </div>
-        </div>
-        <div class="num-item">
-          <div class="num-label">Ηφαιστειακό τόξο</div>
-          <div class="num-val">3M χρόνια</div>
-          <div class="num-desc">
-            Γεωλογική ιστορία που διαμόρφωσε κάθε βράχο
-          </div>
-        </div>
+
+<!-- ══ WHY DIFFERENT ══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Γιατί η Μήλος είναι διαφορετική</span>
+        <h2 class="sec-title">Αυτό που δεν θα βρεις<br/>αλλού στο Αιγαίο</h2>
       </div>
     </div>
-  </section>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div class="why-title">Ηφαιστειακή προέλευση</div>
+        <p class="why-text">Η Μήλος ανήκει στο Αιγαιακό Ηφαιστειακό Τόξο και το τοπίο της έχει διαμορφωθεί από εκατομμύρια χρόνια ηφαιστειακής δραστηριότητας. Αυτό εξηγεί τους λευκούς βραχώδεις σχηματισμούς του Σαρακήνικο, τα θερμά νερά στο Παλαιοχώρι και τα ηφαιστειογενή πετρώματα σε κάθε γωνιά του νησιού.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div class="why-title">Οψιδιανός και αρχαίο εμπόριο</div>
+        <p class="why-text">Από τη Νεολιθική εποχή η Μήλος ήταν σημαντικό εμπορικό κέντρο λόγω του οψιδιανού — ενός ηφαιστειακού πετρώματος που χρησιμοποιούσαν για εργαλεία και όπλα σε όλη τη Μεσόγειο. Έχουν βρεθεί κομμάτια μηλιακού οψιδιανού ακόμα και στην Αίγυπτο.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div class="why-title">Η Αφροδίτη που δεν υπάρχει πλέον</div>
+        <p class="why-text">Το 1820 ένας αγρότης στη Μήλο ανακάλυψε το άγαλμα που σήμερα κοσμεί το Λούβρο. Η περίφημη Αφροδίτη της Μήλου φιλοτεχνήθηκε γύρω στο 130 π.Χ. και ήταν κρυμμένη επί αιώνες στο έδαφος του νησιού.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div class="why-title">Φυσικό λιμάνι βουλκανικής καλδέρας</div>
+        <p class="why-text">Ο κόλπος της Μήλου είναι στην ουσία μια βυθισμένη ηφαιστειακή καλδέρα — ένα από τα μεγαλύτερα φυσικά λιμάνια στη Μεσόγειο. Ιστορικά χρησιμοποιούνταν ως καταφύγιο για στόλους από την αρχαιότητα ως τον Β' Παγκόσμιο Πόλεμο.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- ══ QUICK FACTS ══ -->
+
+<!-- ══ FEATURED TAVERNS ══ -->
+{featuredTaverns.length > 0 && (
   <section class="sec sec-white">
     <div class="container">
       <div class="sec-hdr-row">
         <div>
-          <span class="label">Γρήγορες πληροφορίες</span>
-          <h2 class="sec-title">Quick Facts</h2>
+          <span class="label">Φαγητό</span>
+          <h2 class="sec-title">Επιλεγμένα εστιατόρια</h2>
         </div>
+        <a href={`${base}eat`} class="see-all">Όλα τα εστιατόρια →</a>
       </div>
-      <div class="facts-grid">
-        <div class="fact-item">
-          <span class="fact-key">Περιφέρεια</span><span class="fact-val"
-            >Κυκλάδες</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Πρωτεύουσα</span><span class="fact-val"
-            >Πλάκα</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Λιμάνι</span><span class="fact-val"
-            >Αδάμαντας</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Πληθυσμός</span><span class="fact-val"
-            >~5.000</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Παραλίες</span><span class="fact-val"
-            >70+</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Έκταση</span><span class="fact-val"
-            >151 km²</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Ψηλότερη κορυφή</span><span class="fact-val"
-            >Προφήτης Ηλίας</span>
-        </div>
-        <div class="fact-item">
-          <span class="fact-key">Διάσημο εύρημα</span><span class="fact-val"
-            >Αφροδίτη της Μήλου</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ WHY DIFFERENT ══ -->
-  <section class="sec sec-sand">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Γιατί η Μήλος είναι διαφορετική</span>
-          <h2 class="sec-title">Αυτό που δεν θα βρεις<br />αλλού στο Αιγαίο</h2>
-        </div>
-      </div>
-      <div class="why-grid">
-        <div class="why-item">
-          <div class="why-num">01</div>
-          <div class="why-title">Ηφαιστειακή προέλευση</div>
-          <p class="why-text">
-            Η Μήλος ανήκει στο Αιγαιακό Ηφαιστειακό Τόξο και το τοπίο της έχει
-            διαμορφωθεί από εκατομμύρια χρόνια ηφαιστειακής δραστηριότητας. Αυτό
-            εξηγεί τους λευκούς βραχώδεις σχηματισμούς του Σαρακήνικο, τα θερμά
-            νερά στο Παλαιοχώρι και τα ηφαιστειογενή πετρώματα σε κάθε γωνιά του
-            νησιού.
-          </p>
-        </div>
-        <div class="why-item">
-          <div class="why-num">02</div>
-          <div class="why-title">Οψιδιανός και αρχαίο εμπόριο</div>
-          <p class="why-text">
-            Από τη Νεολιθική εποχή η Μήλος ήταν σημαντικό εμπορικό κέντρο λόγω
-            του οψιδιανού — ενός ηφαιστειακού πετρώματος που χρησιμοποιούσαν για
-            εργαλεία και όπλα σε όλη τη Μεσόγειο. Έχουν βρεθεί κομμάτια μηλιακού
-            οψιδιανού ακόμα και στην Αίγυπτο.
-          </p>
-        </div>
-        <div class="why-item">
-          <div class="why-num">03</div>
-          <div class="why-title">Η Αφροδίτη που δεν υπάρχει πλέον</div>
-          <p class="why-text">
-            Το 1820 ένας αγρότης στη Μήλο ανακάλυψε το άγαλμα που σήμερα κοσμεί
-            το Λούβρο. Η περίφημη Αφροδίτη της Μήλου φιλοτεχνήθηκε γύρω στο 130
-            π.Χ. και ήταν κρυμμένη επί αιώνες στο έδαφος του νησιού.
-          </p>
-        </div>
-        <div class="why-item">
-          <div class="why-num">04</div>
-          <div class="why-title">Φυσικό λιμάνι βουλκανικής καλδέρας</div>
-          <p class="why-text">
-            Ο κόλπος της Μήλου είναι στην ουσία μια βυθισμένη ηφαιστειακή
-            καλδέρα — ένα από τα μεγαλύτερα φυσικά λιμάνια στη Μεσόγειο.
-            Ιστορικά χρησιμοποιούνταν ως καταφύγιο για στόλους από την
-            αρχαιότητα ως τον Β' Παγκόσμιο Πόλεμο.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ FEATURED TAVERNS ══ -->
-  {
-    featuredTaverns.length > 0 && (
-      <section class="sec sec-white">
-        <div class="container">
-          <div class="sec-hdr-row">
-            <div>
-              <span class="label">Φαγητό</span>
-              <h2 class="sec-title">Επιλεγμένα εστιατόρια</h2>
+      <div class="tav-grid">
+        {featuredTaverns.map(tavern => (
+          <a href={`${base}eat/${tavern.slug}`} class="tav-card">
+            {tavern.localPhoto ? (
+              <img src={tavern.localPhoto} alt={tavern.name} class="tav-img" loading="lazy"/>
+            ) : (
+              <div class="tav-ph">🍽</div>
+            )}
+            <div class="tav-body">
+              <div class="tav-top">
+                <span class="tav-badge">⭐ Επιλεγμένο</span>
+                <span class="tav-price">{tavern.priceRange}</span>
+              </div>
+              <h3 class="tav-name">{tavern.name}</h3>
+              <p class="tav-loc">◉ {tavern.location.area}</p>
+              <div class="tav-foot">
+                <span class="tav-rating">⭐ {tavern.rating} / 5</span>
+                <span class="tav-cuisine">{tavern.cuisine?.[0]}</span>
+              </div>
             </div>
-            <a href={`${base}eat`} class="see-all">
-              Όλα τα εστιατόρια →
-            </a>
-          </div>
-          <div class="tav-grid">
-            {featuredTaverns.map((tavern) => (
-              <a href={`${base}eat/${tavern.slug}`} class="tav-card">
-                {tavern.photoRef ? (
-                  <img
-                    src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
-                    alt={tavern.name}
-                    class="tav-img"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="tav-ph">🍽</div>
-                )}
-                <div class="tav-body">
-                  <div class="tav-top">
-                    <span class="tav-badge">⭐ Featured</span>
-                    <span class="tav-price">{tavern.priceRange}</span>
-                  </div>
-                  <h3 class="tav-name">{tavern.name}</h3>
-                  <p class="tav-loc">◉ {tavern.location.area}</p>
-                  <div class="tav-foot">
-                    <span class="tav-rating">⭐ {tavern.rating} / 5</span>
-                    <span class="tav-cuisine">{tavern.cuisine?.[0]}</span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  <!-- ══ BEACHES BY TYPE ══ -->
-  <section class="sec sec-white">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Παραλίες</span>
-          <h2 class="sec-title">Βρες την παραλία σου</h2>
-        </div>
-        <a href={`${base}beaches`} class="see-all">Όλες οι παραλίες →</a>
-      </div>
-      <div class="beach-cat-grid">
-        <div class="beach-cat">
-          <div class="beach-cat-title">👨‍👩‍👧 Για οικογένειες</div>
-          <div class="beach-cat-list">
-            <a href={`${base}beaches/pollonia`} class="beach-link"
-              ><span class="beach-link-icon">🚗</span>Πολλώνια</a
-            >
-            <a href={`${base}beaches/provatas`} class="beach-link"
-              ><span class="beach-link-icon">🚗</span>Προβατάς</a
-            >
-            <a href={`${base}beaches/paleochori`} class="beach-link"
-              ><span class="beach-link-icon">🚗</span>Παλαιοχώρι</a
-            >
-          </div>
-        </div>
-        <div class="beach-cat">
-          <div class="beach-cat-title">📸 Για φωτογραφίες</div>
-          <div class="beach-cat-list">
-            <a href={`${base}beaches/sarakiniko`} class="beach-link"
-              ><span class="beach-link-icon">🚗</span>Σαρακήνικο</a
-            >
-            <a href={`${base}beaches/kleftiko`} class="beach-link"
-              ><span class="beach-link-icon">⛵</span>Κλέφτικο</a
-            >
-            <a href={`${base}beaches/tsigrado`} class="beach-link"
-              ><span class="beach-link-icon">🥾</span>Τσιγκράδο</a
-            >
-          </div>
-        </div>
-        <div class="beach-cat">
-          <div class="beach-cat-title">🔇 Για ησυχία</div>
-          <div class="beach-cat-list">
-            <a href={`${base}beaches/triades`} class="beach-link"
-              ><span class="beach-link-icon">🚗</span>Τριάδες</a
-            >
-            <a href={`${base}beaches/gerontas`} class="beach-link"
-              ><span class="beach-link-icon">🚗</span>Γέροντας</a
-            >
-            <a href={`${base}beaches/ammoudaki`} class="beach-link"
-              ><span class="beach-link-icon">🥾</span>Αμμουδάκι</a
-            >
-          </div>
-        </div>
-        <div class="beach-cat">
-          <div class="beach-cat-title">⛵ Μόνο με σκάφος</div>
-          <div class="beach-cat-list">
-            <a href={`${base}beaches/kleftiko`} class="beach-link"
-              ><span class="beach-link-icon">⛵</span>Κλέφτικο</a
-            >
-            <a href={`${base}beaches/sikia-cave`} class="beach-link"
-              ><span class="beach-link-icon">⛵</span>Σπηλιά Συκιάς</a
-            >
-            <a href={`${base}beaches/ammoudaki`} class="beach-link"
-              ><span class="beach-link-icon">⛵</span>Αμμουδάκι</a
-            >
-          </div>
-        </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
+)}
 
-  <!-- ══ VILLAGES ══ -->
-  <section class="sec sec-sand">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Χωριά</span>
-          <h2 class="sec-title">Η Μήλος πέρα από τις παραλίες</h2>
-        </div>
-        <a href={`${base}villages`} class="see-all">Όλα τα χωριά →</a>
+
+<!-- ══ BEACHES BY TYPE ══ -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Παραλίες</span>
+        <h2 class="sec-title">Βρες την παραλία σου</h2>
       </div>
-      <div class="villages-grid">
-        <a href={`${base}villages/plaka`} class="village-card">
-          <span class="village-name">Πλάκα</span>
-          <span class="village-note"
-            >Η πρωτεύουσα, πάνω στο βράχο, με πανοραμική θέα</span
-          >
-        </a>
-        <a href={`${base}villages/tripiti`} class="village-card">
-          <span class="village-name">Τρυπητή</span>
-          <span class="village-note"
-            >Κατακόμβες, αρχαίο θέατρο, ατμοσφαιρικό χωριό</span
-          >
-        </a>
-        <a href={`${base}villages/pollonia`} class="village-card">
-          <span class="village-name">Πολλώνια</span>
-          <span class="village-note"
-            >Βόρεια, με ψαροταβέρνες και πρόσβαση στη Κίμωλο</span
-          >
-        </a>
-        <a href={`${base}villages/klima`} class="village-card">
-          <span class="village-name">Κλήμα</span>
-          <span class="village-note"
-            >Τα περίφημα σύρματα — αλιευτικές αποθήκες στο νερό</span
-          >
-        </a>
-        <a href={`${base}villages/mandrakia`} class="village-card">
-          <span class="village-name">Μανδράκια</span>
-          <span class="village-note">Μικρό λιμανάκι με πολύχρωμα σύρματα</span>
-        </a>
-        <a href={`${base}villages/firopotamos`} class="village-card">
-          <span class="village-name">Φυροπόταμος</span>
-          <span class="village-note"
-            >Ήσυχος, αυθεντικός, μακριά από τον τουρισμό</span
-          >
-        </a>
+      <a href={`${base}beaches`} class="see-all">Όλες οι παραλίες →</a>
+    </div>
+    <div class="beach-cat-grid">
+      <div class="beach-cat">
+        <div class="beach-cat-title">👨‍👩‍👧 Για οικογένειες</div>
+        <div class="beach-cat-list">
+          <a href={`${base}beaches/paleochori`} class="beach-link"><span class="beach-link-icon">🚗</span>Παλαιοχώρι</a>
+          <a href={`${base}beaches/provatas`}   class="beach-link"><span class="beach-link-icon">🚗</span>Προβατάς</a>
+          <a href={`${base}beaches/fyriplaka`}  class="beach-link"><span class="beach-link-icon">🚗</span>Φυριπλάκα</a>
+        </div>
+      </div>
+      <div class="beach-cat">
+        <div class="beach-cat-title">📸 Για φωτογραφίες</div>
+        <div class="beach-cat-list">
+          <a href={`${base}beaches/sarakiniko`} class="beach-link"><span class="beach-link-icon">🚗</span>Σαρακήνικο</a>
+          <a href={`${base}beaches/kleftiko`}   class="beach-link"><span class="beach-link-icon">⛵</span>Κλέφτικο</a>
+          <a href={`${base}beaches/tsigrado`}   class="beach-link"><span class="beach-link-icon">🥾</span>Τσιγκράδο</a>
+        </div>
+      </div>
+      <div class="beach-cat">
+        <div class="beach-cat-title">🔇 Για ησυχία</div>
+        <div class="beach-cat-list">
+          <a href={`${base}beaches/triades`}   class="beach-link"><span class="beach-link-icon">🚗</span>Τριάδες</a>
+          <a href={`${base}beaches/gerontas`}  class="beach-link"><span class="beach-link-icon">🚗</span>Γέροντας</a>
+          <a href={`${base}beaches/ammoudaki`} class="beach-link"><span class="beach-link-icon">🥾</span>Αμμουδάκι</a>
+        </div>
+      </div>
+      <div class="beach-cat">
+        <div class="beach-cat-title">⛵ Μόνο με σκάφος</div>
+        <div class="beach-cat-list">
+          <a href={`${base}beaches/kleftiko`}   class="beach-link"><span class="beach-link-icon">⛵</span>Κλέφτικο</a>
+          <a href={`${base}beaches/sikia-cave`} class="beach-link"><span class="beach-link-icon">⛵</span>Σπηλιά Συκιάς</a>
+          <a href={`${base}beaches/ammoudaki`}  class="beach-link"><span class="beach-link-icon">⛵</span>Αμμουδάκι</a>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ══ KNOWN PLACES ══ -->
-  <section class="sec sec-white">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Αξιοθέατα &amp; τοπόσημα</span>
-          <h2 class="sec-title">Τα πιο γνωστά μέρη</h2>
-        </div>
+
+<!-- ══ VILLAGES ══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Χωριά</span>
+        <h2 class="sec-title">Η Μήλος πέρα από τις παραλίες</h2>
       </div>
-      <div class="places-strip">
-        <a href={`${base}beaches/sarakiniko`} class="place-chip">
-          <span class="place-chip-name">Σαρακήνικο</span>
-          <span class="place-chip-type">🏖 Παραλία</span>
-        </a>
-        <a href={`${base}beaches/kleftiko`} class="place-chip">
-          <span class="place-chip-name">Κλέφτικο</span>
-          <span class="place-chip-type">⛵ Θαλάσσιο σπήλαιο</span>
-        </a>
-        <a href={`${base}villages/plaka`} class="place-chip">
-          <span class="place-chip-name">Πλάκα</span>
-          <span class="place-chip-type">🏘 Χωριό</span>
-        </a>
-        <a href={`${base}villages/pollonia`} class="place-chip">
-          <span class="place-chip-name">Πολλώνια</span>
-          <span class="place-chip-type">🍽 Φαγητό &amp; θάλασσα</span>
-        </a>
-        <a href={`${base}villages/klima`} class="place-chip">
-          <span class="place-chip-name">Κλήμα</span>
-          <span class="place-chip-type">🏠 Σύρματα</span>
-        </a>
-        <a href={`${base}villages/firopotamos`} class="place-chip">
-          <span class="place-chip-name">Φυροπόταμος</span>
-          <span class="place-chip-type">📷 Φωτογένια</span>
-        </a>
+      <a href={`${base}villages`} class="see-all">Όλα τα χωριά →</a>
+    </div>
+    <div class="villages-grid">
+      <a href={`${base}villages/plaka`}       class="village-card"><span class="village-name">Πλάκα</span><span class="village-note">Η πρωτεύουσα, πάνω στο βράχο, με πανοραμική θέα</span></a>
+      <a href={`${base}villages/tripiti`}     class="village-card"><span class="village-name">Τρυπητή</span><span class="village-note">Κατακόμβες, αρχαίο θέατρο, ατμοσφαιρικό χωριό</span></a>
+      <a href={`${base}villages/pollonia`}    class="village-card"><span class="village-name">Πολλώνια</span><span class="village-note">Βόρεια, με ψαροταβέρνες και πρόσβαση στη Κίμωλο</span></a>
+      <a href={`${base}villages/klima`}       class="village-card"><span class="village-name">Κλήμα</span><span class="village-note">Τα περίφημα σύρματα — αλιευτικές αποθήκες στο νερό</span></a>
+      <a href={`${base}villages/mandrakia`}   class="village-card"><span class="village-name">Μανδράκια</span><span class="village-note">Μικρό λιμανάκι με πολύχρωμα σύρματα</span></a>
+      <a href={`${base}villages/firopotamos`} class="village-card"><span class="village-name">Φυροπόταμος</span><span class="village-note">Ήσυχος, αυθεντικός, μακριά από τον τουρισμό</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ KNOWN PLACES ══ -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Αξιοθέατα &amp; τοπόσημα</span>
+        <h2 class="sec-title">Τα πιο γνωστά μέρη</h2>
       </div>
     </div>
-  </section>
-
-  <!-- ══ WHEN TO VISIT ══ -->
-  <section class="sec sec-sand">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Πότε να έρθεις</span>
-          <h2 class="sec-title">Κάθε μήνας έχει<br />τον χαρακτήρα του</h2>
-        </div>
-      </div>
-      <div class="months-grid">
-        <div class="month-item">
-          <div class="month-name">Μάιος</div>
-          <span class="month-tag">Ήρεμα</span>
-          <p class="month-desc">
-            Λιγότερος κόσμος, ανθισμένο τοπίο, ιδανικό για εξερεύνηση. Θάλασσα
-            ακόμα δροσερή.
-          </p>
-        </div>
-        <div class="month-item">
-          <div class="month-name">Ιούνιος</div>
-          <span class="month-tag">Ιδανικό</span>
-          <p class="month-desc">
-            Η καλύτερη ισορροπία. Ζεστή θάλασσα, λίγα πλήθη, όλα ανοιχτά.
-          </p>
-        </div>
-        <div class="month-item month-item--best">
-          <div class="month-name">Σεπτέμβριος</div>
-          <span class="month-tag">Καλύτερος</span>
-          <p class="month-desc">
-            Ίσως ο τέλειος μήνας. Ζεστή θάλασσα, λιγότερος κόσμος, χαμηλότερες
-            τιμές.
-          </p>
-        </div>
-        <div class="month-item month-item--warn">
-          <div class="month-name">Αύγουστος</div>
-          <span class="month-tag">Προσοχή</span>
-          <p class="month-desc">
-            Μελτέμια επηρεάζουν ποιες παραλίες είναι κατάλληλες κάθε μέρα. Πολύς
-            κόσμος.
-          </p>
-        </div>
-        <div class="month-item">
-          <div class="month-name">Ιούλιος</div>
-          <span class="month-tag">Υψηλή σεζόν</span>
-          <p class="month-desc">
-            Ζωντανή ατμόσφαιρα, αλλά χρειάζεται κράτηση παντού εκ των προτέρων.
-          </p>
-        </div>
-      </div>
-      <p class="meltemia-note">
-        ⚠️ <strong>Μελτέμια:</strong> Τα βόρεια ανέμια επηρεάζουν άμεσα ποιες παραλίες
-        είναι καλές κάθε μέρα — οι νότιες (Παλαιοχώρι, Φυριπλάκα) είναι προστατευμένες,
-        ενώ οι βόρειες μπορεί να έχουν κύμα.
-      </p>
+    <div class="places-strip">
+      <a href={`${base}beaches/sarakiniko`}   class="place-chip"><span class="place-chip-name">Σαρακήνικο</span><span class="place-chip-type">🏖 Παραλία</span></a>
+      <a href={`${base}beaches/kleftiko`}     class="place-chip"><span class="place-chip-name">Κλέφτικο</span><span class="place-chip-type">⛵ Θαλάσσιο σπήλαιο</span></a>
+      <a href={`${base}villages/plaka`}       class="place-chip"><span class="place-chip-name">Πλάκα</span><span class="place-chip-type">🏘 Χωριό</span></a>
+      <a href={`${base}villages/pollonia`}    class="place-chip"><span class="place-chip-name">Πολλώνια</span><span class="place-chip-type">🍽 Φαγητό &amp; θάλασσα</span></a>
+      <a href={`${base}villages/klima`}       class="place-chip"><span class="place-chip-name">Κλήμα</span><span class="place-chip-type">🏠 Σύρματα</span></a>
+      <a href={`${base}villages/firopotamos`} class="place-chip"><span class="place-chip-name">Φυροπόταμος</span><span class="place-chip-type">📷 Φωτογένια</span></a>
     </div>
-  </section>
+  </div>
+</section>
+
+
+<!-- ══ WHEN TO VISIT ══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Πότε να έρθεις</span>
+        <h2 class="sec-title">Κάθε μήνας έχει<br/>τον χαρακτήρα του</h2>
+      </div>
+    </div>
+    <div class="months-grid">
+      <div class="month-item">
+        <div class="month-name">Μάιος</div>
+        <span class="month-tag">Ήρεμα</span>
+        <p class="month-desc">Λιγότερος κόσμος, ανθισμένο τοπίο, ιδανικό για εξερεύνηση. Θάλασσα ακόμα δροσερή.</p>
+      </div>
+      <div class="month-item">
+        <div class="month-name">Ιούνιος</div>
+        <span class="month-tag">Ιδανικό</span>
+        <p class="month-desc">Η καλύτερη ισορροπία. Ζεστή θάλασσα, λίγα πλήθη, όλα ανοιχτά.</p>
+      </div>
+      <div class="month-item month-item--best">
+        <div class="month-name">Σεπτέμβριος</div>
+        <span class="month-tag">Καλύτερος</span>
+        <p class="month-desc">Ίσως ο τέλειος μήνας. Ζεστή θάλασσα, λιγότερος κόσμος, χαμηλότερες τιμές.</p>
+      </div>
+      <div class="month-item month-item--warn">
+        <div class="month-name">Αύγουστος</div>
+        <span class="month-tag">Προσοχή</span>
+        <p class="month-desc">Μελτέμια επηρεάζουν ποιες παραλίες είναι κατάλληλες κάθε μέρα. Πολύς κόσμος.</p>
+      </div>
+      <div class="month-item">
+        <div class="month-name">Ιούλιος</div>
+        <span class="month-tag">Υψηλή σεζόν</span>
+        <p class="month-desc">Ζωντανή ατμόσφαιρα, αλλά χρειάζεται κράτηση παντού εκ των προτέρων.</p>
+      </div>
+    </div>
+    <p class="meltemia-note">⚠️ <strong>Μελτέμια:</strong> Τα βόρεια ανέμια επηρεάζουν άμεσα ποιες παραλίες είναι καλές κάθε μέρα — οι νότιες (Παλαιοχώρι, Φυριπλάκα) είναι προστατευμένες, ενώ οι βόρειες μπορεί να έχουν κύμα.</p>
+  </div>
+</section>
+
 </Layout>
 
 <style>
-  /* ══ HERO ══ */
-  .hero {
-    position: relative;
-    min-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: linear-gradient(
-      150deg,
-      #0a2040 0%,
-      #0d2b4e 25%,
-      #1a5c8a 65%,
-      #2a7faa 100%
-    );
-  }
-  .hero-radial {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(
-        ellipse 75% 55% at 72% 28%,
-        rgba(58, 155, 201, 0.22) 0%,
-        transparent 58%
-      ),
-      radial-gradient(
-        ellipse 45% 35% at 12% 72%,
-        rgba(26, 92, 138, 0.35) 0%,
-        transparent 48%
-      );
-  }
-  .hero-ghost {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-serif);
-    font-size: clamp(6rem, 22vw, 20rem);
-    color: rgba(255, 255, 255, 0.035);
-    letter-spacing: 0.06em;
-    pointer-events: none;
-    user-select: none;
-    white-space: nowrap;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 4rem 0 2rem;
-  }
-  .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.48);
-    margin-bottom: 1.25rem;
-    animation: fadeUp 0.7s ease both;
-  }
-  .eyedot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--sea);
-    animation: blink 2.5s infinite;
-  }
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.4;
-      transform: scale(0.65);
-    }
-  }
-  .hero-title {
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.7s ease 0.1s both;
-  }
-  .hero-title-main {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: clamp(4rem, 11vw, 8.5rem);
-    color: #fff;
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-  }
-  .hero-title-sub {
-    display: block;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.55);
-    letter-spacing: 0.02em;
-    margin-top: 0.55rem;
-  }
-  .hero-desc {
-    max-width: 510px;
-    font-size: 1.05rem;
-    line-height: 1.72;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 2.25rem;
-    animation: fadeUp 0.7s ease 0.2s both;
-  }
-  .hero-ctas {
-    display: flex;
-    gap: 0.85rem;
-    flex-wrap: wrap;
-    animation: fadeUp 0.7s ease 0.3s both;
-  }
-  .hero-stats {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    gap: 0.85rem;
-    flex-wrap: wrap;
-    padding-top: 2.5rem;
-    padding-bottom: 5rem;
-    animation: fadeUp 0.7s ease 0.4s both;
-  }
-  .stat-pill {
-    display: flex;
-    flex-direction: column;
-    gap: 0.12rem;
-    padding: 0.7rem 1.2rem;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    border-radius: var(--radius-md);
-    backdrop-filter: blur(10px);
-  }
-  .stat-n {
-    font-family: var(--font-serif);
-    font-size: 1.65rem;
-    color: #fff;
-    line-height: 1;
-  }
-  .stat-l {
-    font-size: 0.68rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.45);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .hero-waves {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 100px;
-    z-index: 1;
-  }
-  .hero-waves svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    right: 2.5rem;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    animation: fadeUp 1s ease 0.9s both;
-  }
-  .scroll-hint span {
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.28);
-    writing-mode: vertical-rl;
-  }
-  .scroll-line {
-    width: 1px;
-    height: 52px;
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.28),
-      transparent
-    );
-    animation: scrollAnim 2s ease-in-out infinite;
-  }
-  @keyframes scrollAnim {
-    0% {
-      transform: scaleY(0);
-      transform-origin: top;
-      opacity: 1;
-    }
-    100% {
-      transform: scaleY(1);
-      transform-origin: top;
-      opacity: 0;
-    }
-  }
-  @keyframes fadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* ══ EXPLORE ══ */
-  .explore-head {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding-bottom: 1.25rem;
-  }
-  .explore-head-title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
-    color: var(--ink);
-    font-weight: 400;
-  }
-  .cat-list {
-    display: flex;
-    flex-direction: column;
-  }
-  .cat-row {
-    display: grid;
-    grid-template-columns: 80px 1fr auto auto;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.75rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    color: inherit;
-    position: relative;
-    transition: padding-left 0.3s ease;
-  }
-  .cat-row:not(.cat-row--dim) {
-    cursor: pointer;
-  }
-  .cat-row:not(.cat-row--dim)::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 0;
-    background: var(--deep-blue);
-    transition: width 0.3s ease;
-    border-radius: 0 2px 2px 0;
-  }
-  .cat-row:not(.cat-row--dim):hover {
-    padding-left: 1rem;
-  }
-  .cat-row:not(.cat-row--dim):hover::before {
-    width: 3px;
-  }
-  .cat-row--dim {
-    opacity: 0.4;
-    cursor: default;
-  }
-  .cat-num {
-    font-family: var(--font-serif);
-    font-size: clamp(2.5rem, 5vw, 3.8rem);
-    color: rgba(0, 0, 0, 0.1);
-    line-height: 1;
-    transition: color 0.3s;
-    user-select: none;
-  }
-  .cat-row:not(.cat-row--dim):hover .cat-num {
-    color: var(--deep-blue);
-  }
-  .cat-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .cat-name {
-    font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    color: var(--ink);
-    line-height: 1.1;
-    transition: color 0.3s;
-  }
-  .cat-row:not(.cat-row--dim):hover .cat-name {
-    color: var(--deep-blue);
-  }
-  .cat-desc {
-    font-size: 0.875rem;
-    color: var(--muted);
-    line-height: 1.55;
-    max-width: 430px;
-  }
-  .cat-count {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .cat-arrow {
-    font-size: 1.4rem;
-    color: rgba(0, 0, 0, 0.15);
-    transition:
-      color 0.3s,
-      transform 0.3s;
-  }
-  .cat-row:not(.cat-row--dim):hover .cat-arrow {
-    color: var(--deep-blue);
-    transform: translateX(6px);
-  }
-  .soon-tag {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    background: rgba(0, 0, 0, 0.07);
-    color: var(--muted);
-    padding: 3px 8px;
-    border-radius: 4px;
-  }
-
-  /* ══ NUMBERS ══ */
-  .numbers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-  }
-  .num-item {
-    padding: 2.5rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .num-item:nth-child(3n) {
-    border-right: none;
-  }
-  .num-item:nth-last-child(-n + 3) {
-    border-bottom: none;
-  }
-  .num-label {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(58, 155, 201, 0.7);
-    margin-bottom: 0.2rem;
-  }
-  .num-val {
-    font-family: var(--font-serif);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: #fff;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-  .num-desc {
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.5;
-  }
-
-  /* ══ QUICK FACTS ══ */
-  .facts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1px;
-    background: rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  .fact-item {
-    background: var(--white);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-  .fact-key {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--sea);
-  }
-  .fact-val {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-
-  /* ══ WHY DIFFERENT ══ */
-  .why-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  .why-item {
-    padding: 2.5rem;
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    background: var(--white);
-  }
-  .why-item:nth-child(2n) {
-    border-right: none;
-  }
-  .why-item:nth-last-child(-n + 2) {
-    border-bottom: none;
-  }
-  .why-num {
-    font-family: var(--font-serif);
-    font-size: 3rem;
-    color: var(--sand-dark);
-    line-height: 1;
-    margin-bottom: 0.75rem;
-  }
-  .why-title {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    color: var(--deep-blue);
-    margin-bottom: 0.6rem;
-    line-height: 1.2;
-  }
-  .why-text {
-    font-size: 0.875rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  /* ══ BEACHES ══ */
-  .beach-cat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-  .beach-cat {
-    border-top: 2px solid var(--deep-blue);
-    padding-top: 1.25rem;
-  }
-  .beach-cat-title {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    color: var(--deep-blue);
-    margin-bottom: 1rem;
-  }
-  .beach-cat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-  .beach-link {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-    color: var(--ink);
-    transition:
-      color 0.15s,
-      padding-left 0.15s;
-  }
-  .beach-link:hover {
-    color: var(--aegean);
-    padding-left: 0.4rem;
-  }
-  .beach-link-icon {
-    font-size: 0.8rem;
-    color: var(--muted);
-    flex-shrink: 0;
-  }
-
-  /* ══ VILLAGES ══ */
-  .villages-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.75rem;
-  }
-  .village-card {
-    background: var(--white);
-    border: 1px solid var(--sand-dark);
-    border-radius: var(--radius-md);
-    padding: 1.5rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    transition:
-      transform 0.15s,
-      box-shadow 0.15s,
-      border-color 0.15s;
-  }
-  .village-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--sea);
-  }
-  .village-name {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    color: var(--deep-blue);
-  }
-  .village-note {
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.45;
-  }
-
-  /* ══ PLACES ══ */
-  .places-strip {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.75rem;
-  }
-  .place-chip {
-    background: var(--white);
-    border: 1px solid var(--sand-dark);
-    border-radius: var(--radius-md);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    transition:
-      transform 0.15s,
-      box-shadow 0.15s,
-      border-color 0.15s;
-  }
-  .place-chip:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--sea);
-  }
-  .place-chip-name {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    color: var(--deep-blue);
-  }
-  .place-chip-type {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ══ WHEN TO VISIT ══ */
-  .months-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-  .month-item {
-    padding: 1.75rem 1.25rem;
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
-    background: var(--white);
-  }
-  .month-item:last-child {
-    border-right: none;
-  }
-
-  .month-name {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    color: var(--ink);
-    margin-bottom: 0.5rem;
-  }
-
-  .month-tag {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 0.6rem;
-    background: var(--sand-dark);
-    color: var(--muted);
-  }
-  .month-item--best .month-tag {
-    background: rgba(58, 155, 201, 0.25);
-    color: var(--aegean);
-  }
-  .month-item--warn .month-tag {
-    background: rgba(217, 119, 6, 0.12);
-    color: #92400e;
-  }
-  .month-desc {
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-
-  .meltemia-note {
-    margin-top: 1.25rem;
-    font-size: 0.82rem;
-    color: var(--muted);
-    padding: 0 0.25rem;
-  }
-
-  /* ══ TAVERNS ══ */
-  .tav-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-  }
-  .tav-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--white);
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-  }
-  .tav-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-  .tav-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
-  }
-  .tav-card:hover .tav-img {
-    transform: scale(1.04);
-  }
-  .tav-ph {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    background: linear-gradient(140deg, var(--sand), var(--sand-dark));
-  }
-  .tav-body {
-    padding: 1.25rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .tav-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.2rem;
-  }
-  .tav-badge {
-    font-size: 0.58rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    background: var(--aegean);
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 100px;
-  }
-  .tav-price {
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: #b08d57;
-  }
-  .tav-name {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    color: var(--ink);
-    line-height: 1.25;
-  }
-  .tav-loc {
-    font-size: 0.68rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #c0613a;
-  }
-  .tav-foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    padding-top: 0.7rem;
-    border-top: 1px solid var(--border);
-  }
-  .tav-rating {
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-  .tav-cuisine {
-    font-size: 0.68rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-  }
-
-  /* ══ RESPONSIVE ══ */
-  @media (max-width: 900px) {
-    .numbers-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .numbers-grid .num-item:nth-child(2n) {
-      border-right: none;
-    }
-    .months-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .month-item:nth-child(2n) {
-      border-right: none;
-    }
-    .month-item {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-    .tav-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .why-grid {
-      grid-template-columns: 1fr;
-    }
-    .why-item:nth-child(2n) {
-      border-right: none;
-    }
-    .why-item {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-  }
-  @media (max-width: 768px) {
-    .cat-row {
-      grid-template-columns: 50px 1fr auto;
-      gap: 1rem;
-    }
-    .cat-arrow {
-      display: none;
-    }
-    .cat-num {
-      font-size: 2rem;
-    }
-    .cat-name {
-      font-size: 1.4rem;
-    }
-    .cat-desc {
-      display: none;
-    }
-    .beach-cat-grid {
-      grid-template-columns: 1fr;
-    }
-    .tav-grid {
-      grid-template-columns: 1fr;
-    }
-    .scroll-hint {
-      display: none;
-    }
-  }
-  @media (max-width: 480px) {
-    .hero-ctas {
-      flex-direction: column;
-    }
-    .numbers-grid {
-      grid-template-columns: 1fr;
-    }
-    .numbers-grid .num-item {
-      border-right: none;
-    }
-  }
+.hero { position:relative; min-height:90vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; background:linear-gradient(150deg,#0a2040 0%,#0d2b4e 25%,#1a5c8a 65%,#2a7faa 100%); }
+.hero-radial { position:absolute; inset:0; background:radial-gradient(ellipse 75% 55% at 72% 28%,rgba(58,155,201,.22) 0%,transparent 58%),radial-gradient(ellipse 45% 35% at 12% 72%,rgba(26,92,138,.35) 0%,transparent 48%); }
+.hero-ghost { position:absolute; inset:0; z-index:0; display:flex; align-items:center; justify-content:center; font-family:var(--font-serif); font-size:clamp(6rem,22vw,20rem); color:rgba(255,255,255,.035); letter-spacing:.06em; pointer-events:none; user-select:none; white-space:nowrap; }
+.hero-content { position:relative; z-index:2; padding:4rem 0 2rem; }
+.hero-eyebrow { display:flex; align-items:center; gap:.6rem; font-size:.72rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.48); margin-bottom:1.25rem; animation:fadeUp .7s ease both; }
+.eyedot { width:6px; height:6px; border-radius:50%; background:var(--sea); animation:blink 2.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)} }
+.hero-title { margin-bottom:1.5rem; animation:fadeUp .7s ease .1s both; }
+.hero-title-main { display:block; font-family:var(--font-serif); font-size:clamp(4rem,11vw,8.5rem); color:#fff; line-height:.92; letter-spacing:-.02em; }
+.hero-title-sub { display:block; font-size:clamp(.9rem,2vw,1.1rem); font-weight:400; color:rgba(255,255,255,.55); letter-spacing:.02em; margin-top:.55rem; }
+.hero-desc { max-width:510px; font-size:1.05rem; line-height:1.72; color:rgba(255,255,255,.7); margin-bottom:2.25rem; animation:fadeUp .7s ease .2s both; }
+.hero-ctas { display:flex; gap:.85rem; flex-wrap:wrap; animation:fadeUp .7s ease .3s both; }
+.hero-stats { position:relative; z-index:2; display:flex; gap:.85rem; flex-wrap:wrap; padding-top:2.5rem; padding-bottom:5rem; animation:fadeUp .7s ease .4s both; }
+.stat-pill { display:flex; flex-direction:column; gap:.12rem; padding:.7rem 1.2rem; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:var(--radius-md); backdrop-filter:blur(10px); }
+.stat-n { font-family:var(--font-serif); font-size:1.65rem; color:#fff; line-height:1; }
+.stat-l { font-size:.68rem; font-weight:500; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.06em; }
+.hero-waves { position:absolute; bottom:-1px; left:0; right:0; height:100px; z-index:1; }
+.hero-waves svg { width:100%; height:100%; display:block; }
+.scroll-hint { position:absolute; bottom:2rem; right:2.5rem; z-index:2; display:flex; flex-direction:column; align-items:center; gap:.5rem; animation:fadeUp 1s ease .9s both; }
+.scroll-hint span { font-size:.58rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.28); writing-mode:vertical-rl; }
+.scroll-line { width:1px; height:52px; background:linear-gradient(to bottom,rgba(255,255,255,.28),transparent); animation:scrollAnim 2s ease-in-out infinite; }
+@keyframes scrollAnim { 0%{transform:scaleY(0);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:top;opacity:0} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+.explore-head { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:3.5rem; border-bottom:1px solid rgba(0,0,0,.1); padding-bottom:1.25rem; }
+.explore-head-title { font-family:var(--font-serif); font-size:clamp(1.1rem,2vw,1.35rem); color:var(--ink); font-weight:400; }
+.cat-list { display:flex; flex-direction:column; }
+.cat-row { display:grid; grid-template-columns:80px 1fr auto auto; align-items:center; gap:2rem; padding:1.75rem 0; border-bottom:1px solid rgba(0,0,0,.08); color:inherit; position:relative; transition:padding-left .3s ease; }
+.cat-row:not(.cat-row--dim) { cursor:pointer; }
+.cat-row:not(.cat-row--dim)::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--deep-blue); transition:width .3s ease; border-radius:0 2px 2px 0; }
+.cat-row:not(.cat-row--dim):hover { padding-left:1rem; }
+.cat-row:not(.cat-row--dim):hover::before { width:3px; }
+.cat-row--dim { opacity:.4; cursor:default; }
+.cat-num { font-family:var(--font-serif); font-size:clamp(2.5rem,5vw,3.8rem); color:rgba(0,0,0,.1); line-height:1; transition:color .3s; user-select:none; }
+.cat-row:not(.cat-row--dim):hover .cat-num { color:var(--deep-blue); }
+.cat-info { display:flex; flex-direction:column; gap:.3rem; }
+.cat-name { font-family:var(--font-serif); font-size:clamp(1.5rem,3vw,2.2rem); color:var(--ink); line-height:1.1; transition:color .3s; }
+.cat-row:not(.cat-row--dim):hover .cat-name { color:var(--deep-blue); }
+.cat-desc { font-size:.875rem; color:var(--muted); line-height:1.55; max-width:430px; }
+.cat-count { font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+.cat-arrow { font-size:1.4rem; color:rgba(0,0,0,.15); transition:color .3s,transform .3s; }
+.cat-row:not(.cat-row--dim):hover .cat-arrow { color:var(--deep-blue); transform:translateX(6px); }
+.soon-tag { font-size:.6rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; background:rgba(0,0,0,.07); color:var(--muted); padding:3px 8px; border-radius:4px; }
+.numbers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+.num-item { padding:2.5rem; border-right:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
+.num-item:nth-child(3n) { border-right:none; }
+.num-item:nth-last-child(-n+3) { border-bottom:none; }
+.num-label { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(58,155,201,.7); margin-bottom:.2rem; }
+.num-val { font-family:var(--font-serif); font-size:clamp(2.5rem,5vw,4rem); color:#fff; line-height:1; margin-bottom:.4rem; }
+.num-desc { font-size:.82rem; color:rgba(255,255,255,.5); line-height:1.5; }
+.facts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1px; background:rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
+.fact-item { background:var(--white); padding:1.25rem 1.5rem; display:flex; flex-direction:column; gap:.2rem; }
+.fact-key { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--sea); }
+.fact-val { font-family:var(--font-serif); font-size:1.15rem; color:var(--ink); line-height:1.2; }
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
+.why-item { padding:2.5rem; border-right:1px solid rgba(0,0,0,.08); border-bottom:1px solid rgba(0,0,0,.08); background:var(--white); }
+.why-item:nth-child(2n) { border-right:none; }
+.why-item:nth-last-child(-n+2) { border-bottom:none; }
+.why-num { font-family:var(--font-serif); font-size:3rem; color:var(--sand-dark); line-height:1; margin-bottom:.75rem; }
+.why-title { font-family:var(--font-serif); font-size:1.2rem; color:var(--deep-blue); margin-bottom:.6rem; line-height:1.2; }
+.why-text { font-size:.875rem; color:var(--muted); line-height:1.7; }
+.beach-cat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.beach-cat { border-top:2px solid var(--deep-blue); padding-top:1.25rem; }
+.beach-cat-title { font-family:var(--font-serif); font-size:1.1rem; color:var(--deep-blue); margin-bottom:1rem; }
+.beach-cat-list { display:flex; flex-direction:column; gap:.1rem; }
+.beach-link { display:flex; align-items:center; gap:.6rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.9rem; color:var(--ink); transition:color .15s,padding-left .15s; }
+.beach-link:hover { color:var(--aegean); padding-left:.4rem; }
+.beach-link-icon { font-size:.8rem; color:var(--muted); flex-shrink:0; }
+.villages-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.75rem; }
+.village-card { background:var(--white); border:1px solid var(--sand-dark); border-radius:var(--radius-md); padding:1.5rem 1.25rem; display:flex; flex-direction:column; gap:.35rem; transition:transform .15s,box-shadow .15s,border-color .15s; }
+.village-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--sea); }
+.village-name { font-family:var(--font-serif); font-size:1.15rem; color:var(--deep-blue); }
+.village-note { font-size:.78rem; color:var(--muted); line-height:1.45; }
+.places-strip { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.75rem; }
+.place-chip { background:var(--white); border:1px solid var(--sand-dark); border-radius:var(--radius-md); padding:1.25rem; display:flex; flex-direction:column; gap:.25rem; transition:transform .15s,box-shadow .15s,border-color .15s; }
+.place-chip:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--sea); }
+.place-chip-name { font-family:var(--font-serif); font-size:1.05rem; color:var(--deep-blue); }
+.place-chip-type { font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+.months-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0; border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
+.month-item { padding:1.75rem 1.25rem; border-right:1px solid rgba(0,0,0,.08); background:var(--white); }
+.month-item:last-child { border-right:none; }
+.month-item--best { background:var(--deep-blue); }
+.month-item--best .month-name { color:#fff; }
+.month-item--best .month-desc { color:rgba(255,255,255,.6); }
+.month-item--best .month-tag { background:rgba(58,155,201,.25); color:var(--sky); }
+.month-item--warn .month-tag { background:rgba(217,119,6,.12); color:#92400e; }
+.month-name { font-family:var(--font-serif); font-size:1.1rem; color:var(--ink); margin-bottom:.5rem; }
+.month-tag { display:inline-block; font-size:.6rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:.6rem; background:var(--sand-dark); color:var(--muted); }
+.month-desc { font-size:.78rem; color:var(--muted); line-height:1.55; }
+.meltemia-note { margin-top:1.25rem; font-size:.82rem; color:var(--muted); padding:0 .25rem; }
+.tav-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+.tav-card { display:flex; flex-direction:column; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border); background:var(--white); transition:transform .2s,box-shadow .2s; }
+.tav-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
+.tav-img { width:100%; height:200px; object-fit:cover; display:block; transition:transform .4s ease; }
+.tav-card:hover .tav-img { transform:scale(1.04); }
+.tav-ph { height:200px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; background:linear-gradient(140deg,var(--sand),var(--sand-dark)); }
+.tav-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; gap:.3rem; }
+.tav-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:.2rem; }
+.tav-badge { font-size:.58rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--aegean); color:#fff; padding:2px 8px; border-radius:100px; }
+.tav-price { font-weight:700; font-size:.85rem; color:#b08d57; }
+.tav-name { font-family:var(--font-serif); font-size:1.1rem; color:var(--ink); line-height:1.25; }
+.tav-loc { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:#c0613a; }
+.tav-foot { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:.7rem; border-top:1px solid var(--border); }
+.tav-rating { font-size:.8rem; color:var(--muted); }
+.tav-cuisine { font-size:.68rem; font-weight:500; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+@media (max-width:900px) {
+  .numbers-grid { grid-template-columns:repeat(2,1fr); }
+  .numbers-grid .num-item:nth-child(2n) { border-right:none; }
+  .months-grid { grid-template-columns:1fr 1fr; }
+  .month-item:nth-child(2n) { border-right:none; }
+  .month-item { border-bottom:1px solid rgba(0,0,0,.08); }
+  .tav-grid { grid-template-columns:1fr 1fr; }
+  .why-grid { grid-template-columns:1fr; }
+  .why-item:nth-child(2n) { border-right:none; }
+  .why-item { border-bottom:1px solid rgba(0,0,0,.08); }
+}
+@media (max-width:768px) {
+  .cat-row { grid-template-columns:50px 1fr auto; gap:1rem; }
+  .cat-arrow { display:none; }
+  .cat-num { font-size:2rem; }
+  .cat-name { font-size:1.4rem; }
+  .cat-desc { display:none; }
+  .beach-cat-grid { grid-template-columns:1fr; }
+  .tav-grid { grid-template-columns:1fr; }
+  .scroll-hint { display:none; }
+}
+@media (max-width:480px) {
+  .hero-ctas { flex-direction:column; }
+  .numbers-grid { grid-template-columns:1fr; }
+  .numbers-grid .num-item { border-right:none; }
+}
 </style>

@@ -54,7 +54,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.gu
   </script>
 
   <!-- Favicon -->
-  <link rel="icon"             href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" sizes="16x16" href="/favicon-16x16.png" type="image/png" />
+  <link rel="icon" sizes="32x32" href="/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest"         href="/site.webmanifest" />
 
@@ -82,13 +83,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.gu
       </a>
 
       <nav class="main-nav" id="main-nav" aria-label="Κύρια πλοήγηση">
-        <a href={`${base}beaches`}    class="nav-link" data-navlink>
-          <span class="nav-icon" aria-hidden="true">🏖</span>
-          <span>Παραλίες</span>
-        </a>
         <a href={`${base}eat`}        class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🍽</span>
           <span>Φαγητό</span>
+        </a>
+        <a href={`${base}beaches`}    class="nav-link" data-navlink>
+          <span class="nav-icon" aria-hidden="true">🏖</span>
+          <span>Παραλίες</span>
         </a>
         <a href={`${base}activities`} class="nav-link nav-link--soon" data-navlink aria-disabled="true" tabindex="-1">
           <span class="nav-icon" aria-hidden="true">🚤</span>

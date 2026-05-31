@@ -111,9 +111,9 @@ const otherVillages = villagesData
           {linkedTaverns.map(t => (
             <a href={`${base}eat/${t.slug}`} class="nearby-item">
               <div class="nearby-img-wrap">
-                {t.photoRef ? (
+                {t.localPhoto ? (
                   <img
-                    src={`https://places.googleapis.com/v1/${t.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=200`}
+                    src={t.localPhoto ?? `/images/taverns/${t.slug}.jpg`}
                     alt={t.name}
                     class="nearby-img"
                     loading="lazy"
@@ -144,9 +144,9 @@ const otherVillages = villagesData
           {linkedBeaches.map(b => (
             <a href={`${base}beaches/${b.slug}`} class="nearby-item">
               <div class="nearby-img-wrap">
-                {b.photoRef ? (
+                {b.localPhoto ? (
                   <img
-                    src={`https://places.googleapis.com/v1/${b.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=200`}
+                    src={b.localPhoto ?? `/images/beaches/${b.slug}.jpg`}
                     alt={b.name}
                     class="nearby-img"
                     loading="lazy"

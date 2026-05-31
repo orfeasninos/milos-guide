@@ -64,9 +64,9 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
           data-featured={tavern.isFeatured ? 'true' : 'false'}
         >
           <div class="tav-img-wrap">
-            {tavern.photoRef ? (
+            {tavern.localPhoto ? (
               <img
-                src={`https://places.googleapis.com/v1/${tavern.photoRef}/media?key=${import.meta.env.PUBLIC_GOOGLE_PLACES_API_KEY}&maxWidthPx=600`}
+                src={tavern.localPhoto ?? `/images/taverns/${tavern.slug}.jpg`}
                 alt={`Φωτογραφία ${tavern.name}`}
                 class="tav-img"
                 loading="lazy"

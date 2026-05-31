@@ -32,7 +32,7 @@
       "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
       "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
     ],
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "slug": "sirocco-restaurant",
@@ -102,7 +102,7 @@
       "Σάββατο: 1:00–11:00 μ.μ.",
       "Κυριακή: 1:00–11:00 μ.μ."
     ],
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "slug": "o-hamos-tavern",
@@ -137,7 +137,7 @@
       "Σάββατο: 1:00–11:30 μ.μ.",
       "Κυριακή: 1:00–11:30 μ.μ."
     ],
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "slug": "avli-milos",
