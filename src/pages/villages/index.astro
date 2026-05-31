@@ -1,34 +1,34 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import villagesData from '../../../data/villages.json';
+import Layout from '../../layouts/Layout.astro';
+import villagesData from '../../data/villages.json';
 
 
 const typeLabels: Record<string, { label: string; icon: string }> = {
-  capital:  { label: 'Πρωτεύουσα', icon: '👑' },
-  historic: { label: 'Ιστορικό',   icon: '🏛' },
-  fishing:  { label: 'Ψαροχώρι',   icon: '🎣' },
-  port:     { label: 'Λιμάνι',     icon: '⚓' },
-  syrmata:  { label: 'Σύρματα',    icon: '🏠' },
-  village:  { label: 'Χωριό',      icon: '🏘' },
+  capital:  { label: 'Capital',      icon: '👑' },
+  historic: { label: 'Historic',     icon: '🏛' },
+  fishing:  { label: 'Fishing port', icon: '🎣' },
+  port:     { label: 'Harbour',      icon: '⚓' },
+  syrmata:  { label: 'Syrmata',      icon: '🏠' },
+  village:  { label: 'Village',      icon: '🏘' },
 };
 
 const types = [...new Set(villagesData.map(v => v.type))];
 ---
 
 <Layout
-  lang="el"
-  title="Χωριά της Μήλου"
-  description={`Γνωρίστε τα ${villagesData.length} χωριά της Μήλου — Πλάκα, Κλήμα, Τρυπητή, Πολλώνια και άλλα. Ιστορία, αρχιτεκτονική και αυθεντική ζωή.`}
+  lang="en"
+  title="Villages of Milos"
+  description={`Discover the ${villagesData.length} villages of Milos — Plaka, Klima, Tripiti, Pollonia and more. History, architecture and authentic island life.`}
 >
 
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="container">
-    <p class="page-label">Εξερεύνηση</p>
-    <h1 class="page-title">Χωριά της Μήλου</h1>
+    <p class="page-label">Explore</p>
+    <h1 class="page-title">Villages of Milos</h1>
     <p class="page-desc">
-      Η Μήλος δεν είναι μόνο παραλίες. Πλάκα, Κλήμα, Τρυπητή, Πολλώνια —
-      κάθε χωριό έχει τη δική του ψυχή και ιστορία.
+      Milos is more than beaches. Plaka, Klima, Tripiti, Pollonia —
+      every village has its own soul and story.
     </p>
   </div>
 </section>
@@ -37,7 +37,7 @@ const types = [...new Set(villagesData.map(v => v.type))];
 <div class="filters-bar">
   <div class="container filters-inner">
     <div class="filter-chips" id="type-chips">
-      <button class="chip chip--active" data-type="all">Όλα</button>
+      <button class="chip chip--active" data-type="all">All</button>
       {types.map(type => {
         const t = typeLabels[type] ?? { label: type, icon: '📍' };
         return (
@@ -59,7 +59,7 @@ const types = [...new Set(villagesData.map(v => v.type))];
         const t = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
         return (
           <a
-            href={`/el/villages/${village.slug}`}
+            href={`/villages/${village.slug}`}
             class="vc"
             data-type={village.type}
           >
@@ -88,8 +88,8 @@ const types = [...new Set(villagesData.map(v => v.type))];
 
     <div class="empty-state" id="empty-state" style="display:none">
       <p class="empty-icon">🏘</p>
-      <p class="empty-text">Δεν βρέθηκαν χωριά με αυτό το φίλτρο.</p>
-      <button class="btn-dark" id="reset-filters">Εμφάνιση όλων</button>
+      <p class="empty-text">No villages found with this filter.</p>
+      <button class="btn-dark" id="reset-filters">Show all</button>
     </div>
   </div>
 </section>
@@ -99,19 +99,19 @@ const types = [...new Set(villagesData.map(v => v.type))];
   <div class="container">
     <div class="map-inner">
       <div>
-        <span class="label">Γεωγραφία</span>
-        <h2 class="sec-title">Πού βρίσκονται τα χωριά;</h2>
+        <span class="label">Geography</span>
+        <h2 class="sec-title">Where are the villages?</h2>
         <p class="sec-sub" style="margin-top:.5rem">
-          Τα περισσότερα χωριά είναι στο κεντρικό και βόρειο τμήμα του νησιού,
-          με τον Αδάμαντα στο νότο ως κύριο λιμάνι.
+          Most villages are in the central and northern part of the island,
+          with Adamas in the south as the main port.
         </p>
       </div>
       <div class="area-list">
         {[
-          { area: 'Κεντρική Μήλος', villages: ['Πλάκα', 'Τρυπητή', 'Τριοβάσαλος'] },
-          { area: 'Βόρεια Μήλος',   villages: ['Πολλώνια', 'Μανδράκια', 'Φυροπόταμος'] },
-          { area: 'Δυτική Μήλος',   villages: ['Κλήμα'] },
-          { area: 'Νότια Μήλος',    villages: ['Αδάμαντας'] },
+          { area: 'Central Milos', villages: ['Plaka', 'Tripiti', 'Triovasalos'] },
+          { area: 'North Milos',    villages: ['Pollonia', 'Mandrakia', 'Firopotamos'] },
+          { area: 'West Milos',     villages: ['Klima'] },
+          { area: 'South Milos',    villages: ['Adamas'] },
         ].map(g => (
           <div class="area-group">
             <p class="area-group-name">{g.area}</p>
@@ -371,7 +371,7 @@ function applyFilters() {
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   });
-  if (counter) counter.textContent = `${visible} χωριά`;
+  if (counter) counter.textContent = `${visible} villages`;
   if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
   if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
 }

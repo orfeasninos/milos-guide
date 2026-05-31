@@ -1,0 +1,630 @@
+---
+import Layout from '../layouts/Layout.astro';
+import tavernsData from '../data/taverns.json';
+import beachesData from '../data/beaches.json';
+import villagesData from '../data/villages.json';
+
+
+type Village = typeof villagesData[number];
+type Tavern  = typeof tavernsData[number];
+type Beach   = typeof beachesData[number];
+---
+
+<Layout
+  lang="en"
+  title="About Milos"
+  description="Everything you need to know about Milos — history, geography, how to get there, when to visit and what to see. The most complete guide to the island."
+>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="container">
+    <div class="about-hero-inner">
+      <div class="about-hero-text">
+        <p class="page-label">The guide</p>
+        <h1 class="about-title">About Milos</h1>
+        <p class="about-lead">
+          A volcanic island in the Cyclades with 70+ beaches, world-class archaeological monuments
+          and one of the largest natural harbours in the Mediterranean.
+          Milos resembles no other island.
+        </p>
+      </div>
+      <div class="about-stats-box">
+        <div class="astat">
+          <span class="astat-n">151</span>
+          <span class="astat-u">km²</span>
+          <span class="astat-l">Area</span>
+        </div>
+        <div class="astat">
+          <span class="astat-n">125</span>
+          <span class="astat-u">km</span>
+          <span class="astat-l">Coastline</span>
+        </div>
+        <div class="astat">
+          <span class="astat-n">70+</span>
+          <span class="astat-u"></span>
+          <span class="astat-l">Beaches</span>
+        </div>
+        <div class="astat">
+          <span class="astat-n">~5K</span>
+          <span class="astat-u"></span>
+          <span class="astat-l">Residents</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-hero-strip"></div>
+</section>
+
+
+<!-- TABLE OF CONTENTS -->
+<section class="sec sec-white toc-sec">
+  <div class="container">
+    <p class="page-label">Contents</p>
+    <nav class="toc-grid" aria-label="Page contents">
+      <a href="#geography"  class="toc-item">🌍 Geography &amp; location</a>
+      <a href="#history"    class="toc-item">🏺 History</a>
+      <a href="#volcano"    class="toc-item">🌋 Volcanic origin</a>
+      <a href="#aphrodite"  class="toc-item">🗿 Venus de Milo</a>
+      <a href="#howtoget"   class="toc-item">🚢 How to get there</a>
+      <a href="#whentogo"   class="toc-item">📅 When to visit</a>
+      <a href="#villages"   class="toc-item">🏘 Villages</a>
+      <a href="#numbers"    class="toc-item">📊 Milos in numbers</a>
+    </nav>
+  </div>
+</section>
+
+
+<!-- GEOGRAPHY -->
+<section class="sec sec-sand content-sec" id="geography">
+  <div class="container content-grid">
+    <div class="content-main">
+      <span class="sec-anchor-label">Geography &amp; location</span>
+      <h2 class="content-title">Where is Milos?</h2>
+      <p>Η Μήλος βρίσκεται στο νοτιοδυτικό άκρο των Κυκλάδων, 86 ναυτικά μίλια από τον Πειραιά. Ανήκει διοικητικά στην Περιφερειακή Ενότητα Μήλου, μαζί με τις γειτονικές Κίμωλο, Σίφνο και Φολέγανδρο.</p>
+      <p>Το νησί έχει έκταση 151 km² και είναι η 7η μεγαλύτερη νήσος των Κυκλάδων. Η ακτογραμμή του, που φτάνει τα 125 km, είναι ιδιαίτερα διαρθρωμένη λόγω της ηφαιστειακής προέλευσης — με κόλπους, σπήλαια και βραχώδεις σχηματισμούς που δεν συναντάς αλλού στο Αιγαίο.</p>
+      <p>Ο κόλπος της Μήλου, που δημιουργήθηκε από τη βύθιση αρχαίου ηφαιστείου, είναι ένα από τα μεγαλύτερα και ασφαλέστερα φυσικά λιμάνια της Μεσογείου — γεγονός που καθόρισε την ιστορική σημασία του νησιού από την αρχαιότητα.</p>
+    </div>
+    <aside class="content-aside">
+      <div class="fact-card">
+        <p class="fact-card-title">Geographic facts</p>
+        <ul class="fact-list">
+          <li><span>Region</span><span>Cyclades</span></li>
+          <li><span>Municipality</span><span>Milos</span></li>
+          <li><span>Capital</span><span>Plaka</span></li>
+          <li><span>Port</span><span>Adamas</span></li>
+          <li><span>Area</span><span>151 km²</span></li>
+          <li><span>Coastline</span><span>125 km</span></li>
+          <li><span>Highest point</span><span>Prophet Elias (751m)</span></li>
+          <li><span>Coordinates</span><span>36.73°N 24.44°E</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+<!-- HISTORY -->
+<section class="sec sec-white content-sec" id="history">
+  <div class="container content-grid">
+    <div class="content-main">
+      <span class="sec-anchor-label">History</span>
+      <h2 class="content-title">From the Neolithic era to today</h2>
+      <p>Η Μήλος κατοικείται αδιάλειπτα από τα τέλη της Νεολιθικής εποχής (περ. 5000 π.Χ.), κάτι που την καθιστά ένα από τα αρχαιότερα κατοικημένα νησιά του Αιγαίου. Ο οψιδιανός — ένα ηφαιστειακό πέτρωμα κατάλληλο για κατασκευή εργαλείων — ήταν ο λόγος: τα κοιτάσματα οψιδιανού στη Μήλο εξάγονταν σε όλη τη Μεσόγειο, από την Αίγυπτο ως τη Μεσοποταμία.</p>
+      <p>Κατά την Κλασική Αντίκεια, η Μήλος ήταν ουδέτερη κατά τον Πελοποννησιακό Πόλεμο — επιλογή που είχε τραγικές συνέπειες: οι Αθηναίοι το 416 π.Χ. εξόντωσαν τους άνδρες και υποδούλωσαν τον πληθυσμό σε ένα από τα πιο σκοτεινά επεισόδια της αρχαίας ιστορίας (Μήλιος Διάλογος, Θουκυδίδης).</p>
+      <p>Κατά τη Ρωμαϊκή περίοδο το νησί ανέκαμψε, αφήνοντας σημαντικά μνημεία: το αρχαίο θέατρο στην Τρυπητή και τις κατακόμβες — ένα από τα εκτενέστερα χριστιανικά υπόγεια νεκροταφεία στον κόσμο (1ος–5ος αι. μ.Χ.). Κατά τη Βυζαντινή και Ενετική περίοδο, ο κόλπος χρησιμοποιήθηκε ως ναυτικό καταφύγιο. Στον Β' Παγκόσμιο Πόλεμο, η Μήλος υπέστη σημαντικές ζημιές από βομβαρδισμούς.</p>
+    </div>
+    <aside class="content-aside">
+      <div class="fact-card">
+        <p class="fact-card-title">Historical timeline</p>
+        <ul class="timeline-list">
+          <li><span class="tl-date">~5000 BC</span><span>First inhabitants, obsidian trade</span></li>
+          <li><span class="tl-date">416 BC</span><span>Athenian invasion, Melian Dialogue</span></li>
+          <li><span class="tl-date">1st–5th c.</span><span>Catacombs of Tripiti</span></li>
+          <li><span class="tl-date">1820</span><span>Discovery of the Venus de Milo</span></li>
+          <li><span class="tl-date">1941–44</span><span>Occupation, bombardments</span></li>
+          <li><span class="tl-date">Today</span><span>~5,000 residents, tourism</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+<!-- VOLCANO -->
+<section class="sec sec-dark content-sec" id="volcano">
+  <div class="container content-grid content-grid--dark">
+    <div class="content-main">
+      <span class="sec-anchor-label sec-anchor-label--lt">Volcanic origin</span>
+      <h2 class="content-title content-title--lt">Why does Milos look like this?</h2>
+      <p class="dark-p">Η Μήλος ανήκει στο Αιγαιακό Ηφαιστειακό Τόξο — μια αλυσίδα νησιών που σχηματίστηκε από τη σύγκρουση τεκτονικών πλακών. Η ηφαιστειακή δραστηριότητα ξεκίνησε πριν από περίπου 3 εκατομμύρια χρόνια και έχει διαμορφώσει κάθε πτυχή του νησιού.</p>
+      <p class="dark-p">Ο κόλπος της Μήλου είναι στην ουσία μια βυθισμένη καλδέρα — η "στέγη" ενός παλιού ηφαιστείου που κατέρρευσε μέσα στη θάλασσα. Αυτό εξηγεί γιατί έχει τόσο μεγάλο βάθος και αποτελεί τόσο ασφαλές λιμάνι.</p>
+      <p class="dark-p">Τα ορατά αποτελέσματα: οι λευκοί βραχώδεις σχηματισμοί του Σαρακήνικο (από ηφαιστειακή τέφρα), τα θερμά υπόγεια νερά στο Παλαιοχώρι, τα πετρώματα οψιδιανού και η έντονα διαρθρωμένη ακτογραμμή με τα αμέτρητα σπήλαια.</p>
+    </div>
+    <aside class="content-aside">
+      <div class="fact-card fact-card--dark">
+        <p class="fact-card-title">Volcanic facts</p>
+        <ul class="fact-list fact-list--dark">
+          <li><span>Type</span><span>Stratovolcano</span></li>
+          <li><span>Arc</span><span>Aegean Volcanic</span></li>
+          <li><span>Age</span><span>~3 million years</span></li>
+          <li><span>Caldera</span><span>Bay of Milos</span></li>
+          <li><span>Hot springs</span><span>Paleochori</span></li>
+          <li><span>Obsidian</span><span>Northern part of island</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+<!-- APHRODITE -->
+<section class="sec sec-white content-sec" id="aphrodite">
+  <div class="container content-grid">
+    <div class="content-main">
+      <span class="sec-anchor-label">The Venus de Milo</span>
+      <h2 class="content-title">The most famous find in Milos</h2>
+      <p>Το 1820, ένας αγρότης που έσκαβε στους αγρούς του κοντά στην αρχαία πόλη Μήλου βρήκε ένα μαρμάρινο άγαλμα γυναικείας μορφής σε δύο τμήματα. Ήταν η Αφροδίτη της Μήλου, ένα από τα σπουδαιότερα αγάλματα της αρχαίας τέχνης.</p>
+      <p>Το άγαλμα, ύψους 2,02 μέτρων, φιλοτεχνήθηκε γύρω στο 130–100 π.Χ. από αγνώστου ονόματος καλλιτέχνη της Ελληνιστικής εποχής. Εντυπωσιακό για τη φυσικότητα, την αρμονία των αναλογιών και τη ζωντάνια της έκφρασης. Μεταφέρθηκε στη Γαλλία και βρίσκεται στο Λούβρο από το 1821 — ένα γεγονός που παραμένει έκτοτε πηγή εθνικής πικρίας.</p>
+      <p>Το ακριβές σημείο εύρεσης, κοντά στη σημερινή Τρυπητή, διατηρεί μια διακριτική σήμανση. Αντίγραφο του αγάλματος υπάρχει στο Αρχαιολογικό Μουσείο Μήλου στην Πλάκα.</p>
+    </div>
+    <aside class="content-aside">
+      <div class="fact-card">
+        <p class="fact-card-title">Statue facts</p>
+        <ul class="fact-list">
+          <li><span>Discovery</span><span>1820, Tripiti</span></li>
+          <li><span>Dating</span><span>130–100 BC</span></li>
+          <li><span>Height</span><span>2.02 metres</span></li>
+          <li><span>Material</span><span>Parian marble</span></li>
+          <li><span>Now</span><span>The Louvre, Paris</span></li>
+          <li><span>Replica</span><span>Milos Museum, Plaka</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+
+<!-- HOW TO GET THERE -->
+<section class="sec sec-sand content-sec" id="howtoget">
+  <div class="container">
+    <span class="sec-anchor-label">How to get there</span>
+    <h2 class="content-title" style="margin-bottom:2rem">Getting to Milos</h2>
+    <div class="transport-grid">
+      <div class="transport-card">
+        <span class="transport-icon">🚢</span>
+        <h3 class="transport-title">Ferry from Piraeus</h3>
+        <p class="transport-body">The most common option. Regular ferry: ~7 hours. High-speed (SeaJets, Hellenic Seaways): ~3.5 hours. Daily sailings in summer, frequent in winter.</p>
+        <p class="transport-detail">Operators: ANEK, SeaJets, Golden Star Ferries</p>
+      </div>
+      <div class="transport-card">
+        <span class="transport-icon">✈️</span>
+        <h3 class="transport-title">By plane</h3>
+        <p class="transport-body">Milos Airport (MLO) is served by a direct flight from Athens (Sky Express, ~45 min). In summer there are charter flights from European cities.</p>
+        <p class="transport-detail">Airport: 4 km from Adamas</p>
+      </div>
+      <div class="transport-card">
+        <span class="transport-icon">🚗</span>
+        <h3 class="transport-title">On the island</h3>
+        <p class="transport-body">Renting a car or scooter is essential to explore the island. The local bus (KTEL) covers the main routes but not many beaches.</p>
+        <p class="transport-detail">Rentals: Adamas port, airport</p>
+      </div>
+      <div class="transport-card">
+        <span class="transport-icon">⛵</span>
+        <h3 class="transport-title">Boat Tours</h3>
+        <p class="transport-body">Many beaches (Kleftiko, Sykia) are only accessible by boat. Daily boat tours from Adamas — book early in summer.</p>
+        <p class="transport-detail">Departure: Adamas harbour, morning</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHEN TO GO -->
+<section class="sec sec-white content-sec" id="whentogo">
+  <div class="container">
+    <span class="sec-anchor-label">When to visit</span>
+    <h2 class="content-title" style="margin-bottom:.5rem">Every season has its character</h2>
+    <p style="color:var(--muted);margin-bottom:2rem;font-size:.95rem;max-width:580px">
+      The meltemi winds (northern winds) directly affect which beaches are suitable each day — this is factored into the suggestions below.
+    </p>
+    <div class="months-table">
+      {[
+        { month: 'April', crowd: '⬜⬜⬜⬜⬜', temp: '16°C', sea: '17°C', tag: 'Peaceful', note: 'Wildflowers in bloom, few tourists. Sea still fresh.' },
+        { month: 'May',    crowd: '🟦⬜⬜⬜⬜', temp: '20°C', sea: '19°C', tag: 'Ideal', note: 'Perfect balance. Warm, few crowds, everything open.' },
+        { month: 'June',  crowd: '🟦🟦⬜⬜⬜', temp: '25°C', sea: '23°C', tag: 'Very good', note: 'Warm sea, tourism beginning to pick up.' },
+        { month: 'July',  crowd: '🟦🟦🟦🟦⬜', temp: '29°C', sea: '25°C', tag: 'Peak season', note: 'Busy, meltemi begins. Book everything early.' },
+        { month: 'August',crowd: '🟦🟦🟦🟦🟦', temp: '30°C', sea: '26°C', tag: 'Full', note: 'Peak tourism and meltemi. Avoid northern beaches.' },
+        { month: 'September', crowd: '🟦🟦🟦⬜⬜', temp: '26°C', sea: '25°C', tag: '★ Best month', note: 'Warm sea, fewer crowds, lower prices.' },
+        { month: 'October', crowd: '🟦⬜⬜⬜⬜', temp: '21°C', sea: '23°C', tag: 'Autumn', note: 'Very quiet, some places closed. For independent travellers.' },
+      ].map(m => (
+        <div class={`month-row${m.tag.includes('★') ? ' month-row--best' : ''}`}>
+          <span class="mr-month">{m.month}</span>
+          <span class={`mr-tag${m.tag.includes('★') ? ' mr-tag--best' : ''}`}>{m.tag}</span>
+          <span class="mr-crowd" title="Occupancy">{m.crowd}</span>
+          <span class="mr-temps">{m.temp} / {m.sea} 🌊</span>
+          <span class="mr-note">{m.note}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+<!-- VILLAGES OVERVIEW -->
+<section class="sec sec-sand content-sec" id="villages">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="sec-anchor-label">Villages</span>
+        <h2 class="content-title">The villages of Milos</h2>
+      </div>
+      <a href="/villages" class="see-all">All villages →</a>
+    </div>
+    <div class="villages-mini-grid">
+      {villagesData.map((v: Village) => (
+        <a href={`/villages/${v.slug}`} class="vmini">
+          <h3 class="vmini-name">{v.name}</h3>
+          <p class="vmini-tag">{v.tagline}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+<!-- NUMBERS -->
+<section class="sec sec-dark content-sec" id="numbers">
+  <div class="container">
+    <span class="sec-anchor-label sec-anchor-label--lt">Statistics</span>
+    <h2 class="content-title content-title--lt" style="margin-bottom:3rem">Milos in numbers</h2>
+    <div class="big-numbers">
+      {[
+        { n: `${beachesData.length}+`, label: 'Beaches in the guide', sub: 'catalogued and categorised' },
+        { n: `${tavernsData.length}+`, label: 'Restaurants', sub: 'from across the island' },
+        { n: `${villagesData.length}`,  label: 'Villages',        sub: 'with detailed guides' },
+        { n: '70+',   label: 'Total beaches', sub: 'including undeveloped ones' },
+        { n: '125',   label: 'km of coastline',     sub: 'including many sea caves' },
+        { n: '86',    label: 'nm from Piraeus',   sub: '~3.5 hrs by high-speed ferry' },
+      ].map(s => (
+        <div class="bnum">
+          <span class="bnum-n">{s.n}</span>
+          <span class="bnum-label">{s.label}</span>
+          <span class="bnum-sub">{s.sub}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="sec sec-white">
+  <div class="container cta-sec">
+    <h2 class="cta-title">Ready to explore?</h2>
+    <p class="cta-sub">Beaches, restaurants, villages — all in the guide.</p>
+    <div class="cta-btns">
+      <a href="/beaches" class="btn-dark">🏖 Beaches</a>
+      <a href="/eat" class="btn-outline">🍽 Restaurants</a>
+      <a href="/villages" class="btn-outline">🏘 Villages</a>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+
+<style>
+/* ── HERO ── */
+.about-hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 3.5rem 0 0;
+  position: relative;
+}
+.about-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: start;
+  padding-bottom: 3rem;
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.about-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--deep-blue);
+  line-height: 1.08;
+  margin-bottom: 1rem;
+}
+.about-lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 520px;
+}
+.about-stats-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--sand);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--sand-dark);
+  flex-shrink: 0;
+}
+.astat { display: flex; flex-direction: column; gap: 0; text-align: right; }
+.astat-n { font-family: var(--font-serif); font-size: 2.2rem; color: var(--deep-blue); line-height: 1; }
+.astat-u { font-size: 0.8rem; font-weight: 600; color: var(--sea); }
+.astat-l { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.about-hero-strip {
+  height: 3px;
+  background: linear-gradient(90deg, var(--deep-blue) 0%, var(--aegean) 40%, var(--sea) 70%, var(--sand-dark) 100%);
+}
+
+/* ── TOC ── */
+.toc-sec { padding: 2rem 0; }
+.toc-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.toc-item {
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--sand);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.toc-item:hover { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+
+/* ── CONTENT SECTIONS ── */
+.content-sec { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 3.5rem;
+  align-items: start;
+}
+.content-grid--dark .content-main p { color: rgba(255,255,255,0.7); }
+
+.sec-anchor-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.sec-anchor-label--lt { color: rgba(58,155,201,0.75); }
+
+.content-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.content-title--lt { color: #fff; }
+
+.content-main p {
+  font-size: 0.975rem;
+  line-height: 1.82;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.content-main p:last-child { margin-bottom: 0; }
+.dark-p { color: rgba(255,255,255,0.68) !important; }
+
+/* Fact card */
+.fact-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+.fact-card--dark {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+}
+.fact-card-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.85rem;
+}
+.fact-card--dark .fact-card-title { color: rgba(255,255,255,0.35); }
+
+.fact-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; }
+.fact-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.fact-list li:last-child { border-bottom: none; }
+.fact-list li span:first-child { color: var(--muted); flex-shrink: 0; }
+.fact-list li span:last-child { color: var(--ink); text-align: right; font-weight: 500; }
+.fact-list--dark li { border-color: rgba(255,255,255,0.08); }
+.fact-list--dark li span:first-child { color: rgba(255,255,255,0.35); }
+.fact-list--dark li span:last-child { color: rgba(255,255,255,0.8); }
+
+/* Timeline */
+.timeline-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; }
+.timeline-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+.timeline-list li:last-child { border-bottom: none; }
+.tl-date { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; color: var(--sea); }
+
+/* ── TRANSPORT ── */
+.transport-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.transport-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.transport-icon { font-size: 1.75rem; }
+.transport-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--deep-blue); margin: 0; }
+.transport-body { font-size: 0.875rem; color: var(--ink); line-height: 1.65; flex: 1; }
+.transport-detail { font-size: 0.72rem; font-weight: 600; color: var(--muted); padding-top: 0.5rem; border-top: 1px solid var(--border); }
+
+/* ── WHEN TO GO ── */
+.months-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.month-row {
+  display: grid;
+  grid-template-columns: 110px 120px 80px 100px 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  font-size: 0.875rem;
+}
+.month-row:last-child { border-bottom: none; }
+.month-row:nth-child(even) { background: var(--sand); }
+.month-row--best { background: var(--deep-blue) !important; }
+.mr-month { font-weight: 600; color: var(--ink); }
+.month-row--best .mr-month { color: #fff; }
+.mr-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--sand-dark);
+  color: var(--muted);
+  width: fit-content;
+}
+.mr-tag--best { background: rgba(58,155,201,0.25); color: var(--sky); }
+.mr-crowd { font-size: 0.7rem; letter-spacing: -0.05em; }
+.month-row--best .mr-crowd { filter: brightness(1.5); }
+.mr-temps { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+.month-row--best .mr-temps { color: rgba(255,255,255,0.55); }
+.mr-note { font-size: 0.8rem; color: var(--muted); }
+.month-row--best .mr-note { color: rgba(255,255,255,0.6); }
+
+/* ── VILLAGES MINI ── */
+.villages-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+.vmini {
+  background: var(--white);
+  border: 1px solid var(--sand-dark);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.vmini:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--sea); }
+.vmini-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--deep-blue); }
+.vmini-tag { font-size: 0.75rem; color: var(--muted); line-height: 1.4; font-style: italic; }
+
+/* ── BIG NUMBERS ── */
+.big-numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.bnum {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 2rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.bnum:nth-child(3n) { border-right: none; }
+.bnum:nth-last-child(-n+3) { border-bottom: none; }
+.bnum-n { font-family: var(--font-serif); font-size: clamp(2rem,5vw,3.5rem); color: #fff; line-height: 1; }
+.bnum-label { font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.75); }
+.bnum-sub { font-size: 0.72rem; color: rgba(255,255,255,0.38); }
+
+/* ── CTA ── */
+.cta-sec { text-align: center; padding: 4rem 0; }
+.cta-title { font-family: var(--font-serif); font-size: clamp(1.8rem,4vw,2.8rem); color: var(--deep-blue); margin-bottom: 0.6rem; }
+.cta-sub { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; }
+.cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.78rem 1.55rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--deep-blue);
+  border: 1.5px solid var(--border);
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+.btn-outline:hover { border-color: var(--aegean); background: var(--sand); transform: translateY(-2px); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .big-numbers { grid-template-columns: repeat(2, 1fr); }
+  .bnum:nth-child(2n) { border-right: none; }
+}
+@media (max-width: 768px) {
+  .about-hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .about-stats-box { flex-direction: row; flex-wrap: wrap; justify-content: space-between; }
+  .astat { text-align: left; }
+  .content-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .fact-card { position: static; }
+  .months-table { overflow-x: auto; }
+  .month-row { grid-template-columns: 100px 110px 1fr; min-width: 500px; }
+  .mr-crowd, .mr-temps { display: none; }
+  .big-numbers { grid-template-columns: 1fr 1fr; }
+  .bnum:nth-child(2n) { border-right: none; }
+}
+@media (max-width: 480px) {
+  .big-numbers { grid-template-columns: 1fr; }
+  .bnum { border-right: none; }
+  .transport-grid { grid-template-columns: 1fr; }
+}
+</style>

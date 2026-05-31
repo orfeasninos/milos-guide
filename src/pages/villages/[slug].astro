@@ -1,8 +1,8 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import villagesData from '../../../data/villages.json';
-import tavernsRaw from '../../../data/taverns.json';
-import beachesRaw from '../../../data/beaches.json';
+import Layout from '../../layouts/Layout.astro';
+import villagesData from '../../data/villages.json';
+import tavernsRaw from '../../data/taverns.json';
+import beachesRaw from '../../data/beaches.json';
 
 
 type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
@@ -10,7 +10,7 @@ type Beach  = typeof beachesRaw[number] & { localPhoto?: string | null };
 const tavernsData = tavernsRaw as Tavern[];
 const beachesData = beachesRaw as Beach[];
 
-const getName = (item: any): string => typeof item.name === 'object' ? item.name.el : item.name;
+const getName = (item: any): string => typeof item.name === 'object' ? item.name.en : item.name;
 
 export function getStaticPaths() {
   return villagesData.map((village) => ({
@@ -23,12 +23,12 @@ const { village } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const typeLabels: Record<string, { label: string; icon: string }> = {
-  capital:  { label: 'Πρωτεύουσα', icon: '👑' },
-  historic: { label: 'Ιστορικό',   icon: '🏛' },
-  fishing:  { label: 'Ψαροχώρι',   icon: '🎣' },
-  port:     { label: 'Λιμάνι',     icon: '⚓' },
-  syrmata:  { label: 'Σύρματα',    icon: '🏠' },
-  village:  { label: 'Χωριό',      icon: '🏘' },
+  capital:  { label: 'Capital',      icon: '👑' },
+  historic: { label: 'Historic',     icon: '🏛' },
+  fishing:  { label: 'Fishing port', icon: '🎣' },
+  port:     { label: 'Harbour',      icon: '⚓' },
+  syrmata:  { label: 'Syrmata',      icon: '🏠' },
+  village:  { label: 'Village',      icon: '🏘' },
 };
 const typeInfo = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
 
@@ -43,8 +43,8 @@ const otherVillages = villagesData
 ---
 
 <Layout
-  lang="el"
-  title={`${village.name} — Χωριό στη Μήλο`}
+  lang="en"
+  title={`${village.name} — Village in Milos`}
   description={`${village.name}: ${village.tagline}. ${village.description.slice(0, 120)}…`}
 >
 
@@ -53,14 +53,14 @@ const otherVillages = villagesData
   <div class="v-hero-bg"></div>
   <div class="v-hero-overlay">
     <div class="container v-hero-inner">
-      <a href="/el/villages" class="back-link">← Όλα τα χωριά</a>
+      <a href="/villages" class="back-link">← All villages</a>
       <div class="v-hero-meta">
         <span class="v-type-badge">{typeInfo.icon} {typeInfo.label}</span>
         <h1 class="v-hero-name">{village.name}</h1>
         <p class="v-hero-tagline">{village.tagline}</p>
         <div class="v-hero-chips">
           <span class="v-chip">📍 {village.area}</span>
-          {village.population && <span class="v-chip">👥 {village.population} κάτοικοι</span>}
+          {village.population && <span class="v-chip">👥 {village.population} residents</span>}
           {village.elevation && village.elevation !== 'sea level' && (
             <span class="v-chip">⛰ {village.elevation}</span>
           )}
@@ -97,7 +97,7 @@ const otherVillages = villagesData
     <!-- Highlights -->
     {village.highlights.length > 0 && (
       <div class="v-block">
-        <h2 class="block-title">Χαρακτηριστικά</h2>
+        <h2 class="block-title">Highlights</h2>
         <div class="highlights-grid">
           {village.highlights.map(h => (
             <div class="highlight-item">
@@ -113,12 +113,12 @@ const otherVillages = villagesData
     {linkedTaverns.length > 0 && (
       <div class="v-block">
         <div class="block-hdr">
-          <h2 class="block-title">Φαγητό στη {village.name}</h2>
-          <a href="/el/eat" class="see-all">Όλα τα εστιατόρια →</a>
+          <h2 class="block-title">Food in {village.name}</h2>
+          <a href="/eat" class="see-all">All restaurants →</a>
         </div>
         <div class="nearby-list">
           {linkedTaverns.map(t => (
-            <a href={`/el/eat/${t.slug}`} class="nearby-item">
+            <a href={`/eat/${t.slug}`} class="nearby-item">
               <div class="nearby-img-wrap">
                 {t.localPhoto ? (
                   <img
@@ -146,12 +146,12 @@ const otherVillages = villagesData
     {linkedBeaches.length > 0 && (
       <div class="v-block">
         <div class="block-hdr">
-          <h2 class="block-title">Παραλίες κοντά</h2>
-          <a href="/el/beaches" class="see-all">Όλες οι παραλίες →</a>
+          <h2 class="block-title">Nearby beaches</h2>
+          <a href="/beaches" class="see-all">All beaches →</a>
         </div>
         <div class="nearby-list">
           {linkedBeaches.map(b => (
-            <a href={`/el/beaches/${b.slug}`} class="nearby-item">
+            <a href={`/beaches/${b.slug}`} class="nearby-item">
               <div class="nearby-img-wrap">
                 {b.localPhoto ? (
                   <img
@@ -182,39 +182,39 @@ const otherVillages = villagesData
 
     <!-- Quick info -->
     <div class="s-card">
-      <p class="s-card-label">Πληροφορίες</p>
+      <p class="s-card-label">Information</p>
       <ul class="s-info-list">
         <li class="s-info-row">
-          <span class="s-info-key">Τύπος</span>
+          <span class="s-info-key">Type</span>
           <span class="s-info-val">{typeInfo.icon} {typeInfo.label}</span>
         </li>
         <li class="s-info-row">
-          <span class="s-info-key">Περιοχή</span>
+          <span class="s-info-key">Area</span>
           <span class="s-info-val">{village.area}</span>
         </li>
         {village.population && (
           <li class="s-info-row">
-            <span class="s-info-key">Πληθυσμός</span>
+            <span class="s-info-key">Population</span>
             <span class="s-info-val">{village.population}</span>
           </li>
         )}
         {village.elevation && (
           <li class="s-info-row">
-            <span class="s-info-key">Υψόμετρο</span>
+            <span class="s-info-key">Elevation</span>
             <span class="s-info-val">
-              {village.elevation === 'sea level' ? 'Επίπεδο θάλασσας' : village.elevation}
+              {village.elevation === 'sea level' ? 'Sea level' : village.elevation}
             </span>
           </li>
         )}
         {linkedTaverns.length > 0 && (
           <li class="s-info-row">
-            <span class="s-info-key">Εστιατόρια</span>
+            <span class="s-info-key">Restaurants</span>
             <span class="s-info-val">{linkedTaverns.length}</span>
           </li>
         )}
         {linkedBeaches.length > 0 && (
           <li class="s-info-row">
-            <span class="s-info-key">Παραλίες</span>
+            <span class="s-info-key">Beaches</span>
             <span class="s-info-val">{linkedBeaches.length}</span>
           </li>
         )}
@@ -235,15 +235,15 @@ const otherVillages = villagesData
 
     <!-- Other villages -->
     <div class="s-card">
-      <p class="s-card-label">Άλλα χωριά</p>
+      <p class="s-card-label">Other villages</p>
       <div class="s-villages-list">
         {otherVillages.map(v => (
-          <a href={`/el/villages/${v.slug}`} class="s-village-link">
+          <a href={`/villages/${v.slug}`} class="s-village-link">
             <span class="s-village-name">{v.name}</span>
             <span class="s-village-type">{typeLabels[v.type]?.icon}</span>
           </a>
         ))}
-        <a href="/el/villages" class="s-village-all">Όλα τα χωριά →</a>
+        <a href="/villages" class="s-village-all">All villages →</a>
       </div>
     </div>
 
