@@ -1,0 +1,357 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import tavernsRaw from '../../data/taverns.json';
+import beachesRaw from '../../data/beaches.json';
+import villagesRaw from '../../data/villages.json';
+
+const isEl = Astro.url.pathname.startsWith('/el');
+
+// Build a flat search index at build time
+const index = [
+  ...tavernsRaw.map(t => ({
+    slug:     t.slug,
+    type:     'restaurant',
+    typeEl:   'Εστιατόριο',
+    typeEn:   'Restaurant',
+    nameEl:   typeof t.name === 'object' ? (t.name as any).el : t.name,
+    nameEn:   typeof t.name === 'object' ? (t.name as any).en : t.name,
+    area:     t.location.area,
+    url:      `/eat/${t.slug}`,
+    icon:     '🍽',
+  })),
+  ...beachesRaw.map(b => ({
+    slug:     b.slug,
+    type:     'beach',
+    typeEl:   'Παραλία',
+    typeEn:   'Beach',
+    nameEl:   typeof b.name === 'object' ? (b.name as any).el : b.name,
+    nameEn:   typeof b.name === 'object' ? (b.name as any).en : b.name,
+    area:     b.location.area,
+    url:      `/beaches/${b.slug}`,
+    icon:     '🏖',
+  })),
+  ...villagesRaw.map(v => ({
+    slug:     v.slug,
+    type:     'village',
+    typeEl:   'Χωριό',
+    typeEn:   'Village',
+    nameEl:   v.name,
+    nameEn:   v.name,
+    area:     v.area,
+    url:      `/villages/${v.slug}`,
+    icon:     '🏘',
+  })),
+];
+---
+
+<Layout
+  lang={isEl ? 'el' : 'en'}
+  title={isEl ? 'Αναζήτηση — Milos Guide' : 'Search — Milos Guide'}
+  description={isEl ? 'Αναζητήστε παραλίες, εστιατόρια και χωριά στη Μήλο.' : 'Search beaches, restaurants and villages in Milos.'}
+>
+
+<section class="search-hero">
+  <div class="container">
+    <p class="page-label">{isEl ? 'Αναζήτηση' : 'Search'}</p>
+    <h1 class="page-title">{isEl ? 'Βρες οτιδήποτε στη Μήλο' : 'Find anything in Milos'}</h1>
+    <div class="search-box-wrap">
+      <input
+        id="search-input"
+        type="search"
+        class="search-box"
+        placeholder={isEl ? 'Σαρακήνικο, Barko, Πλάκα…' : 'Sarakiniko, Barko, Plaka…'}
+        autofocus
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="search-filters">
+      <button class="sf-chip sf-chip--active" data-filter="all">{isEl ? 'Όλα' : 'All'}</button>
+      <button class="sf-chip" data-filter="beach">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</button>
+      <button class="sf-chip" data-filter="restaurant">🍽 {isEl ? 'Εστιατόρια' : 'Restaurants'}</button>
+      <button class="sf-chip" data-filter="village">🏘 {isEl ? 'Χωριά' : 'Villages'}</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-sand search-results-sec">
+  <div class="container">
+    <p class="results-meta" id="results-meta"></p>
+    <div class="results-grid" id="results-grid"></div>
+    <div class="results-empty" id="results-empty" style="display:none">
+      <p class="empty-icon">🔍</p>
+      <p class="empty-text">{isEl ? 'Δεν βρέθηκαν αποτελέσματα.' : 'No results found.'}</p>
+      <p class="empty-sub">{isEl ? 'Δοκίμασε διαφορετική αναζήτηση ή περιήγησε στις κατηγορίες.' : 'Try a different search term or browse the categories below.'}</p>
+      <div class="empty-links">
+        <a href={isEl ? '/el/beaches' : '/beaches'} class="btn-dark">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</a>
+        <a href={isEl ? '/el/eat' : '/eat'} class="btn-outline-dark">🍽 {isEl ? 'Φαγητό' : 'Food'}</a>
+        <a href={isEl ? '/el/villages' : '/villages'} class="btn-outline-dark">🏘 {isEl ? 'Χωριά' : 'Villages'}</a>
+      </div>
+    </div>
+    <div class="results-initial" id="results-initial">
+      <p class="initial-hint">{isEl ? 'Πληκτρολόγησε για να αναζητήσεις παραλίες, εστιατόρια και χωριά.' : 'Start typing to search beaches, restaurants and villages.'}</p>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<!-- Pass index to client JS -->
+<script define:vars={{ index, isEl }}>
+const input   = document.getElementById('search-input');
+const grid    = document.getElementById('results-grid');
+const meta    = document.getElementById('results-meta');
+const empty   = document.getElementById('results-empty');
+const initial = document.getElementById('results-initial');
+const chips   = document.querySelectorAll('.sf-chip');
+
+let activeFilter = 'all';
+let query = '';
+
+// Check URL param on load
+const params = new URLSearchParams(window.location.search);
+if (params.get('q')) {
+  input.value = params.get('q');
+  query = params.get('q').toLowerCase();
+  render();
+}
+
+input.addEventListener('input', () => {
+  query = input.value.trim().toLowerCase();
+  // Update URL without reload
+  const url = new URL(window.location);
+  if (query) url.searchParams.set('q', input.value.trim());
+  else url.searchParams.delete('q');
+  window.history.replaceState({}, '', url);
+  render();
+});
+
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('sf-chip--active'));
+    chip.classList.add('sf-chip--active');
+    activeFilter = chip.dataset.filter;
+    render();
+  });
+});
+
+function render() {
+  if (!query) {
+    grid.innerHTML = '';
+    meta.textContent = '';
+    empty.style.display = 'none';
+    initial.style.display = '';
+    return;
+  }
+
+  initial.style.display = 'none';
+
+  const results = index.filter(item => {
+    const matchesFilter = activeFilter === 'all' || item.type === activeFilter;
+    const matchesQuery =
+      item.nameEl.toLowerCase().includes(query) ||
+      item.nameEn.toLowerCase().includes(query) ||
+      item.area.toLowerCase().includes(query) ||
+      item.typeEn.toLowerCase().includes(query);
+    return matchesFilter && matchesQuery;
+  });
+
+  if (results.length === 0) {
+    grid.innerHTML = '';
+    meta.textContent = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  meta.textContent = isEl ? `${results.length} αποτέλεσμα${results.length !== 1 ? 'τα' : ''} για "${input.value.trim()}"` : `${results.length} result${results.length !== 1 ? 's' : ''} for "${input.value.trim()}"`;
+
+  grid.innerHTML = results.map(item => `
+    <a href="${item.url}" class="result-card">
+      <span class="result-icon">${item.icon}</span>
+      <div class="result-body">
+        <span class="result-type">${isEl ? item.typeEl : item.typeEn}</span>
+        <h2 class="result-name">${highlight(isEl ? item.nameEl : item.nameEn, query)}</h2>
+        <p class="result-area">📍 ${item.area}</p>
+      </div>
+      <span class="result-arrow">→</span>
+    </a>
+  `).join('');
+}
+
+function highlight(text, q) {
+  if (!q) return text;
+  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+</script>
+
+<style>
+/* ── HERO ── */
+.search-hero {
+  background: var(--white);
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+/* ── SEARCH BOX ── */
+.search-box-wrap {
+  position: relative;
+  max-width: 600px;
+  margin-bottom: 1rem;
+}
+.search-box {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 3rem;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+}
+.search-box:focus {
+  border-color: var(--aegean);
+  box-shadow: 0 0 0 3px rgba(26,92,138,.12);
+}
+.search-box::placeholder { color: var(--muted); }
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* ── FILTERS ── */
+.search-filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+.sf-chip {
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.sf-chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
+.sf-chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+
+/* ── RESULTS ── */
+.search-results-sec { min-height: 40vh; }
+.results-meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+  height: 1.2em;
+}
+.results-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.result-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  transition: background 0.15s, padding-left 0.15s;
+}
+.result-card:last-child { border-bottom: none; }
+.result-card:hover { background: var(--sand); padding-left: 1.5rem; }
+.result-icon { font-size: 1.4rem; flex-shrink: 0; }
+.result-body { flex: 1; min-width: 0; }
+.result-type {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+.result-name {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin: 0.1rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.result-name mark {
+  background: rgba(58,155,201,.2);
+  color: var(--aegean);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.result-area { font-size: 0.75rem; color: var(--muted); }
+.result-arrow { color: var(--muted); flex-shrink: 0; transition: transform 0.15s; }
+.result-card:hover .result-arrow { transform: translateX(4px); color: var(--aegean); }
+
+/* ── EMPTY / INITIAL ── */
+.results-empty, .results-initial {
+  text-align: center;
+  padding: 4rem 0;
+}
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 1.05rem; color: var(--ink); font-weight: 600; margin-bottom: 0.35rem; }
+.empty-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; }
+.empty-links { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.initial-hint { font-size: 0.95rem; color: var(--muted); }
+
+.btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.78rem 1.55rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--deep-blue);
+  border: 1.5px solid var(--border);
+  transition: border-color 0.15s, background 0.15s;
+}
+.btn-outline-dark:hover { border-color: var(--aegean); background: var(--sand); }
+
+@media (max-width: 480px) {
+  .search-box { font-size: 0.95rem; }
+  .empty-links { flex-direction: column; align-items: center; }
+}
+</style>
