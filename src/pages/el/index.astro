@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import tavernsRaw from '../data/taverns.json';
-import beachesRaw from '../data/beaches.json';
+import Layout from '../../layouts/Layout.astro';
+import tavernsRaw from '../../data/taverns.json';
+import beachesRaw from '../../data/beaches.json';
 
 type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
 type Beach  = typeof beachesRaw[number] & { localPhoto?: string | null };
@@ -9,47 +9,50 @@ type Beach  = typeof beachesRaw[number] & { localPhoto?: string | null };
 const tavernsData = tavernsRaw as Tavern[];
 const beachesData = beachesRaw as Beach[];
 
+const base = import.meta.env.BASE_URL;
+
 const featuredTaverns = [...tavernsData]
   .filter(t => t.isFeatured)
   .sort((a, b) => b.rating - a.rating)
   .slice(0, 3);
+const getName    = (t: Tavern) => typeof t.name === 'object' ? (t.name as any).el : t.name as string;
+const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArray(t.cuisine) ? (t.cuisine as any).el : (t.cuisine as any)?.[0] ?? '';
 ---
 
 <Layout
-  lang="en"
-  title="The Complete Guide to Milos"
-  description="Beaches, restaurants, villages, boat tours — the most complete guide to Milos, Greece. No ads."
+  title="Ο Πλήρης Οδηγός για τη Μήλο"
+  description="Παραλίες, εστιατόρια, χωριά, boat tours — ο πιο πλήρης οδηγός για τη Μήλο. Χωρίς διαφημίσεις."
 >
 
 <!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-bg"><div class="hero-radial"></div></div>
-  <div class="hero-ghost" aria-hidden="true">MILOS</div>
+  <div class="hero-ghost" aria-hidden="true">ΜΗΛΟΣ</div>
 
   <div class="hero-content container">
     <div class="hero-eyebrow">
       <span class="eyedot"></span>
-      <span>Cyclades · Greece · 151 km²</span>
+      <span>Κυκλάδες · Ελλάδα · 151 km²</span>
     </div>
     <div class="hero-title">
-      <span class="hero-title-main">Milos</span>
-      <span class="hero-title-sub">The most authentic guide to the island</span>
+      <span class="hero-title-main">Μήλος</span>
+      <span class="hero-title-sub">Ο πιο αυθεντικός οδηγός για το νησί</span>
     </div>
     <p class="hero-desc">
-      Volcanic landscape, 70+ beaches, hidden sea caves, tavernas with freshly caught seafood.
-      Everything you need to experience Milos the right way — no ads.
+      Ηφαιστειακό τοπίο, 70+ παραλίες, κρυφά σπήλαια, ταβέρνες με αλιευμένη γεύση.
+      Ό,τι χρειάζεσαι για να ζήσεις τη Μήλο σωστά — χωρίς διαφημίσεις.
     </p>
     <div class="hero-ctas">
-      <a href="/beaches" class="btn-primary">🏖 Beaches</a>
-      <a href="/eat"     class="btn-secondary">🍽 Food</a>
+      <a href={`${base}beaches`} class="btn-primary">🏖 Παραλίες</a>
+      <a href={`${base}eat`} class="btn-secondary">🍽 Φαγητό</a>
     </div>
   </div>
 
   <div class="hero-stats container">
-    <div class="stat-pill"><span class="stat-n">70+</span><span class="stat-l">Beaches</span></div>
+    <div class="stat-pill"><span class="stat-n">70+</span><span class="stat-l">Παραλίες</span></div>
     <div class="stat-pill"><span class="stat-n">151</span><span class="stat-l">km²</span></div>
-    <div class="stat-pill"><span class="stat-n">125</span><span class="stat-l">km coastline</span></div>
-    <div class="stat-pill"><span class="stat-n">~5,000</span><span class="stat-l">Residents</span></div>
+    <div class="stat-pill"><span class="stat-n">125</span><span class="stat-l">km ακτογραμμή</span></div>
+    <div class="stat-pill"><span class="stat-n">~5.000</span><span class="stat-l">Κάτοικοι</span></div>
   </div>
 
   <div class="hero-waves" aria-hidden="true">
@@ -67,53 +70,53 @@ const featuredTaverns = [...tavernsData]
 <section class="sec sec-sand" style="padding-top:3.5rem">
   <div class="container">
     <div class="explore-head">
-      <span class="label" style="margin:0">Explore</span>
-      <span class="explore-head-title">What do you want to discover in Milos?</span>
+      <span class="label" style="margin:0">Εξερεύνηση</span>
+      <span class="explore-head-title">Τι θες να ανακαλύψεις στη Μήλο;</span>
     </div>
     <div class="cat-list">
-      <a href="/beaches" class="cat-row">
+      <a href={`${base}beaches`} class="cat-row">
         <span class="cat-num">01</span>
         <div class="cat-info">
-          <span class="cat-name">Beaches</span>
-          <span class="cat-desc">From the volcanic Sarakiniko to hidden sea caves — {beachesData.length}+ shores for every taste</span>
+          <span class="cat-name">Παραλίες</span>
+          <span class="cat-desc">Από το ηφαιστειακό Σαρακήνικο ως τα κρυφά σπήλαια — {beachesData.length}+ ακτές για κάθε γούστο</span>
         </div>
-        <span class="cat-count">{beachesData.length}+ beaches</span>
+        <span class="cat-count">{beachesData.length}+ παραλίες</span>
         <span class="cat-arrow">→</span>
       </a>
-      <a href="/eat" class="cat-row">
+      <a href={`${base}eat`} class="cat-row">
         <span class="cat-num">02</span>
         <div class="cat-info">
-          <span class="cat-name">Food</span>
-          <span class="cat-desc">Tavernas with freshly caught fish, wood-fired grills, white wine by the sea</span>
+          <span class="cat-name">Φαγητό</span>
+          <span class="cat-desc">Ταβέρνες με αλιευμένη γεύση, ψητά σε ξυλόφουρνο, λευκό κρασί δίπλα στη θάλασσα</span>
         </div>
-        <span class="cat-count">{tavernsData.length}+ restaurants</span>
+        <span class="cat-count">{tavernsData.length}+ εστιατόρια</span>
         <span class="cat-arrow">→</span>
       </a>
-      <a href="/villages" class="cat-row">
+      <a href={`${base}villages`} class="cat-row">
         <span class="cat-num">03</span>
         <div class="cat-info">
-          <span class="cat-name">Villages</span>
-          <span class="cat-desc">Plaka, Klima, Tripiti, Pollonia — the island beyond the beaches</span>
+          <span class="cat-name">Χωριά</span>
+          <span class="cat-desc">Πλάκα, Κλήμα, Τρυπητή, Πολλώνια — το νησί πέρα από τις παραλίες</span>
         </div>
-        <span class="cat-count">8 villages</span>
+        <span class="cat-count">8 χωριά</span>
         <span class="cat-arrow">→</span>
       </a>
       <div class="cat-row cat-row--dim">
         <span class="cat-num">04</span>
         <div class="cat-info">
           <span class="cat-name">Boat Tours</span>
-          <span class="cat-desc">Kleftiko, Sykia Cave, island circuit — the best captains in Milos</span>
+          <span class="cat-desc">Κλέφτικο, Συκιά, γύρος νησιού — οι καλύτεροι καπετάνιοι στη Μήλο</span>
         </div>
-        <span class="soon-tag">Coming soon</span>
+        <span class="soon-tag">Σύντομα</span>
         <span class="cat-arrow">→</span>
       </div>
       <div class="cat-row cat-row--dim">
         <span class="cat-num">05</span>
         <div class="cat-info">
-          <span class="cat-name">Rentals</span>
-          <span class="cat-desc">Cars, scooters, ATVs — explore at your own pace</span>
+          <span class="cat-name">Ενοικιάσεις</span>
+          <span class="cat-desc">Αυτοκίνητα, μηχανάκια, ATV — εξερεύνησε με τους δικούς σου ρυθμούς</span>
         </div>
-        <span class="soon-tag">Coming soon</span>
+        <span class="soon-tag">Σύντομα</span>
         <span class="cat-arrow">→</span>
       </div>
     </div>
@@ -126,17 +129,17 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row" style="margin-bottom:3rem">
       <div>
-        <span class="label label-lt">Milos in numbers</span>
-        <h2 class="sec-title sec-title-lt">An island in figures</h2>
+        <span class="label label-lt">Η Μήλος με αριθμούς</span>
+        <h2 class="sec-title sec-title-lt">Ένα νησί σε στοιχεία</h2>
       </div>
     </div>
     <div class="numbers-grid">
-      <div class="num-item"><div class="num-label">Beaches</div><div class="num-val">70+</div><div class="num-desc">One of the most beach-rich islands in the Cyclades</div></div>
-      <div class="num-item"><div class="num-label">Coastline</div><div class="num-val">125 km</div><div class="num-desc">Dramatically shaped by millions of years of volcanic activity</div></div>
-      <div class="num-item"><div class="num-label">Area</div><div class="num-val">151 km²</div><div class="num-desc">The 7th largest island in the Cyclades</div></div>
-      <div class="num-item"><div class="num-label">From Piraeus</div><div class="num-val">86 nm</div><div class="num-desc">High-speed ~3.5 hrs, regular ferry ~7 hrs</div></div>
-      <div class="num-item"><div class="num-label">Harbour</div><div class="num-val">Top 5</div><div class="num-desc">One of the largest natural harbours in the Mediterranean</div></div>
-      <div class="num-item"><div class="num-label">Volcanic arc</div><div class="num-val">3M yrs</div><div class="num-desc">Geological history that shaped every rock on the island</div></div>
+      <div class="num-item"><div class="num-label">Παραλίες</div><div class="num-val">70+</div><div class="num-desc">Μία από τις πιο πλούσιες σε παραλίες Κυκλάδες</div></div>
+      <div class="num-item"><div class="num-label">Ακτογραμμή</div><div class="num-val">125 km</div><div class="num-desc">Έντονα διαρθρωμένη λόγω της ηφαιστειακής προέλευσης</div></div>
+      <div class="num-item"><div class="num-label">Έκταση</div><div class="num-val">151 km²</div><div class="num-desc">Η 7η μεγαλύτερη νήσος στις Κυκλάδες</div></div>
+      <div class="num-item"><div class="num-label">Από Πειραιά</div><div class="num-val">86 ν.μ.</div><div class="num-desc">Ταχύπλοο ~3.5 ώρες, κανονικό ~7 ώρες</div></div>
+      <div class="num-item"><div class="num-label">Λιμάνι</div><div class="num-val">Top 5</div><div class="num-desc">Ένα από τα μεγαλύτερα φυσικά λιμάνια της Μεσογείου</div></div>
+      <div class="num-item"><div class="num-label">Ηφαιστειακό τόξο</div><div class="num-val">3M χρόνια</div><div class="num-desc">Γεωλογική ιστορία που διαμόρφωσε κάθε βράχο</div></div>
     </div>
   </div>
 </section>
@@ -147,19 +150,19 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">At a glance</span>
+        <span class="label">Γρήγορες πληροφορίες</span>
         <h2 class="sec-title">Quick Facts</h2>
       </div>
     </div>
     <div class="facts-grid">
-      <div class="fact-item"><span class="fact-key">Region</span><span class="fact-val">Cyclades</span></div>
-      <div class="fact-item"><span class="fact-key">Capital</span><span class="fact-val">Plaka</span></div>
-      <div class="fact-item"><span class="fact-key">Port</span><span class="fact-val">Adamas</span></div>
-      <div class="fact-item"><span class="fact-key">Population</span><span class="fact-val">~5,000</span></div>
-      <div class="fact-item"><span class="fact-key">Beaches</span><span class="fact-val">70+</span></div>
-      <div class="fact-item"><span class="fact-key">Area</span><span class="fact-val">151 km²</span></div>
-      <div class="fact-item"><span class="fact-key">Highest peak</span><span class="fact-val">Prophet Elias</span></div>
-      <div class="fact-item"><span class="fact-key">Famous find</span><span class="fact-val">Venus de Milo</span></div>
+      <div class="fact-item"><span class="fact-key">Περιφέρεια</span><span class="fact-val">Κυκλάδες</span></div>
+      <div class="fact-item"><span class="fact-key">Πρωτεύουσα</span><span class="fact-val">Πλάκα</span></div>
+      <div class="fact-item"><span class="fact-key">Λιμάνι</span><span class="fact-val">Αδάμαντας</span></div>
+      <div class="fact-item"><span class="fact-key">Πληθυσμός</span><span class="fact-val">~5.000</span></div>
+      <div class="fact-item"><span class="fact-key">Παραλίες</span><span class="fact-val">70+</span></div>
+      <div class="fact-item"><span class="fact-key">Έκταση</span><span class="fact-val">151 km²</span></div>
+      <div class="fact-item"><span class="fact-key">Ψηλότερη κορυφή</span><span class="fact-val">Προφήτης Ηλίας</span></div>
+      <div class="fact-item"><span class="fact-key">Διάσημο εύρημα</span><span class="fact-val">Αφροδίτη της Μήλου</span></div>
     </div>
   </div>
 </section>
@@ -170,30 +173,30 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">Why Milos is different</span>
-        <h2 class="sec-title">What you won't find<br/>anywhere else in the Aegean</h2>
+        <span class="label">Γιατί η Μήλος είναι διαφορετική</span>
+        <h2 class="sec-title">Αυτό που δεν θα βρεις<br/>αλλού στο Αιγαίο</h2>
       </div>
     </div>
     <div class="why-grid">
       <div class="why-item">
         <div class="why-num">01</div>
-        <div class="why-title">Volcanic origin</div>
-        <p class="why-text">Milos belongs to the Aegean Volcanic Arc and its landscape has been shaped by millions of years of volcanic activity. This explains the white rock formations of Sarakiniko, the warm waters at Paleochori, and the volcanic rock found in every corner of the island.</p>
+        <div class="why-title">Ηφαιστειακή προέλευση</div>
+        <p class="why-text">Η Μήλος ανήκει στο Αιγαιακό Ηφαιστειακό Τόξο και το τοπίο της έχει διαμορφωθεί από εκατομμύρια χρόνια ηφαιστειακής δραστηριότητας. Αυτό εξηγεί τους λευκούς βραχώδεις σχηματισμούς του Σαρακήνικο, τα θερμά νερά στο Παλαιοχώρι και τα ηφαιστειογενή πετρώματα σε κάθε γωνιά του νησιού.</p>
       </div>
       <div class="why-item">
         <div class="why-num">02</div>
-        <div class="why-title">Obsidian and ancient trade</div>
-        <p class="why-text">Since the Neolithic period, Milos was an important trading hub due to its obsidian — a volcanic rock used for tools and weapons across the entire Mediterranean. Pieces of Milean obsidian have been found as far away as Egypt.</p>
+        <div class="why-title">Οψιδιανός και αρχαίο εμπόριο</div>
+        <p class="why-text">Από τη Νεολιθική εποχή η Μήλος ήταν σημαντικό εμπορικό κέντρο λόγω του οψιδιανού — ενός ηφαιστειακού πετρώματος που χρησιμοποιούσαν για εργαλεία και όπλα σε όλη τη Μεσόγειο. Έχουν βρεθεί κομμάτια μηλιακού οψιδιανού ακόμα και στην Αίγυπτο.</p>
       </div>
       <div class="why-item">
         <div class="why-num">03</div>
-        <div class="why-title">The Venus that is no longer here</div>
-        <p class="why-text">In 1820, a farmer in Milos discovered the statue that now graces the Louvre. The famous Venus de Milo was sculpted around 130 BC and had been hidden for centuries beneath the island's soil.</p>
+        <div class="why-title">Η Αφροδίτη που δεν υπάρχει πλέον</div>
+        <p class="why-text">Το 1820 ένας αγρότης στη Μήλο ανακάλυψε το άγαλμα που σήμερα κοσμεί το Λούβρο. Η περίφημη Αφροδίτη της Μήλου φιλοτεχνήθηκε γύρω στο 130 π.Χ. και ήταν κρυμμένη επί αιώνες στο έδαφος του νησιού.</p>
       </div>
       <div class="why-item">
         <div class="why-num">04</div>
-        <div class="why-title">Natural harbour of a volcanic caldera</div>
-        <p class="why-text">The bay of Milos is essentially a submerged volcanic caldera — one of the largest natural harbours in the Mediterranean. Historically it served as shelter for naval fleets from antiquity through World War II.</p>
+        <div class="why-title">Φυσικό λιμάνι βουλκανικής καλδέρας</div>
+        <p class="why-text">Ο κόλπος της Μήλου είναι στην ουσία μια βυθισμένη ηφαιστειακή καλδέρα — ένα από τα μεγαλύτερα φυσικά λιμάνια στη Μεσόγειο. Ιστορικά χρησιμοποιούνταν ως καταφύγιο για στόλους από την αρχαιότητα ως τον Β' Παγκόσμιο Πόλεμο.</p>
       </div>
     </div>
   </div>
@@ -206,29 +209,29 @@ const featuredTaverns = [...tavernsData]
     <div class="container">
       <div class="sec-hdr-row">
         <div>
-          <span class="label">Food</span>
-          <h2 class="sec-title">Featured restaurants</h2>
+          <span class="label">Φαγητό</span>
+          <h2 class="sec-title">Επιλεγμένα εστιατόρια</h2>
         </div>
-        <a href="/eat" class="see-all">All restaurants →</a>
+        <a href={`${base}eat`} class="see-all">Όλα τα εστιατόρια →</a>
       </div>
       <div class="tav-grid">
         {featuredTaverns.map(tavern => (
-          <a href={`/eat/${tavern.slug}`} class="tav-card">
+          <a href={`${base}eat/${tavern.slug}`} class="tav-card">
             {tavern.localPhoto ? (
-              <img src={tavern.localPhoto} alt={typeof tavern.name === 'object' ? tavern.name.en : tavern.name} class="tav-img" loading="lazy"/>
+              <img src={tavern.localPhoto} alt={getName(tavern)} class="tav-img" loading="lazy"/>
             ) : (
               <div class="tav-ph">🍽</div>
             )}
             <div class="tav-body">
               <div class="tav-top">
-                <span class="tav-badge">⭐ Featured</span>
+                <span class="tav-badge">⭐ Επιλεγμένο</span>
                 <span class="tav-price">{tavern.priceRange}</span>
               </div>
-              <h3 class="tav-name">{typeof tavern.name === 'object' ? tavern.name.en : tavern.name}</h3>
+              <h3 class="tav-name">{getName(tavern)}</h3>
               <p class="tav-loc">◉ {tavern.location.area}</p>
               <div class="tav-foot">
                 <span class="tav-rating">⭐ {tavern.rating} / 5</span>
-                <span class="tav-cuisine">{typeof tavern.cuisine === 'object' ? tavern.cuisine.en : tavern.cuisine?.[0]}</span>
+                <span class="tav-cuisine">{getCuisine(tavern)}</span>
               </div>
             </div>
           </a>
@@ -244,42 +247,42 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">Beaches</span>
-        <h2 class="sec-title">Find your beach</h2>
+        <span class="label">Παραλίες</span>
+        <h2 class="sec-title">Βρες την παραλία σου</h2>
       </div>
-      <a href="/beaches" class="see-all">All beaches →</a>
+      <a href={`${base}beaches`} class="see-all">Όλες οι παραλίες →</a>
     </div>
     <div class="beach-cat-grid">
       <div class="beach-cat">
-        <div class="beach-cat-title">👨‍👩‍👧 For families</div>
+        <div class="beach-cat-title">👨‍👩‍👧 Για οικογένειες</div>
         <div class="beach-cat-list">
-          <a href="/beaches/paleochori" class="beach-link"><span class="beach-link-icon">🚗</span>Paleochori</a>
-          <a href="/beaches/provatas"   class="beach-link"><span class="beach-link-icon">🚗</span>Provatas</a>
-          <a href="/beaches/fyriplaka"  class="beach-link"><span class="beach-link-icon">🚗</span>Fyriplaka</a>
+          <a href={`${base}beaches/paleochori`} class="beach-link"><span class="beach-link-icon">🚗</span>Παλαιοχώρι</a>
+          <a href={`${base}beaches/provatas`}   class="beach-link"><span class="beach-link-icon">🚗</span>Προβατάς</a>
+          <a href={`${base}beaches/fyriplaka`}  class="beach-link"><span class="beach-link-icon">🚗</span>Φυριπλάκα</a>
         </div>
       </div>
       <div class="beach-cat">
-        <div class="beach-cat-title">📸 For photos</div>
+        <div class="beach-cat-title">📸 Για φωτογραφίες</div>
         <div class="beach-cat-list">
-          <a href="/beaches/sarakiniko" class="beach-link"><span class="beach-link-icon">🚗</span>Sarakiniko</a>
-          <a href="/beaches/kleftiko"   class="beach-link"><span class="beach-link-icon">⛵</span>Kleftiko</a>
-          <a href="/beaches/tsigrado"   class="beach-link"><span class="beach-link-icon">🥾</span>Tsigrado</a>
+          <a href={`${base}beaches/sarakiniko`} class="beach-link"><span class="beach-link-icon">🚗</span>Σαρακήνικο</a>
+          <a href={`${base}beaches/kleftiko`}   class="beach-link"><span class="beach-link-icon">⛵</span>Κλέφτικο</a>
+          <a href={`${base}beaches/tsigrado`}   class="beach-link"><span class="beach-link-icon">🥾</span>Τσιγκράδο</a>
         </div>
       </div>
       <div class="beach-cat">
-        <div class="beach-cat-title">🔇 For peace & quiet</div>
+        <div class="beach-cat-title">🔇 Για ησυχία</div>
         <div class="beach-cat-list">
-          <a href="/beaches/triades"   class="beach-link"><span class="beach-link-icon">🚗</span>Triades</a>
-          <a href="/beaches/gerontas"  class="beach-link"><span class="beach-link-icon">🚗</span>Gerontas</a>
-          <a href="/beaches/ammoudaki" class="beach-link"><span class="beach-link-icon">🥾</span>Ammoudaki</a>
+          <a href={`${base}beaches/triades`}   class="beach-link"><span class="beach-link-icon">🚗</span>Τριάδες</a>
+          <a href={`${base}beaches/gerontas`}  class="beach-link"><span class="beach-link-icon">🚗</span>Γέροντας</a>
+          <a href={`${base}beaches/ammoudaki`} class="beach-link"><span class="beach-link-icon">🥾</span>Αμμουδάκι</a>
         </div>
       </div>
       <div class="beach-cat">
-        <div class="beach-cat-title">⛵ Boat access only</div>
+        <div class="beach-cat-title">⛵ Μόνο με σκάφος</div>
         <div class="beach-cat-list">
-          <a href="/beaches/kleftiko"   class="beach-link"><span class="beach-link-icon">⛵</span>Kleftiko</a>
-          <a href="/beaches/sikia-cave" class="beach-link"><span class="beach-link-icon">⛵</span>Sykia Cave</a>
-          <a href="/beaches/ammoudaki"  class="beach-link"><span class="beach-link-icon">⛵</span>Ammoudaki</a>
+          <a href={`${base}beaches/kleftiko`}   class="beach-link"><span class="beach-link-icon">⛵</span>Κλέφτικο</a>
+          <a href={`${base}beaches/sikia-cave`} class="beach-link"><span class="beach-link-icon">⛵</span>Σπηλιά Συκιάς</a>
+          <a href={`${base}beaches/ammoudaki`}  class="beach-link"><span class="beach-link-icon">⛵</span>Αμμουδάκι</a>
         </div>
       </div>
     </div>
@@ -292,18 +295,18 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">Villages</span>
-        <h2 class="sec-title">Milos beyond the beaches</h2>
+        <span class="label">Χωριά</span>
+        <h2 class="sec-title">Η Μήλος πέρα από τις παραλίες</h2>
       </div>
-      <a href="/villages" class="see-all">All villages →</a>
+      <a href={`${base}villages`} class="see-all">Όλα τα χωριά →</a>
     </div>
     <div class="villages-grid">
-      <a href="/villages/plaka"       class="village-card"><span class="village-name">Plaka</span><span class="village-note">The capital, perched on a rock with panoramic views</span></a>
-      <a href="/villages/tripiti"     class="village-card"><span class="village-name">Tripiti</span><span class="village-note">Catacombs, ancient theatre, atmospheric village</span></a>
-      <a href="/villages/pollonia"    class="village-card"><span class="village-name">Pollonia</span><span class="village-note">North coast, fish tavernas and ferries to Kimolos</span></a>
-      <a href="/villages/klima"       class="village-card"><span class="village-name">Klima</span><span class="village-note">The famous syrmata — fishing storehouses over the sea</span></a>
-      <a href="/villages/mandrakia"   class="village-card"><span class="village-name">Mandrakia</span><span class="village-note">A small harbour with colourful syrmata</span></a>
-      <a href="/villages/firopotamos" class="village-card"><span class="village-name">Firopotamos</span><span class="village-note">Quiet, authentic, far from the tourist trail</span></a>
+      <a href={`${base}villages/plaka`}       class="village-card"><span class="village-name">Πλάκα</span><span class="village-note">Η πρωτεύουσα, πάνω στο βράχο, με πανοραμική θέα</span></a>
+      <a href={`${base}villages/tripiti`}     class="village-card"><span class="village-name">Τρυπητή</span><span class="village-note">Κατακόμβες, αρχαίο θέατρο, ατμοσφαιρικό χωριό</span></a>
+      <a href={`${base}villages/pollonia`}    class="village-card"><span class="village-name">Πολλώνια</span><span class="village-note">Βόρεια, με ψαροταβέρνες και πρόσβαση στη Κίμωλο</span></a>
+      <a href={`${base}villages/klima`}       class="village-card"><span class="village-name">Κλήμα</span><span class="village-note">Τα περίφημα σύρματα — αλιευτικές αποθήκες στο νερό</span></a>
+      <a href={`${base}villages/mandrakia`}   class="village-card"><span class="village-name">Μανδράκια</span><span class="village-note">Μικρό λιμανάκι με πολύχρωμα σύρματα</span></a>
+      <a href={`${base}villages/firopotamos`} class="village-card"><span class="village-name">Φυροπόταμος</span><span class="village-note">Ήσυχος, αυθεντικός, μακριά από τον τουρισμό</span></a>
     </div>
   </div>
 </section>
@@ -314,17 +317,17 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">Landmarks & highlights</span>
-        <h2 class="sec-title">The most iconic spots</h2>
+        <span class="label">Αξιοθέατα &amp; τοπόσημα</span>
+        <h2 class="sec-title">Τα πιο γνωστά μέρη</h2>
       </div>
     </div>
     <div class="places-strip">
-      <a href="/beaches/sarakiniko"   class="place-chip"><span class="place-chip-name">Sarakiniko</span><span class="place-chip-type">🏖 Beach</span></a>
-      <a href="/beaches/kleftiko"     class="place-chip"><span class="place-chip-name">Kleftiko</span><span class="place-chip-type">⛵ Sea cave</span></a>
-      <a href="/villages/plaka"       class="place-chip"><span class="place-chip-name">Plaka</span><span class="place-chip-type">🏘 Village</span></a>
-      <a href="/villages/pollonia"    class="place-chip"><span class="place-chip-name">Pollonia</span><span class="place-chip-type">🍽 Food & sea</span></a>
-      <a href="/villages/klima"       class="place-chip"><span class="place-chip-name">Klima</span><span class="place-chip-type">🏠 Syrmata</span></a>
-      <a href="/villages/firopotamos" class="place-chip"><span class="place-chip-name">Firopotamos</span><span class="place-chip-type">📷 Photogenic</span></a>
+      <a href={`${base}beaches/sarakiniko`}   class="place-chip"><span class="place-chip-name">Σαρακήνικο</span><span class="place-chip-type">🏖 Παραλία</span></a>
+      <a href={`${base}beaches/kleftiko`}     class="place-chip"><span class="place-chip-name">Κλέφτικο</span><span class="place-chip-type">⛵ Θαλάσσιο σπήλαιο</span></a>
+      <a href={`${base}villages/plaka`}       class="place-chip"><span class="place-chip-name">Πλάκα</span><span class="place-chip-type">🏘 Χωριό</span></a>
+      <a href={`${base}villages/pollonia`}    class="place-chip"><span class="place-chip-name">Πολλώνια</span><span class="place-chip-type">🍽 Φαγητό &amp; θάλασσα</span></a>
+      <a href={`${base}villages/klima`}       class="place-chip"><span class="place-chip-name">Κλήμα</span><span class="place-chip-type">🏠 Σύρματα</span></a>
+      <a href={`${base}villages/firopotamos`} class="place-chip"><span class="place-chip-name">Φυροπόταμος</span><span class="place-chip-type">📷 Φωτογένια</span></a>
     </div>
   </div>
 </section>
@@ -335,38 +338,38 @@ const featuredTaverns = [...tavernsData]
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">When to visit</span>
-        <h2 class="sec-title">Every month has<br/>its own character</h2>
+        <span class="label">Πότε να έρθεις</span>
+        <h2 class="sec-title">Κάθε μήνας έχει<br/>τον χαρακτήρα του</h2>
       </div>
     </div>
     <div class="months-grid">
       <div class="month-item">
-        <div class="month-name">May</div>
-        <span class="month-tag">Peaceful</span>
-        <p class="month-desc">Few crowds, wildflowers in bloom, ideal for exploring. Sea still fresh.</p>
+        <div class="month-name">Μάιος</div>
+        <span class="month-tag">Ήρεμα</span>
+        <p class="month-desc">Λιγότερος κόσμος, ανθισμένο τοπίο, ιδανικό για εξερεύνηση. Θάλασσα ακόμα δροσερή.</p>
       </div>
       <div class="month-item">
-        <div class="month-name">June</div>
-        <span class="month-tag">Ideal</span>
-        <p class="month-desc">The best balance. Warm sea, few crowds, everything open.</p>
+        <div class="month-name">Ιούνιος</div>
+        <span class="month-tag">Ιδανικό</span>
+        <p class="month-desc">Η καλύτερη ισορροπία. Ζεστή θάλασσα, λίγα πλήθη, όλα ανοιχτά.</p>
       </div>
       <div class="month-item month-item--best">
-        <div class="month-name">September</div>
-        <span class="month-tag">Best month</span>
-        <p class="month-desc">Perhaps the perfect month. Warm sea, fewer crowds, lower prices.</p>
+        <div class="month-name">Σεπτέμβριος</div>
+        <span class="month-tag">Καλύτερος</span>
+        <p class="month-desc">Ίσως ο τέλειος μήνας. Ζεστή θάλασσα, λιγότερος κόσμος, χαμηλότερες τιμές.</p>
       </div>
       <div class="month-item month-item--warn">
-        <div class="month-name">August</div>
-        <span class="month-tag">Busy</span>
-        <p class="month-desc">Meltemi winds affect which beaches are suitable each day. Very crowded.</p>
+        <div class="month-name">Αύγουστος</div>
+        <span class="month-tag">Προσοχή</span>
+        <p class="month-desc">Μελτέμια επηρεάζουν ποιες παραλίες είναι κατάλληλες κάθε μέρα. Πολύς κόσμος.</p>
       </div>
       <div class="month-item">
-        <div class="month-name">July</div>
-        <span class="month-tag">Peak season</span>
-        <p class="month-desc">Lively atmosphere, but book everything well in advance.</p>
+        <div class="month-name">Ιούλιος</div>
+        <span class="month-tag">Υψηλή σεζόν</span>
+        <p class="month-desc">Ζωντανή ατμόσφαιρα, αλλά χρειάζεται κράτηση παντού εκ των προτέρων.</p>
       </div>
     </div>
-    <p class="meltemia-note">⚠️ <strong>Meltemi winds:</strong> The northern winds directly affect which beaches are good each day — southern beaches (Paleochori, Fyriplaka) are sheltered, while northern ones can have waves.</p>
+    <p class="meltemia-note">⚠️ <strong>Μελτέμια:</strong> Τα βόρεια ανέμια επηρεάζουν άμεσα ποιες παραλίες είναι καλές κάθε μέρα — οι νότιες (Παλαιοχώρι, Φυριπλάκα) είναι προστατευμένες, ενώ οι βόρειες μπορεί να έχουν κύμα.</p>
   </div>
 </section>
 

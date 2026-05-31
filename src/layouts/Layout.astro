@@ -1,34 +1,46 @@
 ---
-// src/layouts/Layout.astro
-const { title, description } = Astro.props;
+const { title, description, lang = 'el' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.guide');
+
+// Language switcher logic
+// EN pages are at root (/beaches), EL pages at /el/beaches
+const currentPath = Astro.url.pathname;
+const langSwitchHref = lang === 'el'
+  ? currentPath.replace(/^\/el/, '') || '/'          // /el/beaches → /beaches
+  : `/el${currentPath === '/' ? '' : currentPath}`;  // /beaches → /el/beaches
+
+const isEl = lang === 'el';
 ---
 
 <!DOCTYPE html>
-<html lang="el">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Primary Meta -->
   <title>{title} | Milos.guide</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Milos.guide" />
 
+  <!-- hreflang -->
+  <link rel="alternate" hreflang="el" href={new URL(isEl ? currentPath : `/el${currentPath}`, Astro.site ?? 'https://milos.guide')} />
+  <link rel="alternate" hreflang="en" href={new URL(isEl ? currentPath.replace(/^\/el/, '') || '/' : currentPath, Astro.site ?? 'https://milos.guide')} />
+  <link rel="alternate" hreflang="x-default" href={new URL(isEl ? currentPath.replace(/^\/el/, '') || '/' : currentPath, Astro.site ?? 'https://milos.guide')} />
+
   <!-- Open Graph -->
-  <meta property="og:type"        content="website" />
-  <meta property="og:url"         content={canonicalURL} />
-  <meta property="og:title"       content={`${title} | Milos.guide`} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image"       content="/og-image.jpg" />
+  <meta property="og:type"         content="website" />
+  <meta property="og:url"          content={canonicalURL} />
+  <meta property="og:title"        content={`${title} | Milos.guide`} />
+  <meta property="og:description"  content={description} />
+  <meta property="og:image"        content="/og-image.jpg" />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:locale"      content="el_GR" />
-  <meta property="og:site_name"   content="Milos.guide" />
+  <meta property="og:locale"       content={isEl ? 'el_GR' : 'en_US'} />
+  <meta property="og:site_name"    content="Milos.guide" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card"        content="summary_large_image" />
@@ -36,72 +48,75 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.gu
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image"       content="/og-image.jpg" />
 
-  <!-- JSON-LD: Website -->
-  <script type="application/ld+json">
-    {JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Milos.guide",
-      "url": "https://milos.guide",
-      "description": "Ο πλήρης οδηγός για τη Μήλο — παραλίες, εστιατόρια, χωριά.",
-      "inLanguage": "el",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://milos.guide/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    })}
-  </script>
+  <!-- JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Milos.guide",
+    "url": "https://milos.guide",
+    "description": isEl
+      ? "Ο πλήρης οδηγός για τη Μήλο — παραλίες, εστιατόρια, χωριά."
+      : "The complete guide to Milos — beaches, restaurants, villages.",
+    "inLanguage": lang,
+  })} />
 
   <!-- Favicon -->
   <link rel="icon" sizes="16x16" href="/favicon-16x16.png" type="image/png" />
   <link rel="icon" sizes="32x32" href="/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="manifest"         href="/site.webmanifest" />
+  <link rel="manifest" href="/site.webmanifest" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
 
   <meta name="theme-color" content="#0d2b4e" />
 </head>
 
 <body>
 
-  <a href="#main-content" class="skip-link">Μετάβαση στο περιεχόμενο</a>
+  <a href="#main-content" class="skip-link">
+    {isEl ? 'Μετάβαση στο περιεχόμενο' : 'Skip to content'}
+  </a>
 
   <!-- HEADER -->
   <header class="site-header" id="site-header">
     <div class="header-inner container">
 
-      <a href={base} class="logo" aria-label="Milos.guide — Αρχική">
+      <a href={isEl ? '/el' : '/'} class="logo" aria-label="Milos.guide">
         <span class="logo-serif">milos</span><span class="logo-dot">.</span><span class="logo-guide">guide</span>
       </a>
 
-      <nav class="main-nav" id="main-nav" aria-label="Κύρια πλοήγηση">
-        <a href={`${base}eat`}        class="nav-link" data-navlink>
+      <nav class="main-nav" id="main-nav" aria-label={isEl ? 'Κύρια πλοήγηση' : 'Main navigation'}>
+        <a href={isEl ? '/el/eat' : '/eat'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🍽</span>
-          <span>Φαγητό</span>
+          <span>{isEl ? 'Φαγητό' : 'Food'}</span>
         </a>
-        <a href={`${base}beaches`}    class="nav-link" data-navlink>
+        <a href={isEl ? '/el/beaches' : '/beaches'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏖</span>
-          <span>Παραλίες</span>
+          <span>{isEl ? 'Παραλίες' : 'Beaches'}</span>
         </a>
-        <a href={`${base}activities`} class="nav-link nav-link--soon" data-navlink aria-disabled="true" tabindex="-1">
+        <a href={isEl ? '/el/villages' : '/villages'} class="nav-link" data-navlink>
+          <span class="nav-icon" aria-hidden="true">🏘</span>
+          <span>{isEl ? 'Χωριά' : 'Villages'}</span>
+        </a>
+        <a class="nav-link nav-link--soon" aria-disabled="true" tabindex="-1">
           <span class="nav-icon" aria-hidden="true">🚤</span>
           <span>Boat Tours</span>
-          <span class="badge-soon" aria-label="Σύντομα διαθέσιμο">Σύντομα</span>
+          <span class="badge-soon">{isEl ? 'Σύντομα' : 'Soon'}</span>
+        </a>
+
+        <!-- Language switcher -->
+        <a href={langSwitchHref} class="lang-btn" aria-label={isEl ? 'Switch to English' : 'Αλλαγή σε Ελληνικά'}>
+          {isEl ? 'EN' : 'ΕΛ'}
         </a>
       </nav>
 
       <button
         class="nav-toggle"
         id="nav-toggle"
-        aria-label="Άνοιγμα μενού"
+        aria-label={isEl ? 'Άνοιγμα μενού' : 'Open menu'}
         aria-expanded="false"
         aria-controls="main-nav"
         type="button"
@@ -122,82 +137,89 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.gu
 
   <!-- FOOTER -->
   <footer class="site-footer">
-
-    <!-- Top: brand + nav -->
     <div class="footer-top">
       <div class="container footer-top-inner">
 
         <div class="footer-brand">
-          <a href={base} class="footer-logo" aria-label="Milos.guide — Αρχική">
+          <a href={isEl ? '/el' : '/'} class="footer-logo" aria-label="Milos.guide">
             <span class="logo-serif">milos</span><span class="logo-dot">.</span><span class="logo-guide">guide</span>
           </a>
-          <p class="footer-tagline">Ο πιο πλήρης οδηγός<br/>για τη Μήλο — χωρίς διαφημίσεις.</p>
+          <p class="footer-tagline">
+            {isEl
+              ? 'Ο πιο πλήρης οδηγός\nγια τη Μήλο — χωρίς διαφημίσεις.'
+              : 'The most complete guide\nto Milos — no ads.'}
+          </p>
           <div class="footer-facts">
-            <span>🌋 Κυκλάδες</span>
-            <span>🏖 70+ παραλίες</span>
-            <span>🍽 25+ εστιατόρια</span>
+            <span>🌋 {isEl ? 'Κυκλάδες' : 'Cyclades'}</span>
+            <span>🏖 70+ {isEl ? 'παραλίες' : 'beaches'}</span>
+            <span>🍽 25+ {isEl ? 'εστιατόρια' : 'restaurants'}</span>
           </div>
         </div>
 
-        <nav class="footer-cols" aria-label="Footer πλοήγηση">
+        <nav class="footer-cols" aria-label={isEl ? 'Footer πλοήγηση' : 'Footer navigation'}>
           <div class="footer-col">
-            <p class="footer-col-title">Εξερεύνηση</p>
-            <a href={`${base}beaches`}>
-              <span class="flink-icon">🏖</span>Παραλίες
+            <p class="footer-col-title">{isEl ? 'Εξερεύνηση' : 'Explore'}</p>
+            <a href={isEl ? '/el/beaches' : '/beaches'}>
+              <span class="flink-icon">🏖</span>{isEl ? 'Παραλίες' : 'Beaches'}
             </a>
-            <a href={`${base}eat`}>
-              <span class="flink-icon">🍽</span>Εστιατόρια
+            <a href={isEl ? '/el/eat' : '/eat'}>
+              <span class="flink-icon">🍽</span>{isEl ? 'Εστιατόρια' : 'Restaurants'}
             </a>
-            <a href={`${base}villages`}>
-              <span class="flink-icon">🏘</span>Χωριά
+            <a href={isEl ? '/el/villages' : '/villages'}>
+              <span class="flink-icon">🏘</span>{isEl ? 'Χωριά' : 'Villages'}
             </a>
-            <a class="flink-soon">
+            <span class="flink-soon">
               <span class="flink-icon">🚤</span>Boat Tours
-              <span class="flink-badge">Σύντομα</span>
-            </a>
-            <a class="flink-soon">
-              <span class="flink-icon">🚗</span>Ενοικιάσεις
-              <span class="flink-badge">Σύντομα</span>
-            </a>
+              <span class="flink-badge">{isEl ? 'Σύντομα' : 'Soon'}</span>
+            </span>
+            <span class="flink-soon">
+              <span class="flink-icon">🚗</span>{isEl ? 'Ενοικιάσεις' : 'Rentals'}
+              <span class="flink-badge">{isEl ? 'Σύντομα' : 'Soon'}</span>
+            </span>
           </div>
 
           <div class="footer-col">
-            <p class="footer-col-title">Παραλίες</p>
-            <a href={`${base}beaches/sarakiniko`}>Σαρακήνικο</a>
-            <a href={`${base}beaches/kleftiko`}>Κλέφτικο</a>
-            <a href={`${base}beaches/tsigrado`}>Τσιγκράδο</a>
-            <a href={`${base}beaches/fyriplaka`}>Φυριπλάκα</a>
-            <a href={`${base}beaches`} class="flink-more">Όλες →</a>
+            <p class="footer-col-title">{isEl ? 'Παραλίες' : 'Top Beaches'}</p>
+            <a href={isEl ? '/el/beaches/sarakiniko' : '/beaches/sarakiniko'}>{isEl ? 'Σαρακήνικο' : 'Sarakiniko'}</a>
+            <a href={isEl ? '/el/beaches/kleftiko'   : '/beaches/kleftiko'}>{isEl ? 'Κλέφτικο' : 'Kleftiko'}</a>
+            <a href={isEl ? '/el/beaches/tsigrado'   : '/beaches/tsigrado'}>{isEl ? 'Τσιγκράδο' : 'Tsigrado'}</a>
+            <a href={isEl ? '/el/beaches/fyriplaka'  : '/beaches/fyriplaka'}>{isEl ? 'Φυριπλάκα' : 'Fyriplaka'}</a>
+            <a href={isEl ? '/el/beaches' : '/beaches'} class="flink-more">{isEl ? 'Όλες →' : 'All →'}</a>
           </div>
 
           <div class="footer-col">
-            <p class="footer-col-title">Πληροφορίες</p>
-            <a href="about">Η Μήλος</a>
-            <a href="#">Πότε να έρθετε</a>
-            <a href="#">Χάρτης νησιού</a>
-            <a href="#">Χωριά &amp; αξιοθέατα</a>
-            <a href="#">Επικοινωνία</a>
+            <p class="footer-col-title">{isEl ? 'Πληροφορίες' : 'Information'}</p>
+            <a href={isEl ? '/el/about' : '/about'}>{isEl ? 'Η Μήλος' : 'About Milos'}</a>
+            <a href="#">{isEl ? 'Πότε να έρθετε' : 'When to visit'}</a>
+            <a href="#">{isEl ? 'Χάρτης νησιού' : 'Island map'}</a>
+            <a href="#">{isEl ? 'Επικοινωνία' : 'Contact'}</a>
           </div>
         </nav>
 
       </div>
     </div>
 
-    <!-- Divider with wave -->
     <div class="footer-wave" aria-hidden="true">
       <svg viewBox="0 0 1440 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0,16 C360,32 1080,0 1440,16 L1440,32 L0,32 Z" fill="rgba(255,255,255,0.04)"/>
       </svg>
     </div>
 
-    <!-- Bottom bar -->
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p class="footer-copy">&copy; 2026 Milos.guide</p>
-        <p class="footer-note">Φτιαγμένο με αγάπη για τη Μήλο · Χωρίς διαφημίσεις · Χωρίς χορηγούς</p>
+        <div class="footer-lang">
+          <a href={langSwitchHref} class="footer-lang-btn">
+            {isEl ? '🇬🇧 English' : '🇬🇷 Ελληνικά'}
+          </a>
+        </div>
+        <p class="footer-note">
+          {isEl
+            ? 'Φτιαγμένο με αγάπη για τη Μήλο · Χωρίς διαφημίσεις'
+            : 'Made with love for Milos · No ads'}
+        </p>
       </div>
     </div>
-
   </footer>
 
 </body>
@@ -219,652 +241,168 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.gu
   --ink:        #111827;
   --muted:      #6b7280;
   --border:     rgba(0,0,0,0.08);
-
   --font-sans:  'DM Sans', sans-serif;
   --font-serif: 'DM Serif Display', Georgia, serif;
-
   --radius-sm:  6px;
   --radius-md:  12px;
   --radius-lg:  20px;
-
   --header-h:   64px;
-
   --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   --shadow-md:  0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
   --shadow-lg:  0 16px 48px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.06);
-
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { font-family: var(--font-sans); font-size: 16px; line-height: 1.65; color: var(--ink); background: var(--sand); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+img, video { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+nav ul, nav ol { list-style: none; }
+::selection { color: var(--aegean); background-color: var(--sand-dark); }
 
-/* ════════════════════════════════════════
-   RESET
-════════════════════════════════════════ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+.skip-link { position: absolute; top: -100px; left: 1rem; z-index: 9999; padding: 0.6rem 1.2rem; background: var(--deep-blue); color: #fff; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: top 0.15s; }
+.skip-link:focus { top: 1rem; outline: 3px solid var(--sky); outline-offset: 2px; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
+.container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
 
-body {
-  font-family: var(--font-sans);
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--ink);
-  background: var(--sand);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
+:focus-visible { outline: 2px solid var(--sea); outline-offset: 3px; border-radius: 3px; }
 
-img, video {
-  max-width: 100%;
-  display: block;
-}
+/* HEADER */
+.site-header { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.93); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow 0.25s var(--ease); }
+.site-header.is-scrolled { box-shadow: var(--shadow-md); }
+.header-inner { display: flex; align-items: center; height: var(--header-h); gap: 2rem; }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-/* Remove default list styles when used for nav */
-nav ul, nav ol {
-  list-style: none;
-}
-
-::selection {
-  color:var(--aegean);
-  background-color:var(--sand-dark);
-}
-
-/* ════════════════════════════════════════
-   SKIP LINK
-════════════════════════════════════════ */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: 1rem;
-  z-index: 9999;
-  padding: 0.6rem 1.2rem;
-  background: var(--deep-blue);
-  color: #fff;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: top 0.15s;
-}
-.skip-link:focus {
-  top: 1rem;
-  outline: 3px solid var(--sky);
-  outline-offset: 2px;
-}
-
-
-/* ════════════════════════════════════════
-   CONTAINER
-════════════════════════════════════════ */
-.container {
-  width: 100%;
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-
-/* ════════════════════════════════════════
-   FOCUS
-════════════════════════════════════════ */
-:focus-visible {
-  outline: 2px solid var(--sea);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-
-/* ════════════════════════════════════════
-   HEADER
-════════════════════════════════════════ */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  background: rgba(255, 255, 255, 0.93);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  transition: box-shadow 0.25s var(--ease);
-}
-
-.site-header.is-scrolled {
-  box-shadow: var(--shadow-md);
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  height: var(--header-h);
-  gap: 2rem;
-}
-
-
-/* ── Logo ── */
-.logo {
-  display: flex;
-  align-items: baseline;
-  flex-shrink: 0;
-  transition: opacity 0.15s;
-}
+.logo { display: flex; align-items: baseline; flex-shrink: 0; transition: opacity 0.15s; }
 .logo:hover { opacity: 0.78; }
+.logo-serif { font-family: var(--font-serif); font-size: 1.5rem; color: var(--deep-blue); letter-spacing: -0.01em; }
+.logo-dot   { font-family: var(--font-serif); font-size: 1.5rem; color: var(--sea); }
+.logo-guide { font-family: var(--font-sans); font-size: 0.78rem; font-weight: 600; color: var(--aegean); letter-spacing: 0.07em; text-transform: uppercase; align-self: center; margin-left: 1px; }
 
-.logo-serif {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: var(--deep-blue);
-  letter-spacing: -0.01em;
-}
-.logo-dot {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: var(--sea);
-}
-.logo-guide {
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--aegean);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  align-self: center;
-  margin-left: 1px;
-}
+.main-nav { display: flex; align-items: center; gap: 0.2rem; margin-left: auto; }
 
+.nav-link { display: flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 500; color: var(--ink); white-space: nowrap; position: relative; transition: background 0.15s var(--ease), color 0.15s var(--ease); }
+.nav-link:hover { background: var(--sand); color: var(--aegean); }
+.nav-link.is-active { color: var(--aegean); background: rgba(26,92,138,0.07); }
+.nav-link.is-active::after { content: ''; position: absolute; bottom: -1px; left: 0.85rem; right: 0.85rem; height: 2px; background: var(--aegean); border-radius: 2px; }
+.nav-link--soon { color: var(--muted); pointer-events: none; }
+.nav-link--soon:hover { background: none; color: var(--muted); }
+.nav-icon { font-size: 1rem; line-height: 1; }
+.badge-soon { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; background: var(--sand-dark); color: var(--muted); padding: 2px 6px; border-radius: 4px; }
 
-/* ── Nav ── */
-.main-nav {
+/* Language button */
+.lang-btn {
   display: flex;
   align-items: center;
-  gap: 0.2rem;
-  margin-left: auto;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--ink);
-  white-space: nowrap;
-  position: relative;
-  transition: background 0.15s var(--ease), color 0.15s var(--ease);
-}
-
-.nav-link:hover {
-  background: var(--sand);
-  color: var(--aegean);
-}
-
-/* Active state */
-.nav-link.is-active {
-  color: var(--aegean);
-  background: rgba(26, 92, 138, 0.07);
-}
-.nav-link.is-active::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0.85rem;
-  right: 0.85rem;
-  height: 2px;
-  background: var(--aegean);
-  border-radius: 2px;
-}
-
-/* Soon state */
-.nav-link--soon {
-  color: var(--muted);
-  pointer-events: none;
-}
-.nav-link--soon:hover {
-  background: none;
-  color: var(--muted);
-}
-
-.nav-icon {
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.badge-soon {
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background: var(--sand-dark);
-  color: var(--muted);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-/* Accent strip */
-.header-strip {
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    var(--deep-blue) 0%,
-    var(--aegean)    40%,
-    var(--sea)       70%,
-    var(--sand-dark) 100%
-  );
-}
-
-
-/* ── Hamburger ── */
-.nav-toggle {
-  display: none;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: 1px solid var(--border);
+  min-width: 36px;
+  height: 28px;
+  padding: 0 0.6rem;
+  margin-left: 0.5rem;
   border-radius: var(--radius-sm);
-  width: 38px;
-  height: 38px;
-  padding: 7px;
-  margin-left: auto;
-  transition: background 0.15s, border-color 0.15s;
+  border: 1.5px solid var(--border);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  background: transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
 }
-.nav-toggle:hover {
-  background: var(--sand);
-  border-color: var(--sand-dark);
-}
+.lang-btn:hover { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
 
-.hamburger-line {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--ink);
-  border-radius: 2px;
-  transform-origin: center;
-  transition: transform 0.22s var(--ease), opacity 0.22s var(--ease);
-}
+.header-strip { height: 2px; background: linear-gradient(90deg, var(--deep-blue) 0%, var(--aegean) 40%, var(--sea) 70%, var(--sand-dark) 100%); }
 
-.nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-.nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+.nav-toggle { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); width: 38px; height: 38px; padding: 7px; margin-left: auto; transition: background 0.15s, border-color 0.15s; }
+.nav-toggle:hover { background: var(--sand); border-color: var(--sand-dark); }
+.hamburger-line { display: block; width: 18px; height: 2px; background: var(--ink); border-radius: 2px; transform-origin: center; transition: transform 0.22s var(--ease), opacity 0.22s var(--ease); }
+.nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle[aria-expanded="true"] .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+.page-main { min-height: calc(100vh - var(--header-h) - 260px); }
 
-/* ════════════════════════════════════════
-   MAIN
-════════════════════════════════════════ */
-.page-main {
-  min-height: calc(100vh - var(--header-h) - 260px);
-}
-
-
-/* ════════════════════════════════════════
-   FOOTER
-════════════════════════════════════════ */
-.site-footer {
-  background: var(--deep-blue);
-  color: rgba(255,255,255,0.6);
-  margin-top: 5rem;
-}
-
-/* Top section */
+/* FOOTER */
+.site-footer { background: var(--deep-blue); color: rgba(255,255,255,0.6); margin-top: 5rem; }
 .footer-top { padding: 4rem 0 3rem; }
-
-.footer-top-inner {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 5rem;
-  align-items: start;
-}
-
-/* Brand */
-.footer-logo {
-  display: inline-flex;
-  align-items: baseline;
-  transition: opacity 0.15s;
-}
+.footer-top-inner { display: grid; grid-template-columns: 320px 1fr; gap: 5rem; align-items: start; }
+.footer-logo { display: inline-flex; align-items: baseline; transition: opacity 0.15s; }
 .footer-logo:hover { opacity: 0.75; }
-
 .footer-brand .logo-serif { color: rgba(255,255,255,0.92); font-size: 1.4rem; }
 .footer-brand .logo-dot   { color: var(--sea); font-size: 1.4rem; }
 .footer-brand .logo-guide { color: var(--sea); font-size: 0.8rem; }
-
-.footer-tagline {
-  margin-top: 0.85rem;
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.65;
-}
-
-.footer-facts {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.footer-facts span {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.02em;
-}
-
-/* Columns */
-.footer-cols {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-}
-
-.footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.footer-col-title {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-  margin-bottom: 0.85rem;
-}
-
-.footer-col a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.3rem 0;
-  font-size: 0.875rem;
-  color: rgba(255,255,255,0.55);
-  transition: color 0.15s, padding-left 0.15s;
-  border-radius: 4px;
-}
-.footer-col a:hover {
-  color: #fff;
-  padding-left: 0.3rem;
-}
-
+.footer-tagline { margin-top: 0.85rem; font-size: 0.9rem; color: rgba(255,255,255,0.45); line-height: 1.65; white-space: pre-line; }
+.footer-facts { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.footer-facts span { font-size: 0.78rem; color: rgba(255,255,255,0.3); letter-spacing: 0.02em; }
+.footer-cols { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; }
+.footer-col { display: flex; flex-direction: column; gap: 0.15rem; }
+.footer-col-title { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 0.85rem; }
+.footer-col a, .footer-col span.flink-soon { display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0; font-size: 0.875rem; color: rgba(255,255,255,0.55); transition: color 0.15s, padding-left 0.15s; }
+.footer-col a:hover { color: #fff; padding-left: 0.3rem; }
 .flink-icon { font-size: 0.85rem; flex-shrink: 0; }
-
-.flink-soon {
-  opacity: 0.35 !important;
-  pointer-events: none;
-  cursor: default;
-}
-
-.flink-badge {
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.5);
-  padding: 2px 6px;
-  border-radius: 3px;
-  margin-left: auto;
-}
-
-.flink-more {
-  margin-top: 0.35rem;
-  font-size: 0.78rem !important;
-  color: var(--sea) !important;
-  font-weight: 600;
-}
+.flink-soon { opacity: 0.35; pointer-events: none; cursor: default; }
+.flink-badge { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); padding: 2px 6px; border-radius: 3px; margin-left: auto; }
+.flink-more { margin-top: 0.35rem; font-size: 0.78rem !important; color: var(--sea) !important; font-weight: 600; }
 .flink-more:hover { color: var(--sky) !important; }
+.footer-wave { height: 32px; overflow: hidden; }
+.footer-wave svg { width: 100%; height: 100%; display: block; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 1.25rem 0; }
+.footer-bottom-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; padding: 0 1.5rem; max-width: 1160px; margin: 0 auto; }
+.footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.2); }
+.footer-note { font-size: 0.72rem; color: rgba(255,255,255,0.15); letter-spacing: 0.01em; }
 
-/* Wave divider */
-.footer-wave {
-  height: 32px;
-  overflow: hidden;
-}
-.footer-wave svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Bottom bar */
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 1.25rem 0;
-}
-.footer-bottom-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0 1.5rem;
-  max-width: 1160px;
-  margin: 0 auto;
-}
-.footer-copy {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.2);
-}
-.footer-note {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.15);
-  letter-spacing: 0.01em;
-}
-
-
-/* ════════════════════════════════════════
-   UTILITIES (used across pages)
-════════════════════════════════════════ */
-
-/* Sections */
-.sec        { padding: 5rem 0; }
-.sec-white  { background: var(--white); }
-.sec-sand   { background: var(--sand); }
-.sec-dark   { background: var(--deep-blue); }
-
-/* Typography */
-.label {
-  display: block;
-  font-size: 0.68rem;
+/* Footer lang switcher */
+.footer-lang-btn {
+  font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--sea);
-  margin-bottom: 0.35rem;
+  color: rgba(255,255,255,0.4);
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  transition: color 0.15s, border-color 0.15s;
 }
-.label-lt { color: rgba(58, 155, 201, 0.75); }
+.footer-lang-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
 
-.sec-title {
-  font-family: var(--font-serif);
-  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  color: var(--ink);
-  line-height: 1.15;
-}
+/* UTILITIES */
+.sec       { padding: 5rem 0; }
+.sec-white { background: var(--white); }
+.sec-sand  { background: var(--sand); }
+.sec-dark  { background: var(--deep-blue); }
+.label { display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sea); margin-bottom: 0.35rem; }
+.label-lt { color: rgba(58,155,201,0.75); }
+.sec-title { font-family: var(--font-serif); font-size: clamp(1.8rem,3.5vw,2.5rem); color: var(--ink); line-height: 1.15; }
 .sec-title-lt { color: #fff; }
-
-.sec-sub {
-  margin-top: 0.45rem;
-  color: var(--muted);
-  font-size: 0.975rem;
-}
-
-/* Section header row */
-.sec-hdr-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-
-/* See all link */
-.see-all {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--aegean);
-  border-bottom: 1.5px solid var(--sea);
-  padding-bottom: 2px;
-  white-space: nowrap;
-  transition: color 0.15s;
-}
+.sec-sub { margin-top: 0.45rem; color: var(--muted); font-size: 0.975rem; }
+.sec-hdr-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+.see-all { font-size: 0.85rem; font-weight: 600; color: var(--aegean); border-bottom: 1.5px solid var(--sea); padding-bottom: 2px; white-space: nowrap; transition: color 0.15s; }
 .see-all:hover { color: var(--sea); }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.8rem 1.6rem; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 600; background: #fff; color: var(--deep-blue); box-shadow: 0 4px 18px rgba(0,0,0,0.14); transition: transform 0.15s var(--ease-spring), box-shadow 0.15s var(--ease); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.8rem 1.6rem; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 600; background: rgba(255,255,255,0.11); color: #fff; border: 1.5px solid rgba(255,255,255,0.26); transition: background 0.15s var(--ease), transform 0.15s var(--ease-spring); }
+.btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+.btn-dark { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.78rem 1.55rem; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 600; background: var(--deep-blue); color: #fff; transition: background 0.15s var(--ease), transform 0.15s var(--ease-spring); }
+.btn-dark:hover { background: var(--aegean); transform: translateY(-2px); }
 
-/* Buttons */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.8rem 1.6rem;
-  border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
-  font-weight: 600;
-  background: #fff;
-  color: var(--deep-blue);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.14);
-  transition: transform 0.15s var(--ease-spring), box-shadow 0.15s var(--ease);
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.2);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.8rem 1.6rem;
-  border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
-  font-weight: 600;
-  background: rgba(255,255,255,0.11);
-  color: #fff;
-  border: 1.5px solid rgba(255,255,255,0.26);
-  transition: background 0.15s var(--ease), transform 0.15s var(--ease-spring);
-}
-.btn-secondary:hover {
-  background: rgba(255,255,255,0.2);
-  transform: translateY(-2px);
-}
-
-.btn-dark {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.78rem 1.55rem;
-  border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
-  font-weight: 600;
-  background: var(--deep-blue);
-  color: #fff;
-  transition: background 0.15s var(--ease), transform 0.15s var(--ease-spring);
-}
-.btn-dark:hover {
-  background: var(--aegean);
-  transform: translateY(-2px);
-}
-
-
-/* ════════════════════════════════════════
-   MOBILE
-════════════════════════════════════════ */
+/* MOBILE */
 @media (max-width: 720px) {
-
-  .main-nav {
-    display: none;
-    position: absolute;
-    top: calc(var(--header-h) + 2px);
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 0.75rem;
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow-lg);
-    gap: 0.2rem;
-  }
-
-  .main-nav.is-open {
-    display: flex;
-    animation: slideDown 0.2s var(--ease);
-  }
-
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .nav-link {
-    width: 100%;
-    padding: 0.7rem 1rem;
-  }
-
+  .main-nav { display: none; position: absolute; top: calc(var(--header-h) + 2px); left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 0.75rem; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg); gap: 0.2rem; }
+  .main-nav.is-open { display: flex; animation: slideDown 0.2s var(--ease); }
+  @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+  .nav-link { width: 100%; padding: 0.7rem 1rem; }
   .nav-link.is-active::after { display: none; }
-
+  .lang-btn { width: 100%; justify-content: flex-start; padding: 0.7rem 1rem; border: none; border-top: 1px solid var(--border); border-radius: 0; margin-left: 0; height: auto; font-size: 0.875rem; }
   .nav-toggle { display: flex; }
-
   .sec { padding: 3.5rem 0; }
-
   .sec-hdr-row { flex-direction: column; align-items: flex-start; }
-
-  .footer-top-inner {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-
-  .footer-cols {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-  }
-
-  .footer-bottom-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
+  .footer-top-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-bottom-inner { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
 }
 
-
-/* ════════════════════════════════════════
-   PRINT
-════════════════════════════════════════ */
 @media print {
-  .site-header,
-  .site-footer,
-  .skip-link,
-  .nav-toggle { display: none; }
+  .site-header, .site-footer, .skip-link, .nav-toggle { display: none; }
   body { background: #fff; color: #000; }
   .page-main { min-height: auto; }
 }
@@ -872,65 +410,37 @@ nav ul, nav ol {
 
 
 <script>
-// ── Header shadow on scroll ──
 const header = document.getElementById('site-header');
-const onScroll = () => {
+window.addEventListener('scroll', () => {
   header?.classList.toggle('is-scrolled', window.scrollY > 8);
-};
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
+}, { passive: true });
 
-// ── Mobile nav ──
 const toggle = document.getElementById('nav-toggle');
 const nav    = document.getElementById('main-nav');
 
 const closeNav = () => {
   nav?.classList.remove('is-open');
   toggle?.setAttribute('aria-expanded', 'false');
-  toggle?.setAttribute('aria-label', 'Άνοιγμα μενού');
 };
-
 const openNav = () => {
   nav?.classList.add('is-open');
   toggle?.setAttribute('aria-expanded', 'true');
-  toggle?.setAttribute('aria-label', 'Κλείσιμο μενού');
 };
 
 toggle?.addEventListener('click', () => {
-  const isOpen = nav?.classList.contains('is-open');
-  isOpen ? closeNav() : openNav();
+  nav?.classList.contains('is-open') ? closeNav() : openNav();
 });
-
-// Close on nav link click
-nav?.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', closeNav);
-});
-
-// Close on outside click
+nav?.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeNav));
 document.addEventListener('click', (e) => {
-  if (
-    nav?.classList.contains('is-open') &&
-    !nav.contains(e.target as Node) &&
-    !toggle?.contains(e.target as Node)
-  ) {
-    closeNav();
-  }
+  if (nav?.classList.contains('is-open') && !nav.contains(e.target as Node) && !toggle?.contains(e.target as Node)) closeNav();
 });
-
-// Close on Escape
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && nav?.classList.contains('is-open')) {
-    closeNav();
-    toggle?.focus();
-  }
+  if (e.key === 'Escape' && nav?.classList.contains('is-open')) { closeNav(); toggle?.focus(); }
 });
 
-// ── Active nav link ──
 const path = window.location.pathname;
 document.querySelectorAll<HTMLAnchorElement>('[data-navlink]').forEach(link => {
   const href = link.getAttribute('href') ?? '';
-  if (href.length > 1 && path.startsWith(href)) {
-    link.classList.add('is-active');
-  }
+  if (href.length > 1 && path.startsWith(href)) link.classList.add('is-active');
 });
 </script>

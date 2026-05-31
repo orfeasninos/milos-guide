@@ -1,8 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import tavernsData from '../../data/taverns.json';
+import Layout from '../../../layouts/Layout.astro';
+import tavernsRaw from '../../../data/taverns.json';
 
-const base = import.meta.env.BASE_URL;
+type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
+const tavernsData = tavernsRaw as Tavern[];
+
+const getName    = (t: Tavern): string => typeof t.name === 'object' ? (t.name as any).el : t.name as string;
+const getCuisine = (t: Tavern): string => typeof t.cuisine === 'object' && !Array.isArray(t.cuisine) ? (t.cuisine as any).el : (t.cuisine as any)?.[0] ?? '';
 
 const areas = [...new Set(tavernsData.map(t => t.location.area).filter(Boolean))].sort();
 
@@ -16,6 +20,7 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
 ---
 
 <Layout
+  lang="el"
   title="Φαγητό στη Μήλο"
   description={`Τα καλύτερα εστιατόρια και ταβέρνες στη Μήλο — ${tavernsData.length}+ επιλογές σε όλο το νησί.`}
 >
@@ -58,7 +63,7 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
     <div class="taverns-grid" id="taverns-grid">
       {sortedTaverns.map(tavern => (
         <a
-          href={`${base}eat/${tavern.slug}`}
+          href={`/el/eat/${tavern.slug}`}
           class={`tav-card${tavern.isFeatured ? ' tav-card--featured' : ''}`}
           data-area={tavern.location.area}
           data-featured={tavern.isFeatured ? 'true' : 'false'}
@@ -66,8 +71,8 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
           <div class="tav-img-wrap">
             {tavern.localPhoto ? (
               <img
-                src={tavern.localPhoto ?? `/images/taverns/${tavern.slug}.jpg`}
-                alt={`Φωτογραφία ${tavern.name}`}
+                src={tavern.localPhoto}
+                alt={`Φωτογραφία ${getName(tavern)}`}
                 class="tav-img"
                 loading="lazy"
               />
@@ -82,7 +87,7 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
               <span class="tav-area">{tavern.location.area}</span>
               {tavern.priceRange && <span class="tav-price">{tavern.priceRange}</span>}
             </div>
-            <h2 class="tav-name">{tavern.name}</h2>
+            <h2 class="tav-name">{getName(tavern)}</h2>
             <div class="tav-footer">
               {tavern.rating > 0 && (
                 <span class="tav-rating">
@@ -90,8 +95,8 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
                   {tavern.rating}
                 </span>
               )}
-              {tavern.cuisine?.[0] && (
-                <span class="tav-cuisine">{tavern.cuisine[0]}</span>
+              {getCuisine(tavern) && (
+                <span class="tav-cuisine">{getCuisine(tavern)}</span>
               )}
               {tavern.hours && (
                 <span class="tav-hours">{tavern.hours.split('–')[0].trim()}–{tavern.hours.split('–')[1]?.trim()}</span>
@@ -102,7 +107,6 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
       ))}
     </div>
 
-    <!-- Empty state -->
     <div class="empty-state" id="empty-state" style="display:none">
       <p class="empty-icon">🍽</p>
       <p class="empty-text">Δεν βρέθηκαν εστιατόρια με αυτά τα φίλτρα.</p>
@@ -387,7 +391,6 @@ const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
   .taverns-grid { grid-template-columns: 1fr; }
 }
 </style>
-
 
 <script>
 const grid    = document.getElementById('taverns-grid');

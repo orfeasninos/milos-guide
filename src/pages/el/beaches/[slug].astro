@@ -1,6 +1,6 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import beachesData from '../../data/beaches.json';
+import Layout from '../../../layouts/Layout.astro';
+import beachesData from '../../../data/beaches.json';
 
 export function getStaticPaths() {
   return beachesData.map((beach) => ({
@@ -17,6 +17,12 @@ const accessMap: Record<string, { icon: string; label: string; color: string }> 
   hike: { icon: '🥾', label: 'Προσβάσιμη με πεζοπορία',  color: '#854f0b' },
   boat: { icon: '⛵', label: 'Προσβάσιμη μόνο με βάρκα', color: '#185fa5' },
 };
+
+const getBeachName = (b: any): string =>
+  typeof b.name === 'object' ? b.name.el : b.name;
+const getBeachDesc = (b: any): string =>
+  typeof b.description === 'object' ? b.description.el : b.description;
+
 const access = accessMap[beach.accessType] ?? { icon: '📍', label: beach.accessType, color: '#6b7280' };
 
 const facilityIcons: Record<string, string> = {
@@ -33,8 +39,9 @@ const related = beachesData
 ---
 
 <Layout
-  title={`${beach.name} — Παραλία στη Μήλο`}
-  description={`${beach.name}: ${access.label}. ${beach.facilities.length ? 'Παροχές: ' + beach.facilities.join(', ') + '.' : ''} Αξιολόγηση ${beach.rating}/5.`}
+  lang="el"
+  title={`${getBeachName(beach)} — Παραλία στη Μήλο`}
+  description={`${getBeachName(beach)}: ${access.label}. ${beach.facilities.length ? 'Παροχές: ' + beach.facilities.join(', ') + '.' : ''} Αξιολόγηση ${beach.rating}/5.`}
 >
 
 <!-- HERO -->
@@ -42,7 +49,7 @@ const related = beachesData
   {beach.localPhoto ? (
     <img
       src={beach.localPhoto ?? `/images/beaches/${beach.slug}.jpg`}
-      alt={beach.name}
+      alt={getBeachName(beach)}
       class="b-hero-img"
       fetchpriority="high"
     />
@@ -51,7 +58,7 @@ const related = beachesData
   )}
   <div class="b-hero-overlay">
     <div class="container b-hero-inner">
-      <a href={`${base}beaches`} class="back-link">← Όλες οι παραλίες</a>
+      <a href="/el/beaches" class="back-link">← Όλες οι παραλίες</a>
       <div class="b-hero-meta">
         <div class="b-hero-chips">
           <span class="b-access-chip">{access.icon} {access.label}</span>
@@ -59,7 +66,7 @@ const related = beachesData
             <span class="b-rating-chip">★ {beach.rating}</span>
           )}
         </div>
-        <h1 class="b-hero-name">{beach.name}</h1>
+        <h1 class="b-hero-name">{getBeachName(beach)}</h1>
         {beach.location.area && (
           <p class="b-hero-area">
             <span style="color:var(--sky)">◉</span> {beach.location.area}
@@ -103,7 +110,7 @@ const related = beachesData
     </div>
 
     <!-- Description -->
-    <p class="b-desc">{beach.description}</p>
+    <p class="b-desc">{getBeachDesc(beach)}</p>
 
     <!-- Tips block -->
     <div class="tips-block">
@@ -234,16 +241,16 @@ const related = beachesData
           <span class="label">Παρόμοιες παραλίες</span>
           <h2 class="sec-title">Επίσης {access.label.split(' ').slice(-1)[0]}</h2>
         </div>
-        <a href={`${base}beaches`} class="see-all">Όλες οι παραλίες →</a>
+        <a href="/el/beaches" class="see-all">Όλες οι παραλίες →</a>
       </div>
       <div class="related-grid">
         {related.map(r => (
-          <a href={`${base}beaches/${r.slug}`} class="rel-card">
+          <a href={`/el/beaches/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
               {r.localPhoto ? (
                 <img
                   src={r.localPhoto ?? `/images/beaches/${r.slug}.jpg`}
-                  alt={r.name}
+                  alt={getBeachName(r)}
                   class="rel-img"
                   loading="lazy"
                 />
@@ -252,7 +259,7 @@ const related = beachesData
               )}
               <div class="rel-overlay">
                 {r.rating > 0 && <span class="rel-rating">★ {r.rating}</span>}
-                <h3 class="rel-name">{r.name}</h3>
+                <h3 class="rel-name">{getBeachName(r)}</h3>
               </div>
             </div>
           </a>

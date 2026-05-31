@@ -1,9 +1,17 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import tavernsData from '../../data/taverns.json';
+import Layout from '../../../layouts/Layout.astro';
+import tavernsRaw from '../../../data/taverns.json';
+
+type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
+const tavernsData = tavernsRaw as Tavern[];
+
+
+const getName    = (t: any): string => typeof t.name === 'object' ? t.name.el : t.name;
+const getDesc    = (t: any): string => typeof t.description === 'object' ? t.description.el : t.description;
+const getCuisine = (t: any): string => typeof t.cuisine === 'object' && !Array.isArray(t.cuisine) ? t.cuisine.el : t.cuisine?.[0] ?? '';
 
 export function getStaticPaths() {
-  return tavernsData.map((tavern) => ({
+  return tavernsRaw.map((tavern) => ({
     params: { slug: tavern.slug },
     props:  { tavern },
   }));
@@ -30,8 +38,9 @@ const related = tavernsData
 ---
 
 <Layout
-  title={`${tavern.name} — Εστιατόριο στη Μήλο`}
-  description={`${tavern.name} στη${tavern.location.area ? ' ' + tavern.location.area : ''} Μήλο. ${tavern.cuisine?.[0] ?? 'Ελληνική κουζίνα'} · Αξιολόγηση ${tavern.rating}/5.`}
+  lang="el"
+  title={`${getName(tavern)} — Εστιατόριο στη Μήλο`}
+  description={`${getName(tavern)} στη${tavern.location.area ? ' ' + tavern.location.area : ''} Μήλο. ${getCuisine(tavern) || 'Ελληνική κουζίνα'} · Αξιολόγηση ${tavern.rating}/5.`}
 >
 
 <!-- HERO -->
@@ -39,7 +48,7 @@ const related = tavernsData
   {tavern.localPhoto ? (
     <img
       src={tavern.localPhoto ?? `/images/taverns/${tavern.slug}.jpg`}
-      alt={`${tavern.name}`}
+      alt={getName(tavern)}
       class="t-hero-img"
       fetchpriority="high"
     />
@@ -48,15 +57,15 @@ const related = tavernsData
   )}
   <div class="t-hero-overlay">
     <div class="container t-hero-inner">
-      <a href={`${base}eat`} class="back-link">← Όλα τα εστιατόρια</a>
+      <a href="/el/eat" class="back-link">← Όλα τα εστιατόρια</a>
       <div class="t-hero-meta">
         {tavern.isFeatured && <span class="featured-badge">Επιλεγμένο</span>}
-        <h1 class="t-hero-name">{tavern.name}</h1>
+        <h1 class="t-hero-name">{getName(tavern)}</h1>
         <p class="t-hero-area">
           <span class="area-dot">◉</span>
           {tavern.location.area}
-          {tavern.cuisine?.[0] && <span class="area-sep">·</span>}
-          {tavern.cuisine?.[0]}
+          {getCuisine(tavern) && <span class="area-sep">·</span>}
+          {getCuisine(tavern)}
         </p>
       </div>
     </div>
@@ -100,16 +109,12 @@ const related = tavernsData
     </div>
 
     <!-- Description -->
-    <p class="t-desc">{tavern.description}</p>
+    <p class="t-desc">{getDesc(tavern)}</p>
 
     <!-- Tags -->
     <div class="t-tags">
-      {tavern.cuisine?.map(c => (
-        <span class="tag">{c}</span>
-      ))}
-      {tavern.servesCuisine && tavern.servesCuisine !== tavern.cuisine?.[0] && (
-        <span class="tag">{tavern.servesCuisine}</span>
-      )}
+      <span class="tag">{getCuisine(tavern)}</span>
+      
     </div>
 
     <!-- Opening Hours -->
@@ -216,16 +221,16 @@ const related = tavernsData
           <span class="label">Ίδια περιοχή</span>
           <h2 class="sec-title">Άλλα εστιατόρια στη {tavern.location.area}</h2>
         </div>
-        <a href={`${base}eat`} class="see-all">Όλα τα εστιατόρια →</a>
+        <a href="/el/eat" class="see-all">Όλα τα εστιατόρια →</a>
       </div>
       <div class="related-grid">
         {related.map(r => (
-          <a href={`${base}eat/${r.slug}`} class="rel-card">
+          <a href={`/el/eat/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
               {r.localPhoto ? (
                 <img
                   src={r.localPhoto ?? `/images/taverns/${r.slug}.jpg`}
-                  alt={r.name}
+                  alt={getName(r)}
                   class="rel-img"
                   loading="lazy"
                 />
@@ -235,7 +240,7 @@ const related = tavernsData
             </div>
             <div class="rel-body">
               <p class="rel-area">{r.location.area}</p>
-              <h3 class="rel-name">{r.name}</h3>
+              <h3 class="rel-name">{getName(r)}</h3>
               {r.rating > 0 && <p class="rel-rating">★ {r.rating}</p>}
             </div>
           </a>

@@ -1,18 +1,24 @@
 [
   {
     "slug": "barko-tavern",
-    "name": "Barko tavern restaurant",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Barko tavern restaurant στον προορισμό Adamas της Μήλου.",
+    "name": {
+      "el": "Barko tavern restaurant",
+      "en": "Barko Tavern"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Barko tavern restaurant στον προορισμό Adamas της Μήλου.",
+      "en": "Enjoy authentic Greek cuisine at Barko Tavern in Adamas, right by the harbour."
+    },
     "location": {
       "area": "Adamas",
       "address": "Greece, Αδάμας 848 01, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=3229445517250825055&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJVWP7LUffmBQRX4s2bZZL0Sw/photos/Ab43m-s3Ri1H2mHxgzIoCp3N5-iQuvivPaJ998xh5ZDzpL0P-QxAIszj6ulNtoNcrzc_EVytyqU84fMhAtO3E8XQsBKjeC2PrC5eF14q1_imVeSW_Pcpz1u3MM00m0qEFrPvG324s5O439-_J4mrs_go8IhbyfduzcWPckKNCI_SH_lK79YTADjHLDPKYOL7xismtp_6eN57CbLpW8hzovQq_11s6Id2xU_GcGa28X8za9AQXK9kCoDBi9mlxXiKiFiuIWxBnxvhPxTAlE72X-BLRnRqTwXZwzmQB3GQgHkjimCJgg",
     "localPhoto": "/images/taverns/barko-tavern.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 022660",
     "website": "https://barkotavernmilos.com/",
@@ -36,18 +42,24 @@
   },
   {
     "slug": "sirocco-restaurant",
-    "name": "Sirocco Volcanic Restaurant",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Sirocco Volcanic Restaurant στον προορισμό Paleochori της Μήλου.",
+    "name": {
+      "el": "Sirocco Volcanic Restaurant",
+      "en": "Sirocco Volcanic Restaurant"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Sirocco Volcanic Restaurant στον προορισμό Paleochori της Μήλου.",
+      "en": "Dine on a geothermally heated beach at Sirocco in Paleochori — a truly unique experience."
+    },
     "location": {
       "area": "Paleochori",
       "address": "Παλιοχώρι, Milos 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=6854837061465397215&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJV017TR8gmRQR39fTKf1FIV8/photos/Ab43m-ssLsFYH_4EHnDo7e9iXeZvnoLGr21CbHZAA5LelIzPVCjXDVuMmYM1PeJIrT7qnXecINgQk0HQEO20ItDVvNTwIGka17D0dKRCmZHNikWKgjuCR1iA-IBDspNMHLu8A5dHpdONTT0ERe-MHg_x9atuVTmTdW_Sg5r7j3pbJ1L60d6zYTUOQPm_PP_aUJhRl1WwcHW6MWc_LOzTJQn49jwoeV3paSUAzEl0zOLeZC2B51EvvLsZzjQBKjNIXPKTjQNIWIQ2m_k84998Shej0iiFZeF0ORR2pxRd0WcOQmapIQ",
     "localPhoto": "/images/taverns/sirocco-restaurant.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 031201",
     "website": "https://siroccomilos.gr/",
@@ -71,18 +83,24 @@
   },
   {
     "slug": "enalion-restaurant",
-    "name": "Ενάλιον",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Ενάλιον στον προορισμό Pollonia της Μήλου.",
+    "name": {
+      "el": "Ενάλιον",
+      "en": "Enalion"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Ενάλιον στον προορισμό Pollonia της Μήλου.",
+      "en": "Fresh seafood and traditional Greek dishes served by the sea in Pollonia."
+    },
     "location": {
       "area": "Pollonia",
       "address": "Pollonia, Cyclades 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=2136965571963822506&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJAfiJ26fgmBQRqqEklt0GqB0/photos/Ab43m-tWTIbTX2ioamJnJLspxRKmW0RcAsJcQVe8lGD6J07h_FIRUwdul5NV4NDlkUCoMyhjxznCgCzOzKGwHAsRc8BumG5liAnK17aiUQTPGzh7KwCYoAN2mmQG2vvhFCewUyH2iPGR_t74v9dWeHGty7ez_EggcM54qgYzDSeuzR1N7_cLQKGt8V_2vFVzikm6v3lGJ-atXsMcoEm2oPEXYvCagOYcFZ9W9YLlVzjAhCe46L_upOufQwUnAZBuAPCh2vb70i7tGPumOykWfvH5pDM0ln7AjZzf5kPQozwyZu7eaQ",
     "localPhoto": "/images/taverns/enalion-restaurant.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 041415",
     "website": "http://www.enalion-milos.gr/",
@@ -102,22 +120,28 @@
       "Σάββατο: 1:00–11:00 μ.μ.",
       "Κυριακή: 1:00–11:00 μ.μ."
     ],
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "slug": "o-hamos-tavern",
-    "name": "Οινομαγειρείο Ω! Χαμός!",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Οινομαγειρείο Ω! Χαμός! στον προορισμό Papikinou της Μήλου.",
+    "name": {
+      "el": "Οινομαγειρείο Ω! Χαμός!",
+      "en": "O! Hamos!"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Οινομαγειρείο Ω! Χαμός! στον προορισμό Papikinou της Μήλου.",
+      "en": "A beloved local taverna with hearty traditional recipes in Papikinou, Milos."
+    },
     "location": {
       "area": "Papikinou",
       "address": "Αδάμας 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=18236209760418511654&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJnWItUGnfmBQRJrtBUygIFP0/photos/Ab43m-tVmAr2Umpyf6Zn4H1DZNdz3FjnjAHh-cm0g4Deabz_CsYqGXWEAYYPY55_yOWb3B8agjXmuBzQpzGxd9FHs2I9JogIwvNxz_PncqT6Dy_g58GbLVGDiWY0NcADq3Q00Cf1J_BDqfhSzaI1HEDh8ZQjbOgZINVuREfGIHL4zVqPiJlldNI7m7vFx3Ee0Q7iBkTehV4Feq5BHJPjv5IdQ5QQ1BiO1B59S9a7oIXAjeE-IxIZzx-BcSuwNlYDFUXGums06DJIfTZ7gaMQa1pdXrum4Sq_2wvoqbhSRG0QicQSR37JZdWSOedaQneU15VtISZAjlh_gjD2tQFiV1tO0IIGuGWrY89piqduVwj1kz8FiiQBfCT9OOIuuirCWBmemm22aYc93O90HHAfrav49n-foaDIh5P-xyC9UfXNhlR_iw",
     "localPhoto": "/images/taverns/o-hamos-tavern.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 021672",
     "website": "http://www.ohamos-milos.gr/",
@@ -137,22 +161,28 @@
       "Σάββατο: 1:00–11:30 μ.μ.",
       "Κυριακή: 1:00–11:30 μ.μ."
     ],
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "slug": "avli-milos",
-    "name": "Avli-Milos",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Avli-Milos στον προορισμό Plaka της Μήλου.",
+    "name": {
+      "el": "Avli-Milos",
+      "en": "Avli Milos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Avli-Milos στον προορισμό Plaka της Μήλου.",
+      "en": "A charming courtyard restaurant in the hilltop village of Plaka, with views over the bay."
+    },
     "location": {
       "area": "Plaka",
       "address": "Πλακα, Πλάκα 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=7961636302392792537&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJVbaPVyTZmBQR2RX60ghqfW4/photos/Ab43m-t0zgeqfSmyklQeljRGXcQ_A7fqNGNO4U5sCPiJggxetwWr76Sv-_Kw8hZlytOAGlf42kxav6dLYiXoRXQQSoXYnUK2Iz5NTIW_iMo951YTK1nJlOc2dFTlP9DHSe3dpL_lKhQ6TtENKVp8nm1Xlg7ZkhYtIM2PvlXeLRiXlbmRx0SjtxQPd2GsZ9s27J0hEDJaY3LoxlA0R0bBOmbm2OsXX8lLQAsUfJ5CDC2X7a37ycQo1VnzMXy6svNQ0OLHBXuq3LfPIpEcU_0Z6tiH_DMp432vzDYKr9cttmC0Nq1DaKgfhusO1zbkmWlnHbm9fSwtq86yUjUFYQNhuHu2VNjqhysCbbPYo8yEg5Hcoa0UlApatsznXJujxlgpho1ngRtKudv3mDzv1i9LieEPGhaXy9PTlwOs6NGB9c_6xiNjPIs",
     "localPhoto": "/images/taverns/avli-milos.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 027590",
     "website": null,
@@ -176,18 +206,24 @@
   },
   {
     "slug": "mikros-apoplous",
-    "name": "Mikros Apoplous - Seafood and more",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Mikros Apoplous - Seafood and more στον προορισμό Adamas της Μήλου.",
+    "name": {
+      "el": "Mikros Apoplous - Seafood and more",
+      "en": "Mikros Apoplous – Seafood & More"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Mikros Apoplous - Seafood and more στον προορισμό Adamas της Μήλου.",
+      "en": "Seafood specialties and fresh catches steps from the harbour in Adamas."
+    },
     "location": {
       "area": "Adamas",
       "address": "Νεοχώρι, Αδάμας 848 01, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=13810562751115067026&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJ-w93okHfmBQRkn50kKb5qL8/photos/Ab43m-tE5Bm_UfpeWFFA9NMvTDpunFNA1hPhnJyt4jAzE2_z6_J4rJzP2Iqrxj846iBmvVzJ25_aJBOAjJvrb7GzwH3582xyXsuPJHkcmE_gkLwbBg4eLBcOvia-nJcOFSHMeWVNfd3Fz2QbTJcPygWtLUYCNyZJ1pBaQSckNqbGn5Pz7pAYDLeW8AIaIBFWhOmsosqfdcuYtovW6gIPsTC4xV1UEpyIngac1G1kwEfqebiNkpcah2u2NqJiVfj-pydm5kr-ATEZqexU3klOX22ndr2tu2Xp_W4l2S34rvV0VvPKaWHPn_isKyzYzdWtBl-MzRCypp3v7sq5qRUeXADKWZbE97b7FZbNV1NKk4-lAr1KxRYEmVlL2qJURUQq5F7wmgJLwP7_oIBqgyd5JoSgm1tfEzX9VsZsZPbjHeHmgBIKhNzy",
     "localPhoto": "/images/taverns/mikros-apoplous.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 024207",
     "website": "http://bit.ly/4njZpZ9",
@@ -211,18 +247,24 @@
   },
   {
     "slug": "glaronisia-milos",
-    "name": "τα γλαρονήσια",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο τα γλαρονήσια στον προορισμό Tripiti της Μήλου.",
+    "name": {
+      "el": "τα γλαρονήσια",
+      "en": "Ta Glaronisia"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο τα γλαρονήσια στον προορισμό Tripiti της Μήλου.",
+      "en": "Traditional taverna with panoramic sea views perched above Tripiti."
+    },
     "location": {
       "area": "Tripiti",
       "address": "Τρυπητή 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=4656315088722365418&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJ_-3TGcvYmBQR6ouWKeeNnkA/photos/Ab43m-uAp9A4ImAmIwf0mYSmBE5ko4EKN-MTr5orW3Qk6eEO-BEkiRO_rtXIutjNYSSUkNELm-FaQzSBctGGj_XrdMQuQE9wyz_9Yne7pqkN-ZSr0WLdy0CWK62pEt5MkQpPhaQcJXZgUYgM_0LndsE8YnHhRuNVP4UKBGeB4k7OyZTpPYsMLQlmhHQQJxtEp2QfLkkuENhrc_v-GxL9Pzbse_KwfsP9zmXUk_jt5NkDRYsdTETf9EbLATkfb89dev24hkzr5iTrTJgi0hOVBBIV_xINAlBP6kaKcHIwyqHoXFhmiSZH6IwP8gvDriYWjnEmHgI8ik0EhDYhrjnC8E2NhrdlVaSH0UmqTv0HdYcCKaLkbaQrnk4Y99rbNv26R_De_peNCMKupzinJShFr-_S_ecdITOs0-wCFFDChlzMiBM",
     "localPhoto": "/images/taverns/glaronisia-milos.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 023480",
     "website": null,
@@ -246,18 +288,24 @@
   },
   {
     "slug": "barriello-milos",
-    "name": "barriello",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο barriello στον προορισμό Triovassalos της Μήλου.",
+    "name": {
+      "el": "barriello",
+      "en": "Barriello"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο barriello στον προορισμό Triovassalos της Μήλου.",
+      "en": "Creative Mediterranean cuisine in a relaxed garden setting in Triovassalos."
+    },
     "location": {
       "area": "Triovassalos",
       "address": "island, Τρυπητή 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=10428939674316931938&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJa6trBcvYmBQRYoOj_2AJu5A/photos/Ab43m-sSPgfzNdtpigmrcUJrD5uyYQTF8YmwOhE2UV17P7M2ONje9Jl_9TFXrRQhcmmuxDLoKWE8Fl7pgv7ob6jrim0xNE7GSowkcwH6CqymcZkYEwaufRJnMxi9eLcaYyK9fHNvjr1MBNdDgmSI-dtyUpzvSeZftR4I12xtrqJOGce-D4pRp5aOXItx7HEE95TBwtto7Sh_pv--y4BbuijJ4vGFdCerohBArdMtzOgrjPlT_-UbBhZVydJufVeCPvspazUzmRbEX4j0ulcuVw34ivyF_rlseR_XZqj1bvllH0sHSw",
     "localPhoto": "/images/taverns/barriello-milos.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "693 297 0970",
     "website": "https://barriello.com/",
@@ -281,18 +329,24 @@
   },
   {
     "slug": "gialos-milos",
-    "name": "Γιαλός",
-    "description": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Γιαλός στον προορισμό Pollonia της Μήλου.",
+    "name": {
+      "el": "Γιαλός",
+      "en": "Gialos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Γιαλός στον προορισμό Pollonia της Μήλου.",
+      "en": "Waterfront dining with freshly caught fish and mezedes in Pollonia."
+    },
     "location": {
       "area": "Pollonia",
       "address": "Πολλώνια 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=10610761391792570493&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "photoRef": "places/ChIJiwl_f6jgmBQRfcA5gkT_QJM/photos/Ab43m-s_L37XUjlrPQdyLUJ6P3jGaMImK5wewUv74o_PgOZpLG6zQ7RhTuCYtdKdS9w7xBsCOzki3lSVROmM7OHdTy17dF-lL9iOWiZPbsxdqwCu0onWlVibC81poTk3XjpCTTMhm13pXZSGjz0njflkKXMLQfOB2dWfJsYUbi5HPd7gnPRIc3Q2nKebOOmA9BMThU1XCOIJvJBMopL5qbQISC7v1_6DBOWVvjgAzWXcqhbH3z0XwoJwLF4qaBPIElBVB9_2-3Nq7hwVhgTECtN35nJQ4P_FIXxjJF97hWoINTKUJH-DdewAeXL-_lkLpEUHftkaS66fEo5zHwvqYNFJ47YL2Hu2bovN-skPUG_cy1KXsJ3sYhlm8y7NejG5dm_9-kTusrzCZQa_s5AWwUH4ew1izQyhv5Ui1uR6YP04Y6yz1FZoMXbBoKmz6Da3LQ",
     "localPhoto": "/images/taverns/gialos-milos.jpg",
-    "cuisine": [
-      "Παραδοσιακή Ελληνική"
-    ],
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
     "servesCuisine": "Greek",
     "phone": "2287 041208",
     "website": "https://yialos-milos.gr/",
@@ -311,6 +365,697 @@
       "Παρασκευή: 12:30 μ.μ. – 12:00 π.μ.",
       "Σάββατο: 12:30 μ.μ. – 12:00 π.μ.",
       "Κυριακή: 12:30 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "medusa-milos",
+    "name": {
+      "el": "Μέδουσα Μήλος",
+      "en": "Medusa Milos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Μέδουσα Μήλος στον προορισμό Mandrakia της Μήλου.",
+      "en": "A cosy taverna overlooking the colourful syrmata of Mandrakia."
+    },
+    "location": {
+      "area": "Mandrakia",
+      "address": "Μανδράκια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16542655321464481123&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/medusa-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 023670",
+    "website": "https://medusamilos.gr/en/restaurant-2/",
+    "coordinates": {
+      "lat": 36.7511313,
+      "lng": 24.4465407
+    },
+    "rating": 4.5,
+    "priceRange": "€€",
+    "hours": "12:00–11:00 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00–11:00 μ.μ.",
+      "Τρίτη: 12:00–11:00 μ.μ.",
+      "Τετάρτη: 12:00–11:00 μ.μ.",
+      "Πέμπτη: 12:00–11:00 μ.μ.",
+      "Παρασκευή: 12:00–11:00 μ.μ.",
+      "Σάββατο: 12:00–11:00 μ.μ.",
+      "Κυριακή: 12:00–11:00 μ.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "methismeni-politeia",
+    "name": {
+      "el": "Μεθυσμένη Πολιτεία",
+      "en": "Methismeni Politeia"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Μεθυσμένη Πολιτεία στον προορισμό Tripiti της Μήλου.",
+      "en": "One of the most celebrated restaurants in Milos, set in a beautifully restored space in Tripiti."
+    },
+    "location": {
+      "area": "Tripiti",
+      "address": "Τρυπητή 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5122659497845800447&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/methismeni-politeia.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 023100",
+    "website": "https://www.methismenipolitia.gr/",
+    "coordinates": {
+      "lat": 36.7400881,
+      "lng": 24.424404
+    },
+    "rating": 4.6,
+    "priceRange": "€€",
+    "hours": "1:00 μ.μ. – 12:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
+      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": true
+  },
+  {
+    "slug": "archontoula-milos",
+    "name": {
+      "el": "Αρχοντούλα",
+      "en": "Archontoula"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Αρχοντούλα στον προορισμό Plaka της Μήλου.",
+      "en": "Traditional Greek home cooking in a welcoming family taverna in Plaka."
+    },
+    "location": {
+      "area": "Plaka",
+      "address": "Unnamed Rd, Plaka 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=993120032229978418&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/archontoula-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 021384",
+    "website": "https://archontoula.gr/",
+    "coordinates": {
+      "lat": 36.7439658,
+      "lng": 24.4218869
+    },
+    "rating": 4.1,
+    "priceRange": "€€",
+    "hours": "12:00 μ.μ. – 1:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00 μ.μ. – 1:00 π.μ.",
+      "Τρίτη: 12:00 μ.μ. – 1:00 π.μ.",
+      "Τετάρτη: 12:00 μ.μ. – 1:00 π.μ.",
+      "Πέμπτη: 12:00 μ.μ. – 1:00 π.μ.",
+      "Παρασκευή: 12:00 μ.μ. – 1:00 π.μ.",
+      "Σάββατο: 12:00 μ.μ. – 1:00 π.μ.",
+      "Κυριακή: 12:00 μ.μ. – 1:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "foras-milos",
+    "name": {
+      "el": "Foras",
+      "en": "Foras"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Foras στον προορισμό Plaka της Μήλου.",
+      "en": "A relaxed spot in Plaka with mezedes, local wine, and views of the sunset."
+    },
+    "location": {
+      "area": "Plaka",
+      "address": "Πλάκα 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10782416766055311197&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/foras-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "697 718 2033",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7441928,
+      "lng": 24.422299799999998
+    },
+    "rating": 4.5,
+    "priceRange": "€€",
+    "hours": "12:00–11:00 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00–11:00 μ.μ.",
+      "Τρίτη: 12:00–11:00 μ.μ.",
+      "Τετάρτη: 12:00–11:00 μ.μ.",
+      "Πέμπτη: 12:00–11:00 μ.μ.",
+      "Παρασκευή: 12:00–11:00 μ.μ.",
+      "Σάββατο: 12:00–11:00 μ.μ.",
+      "Κυριακή: 12:00–11:00 μ.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "nostos-seafood",
+    "name": {
+      "el": "Nostos Seafood Experience",
+      "en": "Nostos Seafood Experience"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Nostos Seafood Experience στον προορισμό Adamas της Μήλου.",
+      "en": "Premium seafood and creative starters in a contemporary setting in Adamas."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=6773972574899997025&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/nostos-seafood.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "697 196 4981",
+    "website": "https://nostosseafoodexperience.com/",
+    "coordinates": {
+      "lat": 36.7258068,
+      "lng": 24.450329
+    },
+    "rating": 4.6,
+    "priceRange": "€€",
+    "hours": "12:00 μ.μ. – 12:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00 μ.μ. – 12:00 π.μ.",
+      "Τρίτη: 12:00 μ.μ. – 12:00 π.μ.",
+      "Τετάρτη: 12:00 μ.μ. – 12:00 π.μ.",
+      "Πέμπτη: 12:00 μ.μ. – 12:00 π.μ.",
+      "Παρασκευή: 12:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 12:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 12:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "galanis-mpakalikon",
+    "name": {
+      "el": "Μπακάλικον Γαλάνης",
+      "en": "Galanis Mpakalikon"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Μπακάλικον Γαλάνης στον προορισμό Triovasalos της Μήλου.",
+      "en": "A traditional bakalikon-style eatery in Triovasalos — honest food, local character."
+    },
+    "location": {
+      "area": "Triovasalos",
+      "address": "τριοβασαλος, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=8003748629023849940&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/galanis-mpakalikon.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 028163",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7439521,
+      "lng": 24.4337986
+    },
+    "rating": 4.6,
+    "priceRange": "€€",
+    "hours": "1:00 μ.μ. – 1:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 1:00 μ.μ. – 1:00 π.μ.",
+      "Τρίτη: 1:00 μ.μ. – 1:00 π.μ.",
+      "Τετάρτη: 1:00 μ.μ. – 1:00 π.μ.",
+      "Πέμπτη: 1:00 μ.μ. – 1:00 π.μ.",
+      "Παρασκευή: 1:00 μ.μ. – 1:00 π.μ.",
+      "Σάββατο: 1:00 μ.μ. – 1:00 π.μ.",
+      "Κυριακή: 1:00 μ.μ. – 1:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "iliovasilema-milos",
+    "name": {
+      "el": "Εστιατόριο Ηλιοβασίλεμα",
+      "en": "Iliovasilema"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Εστιατόριο Ηλιοβασίλεμα στον προορισμό Milos της Μήλου.",
+      "en": "Watch the sunset over the Aegean while enjoying fresh seafood and grilled specialties."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12445172176976446735&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/iliovasilema-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "699 205 4388",
+    "website": "https://web.facebook.com/profile.php?id=100088462022367&sk",
+    "coordinates": {
+      "lat": 36.6963539,
+      "lng": 24.463193
+    },
+    "rating": 4.5,
+    "priceRange": "€€",
+    "hours": "4:00–11:30 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 4:00–11:30 μ.μ.",
+      "Τρίτη: 4:00–11:30 μ.μ.",
+      "Τετάρτη: 4:00–11:30 μ.μ.",
+      "Πέμπτη: 4:00–11:30 μ.μ.",
+      "Παρασκευή: 4:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 4:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 2:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": true
+  },
+  {
+    "slug": "psitolatreia-milos",
+    "name": {
+      "el": "Ψητολατρεία",
+      "en": "Psitolatreia"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Ψητολατρεία στον προορισμό Triovasalos της Μήλου.",
+      "en": "Wood-fired grills and slow-roasted meats in a rustic setting in Triovasalos."
+    },
+    "location": {
+      "area": "Triovasalos",
+      "address": "Πέρα Τριοβασαλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5187653632682253295&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/psitolatreia-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 022227",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7405093,
+      "lng": 24.432849899999997
+    },
+    "rating": 4.8,
+    "priceRange": "€€",
+    "hours": "1:00 μ.μ. – 12:30 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 1:00 μ.μ. – 12:30 π.μ.",
+      "Τρίτη: 1:00 μ.μ. – 12:30 π.μ.",
+      "Τετάρτη: 1:00 μ.μ. – 12:30 π.μ.",
+      "Πέμπτη: 1:00 μ.μ. – 12:30 π.μ.",
+      "Παρασκευή: 1:00 μ.μ. – 12:30 π.μ.",
+      "Σάββατο: 1:00 μ.μ. – 12:30 π.μ.",
+      "Κυριακή: 1:00 μ.μ. – 12:30 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "astakas-milos",
+    "name": {
+      "el": "Άστακας Cafe Restaurant",
+      "en": "Astakas Milos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Άστακας Cafe Restaurant στον προορισμό Klima της Μήλου.",
+      "en": "A seafood-focused restaurant in the picturesque fishing village of Klima."
+    },
+    "location": {
+      "area": "Klima",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12780773149770370847&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/astakas-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 022134",
+    "website": "https://www.facebook.com/astakas.klima/",
+    "coordinates": {
+      "lat": 36.7356038,
+      "lng": 24.419531000000003
+    },
+    "rating": 4.4,
+    "priceRange": "€€",
+    "hours": "12:00–11:00 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00–11:00 μ.μ.",
+      "Τρίτη: 12:00–11:00 μ.μ.",
+      "Τετάρτη: 12:00–11:00 μ.μ.",
+      "Πέμπτη: 12:00–11:00 μ.μ.",
+      "Παρασκευή: 12:00–11:00 μ.μ.",
+      "Σάββατο: 12:00–11:00 μ.μ.",
+      "Κυριακή: 12:00–11:00 μ.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "zigos-milos",
+    "name": {
+      "el": "Ο Ζυγός",
+      "en": "O Zigos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Ο Ζυγός στον προορισμό Adamas της Μήλου.",
+      "en": "A local favourite in Adamas serving generous portions of traditional Greek food."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16700229156652883838&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/zigos-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 023120",
+    "website": null,
+    "coordinates": {
+      "lat": 36.727755099999996,
+      "lng": 24.451839
+    },
+    "rating": 4.5,
+    "priceRange": "€",
+    "hours": "7:00 μ.μ. – 12:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 7:00 μ.μ. – 12:00 π.μ.",
+      "Τρίτη: 7:00 μ.μ. – 12:00 π.μ.",
+      "Τετάρτη: 7:00 μ.μ. – 12:00 π.μ.",
+      "Πέμπτη: 7:00 μ.μ. – 12:00 π.μ.",
+      "Παρασκευή: 7:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 7:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 7:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "trapatselis-milos",
+    "name": {
+      "el": "ΤΡΑΠΑΤΣΕΛΗΣ",
+      "en": "Trapatselis"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο ΤΡΑΠΑΤΣΕΛΗΣ στον προορισμό Adamas της Μήλου.",
+      "en": "A no-frills traditional taverna in Adamas popular with locals for its honest cooking."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Αδάμας 848 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10770808267126265469&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/trapatselis-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "694 443 2600",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7257975,
+      "lng": 24.4496917
+    },
+    "rating": 4.2,
+    "priceRange": "€€",
+    "hours": "12:00 μ.μ. – 12:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00 μ.μ. – 12:00 π.μ.",
+      "Τρίτη: 12:00 μ.μ. – 12:00 π.μ.",
+      "Τετάρτη: 12:00 μ.μ. – 12:00 π.μ.",
+      "Πέμπτη: 12:00 μ.μ. – 12:00 π.μ.",
+      "Παρασκευή: 12:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 12:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 12:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "ergina-milos",
+    "name": {
+      "el": "Εστιατόριο Εργινα",
+      "en": "Estiatorio Ergina"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Εστιατόριο Εργινα στον προορισμό Tripiti της Μήλου.",
+      "en": "A relaxed restaurant in Tripiti with good mezedes and a pleasant terrace."
+    },
+    "location": {
+      "area": "Tripiti",
+      "address": "Τρυπητή 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=6072568407429680861&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/ergina-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "698 204 1876",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7386477,
+      "lng": 24.4260041
+    },
+    "rating": 4.6,
+    "priceRange": "€€",
+    "hours": "13:00 - 00:00",
+    "openingHours": [
+      "Δεν ανακοινώθηκε ωράριο"
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "cavos-milos",
+    "name": {
+      "el": "Cavos Restaurant Milos",
+      "en": "Cavos Restaurant"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Cavos Restaurant Milos στον προορισμό Adamas της Μήλου.",
+      "en": "Harbour-front dining in Adamas with a wide menu of grilled fish and Greek classics."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Παραλια Λαγκαδα, Πλάκα 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=13994601664254519547&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/cavos-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 022272",
+    "website": "https://cavosrestaurant.com/",
+    "coordinates": {
+      "lat": 36.7247123,
+      "lng": 24.4409411
+    },
+    "rating": 5,
+    "priceRange": "€€",
+    "hours": "1:00 μ.μ. – 12:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
+      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "alkis-milos",
+    "name": {
+      "el": "Alkis",
+      "en": "Alkis"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Alkis στον προορισμό Pollonia της Μήλου.",
+      "en": "A well-regarded fish taverna in Pollonia, ideal after a day at the beach."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Πολλώνια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=7272580187392976828&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/alkis-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 041598",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7638786,
+      "lng": 24.5272179
+    },
+    "rating": 4.6,
+    "priceRange": "€€",
+    "hours": "12:00–11:30 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:00–11:30 μ.μ.",
+      "Τρίτη: 12:00–11:30 μ.μ.",
+      "Τετάρτη: 12:00–11:30 μ.μ.",
+      "Πέμπτη: 12:00–11:30 μ.μ.",
+      "Παρασκευή: 12:00–11:30 μ.μ.",
+      "Σάββατο: 12:00–11:30 μ.μ.",
+      "Κυριακή: 12:00–11:30 μ.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "nama-milos",
+    "name": {
+      "el": "Nama Milos",
+      "en": "Nama Milos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Nama Milos στον προορισμό Pollonia της Μήλου.",
+      "en": "A modern café-restaurant in Pollonia with creative dishes and a relaxed vibe."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Unnamed Road, Pollonia 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5226471837524253346&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/nama-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 041564",
+    "website": "https://namamilosrestaurant.gr/",
+    "coordinates": {
+      "lat": 36.763564599999995,
+      "lng": 24.5266332
+    },
+    "rating": 4.5,
+    "priceRange": "€€",
+    "hours": "12:30–11:30 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 12:30–11:30 μ.μ.",
+      "Τρίτη: 12:30–11:30 μ.μ.",
+      "Τετάρτη: 12:30–11:30 μ.μ.",
+      "Πέμπτη: 12:30–11:30 μ.μ.",
+      "Παρασκευή: 12:30–11:30 μ.μ.",
+      "Σάββατο: 12:30–11:30 μ.μ.",
+      "Κυριακή: 12:30–11:30 μ.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "lyra-milos",
+    "name": {
+      "el": "Lyra Milos - The Sound of Taste",
+      "en": "Lyra Milos"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Lyra Milos - The Sound of Taste στον προορισμό Pollonia της Μήλου.",
+      "en": "The sound of good taste — Lyra serves Greek cuisine with creative touches in Pollonia."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Pollonia, Kikladhes 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=15255121613404934440&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/lyra-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "697 729 7987",
+    "website": "https://www.instagram.com/lyra.milos/",
+    "coordinates": {
+      "lat": 36.7635219,
+      "lng": 24.526331799999998
+    },
+    "rating": 4.7,
+    "priceRange": "€€",
+    "hours": "1:00 μ.μ. – 12:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
+      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
+      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
+      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
+      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
+    ],
+    "isFeatured": false
+  },
+  {
+    "slug": "rifaki-milos",
+    "name": {
+      "el": "Rifaki",
+      "en": "Rifaki"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Rifaki στον προορισμό Pollonia της Μήλου.",
+      "en": "A casual spot in Pollonia with fresh mezedes and a friendly atmosphere."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Πολλώνια ΜΗΛΟΣ, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=13280408755287035738&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/taverns/rifaki-milos.jpg",
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "2287 041212",
+    "website": "http://rifaki.gr/",
+    "coordinates": {
+      "lat": 36.7636349,
+      "lng": 24.526815199999998
+    },
+    "rating": 4.5,
+    "priceRange": "€€",
+    "hours": "11:30 π.μ. – 11:30 μ.μ.",
+    "openingHours": [
+      "Δευτέρα: 11:30 π.μ. – 11:30 μ.μ.",
+      "Τρίτη: 11:30 π.μ. – 11:30 μ.μ.",
+      "Τετάρτη: 11:30 π.μ. – 11:30 μ.μ.",
+      "Πέμπτη: 11:30 π.μ. – 11:30 μ.μ.",
+      "Παρασκευή: 11:30 π.μ. – 11:30 μ.μ.",
+      "Σάββατο: 11:30 π.μ. – 11:30 μ.μ.",
+      "Κυριακή: 11:30 π.μ. – 11:30 μ.μ."
     ],
     "isFeatured": false
   }
