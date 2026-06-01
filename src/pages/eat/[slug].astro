@@ -20,12 +20,9 @@ export function getStaticPaths() {
 const { tavern } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
-// Today's day in Greek for highlighting
-const dayMap: Record<number, string> = {
-  0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday',
-  4: 'Thursday', 5: 'Friday', 6: 'Saturday',
-};
-const todayName = dayMap[new Date().getDay()];
+// Opening hours come from Places API in Greek — match by day index
+// Sunday=0 in JS, but Places API starts from Monday (index 0)
+const todayIndex = (new Date().getDay() + 6) % 7; // Mon=0 ... Sun=6
 
 const showHours = tavern.openingHours?.length &&
   tavern.openingHours[0] !== 'Δεν ανακοινώθηκε ωράριο' && tavern.openingHours[0] !== 'Hours not announced';
@@ -122,9 +119,9 @@ const related = tavernsData
       <div class="hours-block">
         <h2 class="block-title">Opening hours</h2>
         <div class="hours-grid">
-          {tavern.openingHours!.map(line => {
+          {tavern.openingHours!.map((line, idx) => {
             const [day, time] = line.split(': ');
-            const isToday = day === todayName;
+            const isToday = idx === todayIndex;
             return (
               <div class={`hours-row${isToday ? ' hours-row--today' : ''}`}>
                 <span class="hours-day">{day}</span>

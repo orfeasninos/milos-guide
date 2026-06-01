@@ -74,7 +74,7 @@ const seedBeaches = [
   { name: "Ammoudaraki beach", location: "Milos", slug: "ammoudaraki-beach", accessType: "road", facilities: [] },
   { name: "Kalamos beach", location: "Milos", slug: "kalamos", accessType: "road", facilities: [] },
   { name: "Agios Ioannis beach", location: "Milos", slug: "agios-ioannis-beach", accessType: "road", facilities: [] },
-  { name: "Kipos beach", location: "Milos", slug: "kipos-beach", accessType: "road", facilities: [] },
+  { name: "Paralia Kipos", location: "Milos", slug: "kipos-beach", accessType: "road", facilities: [] },
   { name: "Deep blue beach", location: "Milos", slug: "deep-blue-beach", accessType: "road", facilities: [] },
   { name: "Psathi beach", location: "Milos", slug: "psathi-beach", accessType: "road", facilities: [] },
   { name: "Kolympionas beach", location: "Milos", slug: "kolympionas-beach", accessType: "road", facilities: [] },
@@ -85,7 +85,6 @@ const seedBeaches = [
   { name: "Nerodafni beach", location: "Milos", slug: "nerodafni-beach", accessType: "road", facilities: [] },
   { name: "Klima beach", location: "Milos", slug: "klima", accessType: "road", facilities: [] },
   { name: "Papikinou beach", location: "Milos", slug: "papikinou-beach", accessType: "road", facilities: [] },
-  { name: "Fatouraina Beach", location: "Milos", slug: "fatouraina-beach", accessType: "road", facilities: [] },
   { name: "Agios Dimitrios beach", location: "Milos", slug: "agios-dimitrios-beach", accessType: "road", facilities: [] },
 ];
 
@@ -121,6 +120,7 @@ const tavernTranslations = {
 
 const beachTranslations = {
   "sarakiniko": { name: "Sarakiniko", description: "A lunar landscape of brilliant white volcanic rock — one of the most photographed beaches in the Aegean." },
+  "fyropotamos": { name: "Fyropotamos", description: "A picturesque bay with a small beach, crystal clear waters, and traditional 'syrmata' (boathouses) lining the shore." },
   "tsigrado": { name: "Tsigrado", description: "A hidden gem reached by descending a rope through a narrow cliff crevice, with dazzling turquoise water below." },
   "fyriplaka": { name: "Fyriplaka", description: "A long sandy beach on the south coast, sheltered from the meltemi winds and ideal throughout the summer." },
   "paleochori": { name: "Paleochori", description: "A unique geothermal beach where volcanic heat warms the sand from below — and the water from beneath the surface." },
@@ -132,7 +132,7 @@ const beachTranslations = {
   "triades": { name: "Triades", description: "A long sandy beach on the northwest coast, naturally beautiful and unspoiled, with no facilities." },
   "rivari": { name: "Rivari Lagoon", description: "A stunning natural lagoon on the west coast where warm shallow water is separated from the open sea by a sand strip." },
   "ammoudaki": { name: "Ammoudaki", description: "A tiny remote beach on the southwest coast, reachable only on foot or by boat — pristine and rarely visited." },
-  "sikia-cave": { name: "Sykia Cave", description: "A vast sea cave with a partially collapsed ceiling that lets sunlight pour in — the highlight of most boat tours." },
+  "sikia-beach": { name: "Sikia Beach", description: "A small beach inside a collapsed sea cave, famous for its emerald waters and spectacular natural skylight." },
   "plathiena": { name: "Plathiena", description: "A long sandy beach near Plaka with good facilities and colourful volcanic cliffs, easily accessible by road." },
   "theiorycheia": { name: "Paralia Theiorycheio", description: "A historic beach featuring abandoned sulfur mines and rusted machinery against a backdrop of colorful cliffs." },
   "achivadolimni": { name: "Achivadolimni", description: "A large, popular beach known for its sandy bottom, crystal clear waters, and ideal conditions for windsurfing." },
@@ -140,7 +140,24 @@ const beachTranslations = {
   "tria-pigadia": { name: "Tria Pigadia", description: "A secluded, rugged beach favored by those looking for privacy and untouched natural beauty." },
   "kastanas": { name: "Kastanas", description: "A striking beach with colorful volcanic pebbles and stones, set against dramatic, high cliffs." },
   "polonia-beach": { name: "Polonia Beach", description: "A convenient, family-friendly beach located in the charming fishing village of Pollonia, close to cafes and tavernas." },
-  "mandrakia": { name: "Mandrakia", description: "A beautiful beach with clear blue waters and golden sand, located on the northern coast of Milos." }
+  "mandrakia": { name: "Mandrakia", description: "A beautiful beach with clear blue waters, famous for the traditional colourful boathouses carved into the rocks." },
+  "kalogries-beach": { name: "Kalogries Beach", description: "A quiet, secluded beach with fine sand and shallow, crystal-clear waters, perfect for relaxation." },
+  "aggathia": { name: "Aggathia", description: "A tranquil, lesser-known spot on the island, ideal for those seeking privacy away from the crowds." },
+  "ammoudaraki-beach": { name: "Ammoudaraki Beach", description: "A remote and peaceful beach featuring soft sand and beautiful natural surroundings." },
+  "kalamos": { name: "Kalamos Beach", description: "A beautiful beach with fine golden sand and deep, clear blue waters, surrounded by impressive volcanic scenery." },
+  "agios-ioannis-beach": { name: "Agios Ioannis Beach", description: "A long, wild, and mostly secluded beach on the west side of the island with golden sand and dramatic rocks." },
+  "kipos-beach": { name: "Paralia Kipos", description: "A small, serene beach known for its clear waters and proximity to traditional fish tavernas." },
+  "deep-blue-beach": { name: "Deep Blue Beach", description: "A hidden cove with incredibly deep blue waters, offering a sense of isolation and raw beauty." },
+  "psathi-beach": { name: "Psathi Beach", description: "A lovely, quiet beach with a calm atmosphere, often visited by those looking for a peaceful swim." },
+  "kolympionas-beach": { name: "Kolympionas Beach", description: "A rugged, non-organized beach offering a wild landscape for nature lovers." },
+  "voudia-beach": { name: "Voudia Beach", description: "A unique beach characterized by its industrial history and proximity to the old mines, offering a different side of Milos." },
+  "pachaina-beach": { name: "Pachaina Beach", description: "A lovely sandy beach with interesting rock formations and beautiful views of the Glaronisia islets." },
+  "alogomantra-beach": { name: "Alogomantra Beach", description: "A beach enclosed by high vertical rocks, creating a natural harbor and a unique swimming experience." },
+  "mytakas-beach": { name: "Mytakas Beach", description: "A small, scenic beach with traditional boat houses, popular for its clear waters and calm environment." },
+  "nerodafni-beach": { name: "Nerodafni Beach", description: "A secluded, natural spot perfect for those who enjoy pristine environments away from organized facilities." },
+  "klima": { name: "Klima Beach", description: "A unique beach at the famous settlement of Klima, known for the multi-colored traditional 'syrmata' houses." },
+  "papikinou-beach": { name: "Papikinou Beach", description: "A long, tree-lined sandy beach near Adamas, offering plenty of shade and convenient access to local tavernas." },
+  "agios-dimitrios-beach": { name: "Agios Dimitrios Beach", description: "A quiet beach named after the local chapel, offering a peaceful setting and shallow waters." }
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────

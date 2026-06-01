@@ -21,7 +21,7 @@
       "lng": 24.458423
     },
     "rating": 4.8,
-    "accessType": "road",
+    "accessType": "plane",
     "facilities": [
       "parking"
     ]
@@ -966,31 +966,6 @@
       "lng": 24.458498799999997
     },
     "rating": 4.2,
-    "accessType": "road",
-    "facilities": []
-  },
-  {
-    "slug": "fatouraina-beach",
-    "name": {
-      "el": "Παραλία Τσιγκράδο",
-      "en": "Fatouraina Beach"
-    },
-    "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Fatouraina Beach beach in Milos."
-    },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
-    },
-    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/beaches/fatouraina-beach.jpg",
-    "website": null,
-    "coordinates": {
-      "lat": 36.661895799999996,
-      "lng": 24.4693335
-    },
-    "rating": 4.6,
     "accessType": "road",
     "facilities": []
   },

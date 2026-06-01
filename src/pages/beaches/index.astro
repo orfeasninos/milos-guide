@@ -2,13 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import beachesData from '../../data/beaches.json';
 
-
-const accessLabels: Record<string, { icon: string; label: string }> = {
-  road: { icon: '🚗', label: 'By car' },
-  hike: { icon: '🥾', label: 'Hiking' },
-  boat: { icon: '⛵', label: 'Boat only' },
-};
-
 function getArea(lat: number, lng: number): string {
   if (!lat || !lng) return 'north';
   // West: Kleftiko, Gerontas, Sikia, Ammoudaki, Triades
@@ -25,7 +18,7 @@ function getArea(lat: number, lng: number): string {
 
 const allFacilities = [...new Set(
   beachesData.flatMap(b => b.facilities)
-)].filter(Boolean).sort();
+)].filter(f => Boolean(f) && f !== 'snack bar').sort();
 
 const sortedBeaches = [...beachesData]
   .sort((a, b) => b.rating - a.rating)
@@ -86,6 +79,7 @@ const sortedBeaches = [...beachesData]
 
     <div class="filter-group">
       <button class="chip" id="boat-toggle">⛵ Boat only</button>
+      <button class="chip" id="hike-toggle">🥾 Hiking</button>
     </div>
 
     <div class="filter-right">
@@ -106,6 +100,7 @@ const sortedBeaches = [...beachesData]
             class="bc"
             data-area={beach.area}
             data-boat={String(beach.isBoat)}
+            data-access={beach.accessType}
             data-facilities={JSON.stringify(beach.facilities)}
           >
             <div class="bc-img-wrap">
@@ -121,7 +116,9 @@ const sortedBeaches = [...beachesData]
               )}
               <div class="bc-overlay">
                 <div class="bc-chips">
-                  <span class="bc-access-chip">{beach.accessType === "boat" ? "⛵ Boat only" : beach.accessType === "hike" ? "🥾 Hiking" : "🚗 By car"}</span>
+{(beach.accessType === 'boat' || beach.accessType === 'hike') && (
+                  <span class="bc-access-chip">{beach.accessType === 'boat' ? '⛵ Boat only' : '🥾 Hiking'}</span>
+                )}
                   {beach.rating > 0 && (
                     <span class="bc-rating-chip">★ {beach.rating}</span>
                   )}
@@ -340,9 +337,10 @@ const counter = document.getElementById('results-count');
 const reset   = document.getElementById('reset-filters');
 const boatBtn = document.getElementById('boat-toggle');
 
-let activeArea     = 'all';
-let activeFacility = 'all';
-let boatOnly       = false;
+let activeArea      = 'all';
+let activeFacilities= new Set<string>();
+let boatOnly        = false;
+let hikeOnly        = false;
 
 function applyFilters() {
   const cards = grid?.querySelectorAll<HTMLElement>('.bc') ?? [];
@@ -354,8 +352,9 @@ function applyFilters() {
     const facilities = JSON.parse(card.dataset.facilities ?? '[]') as string[];
     const show =
       (activeArea     === 'all' || area === activeArea) &&
-      (activeFacility === 'all' || facilities.includes(activeFacility)) &&
-      (!boatOnly || boat);
+      (activeFacilities.size === 0 || [...activeFacilities].every(f => facilities.includes(f))) &&
+      (!boatOnly || boat) &&
+      (!hikeOnly || card.dataset.access === 'hike');
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   });
@@ -376,28 +375,56 @@ document.querySelectorAll<HTMLButtonElement>('#area-chips .chip').forEach(chip =
 
 document.querySelectorAll<HTMLButtonElement>('#facility-chips .chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
-    chip.classList.add('chip--active');
-    activeFacility = chip.dataset.facility ?? 'all';
+    const val = chip.dataset.facility ?? 'all';
+    if (val === 'all') {
+      activeFacilities.clear();
+      document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
+      chip.classList.add('chip--active');
+    } else {
+      // Deactivate "All"
+      document.querySelector('#facility-chips .chip[data-facility="all"]')?.classList.remove('chip--active');
+      if (activeFacilities.has(val)) {
+        activeFacilities.delete(val);
+        chip.classList.remove('chip--active');
+        if (activeFacilities.size === 0) {
+          document.querySelector('#facility-chips .chip[data-facility="all"]')?.classList.add('chip--active');
+        }
+      } else {
+        activeFacilities.add(val);
+        chip.classList.add('chip--active');
+      }
+    }
     applyFilters();
   });
 });
 
+const hikeBtn = document.getElementById('hike-toggle');
+
 boatBtn?.addEventListener('click', () => {
   boatOnly = !boatOnly;
   boatBtn.classList.toggle('chip--active', boatOnly);
+  if (boatOnly) { hikeOnly = false; hikeBtn?.classList.remove('chip--active'); }
+  applyFilters();
+});
+
+hikeBtn?.addEventListener('click', () => {
+  hikeOnly = !hikeOnly;
+  hikeBtn.classList.toggle('chip--active', hikeOnly);
+  if (hikeOnly) { boatOnly = false; boatBtn?.classList.remove('chip--active'); }
   applyFilters();
 });
 
 reset?.addEventListener('click', () => {
   activeArea     = 'all';
-  activeFacility = 'all';
+  activeFacilities.clear();
   boatOnly       = false;
   document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
   document.querySelector('#area-chips .chip')?.classList.add('chip--active');
   document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
-  document.querySelector('#facility-chips .chip')?.classList.add('chip--active');
+  document.querySelector('#facility-chips .chip[data-facility="all"]')?.classList.add('chip--active');
   boatBtn?.classList.remove('chip--active');
+  hikeOnly = false;
+  hikeBtn?.classList.remove('chip--active');
   applyFilters();
 });
 </script>
