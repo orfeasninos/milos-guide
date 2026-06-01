@@ -1,0 +1,494 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Milos coordinates
+const LAT = 36.7257;
+const LNG = 24.4496;
+---
+
+<Layout
+  lang="en"
+  title="Weather in Milos"
+  description="Current weather in Milos and beach recommendations based on today's wind and sea conditions."
+>
+
+<section class="weather-hero">
+  <div class="container">
+    <p class="page-label">Today in Milos</p>
+    <h1 class="page-title">Weather & Beach Guide</h1>
+    <p class="page-desc">Real-time conditions to help you pick the right beach today.</p>
+  </div>
+</section>
+
+<section class="sec sec-sand weather-sec">
+  <div class="container">
+
+    <!-- Loading state -->
+    <div class="w-loading" id="w-loading">
+      <div class="w-spinner"></div>
+      <p>Fetching current conditions…</p>
+    </div>
+
+    <!-- Error state -->
+    <div class="w-error" id="w-error" style="display:none">
+      <p class="w-error-icon">⚠️</p>
+      <p>Could not load weather data. Please try again later.</p>
+    </div>
+
+    <!-- Weather content -->
+    <div class="w-content" id="w-content" style="display:none">
+
+      <!-- Main weather card -->
+      <div class="w-main-grid">
+
+        <div class="w-card w-card--temp">
+          <p class="w-card-label">Temperature</p>
+          <div class="w-card-val" id="w-temp">–</div>
+          <p class="w-card-sub" id="w-feels">Feels like –</p>
+        </div>
+
+        <div class="w-card w-card--wind">
+          <p class="w-card-label">Wind</p>
+          <div class="w-card-val-wrap">
+            <span class="w-wind-arrow" id="w-wind-arrow">↑</span>
+            <div>
+              <div class="w-card-val" id="w-wind-speed">–</div>
+              <p class="w-card-sub" id="w-wind-dir">–</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-card w-card--sea">
+          <p class="w-card-label">Sea</p>
+          <div class="w-card-val" id="w-sea-temp">–</div>
+          <p class="w-card-sub">Sea temperature</p>
+        </div>
+
+        <div class="w-card w-card--waves">
+          <p class="w-card-label">Wave height</p>
+          <div class="w-card-val" id="w-waves">–</div>
+          <p class="w-card-sub" id="w-wave-desc">–</p>
+        </div>
+
+        <div class="w-card w-card--uv">
+          <p class="w-card-label">UV Index</p>
+          <div class="w-card-val" id="w-uv">–</div>
+          <p class="w-card-sub" id="w-uv-desc">–</p>
+        </div>
+
+        <div class="w-card w-card--condition">
+          <p class="w-card-label">Conditions</p>
+          <div class="w-condition-icon" id="w-icon">☀️</div>
+          <p class="w-card-sub" id="w-condition-text">–</p>
+        </div>
+
+      </div>
+
+      <!-- Beach recommendation -->
+      <div class="w-rec" id="w-rec">
+        <div class="w-rec-header">
+          <span class="w-rec-emoji" id="w-rec-emoji">🏖</span>
+          <div>
+            <p class="w-rec-label">Beach recommendation for today</p>
+            <h2 class="w-rec-title" id="w-rec-title">–</h2>
+          </div>
+        </div>
+        <p class="w-rec-desc" id="w-rec-desc">–</p>
+
+        <div class="w-beaches-grid" id="w-beaches-grid"></div>
+      </div>
+
+      <!-- Hourly forecast -->
+      <div class="w-forecast-wrap">
+        <p class="w-section-title">Next 12 hours</p>
+        <div class="w-forecast" id="w-forecast"></div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.weather-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+.page-desc { font-size: 1rem; color: var(--muted); line-height: 1.7; }
+
+.weather-sec { min-height: 60vh; }
+
+/* Loading */
+.w-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 5rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.w-spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--sand-dark);
+  border-top-color: var(--aegean);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.w-error { text-align: center; padding: 4rem 0; color: var(--muted); }
+.w-error-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+/* Main grid */
+.w-main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.w-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.w-card-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.w-card-val {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: var(--deep-blue);
+  line-height: 1;
+}
+.w-card-sub { font-size: 0.78rem; color: var(--muted); }
+
+.w-card-val-wrap { display: flex; align-items: center; gap: 0.75rem; }
+.w-wind-arrow {
+  font-size: 2rem;
+  display: inline-block;
+  transition: transform 0.5s ease;
+  color: var(--aegean);
+}
+
+.w-condition-icon { font-size: 2.5rem; line-height: 1; margin: 0.2rem 0; }
+
+/* Recommendation */
+.w-rec {
+  background: var(--deep-blue);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+.w-rec-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.w-rec-emoji { font-size: 2.5rem; flex-shrink: 0; }
+.w-rec-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.2rem;
+}
+.w-rec-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: #fff;
+  line-height: 1.2;
+}
+.w-rec-desc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+}
+
+.w-beaches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+.w-beach-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  color: #fff;
+  transition: background 0.15s;
+  text-decoration: none;
+}
+.w-beach-card:hover { background: rgba(255,255,255,0.15); }
+.w-beach-name {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+.w-beach-access { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+
+/* Forecast */
+.w-section-title {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.w-forecast {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.w-fc-item {
+  padding: 1rem 0.5rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+}
+.w-fc-item:last-child { border-right: none; }
+.w-fc-time { font-size: 0.68rem; color: var(--muted); font-weight: 600; }
+.w-fc-icon { font-size: 1.4rem; }
+.w-fc-temp { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+.w-fc-wind { font-size: 0.68rem; color: var(--muted); }
+
+@media (max-width: 768px) {
+  .w-main-grid { grid-template-columns: 1fr 1fr; }
+  .w-forecast { grid-template-columns: repeat(4, 1fr); }
+  .w-fc-item:nth-child(n+5) { display: none; }
+}
+@media (max-width: 480px) {
+  .w-main-grid { grid-template-columns: 1fr 1fr; }
+  .w-forecast { grid-template-columns: repeat(3, 1fr); }
+  .w-fc-item:nth-child(n+4) { display: none; }
+}
+</style>
+
+<script define:vars={{ LAT, LNG }}>
+const BEACHES = {
+  all: [
+    { name: 'Sarakiniko',  slug: 'sarakiniko',  access: '🚗 By car',   wind: 'any' },
+    { name: 'Paleochori',  slug: 'paleochori',  access: '🚗 By car',   wind: 'north' },
+    { name: 'Fyriplaka',   slug: 'fyriplaka',   access: '🚗 By car',   wind: 'north' },
+    { name: 'Provatas',    slug: 'provatas',    access: '🚗 By car',   wind: 'north' },
+    { name: 'Tsigrado',    slug: 'tsigrado',    access: '🥾 Hiking',   wind: 'north' },
+    { name: 'Triades',     slug: 'triades',     access: '🚗 By car',   wind: 'south' },
+    { name: 'Firopotamos', slug: 'firopotamos', access: '🚗 By car',   wind: 'south' },
+    { name: 'Plathiena',   slug: 'plathiena',   access: '🚗 By car',   wind: 'south' },
+    { name: 'Gerontas',    slug: 'gerontas',    access: '🚗 By car',   wind: 'east'  },
+    { name: 'Kleftiko',    slug: 'kleftiko',    access: '⛵ Boat only', wind: 'calm'  },
+    { name: 'Agia Kyriaki',slug: 'agia-kyriaki',access: '🚗 By car',   wind: 'north' },
+  ]
+};
+
+const WMO_ICONS = {
+  0: '☀️', 1: '🌤', 2: '⛅', 3: '☁️',
+  45: '🌫', 48: '🌫',
+  51: '🌦', 53: '🌦', 55: '🌧',
+  61: '🌧', 63: '🌧', 65: '🌧',
+  71: '🌨', 73: '🌨', 75: '🌨',
+  80: '🌦', 81: '🌧', 82: '⛈',
+  95: '⛈', 96: '⛈', 99: '⛈',
+};
+const WMO_TEXT = {
+  0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+  45: 'Fog', 48: 'Fog',
+  51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+  61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
+  71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
+  80: 'Showers', 81: 'Heavy showers', 82: 'Violent showers',
+  95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm',
+};
+
+function windDirection(deg) {
+  const dirs = ['N','NE','E','SE','S','SW','W','NW'];
+  return dirs[Math.round(deg / 45) % 8];
+}
+function windCategory(deg) {
+  const d = ((deg % 360) + 360) % 360;
+  if (d >= 315 || d < 45)  return 'north';
+  if (d >= 45  && d < 135) return 'east';
+  if (d >= 135 && d < 225) return 'south';
+  return 'west';
+}
+
+function uvLabel(uv) {
+  if (uv <= 2) return 'Low';
+  if (uv <= 5) return 'Moderate';
+  if (uv <= 7) return 'High';
+  if (uv <= 10) return 'Very high';
+  return 'Extreme';
+}
+function waveLabel(h) {
+  if (h < 0.3) return 'Calm — ideal for swimming';
+  if (h < 0.8) return 'Slight — good conditions';
+  if (h < 1.5) return 'Moderate — caution advised';
+  return 'Rough — avoid open beaches';
+}
+
+function getRecommendation(windSpeedKmh, windDeg, waveH) {
+  const cat = windCategory(windDeg);
+  const isCalm = windSpeedKmh < 15 && waveH < 0.5;
+  const isStrong = windSpeedKmh > 35;
+
+  if (isCalm) {
+    return {
+      emoji: '🏖',
+      title: 'All beaches are great today',
+      desc: 'Calm winds and flat seas — perfect conditions across the island. A great day for boat tours too.',
+      filter: 'any',
+    };
+  }
+  if (isStrong) {
+    return {
+      emoji: '⚠️',
+      title: 'Strong winds — choose sheltered beaches',
+      desc: `Strong ${windDirection(windDeg)} winds today. Stick to sheltered beaches on the opposite coast. Avoid boat tours.`,
+      filter: cat === 'north' ? 'north' : cat === 'south' ? 'south' : 'north',
+    };
+  }
+  if (cat === 'north' || cat === 'NW' || cat === 'NE') {
+    return {
+      emoji: '🌊',
+      title: 'North winds — head to the south coast',
+      desc: 'The meltemi is blowing from the north. Southern beaches like Paleochori, Fyriplaka and Provatas are sheltered and ideal.',
+      filter: 'north',
+    };
+  }
+  if (cat === 'south') {
+    return {
+      emoji: '💨',
+      title: 'South winds — north coast is better',
+      desc: 'Winds from the south today. Head to Triades, Firopotamos or Plathiena on the north coast for calmer conditions.',
+      filter: 'south',
+    };
+  }
+  return {
+    emoji: '🏖',
+    title: 'Conditions are decent today',
+    desc: 'Moderate winds — most beaches are accessible. Check individual beach orientation before heading out.',
+    filter: 'any',
+  };
+}
+
+async function loadWeather() {
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LNG}&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m,uv_index&hourly=temperature_2m,weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FAthens&forecast_days=1&models=best_match`;
+    const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${LAT}&longitude=${LNG}&current=wave_height,sea_surface_temperature&hourly=wave_height&timezone=Europe%2FAthens&forecast_days=1`;
+
+    const [weatherRes, marineRes] = await Promise.all([fetch(url), fetch(marineUrl)]);
+    const weather = await weatherRes.json();
+    const marine = await marineRes.json();
+
+    const c = weather.current;
+    const waveH = marine.current?.wave_height ?? 0;
+    const seaTemp = marine.current?.sea_surface_temperature ?? null;
+
+    // Fill in cards
+    document.getElementById('w-temp').textContent = `${Math.round(c.temperature_2m)}°C`;
+    document.getElementById('w-feels').textContent = `Feels like ${Math.round(c.apparent_temperature)}°C`;
+    document.getElementById('w-wind-speed').textContent = `${Math.round(c.windspeed_10m)} km/h`;
+    document.getElementById('w-wind-dir').textContent = `${windDirection(c.winddirection_10m)} wind`;
+    document.getElementById('w-waves').textContent = `${waveH.toFixed(1)} m`;
+    document.getElementById('w-wave-desc').textContent = waveLabel(waveH);
+    document.getElementById('w-uv').textContent = Math.round(c.uv_index);
+    document.getElementById('w-uv-desc').textContent = uvLabel(c.uv_index);
+    document.getElementById('w-icon').textContent = WMO_ICONS[c.weathercode] ?? '🌤';
+    document.getElementById('w-condition-text').textContent = WMO_TEXT[c.weathercode] ?? 'Unknown';
+    document.getElementById('w-sea-temp').textContent = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
+
+    // Wind arrow rotation
+    document.getElementById('w-wind-arrow').style.transform = `rotate(${c.winddirection_10m}deg)`;
+
+    // Recommendation
+    const rec = getRecommendation(c.windspeed_10m, c.winddirection_10m, waveH);
+    document.getElementById('w-rec-emoji').textContent = rec.emoji;
+    document.getElementById('w-rec-title').textContent = rec.title;
+    document.getElementById('w-rec-desc').textContent = rec.desc;
+
+    const beachGrid = document.getElementById('w-beaches-grid');
+    const filtered = BEACHES.all.filter(b => rec.filter === 'any' || b.wind === rec.filter || b.wind === 'any');
+    beachGrid.innerHTML = filtered.slice(0, 6).map(b => `
+      <a href="/beaches/${b.slug}" class="w-beach-card">
+        <p class="w-beach-name">${b.name}</p>
+        <p class="w-beach-access">${b.access}</p>
+      </a>
+    `).join('');
+
+    // Hourly forecast (next 6 slots from current hour)
+    const now = new Date();
+    const currentHour = now.getHours();
+    const times = weather.hourly.time;
+    const temps = weather.hourly.temperature_2m;
+    const codes = weather.hourly.weathercode;
+    const winds = weather.hourly.windspeed_10m;
+
+    let startIdx = times.findIndex(t => new Date(t).getHours() >= currentHour);
+    if (startIdx < 0) startIdx = 0;
+
+    const forecast = document.getElementById('w-forecast');
+    forecast.innerHTML = times.slice(startIdx, startIdx + 6).map((t, i) => {
+      const h = new Date(t).getHours();
+      const label = h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`;
+      return `
+        <div class="w-fc-item">
+          <span class="w-fc-time">${label}</span>
+          <span class="w-fc-icon">${WMO_ICONS[codes[startIdx + i]] ?? '🌤'}</span>
+          <span class="w-fc-temp">${Math.round(temps[startIdx + i])}°</span>
+          <span class="w-fc-wind">${Math.round(winds[startIdx + i])} km/h</span>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('w-loading').style.display = 'none';
+    document.getElementById('w-content').style.display = 'block';
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('w-loading').style.display = 'none';
+    document.getElementById('w-error').style.display = 'block';
+  }
+}
+
+loadWeather();
+</script>
