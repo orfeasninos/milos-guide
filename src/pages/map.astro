@@ -462,19 +462,22 @@ function initMap() {
 
   map.addLayer(clusterGroup);
 
-  // Sidebar card clicks
-  document.querySelectorAll('.mc').forEach(card => {
-    card.addEventListener('click', e => {
-      e.preventDefault();
-      const slug = card.dataset.slug;
-      const lat  = parseFloat(card.dataset.lat);
-      const lng  = parseFloat(card.dataset.lng);
-      activateCard(slug, true);
-      map.setView([lat, lng], 14, { animate: true });
-      const m = markers.find(m => m.slug === slug);
-      if (m) m.marker.openPopup();
+// Sidebar card clicks
+document.querySelectorAll('.mc').forEach(card => {
+  card.addEventListener('click', e => {
+    e.preventDefault();
+    const slug = card.dataset.slug;
+    activateCard(slug, true);
+    const m = markers.find(m => m.slug === slug);
+    if (!m) return;
+
+    // zoomToShowLayer σπάει το cluster αν χρειαστεί,
+    // και μόλις ο marker γίνει ορατός ανοίγει το popup.
+    clusterGroup.zoomToShowLayer(m.marker, () => {
+      m.marker.openPopup();
     });
   });
+});
 
   // Filter chips
   document.querySelectorAll('.mf-chip').forEach(chip => {
