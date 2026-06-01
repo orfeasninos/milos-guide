@@ -1058,5 +1058,46 @@
       "Κυριακή: 11:30 π.μ. – 11:30 μ.μ."
     ],
     "isFeatured": false
+  },
+  {
+    "slug": "akri-milos",
+    "name": {
+      "el": "ΑΚΡΗ",
+      "en": "Akri"
+    },
+    "description": {
+      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο ΑΚΡΗ στον προορισμό Adamas της Μήλου.",
+      "en": "A hidden gem in Adamas with a relaxed atmosphere and delicious local cuisine."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Αδάμας 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=11888611627601147945&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": null,
+    "cuisine": {
+      "el": "Παραδοσιακή Ελληνική",
+      "en": "Traditional Greek"
+    },
+    "servesCuisine": "Greek",
+    "phone": "694 542 3605",
+    "website": null,
+    "coordinates": {
+      "lat": 36.724359,
+      "lng": 24.444376899999998
+    },
+    "rating": 4.6,
+    "priceRange": "€€",
+    "hours": "7:00 μ.μ. – 4:00 π.μ.",
+    "openingHours": [
+      "Δευτέρα: 7:00 μ.μ. – 4:00 π.μ.",
+      "Τρίτη: 7:00 μ.μ. – 4:00 π.μ.",
+      "Τετάρτη: 7:00 μ.μ. – 4:00 π.μ.",
+      "Πέμπτη: 7:00 μ.μ. – 4:00 π.μ.",
+      "Παρασκευή: 7:00 μ.μ. – 4:00 π.μ.",
+      "Σάββατο: 7:00 μ.μ. – 4:00 π.μ.",
+      "Κυριακή: 7:00 μ.μ. – 4:00 π.μ."
+    ],
+    "isFeatured": false
   }
 ]

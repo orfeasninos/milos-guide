@@ -42,7 +42,8 @@ const seedTaverns = [
   { name: "Alkis", location: "Pollonia", slug: "alkis-milos", isFeatured: false },
   { name: "Nama Milos", location: "Pollonia", slug: "nama-milos", isFeatured: false },
   { name: "Lyra Milos - The sound of taste", location: "Pollonia", slug: "lyra-milos", isFeatured: false },
-  { name: "Rifaki", location: "Pollonia", slug: "rifaki-milos", isFeatured: false }
+  { name: "Rifaki", location: "Pollonia", slug: "rifaki-milos", isFeatured: false },
+  { name: "Akri", location: "Adamas", slug: "akri-milos", isFeatured: false }
 ];
 
 const seedBeaches = [
@@ -95,6 +96,7 @@ const tavernTranslations = {
   "nama-milos": { name: "Nama Milos", description: "A modern café-restaurant in Pollonia with creative dishes and a relaxed vibe." },
   "lyra-milos": { name: "Lyra Milos", description: "The sound of good taste — Lyra serves Greek cuisine with creative touches in Pollonia." },
   "rifaki-milos": { name: "Rifaki", description: "A casual spot in Pollonia with fresh mezedes and a friendly atmosphere." },
+  "akri-milos": { name: "Akri", description: "A hidden gem in Adamas with a relaxed atmosphere and delicious local cuisine." },
 };
 
 const beachTranslations = {
