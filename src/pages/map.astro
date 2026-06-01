@@ -120,6 +120,8 @@ const points = [
 
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
 
 <style>
 /* Full-height layout */
@@ -270,24 +272,39 @@ const points = [
 .custom-marker:hover { transform: translateY(-4px) scale(1.12); }
 .custom-marker--active { transform: translateY(-5px) scale(1.2) !important; }
 
-/* Popup */
-.leaflet-popup-content-wrapper {
+/* Cluster icon */
+:global(.cluster-icon) {
+  background: var(--deep-blue);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+:global(.cluster-icon span) {
+  line-height: 1;
+}
+
+:global(.leaflet-popup-content-wrapper) {
   border-radius: 12px !important;
   box-shadow: 0 8px 24px rgba(0,0,0,0.15) !important;
   padding: 0 !important;
   overflow: hidden;
 }
-.leaflet-popup-content { margin: 0 !important; }
-.map-popup {
-  width: 200px;
-}
-.map-popup-img {
+:global(.leaflet-popup-content) { margin: 0 !important; }
+:global(.map-popup) { width: 200px; }
+:global(.map-popup-img) {
   width: 100%;
   height: 110px;
   object-fit: cover;
   display: block;
 }
-.map-popup-ph {
+:global(.map-popup-ph) {
   width: 100%;
   height: 110px;
   display: flex;
@@ -296,8 +313,8 @@ const points = [
   font-size: 2rem;
   background: var(--sand);
 }
-.map-popup-body { padding: 0.85rem 1rem; }
-.map-popup-type {
+:global(.map-popup-body) { padding: 0.85rem 1rem; }
+:global(.map-popup-type) {
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -306,15 +323,15 @@ const points = [
   display: block;
   margin-bottom: 0.2rem;
 }
-.map-popup-name {
+:global(.map-popup-name) {
   font-family: var(--font-serif);
   font-size: 1rem;
   color: var(--ink);
   margin-bottom: 0.25rem;
   line-height: 1.2;
 }
-.map-popup-area { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.65rem; }
-.map-popup-link {
+:global(.map-popup-area) { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.65rem; }
+:global(.map-popup-link) {
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 600;
@@ -335,7 +352,12 @@ const points = [
 // Load Leaflet dynamically
 const script = document.createElement('script');
 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-script.onload = initMap;
+script.onload = () => {
+  const clusterScript = document.createElement('script');
+  clusterScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js';
+  clusterScript.onload = initMap;
+  document.head.appendChild(clusterScript);
+};
 document.head.appendChild(script);
 
 const markerColors = {
@@ -349,19 +371,48 @@ const markerEmoji = {
   village:    '🏘',
 };
 
-let map, markers = [], activeSlug = null, activeFilter = 'all';
+let map, markers = [], clusterGroup, activeSlug = null, activeFilter = 'all';
 
 function initMap() {
+  // Milos bounding box — keeps the user on the island
+  const milosBounds = L.latLngBounds(
+    L.latLng(36.60, 24.25),  // SW
+    L.latLng(36.85, 24.65),  // NE
+  );
+
   map = L.map('map', {
     center: [36.738, 24.455],
     zoom: 12,
+    minZoom: 10,
+    maxZoom: 19,
+    maxBounds: milosBounds,
+    maxBoundsViscosity: 1.0,
     zoomControl: true,
   });
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
-    maxZoom: 18,
+    maxZoom: 19,
   }).addTo(map);
+
+  // Cluster group
+  clusterGroup = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    disableClusteringAtZoom: 16,
+    zoomToBoundsOnClick: true,
+    iconCreateFunction: (cluster) => {
+      const count = cluster.getChildCount();
+      const size = count < 10 ? 36 : count < 20 ? 42 : 48;
+      return L.divIcon({
+        html: `<div class="cluster-icon" style="width:${size}px;height:${size}px"><span>${count}</span></div>`,
+        className: '',
+        iconSize: [size, size],
+        iconAnchor: [size/2, size/2],
+      });
+    },
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+  });
 
   // Add markers
   points.forEach(p => {
@@ -384,7 +435,7 @@ function initMap() {
     el.innerHTML = svg;
 
     const icon = L.divIcon({ html: el, className: '', iconSize: [40, 52], iconAnchor: [20, 52] });
-    const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
+    const marker = L.marker([p.lat, p.lng], { icon });
 
     const photoHtml = p.photo
       ? `<img src="${p.photo}" alt="${p.name}" class="map-popup-img" />`
@@ -406,7 +457,10 @@ function initMap() {
     marker.on('click', () => activateCard(p.slug, false));
 
     markers.push({ slug: p.slug, type: p.type, marker, el });
+    clusterGroup.addLayer(marker);
   });
+
+  map.addLayer(clusterGroup);
 
   // Sidebar card clicks
   document.querySelectorAll('.mc').forEach(card => {
@@ -462,10 +516,10 @@ function activateCard(slug, scroll) {
 function applyFilter() {
   let visible = 0;
 
+  clusterGroup.clearLayers();
   markers.forEach(m => {
     const show = activeFilter === 'all' || m.type === activeFilter;
-    if (show) { m.marker.addTo(map); visible++; }
-    else m.marker.remove();
+    if (show) { clusterGroup.addLayer(m.marker); visible++; }
   });
 
   document.querySelectorAll('.mc').forEach(card => {

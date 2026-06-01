@@ -4,6 +4,8 @@ import tavernsRaw from '../data/taverns.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 
+const isEl = Astro.url.pathname.startsWith('/el');
+
 // Build a flat search index at build time
 const index = [
   ...tavernsRaw.map(t => ({
@@ -43,21 +45,21 @@ const index = [
 ---
 
 <Layout
-  lang="en"
-  title="Search — Milos Guide"
-  description="Search beaches, restaurants and villages in Milos."
+  lang={isEl ? 'el' : 'en'}
+  title={isEl ? 'Αναζήτηση — Milos Guide' : 'Search — Milos Guide'}
+  description={isEl ? 'Αναζητήστε παραλίες, εστιατόρια και χωριά στη Μήλο.' : 'Search beaches, restaurants and villages in Milos.'}
 >
 
 <section class="search-hero">
   <div class="container">
-    <p class="page-label">Search</p>
-    <h1 class="page-title">Find anything in Milos</h1>
+    <p class="page-label">{isEl ? 'Αναζήτηση' : 'Search'}</p>
+    <h1 class="page-title">{isEl ? 'Βρες οτιδήποτε στη Μήλο' : 'Find anything in Milos'}</h1>
     <div class="search-box-wrap">
       <input
         id="search-input"
         type="search"
         class="search-box"
-        placeholder="Sarakiniko, Barko, Plaka…"
+        placeholder={isEl ? 'Σαρακήνικο, Barko, Πλάκα…' : 'Sarakiniko, Barko, Plaka…'}
         autofocus
         autocomplete="off"
         spellcheck="false"
@@ -65,10 +67,10 @@ const index = [
       <span class="search-icon">🔍</span>
     </div>
     <div class="search-filters">
-      <button class="sf-chip sf-chip--active" data-filter="all">All</button>
-      <button class="sf-chip" data-filter="beach">🏖 Beaches</button>
-      <button class="sf-chip" data-filter="restaurant">🍽 Restaurants</button>
-      <button class="sf-chip" data-filter="village">🏘 Villages</button>
+      <button class="sf-chip sf-chip--active" data-filter="all">{isEl ? 'Όλα' : 'All'}</button>
+      <button class="sf-chip" data-filter="beach">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</button>
+      <button class="sf-chip" data-filter="restaurant">🍽 {isEl ? 'Εστιατόρια' : 'Restaurants'}</button>
+      <button class="sf-chip" data-filter="village">🏘 {isEl ? 'Χωριά' : 'Villages'}</button>
     </div>
   </div>
 </section>
@@ -79,16 +81,16 @@ const index = [
     <div class="results-grid" id="results-grid"></div>
     <div class="results-empty" id="results-empty" style="display:none">
       <p class="empty-icon">🔍</p>
-      <p class="empty-text">No results found.</p>
-      <p class="empty-sub">Try a different search term or browse the categories below.</p>
+      <p class="empty-text">{isEl ? 'Δεν βρέθηκαν αποτελέσματα.' : 'No results found.'}</p>
+      <p class="empty-sub">{isEl ? 'Δοκίμασε διαφορετική αναζήτηση ή περιήγησε στις κατηγορίες.' : 'Try a different search term or browse the categories below.'}</p>
       <div class="empty-links">
-        <a href="/beaches" class="btn-dark">🏖 Beaches</a>
-        <a href="/eat"     class="btn-outline-dark">🍽 Food</a>
-        <a href="/villages" class="btn-outline-dark">🏘 Villages</a>
+        <a href={isEl ? '/el/beaches' : '/beaches'} class="btn-dark">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</a>
+        <a href={isEl ? '/el/eat' : '/eat'} class="btn-outline-dark">🍽 {isEl ? 'Φαγητό' : 'Food'}</a>
+        <a href={isEl ? '/el/villages' : '/villages'} class="btn-outline-dark">🏘 {isEl ? 'Χωριά' : 'Villages'}</a>
       </div>
     </div>
     <div class="results-initial" id="results-initial">
-      <p class="initial-hint">Start typing to search beaches, restaurants and villages.</p>
+      <p class="initial-hint">{isEl ? 'Πληκτρολόγησε για να αναζητήσεις παραλίες, εστιατόρια και χωριά.' : 'Start typing to search beaches, restaurants and villages.'}</p>
     </div>
   </div>
 </section>
@@ -96,7 +98,7 @@ const index = [
 </Layout>
 
 <!-- Pass index to client JS -->
-<script define:vars={{ index }}>
+<script define:vars={{ index, isEl }}>
 const input   = document.getElementById('search-input');
 const grid    = document.getElementById('results-grid');
 const meta    = document.getElementById('results-meta');
@@ -163,14 +165,14 @@ function render() {
   }
 
   empty.style.display = 'none';
-  meta.textContent = `${results.length} result${results.length !== 1 ? 's' : ''} for "${input.value.trim()}"`;
+  meta.textContent = isEl ? `${results.length} αποτέλεσμα${results.length !== 1 ? 'τα' : ''} για "${input.value.trim()}"` : `${results.length} result${results.length !== 1 ? 's' : ''} for "${input.value.trim()}"`;
 
   grid.innerHTML = results.map(item => `
     <a href="${item.url}" class="result-card">
       <span class="result-icon">${item.icon}</span>
       <div class="result-body">
-        <span class="result-type">${item.typeEn}</span>
-        <h2 class="result-name">${highlight(item.nameEn, query)}</h2>
+        <span class="result-type">${isEl ? item.typeEl : item.typeEn}</span>
+        <h2 class="result-name">${highlight(isEl ? item.nameEl : item.nameEn, query)}</h2>
         <p class="result-area">📍 ${item.area}</p>
       </div>
       <span class="result-arrow">→</span>
@@ -273,7 +275,7 @@ function highlight(text, q) {
   margin-bottom: 1.25rem;
   height: 1.2em;
 }
-.results-grid {
+:global(.results-grid) {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -281,7 +283,7 @@ function highlight(text, q) {
   border-radius: var(--radius-md);
   overflow: hidden;
 }
-.result-card {
+:global(.result-card) {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -291,18 +293,18 @@ function highlight(text, q) {
   color: inherit;
   transition: background 0.15s, padding-left 0.15s;
 }
-.result-card:last-child { border-bottom: none; }
-.result-card:hover { background: var(--sand); padding-left: 1.5rem; }
-.result-icon { font-size: 1.4rem; flex-shrink: 0; }
-.result-body { flex: 1; min-width: 0; }
-.result-type {
+:global(.result-card:last-child) { border-bottom: none; }
+:global(.result-card:hover) { background: var(--sand); padding-left: 1.5rem; }
+:global(.result-icon) { font-size: 1.4rem; flex-shrink: 0; }
+:global(.result-body) { flex: 1; min-width: 0; }
+:global(.result-type) {
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--sea);
 }
-.result-name {
+:global(.result-name) {
   font-family: var(--font-serif);
   font-size: 1.1rem;
   color: var(--ink);
@@ -311,15 +313,15 @@ function highlight(text, q) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.result-name mark {
+:global(.result-name mark) {
   background: rgba(58,155,201,.2);
   color: var(--aegean);
   border-radius: 2px;
   padding: 0 1px;
 }
-.result-area { font-size: 0.75rem; color: var(--muted); }
-.result-arrow { color: var(--muted); flex-shrink: 0; transition: transform 0.15s; }
-.result-card:hover .result-arrow { transform: translateX(4px); color: var(--aegean); }
+:global(.result-area) { font-size: 0.75rem; color: var(--muted); }
+:global(.result-arrow) { color: var(--muted); flex-shrink: 0; transition: transform 0.15s; }
+:global(.result-card:hover .result-arrow) { transform: translateX(4px); color: var(--aegean); }
 
 /* ── EMPTY / INITIAL ── */
 .results-empty, .results-initial {
