@@ -44,8 +44,8 @@ const otherVillages = villagesData
 
 <Layout
   lang="en"
-  title={`${village.name} — Village in Milos`}
-  description={`${village.name}: ${village.tagline}. ${village.description.slice(0, 120)}…`}
+  title={`${village.nameEn ?? village.name} — Village in Milos`}
+  description={`${village.nameEn ?? village.name}: ${(village as any).taglineEn ?? village.tagline}. ${((village as any).descriptionEn ?? village.description).slice(0, 120)}…`}
 >
 
 <!-- HERO -->
@@ -56,8 +56,8 @@ const otherVillages = villagesData
       <a href="/villages" class="back-link">← All villages</a>
       <div class="v-hero-meta">
         <span class="v-type-badge">{typeInfo.icon} {typeInfo.label}</span>
-        <h1 class="v-hero-name">{village.name}</h1>
-        <p class="v-hero-tagline">{village.tagline}</p>
+        <h1 class="v-hero-name">{village.nameEn ?? village.name}</h1>
+        <p class="v-hero-tagline">{(village as any).taglineEn ?? village.tagline}</p>
         <div class="v-hero-chips">
           <span class="v-chip">📍 {village.area}</span>
           {village.population && <span class="v-chip">👥 {village.population} residents</span>}
@@ -77,14 +77,14 @@ const otherVillages = villagesData
   <!-- MAIN -->
   <main class="v-main">
 
-    <p class="v-desc">{village.description}</p>
+    <p class="v-desc">{(village as any).descriptionEn ?? village.description}</p>
 
     <!-- Must See -->
     {village.mustSee.length > 0 && (
       <div class="v-block">
         <h2 class="block-title">Must see</h2>
         <div class="must-grid">
-          {village.mustSee.map((item, i) => (
+          {((village as any).mustSeeEn ?? village.mustSee).map((item: string, i: number) => (
             <div class="must-item">
               <span class="must-num">{String(i + 1).padStart(2, '0')}</span>
               <span class="must-text">{item}</span>
@@ -99,7 +99,7 @@ const otherVillages = villagesData
       <div class="v-block">
         <h2 class="block-title">Highlights</h2>
         <div class="highlights-grid">
-          {village.highlights.map(h => (
+          {((village as any).highlightsEn ?? village.highlights).map((h: string) => (
             <div class="highlight-item">
               <span class="highlight-check">✓</span>
               <span>{h}</span>
@@ -113,7 +113,7 @@ const otherVillages = villagesData
     {linkedTaverns.length > 0 && (
       <div class="v-block">
         <div class="block-hdr">
-          <h2 class="block-title">Food in {village.name}</h2>
+          <h2 class="block-title">Food in {village.nameEn ?? village.name}</h2>
           <a href="/eat" class="see-all">All restaurants →</a>
         </div>
         <div class="nearby-list">
@@ -239,7 +239,7 @@ const otherVillages = villagesData
       <div class="s-villages-list">
         {otherVillages.map(v => (
           <a href={`/villages/${v.slug}`} class="s-village-link">
-            <span class="s-village-name">{v.name}</span>
+            <span class="s-village-name">{(v as any).nameEn ?? v.name}</span>
             <span class="s-village-type">{typeLabels[v.type]?.icon}</span>
           </a>
         ))}

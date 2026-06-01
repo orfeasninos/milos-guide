@@ -38,7 +38,7 @@
       "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
       "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
     ],
-    "isFeatured": true
+    "isFeatured": false
   },
   {
     "slug": "sirocco-restaurant",
@@ -694,7 +694,7 @@
       "Σάββατο: 1:00 μ.μ. – 12:30 π.μ.",
       "Κυριακή: 1:00 μ.μ. – 12:30 π.μ."
     ],
-    "isFeatured": false
+    "isFeatured": true
   },
   {
     "slug": "astakas-milos",

@@ -71,11 +71,11 @@ const types = [...new Set(villagesData.map(v => v.type))];
                 <span class="vc-type">{t.icon} {t.label}</span>
                 <span class="vc-area">{village.area}</span>
               </div>
-              <h2 class="vc-name">{village.name}</h2>
-              <p class="vc-tagline">{village.tagline}</p>
-              <p class="vc-desc">{village.description.slice(0, 120)}…</p>
+              <h2 class="vc-name">{village.nameEn ?? village.name}</h2>
+              <p class="vc-tagline">{(village as any).taglineEn ?? village.tagline}</p>
+              <p class="vc-desc">{((village as any).descriptionEn ?? village.description).slice(0, 120)}…</p>
               <div class="vc-highlights">
-                {village.highlights.slice(0, 3).map(h => (
+                {((village as any).highlightsEn ?? village.highlights).slice(0, 3).map((h: string) => (
                   <span class="vc-highlight">{h}</span>
                 ))}
               </div>

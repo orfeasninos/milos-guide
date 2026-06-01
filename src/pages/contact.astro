@@ -1,0 +1,370 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  lang="en"
+  title="Contact"
+  description="Get in touch with Milos.guide — suggestions, corrections, partnerships or just to say hello."
+>
+
+<section class="contact-hero">
+  <div class="container">
+    <p class="page-label">Contact</p>
+    <h1 class="page-title">Get in touch</h1>
+    <p class="page-desc">
+      Have a suggestion, spotted an error, or want to add your restaurant or beach?
+      We'd love to hear from you.
+    </p>
+  </div>
+</section>
+
+<section class="sec sec-sand contact-sec">
+  <div class="container contact-layout">
+
+    <!-- FORM -->
+    <div class="contact-form-wrap">
+      <form class="contact-form" id="contact-form" novalidate>
+
+        <!-- Honeypot -->
+        <input type="text" name="_trap" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="form-row">
+          <label class="form-label" for="name">Your name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            class="form-input"
+            placeholder="Name"
+            required
+            autocomplete="name"
+          />
+          <span class="form-error" id="name-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="email">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            class="form-input"
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+          />
+          <span class="form-error" id="email-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="subject">Subject</label>
+          <select id="subject" name="subject" class="form-select" required>
+            <option value="" disabled selected>Choose a topic…</option>
+            <option value="suggestion">Suggestion or feedback</option>
+            <option value="correction">Correction or error</option>
+            <option value="add-place">Add a restaurant / beach</option>
+            <option value="partnership">Partnership</option>
+            <option value="other">Other</option>
+          </select>
+          <span class="form-error" id="subject-error"></span>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            class="form-input form-textarea"
+            placeholder="Write your message here…"
+            rows="5"
+            required
+          ></textarea>
+          <span class="form-error" id="message-error"></span>
+        </div>
+
+        <button type="submit" class="form-submit btn-dark" id="submit-btn">
+          Send message
+        </button>
+
+        <div class="form-success" id="form-success" style="display:none">
+          <span class="success-icon">✓</span>
+          <div>
+            <p class="success-title">Message sent!</p>
+            <p class="success-sub">We'll get back to you as soon as possible.</p>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="contact-aside">
+      <div class="aside-card">
+        <p class="aside-label">About the guide</p>
+        <p class="aside-text">
+          Milos.guide is an independent, ad-free travel guide built by someone who loves the island.
+          All information is researched and maintained manually.
+        </p>
+      </div>
+
+      <div class="aside-card">
+        <p class="aside-label">Common reasons to write</p>
+        <ul class="aside-list">
+          <li>🍽 Your restaurant isn't listed</li>
+          <li>🏖 A beach is missing or incorrect</li>
+          <li>📸 You'd like to share photos</li>
+          <li>✏️ Something needs updating</li>
+          <li>🤝 Partnership or collaboration</li>
+        </ul>
+      </div>
+
+      <div class="aside-card">
+        <p class="aside-label">Response time</p>
+        <p class="aside-text">We aim to reply within 2–3 working days.</p>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.trap { display: none; }
+
+/* ── HERO ── */
+.contact-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+/* ── LAYOUT ── */
+.contact-sec { min-height: 50vh; }
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 4rem;
+  align-items: start;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+/* ── FORM ── */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+}
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--aegean);
+  box-shadow: 0 0 0 3px rgba(26,92,138,.1);
+}
+.form-input::placeholder { color: var(--muted); }
+.form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer; }
+.form-textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+.form-error { font-size: 0.75rem; color: #dc2626; min-height: 1rem; }
+.form-input.is-invalid,
+.form-select.is-invalid { border-color: #dc2626; }
+
+.form-submit {
+  align-self: flex-start;
+  padding: 0.85rem 2rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.15s, transform 0.15s, opacity 0.15s;
+}
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* Success */
+.form-success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(26,92,138,.07);
+  border: 1px solid rgba(26,92,138,.2);
+  border-radius: var(--radius-md);
+  margin-top: 0.5rem;
+}
+.success-icon {
+  font-size: 1.4rem;
+  color: var(--aegean);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.success-title { font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+.success-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+
+/* ── ASIDE ── */
+.contact-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+.aside-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.aside-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.aside-text {
+  font-size: 0.875rem;
+  color: var(--ink);
+  line-height: 1.65;
+}
+.aside-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.aside-list li {
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .contact-aside { position: static; }
+  .form-submit { width: 100%; justify-content: center; }
+}
+</style>
+
+<script>
+const form       = document.getElementById('contact-form') as HTMLFormElement;
+const submitBtn  = document.getElementById('submit-btn') as HTMLButtonElement;
+const successBox = document.getElementById('form-success') as HTMLElement;
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+function validate(): boolean {
+  let valid = true;
+
+  const fields = [
+    { id: 'name',    errorId: 'name-error',    msg: 'Please enter your name.' },
+    { id: 'email',   errorId: 'email-error',   msg: 'Please enter a valid email.' },
+    { id: 'subject', errorId: 'subject-error', msg: 'Please choose a topic.' },
+    { id: 'message', errorId: 'message-error', msg: 'Please write a message.' },
+  ];
+
+  fields.forEach(({ id, errorId, msg }) => {
+    const el    = document.getElementById(id) as HTMLInputElement;
+    const error = document.getElementById(errorId) as HTMLElement;
+    const value = el.value.trim();
+    const isEmail = id === 'email';
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const ok = value && (!isEmail || emailOk);
+
+    if (!ok) {
+      el.classList.add('is-invalid');
+      error.textContent = msg;
+      valid = false;
+    } else {
+      el.classList.remove('is-invalid');
+      error.textContent = '';
+    }
+  });
+
+  return valid;
+}
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Honeypot check
+  const trap = (form.querySelector('[name="_trap"]') as HTMLInputElement)?.value;
+  if (trap) return;
+
+  if (!validate()) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  try {
+    const data = new FormData(form);
+    await fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
+
+    form.reset();
+    successBox.style.display = 'flex';
+    submitBtn.style.display  = 'none';
+  } catch {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send message';
+    alert('Something went wrong. Please try again.');
+  }
+});
+
+// Clear errors on input
+form?.querySelectorAll('.form-input, .form-select').forEach(el => {
+  el.addEventListener('input', () => {
+    el.classList.remove('is-invalid');
+    const errorEl = document.getElementById(`${el.id}-error`);
+    if (errorEl) errorEl.textContent = '';
+  });
+});
+</script>

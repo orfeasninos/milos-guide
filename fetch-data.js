@@ -2,11 +2,16 @@ import fs   from "fs";
 import path from "path";
 import "dotenv/config";
 
-const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
+const API_KEY    = process.env.GOOGLE_PLACES_API_KEY;
+const DOWNLOAD_PHOTOS = process.argv.includes("--photos");
 
 if (!API_KEY) {
   console.error("❌ Δεν βρέθηκε το GOOGLE_PLACES_API_KEY στο .env");
   process.exit(1);
+}
+
+if (!DOWNLOAD_PHOTOS) {
+  console.log("ℹ️  Photo download skipped. Run with --photos to download.");
 }
 
 // ─── SEED DATA ───────────────────────────────────────────────────────────────
@@ -51,14 +56,12 @@ const seedBeaches = [
   { name: "Agia Kyriaki",location: "Milos",       slug: "agia-kyriaki",accessType: "road",  facilities: ["sunbeds"] },
   { name: "Gerontas",    location: "Milos",       slug: "gerontas",    accessType: "road",  facilities: [] },
   { name: "Triades",     location: "Milos",       slug: "triades",     accessType: "road",  facilities: [] },
-  { name: "Patakonas",   location: "Milos",       slug: "patakonas",   accessType: "road",  facilities: [] },
   { name: "Rivari",      location: "Milos",       slug: "rivari",      accessType: "road",  facilities: [] },
   { name: "Ammoudaki",   location: "Milos",       slug: "ammoudaki",   accessType: "hike",  facilities: [] },
   { name: "Sikia Cave",  location: "Milos",       slug: "sikia-cave",  accessType: "boat",  facilities: [] },
   { name: "Plathiena",   location: "Milos",       slug: "plathiena",   accessType: "road",  facilities: ["sunbeds"] }
 ];
 
-// Αγγλικές μεταφράσεις για taverns — name και description
 const tavernTranslations = {
   "barko-tavern":        { name: "Barko Tavern",                     description: "Enjoy authentic Greek cuisine at Barko Tavern in Adamas, right by the harbour." },
   "sirocco-restaurant":  { name: "Sirocco Volcanic Restaurant",      description: "Dine on a geothermally heated beach at Sirocco in Paleochori — a truly unique experience." },
@@ -87,24 +90,22 @@ const tavernTranslations = {
   "lyra-milos":          { name: "Lyra Milos",                       description: "The sound of good taste — Lyra serves Greek cuisine with creative touches in Pollonia." },
   "rifaki-milos":        { name: "Rifaki",                           description: "A casual spot in Pollonia with fresh mezedes and a friendly atmosphere." },
 };
- 
-// Αγγλικές μεταφράσεις για beaches
+
 const beachTranslations = {
-  "sarakiniko":   { name: "Sarakiniko",   description: "A lunar landscape of brilliant white volcanic rock — one of the most photographed beaches in the Aegean." },
-  "tsigrado":     { name: "Tsigrado",     description: "A hidden gem reached by descending a rope through a narrow cliff crevice, with dazzling turquoise water below." },
-  "fyriplaka":    { name: "Fyriplaka",    description: "A long sandy beach on the south coast, sheltered from the meltemi winds and ideal throughout the summer." },
-  "paleochori":   { name: "Paleochori",   description: "A unique geothermal beach where volcanic heat warms the sand from below — and the water from beneath the surface." },
-  "provatas":     { name: "Provatas",     description: "A family-friendly beach with calm shallow water, full facilities, and easy road access on the south coast." },
-  "papafragas":   { name: "Papafragas",   description: "Not a conventional beach but a series of narrow sea caves carved into the volcanic cliffs — magical for swimming." },
-  "kleftiko":     { name: "Kleftiko",     description: "The crown jewel of Milos — dramatic sea caves and arches on the southwest tip, accessible only by boat." },
-  "agia-kyriaki": { name: "Agia Kyriaki", description: "A sheltered south-coast beach with calm clear water, sunbeds, and a relaxed atmosphere." },
-  "gerontas":     { name: "Gerontas",     description: "A remote beach with striking red and orange volcanic cliffs — few crowds and spectacular scenery." },
-  "triades":      { name: "Triades",      description: "A long sandy beach on the northwest coast, naturally beautiful and unspoiled, with no facilities." },
-  "patakonas":    { name: "Patakonas",    description: "A small secluded cove near Tsigrado with similar volcanic rock formations and crystal-clear water." },
+  "sarakiniko":   { name: "Sarakiniko",    description: "A lunar landscape of brilliant white volcanic rock — one of the most photographed beaches in the Aegean." },
+  "tsigrado":     { name: "Tsigrado",      description: "A hidden gem reached by descending a rope through a narrow cliff crevice, with dazzling turquoise water below." },
+  "fyriplaka":    { name: "Fyriplaka",     description: "A long sandy beach on the south coast, sheltered from the meltemi winds and ideal throughout the summer." },
+  "paleochori":   { name: "Paleochori",    description: "A unique geothermal beach where volcanic heat warms the sand from below — and the water from beneath the surface." },
+  "provatas":     { name: "Provatas",      description: "A family-friendly beach with calm shallow water, full facilities, and easy road access on the south coast." },
+  "papafragas":   { name: "Papafragas",    description: "Not a conventional beach but a series of narrow sea caves carved into the volcanic cliffs — magical for swimming." },
+  "kleftiko":     { name: "Kleftiko",      description: "The crown jewel of Milos — dramatic sea caves and arches on the southwest tip, accessible only by boat." },
+  "agia-kyriaki": { name: "Agia Kyriaki",  description: "A sheltered south-coast beach with calm clear water, sunbeds, and a relaxed atmosphere." },
+  "gerontas":     { name: "Gerontas",      description: "A remote beach with striking red and orange volcanic cliffs — few crowds and spectacular scenery." },
+  "triades":      { name: "Triades",       description: "A long sandy beach on the northwest coast, naturally beautiful and unspoiled, with no facilities." },
   "rivari":       { name: "Rivari Lagoon", description: "A stunning natural lagoon on the west coast where warm shallow water is separated from the open sea by a sand strip." },
-  "ammoudaki":    { name: "Ammoudaki",    description: "A tiny remote beach on the southwest coast, reachable only on foot or by boat — pristine and rarely visited." },
-  "sikia-cave":   { name: "Sykia Cave",   description: "A vast sea cave with a partially collapsed ceiling that lets sunlight pour in — the highlight of most boat tours." },
-  "plathiena":    { name: "Plathiena",    description: "A long sandy beach near Plaka with good facilities and colourful volcanic cliffs, easily accessible by road." },
+  "ammoudaki":    { name: "Ammoudaki",     description: "A tiny remote beach on the southwest coast, reachable only on foot or by boat — pristine and rarely visited." },
+  "sikia-cave":   { name: "Sykia Cave",    description: "A vast sea cave with a partially collapsed ceiling that lets sunlight pour in — the highlight of most boat tours." },
+  "plathiena":    { name: "Plathiena",     description: "A long sandy beach near Plaka with good facilities and colourful volcanic cliffs, easily accessible by road." },
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -131,12 +132,15 @@ async function fetchPlace(query) {
 }
 
 async function downloadPhoto(photoRef, slug, type) {
+  // Skip entirely if --photos flag not passed
+  if (!DOWNLOAD_PHOTOS) return null;
   if (!photoRef) return null;
 
   const dir  = path.join(process.cwd(), "public", "images", type);
   const file = path.join(dir, `${slug}.jpg`);
   const url  = `/images/${type}/${slug}.jpg`;
 
+  // Skip if already downloaded
   if (fs.existsSync(file)) {
     console.log(`    ⏭  Photo exists: ${url}`);
     return url;
@@ -170,6 +174,13 @@ async function downloadPhoto(photoRef, slug, type) {
   }
 }
 
+// Αν έχουμε ήδη κατεβάσει φωτογραφία, διατήρησέ την στο JSON
+function resolveExistingPhoto(slug, type) {
+  const file = path.join(process.cwd(), "public", "images", type, `${slug}.jpg`);
+  const url  = `/images/${type}/${slug}.jpg`;
+  return fs.existsSync(file) ? url : null;
+}
+
 // ─── TAVERNS ─────────────────────────────────────────────────────────────────
 
 async function fetchTaverns() {
@@ -193,9 +204,12 @@ async function fetchTaverns() {
       if (place.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE") priceRange = "€€€€";
 
       const photoRef   = place.photos?.[0]?.name || null;
-      const localPhoto = await downloadPhoto(photoRef, tavern.slug, "taverns");
-      const weekdays   = place.regularOpeningHours?.weekdayDescriptions || ["Δεν ανακοινώθηκε ωράριο"];
-      const tr         = tavernTranslations[tavern.slug];
+      const localPhoto = DOWNLOAD_PHOTOS
+        ? await downloadPhoto(photoRef, tavern.slug, "taverns")
+        : resolveExistingPhoto(tavern.slug, "taverns");
+
+      const weekdays = place.regularOpeningHours?.weekdayDescriptions || ["Δεν ανακοινώθηκε ωράριο"];
+      const tr       = tavernTranslations[tavern.slug];
 
       finalData.push({
         slug: tavern.slug,
@@ -248,8 +262,11 @@ async function fetchBeaches() {
       }
 
       const photoRef   = place.photos?.[0]?.name || null;
-      const localPhoto = await downloadPhoto(photoRef, beach.slug, "beaches");
-      const tr         = beachTranslations[beach.slug];
+      const localPhoto = DOWNLOAD_PHOTOS
+        ? await downloadPhoto(photoRef, beach.slug, "beaches")
+        : resolveExistingPhoto(beach.slug, "beaches");
+
+      const tr = beachTranslations[beach.slug];
 
       finalData.push({
         slug: beach.slug,
@@ -284,6 +301,7 @@ async function fetchBeaches() {
 
 async function main() {
   console.log("🚀 Starting fetch-all-data...");
+  console.log(`📷 Photo mode: ${DOWNLOAD_PHOTOS ? "ENABLED (--photos)" : "DISABLED"}`);
 
   const [taverns, beaches] = await Promise.all([fetchTaverns(), fetchBeaches()]);
 
@@ -296,8 +314,12 @@ async function main() {
   console.log(`\n🎉 Done!`);
   console.log(`   taverns.json → ${taverns.length} entries`);
   console.log(`   beaches.json → ${beaches.length} entries`);
-  console.log(`   Photos       → public/images/`);
-  console.log(`\n💡 Tip: add more translations in tavernTranslations / beachTranslations`);
+  if (DOWNLOAD_PHOTOS) {
+    console.log(`   Photos       → public/images/`);
+  } else {
+    console.log(`   Photos       → skipped (existing photos preserved)`);
+    console.log(`   💡 Run with --photos to download/update photos`);
+  }
 }
 
 main();

@@ -197,7 +197,7 @@ const isEl = lang === 'el';
             <a href={isEl ? '/el/about' : '/about'}>{isEl ? 'Η Μήλος' : 'About Milos'}</a>
             <a href="#">{isEl ? 'Πότε να έρθετε' : 'When to visit'}</a>
             <a href="#">{isEl ? 'Χάρτης νησιού' : 'Island map'}</a>
-            <a href="#">{isEl ? 'Επικοινωνία' : 'Contact'}</a>
+            <a href={isEl ? '/el/contact' : '/contact'}>{isEl ? 'Επικοινωνία' : 'Contact'}</a>
           </div>
         </nav>
 

@@ -266,31 +266,6 @@
     "facilities": []
   },
   {
-    "slug": "patakonas",
-    "name": {
-      "el": "Gerakas Beach",
-      "en": "Patakonas"
-    },
-    "description": {
-      "el": "Ανακαλύψτε την παραλία Gerakas Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A small secluded cove near Tsigrado with similar volcanic rock formations and crystal-clear water."
-    },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος, Ελλάδα"
-    },
-    "googleMapsUri": "https://maps.google.com/?cid=14621251355667870835&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/beaches/gerakas.jpg",
-    "website": null,
-    "coordinates": {
-      "lat": 36.6662603,
-      "lng": 24.480878500000003
-    },
-    "rating": 5,
-    "accessType": "road",
-    "facilities": []
-  },
-  {
     "slug": "rivari",
     "name": {
       "el": "Λιμνοθάλασσα Ριβάρι",
