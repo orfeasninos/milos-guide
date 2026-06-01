@@ -9,11 +9,31 @@ const accessLabels: Record<string, { icon: string; label: string }> = {
   boat: { icon: '⛵', label: 'Boat only' },
 };
 
+function getArea(lat: number, lng: number): string {
+  if (!lat || !lng) return 'north';
+  // West: Kleftiko, Gerontas, Sikia, Ammoudaki, Triades
+  if (lng < 24.37) return 'west';
+  // East: Pollonia, Tria Pigadia, Kastanas, Theiorycheia
+  if (lng > 24.52 && lat > 36.68) return 'east';
+  // South: Tsigrado, Fyriplaka, Provatas, Agia Kyriaki, Paleochori
+  if (lat < 36.68) return 'south';
+  // North: Sarakiniko, Papafragas, Plathiena, Mandrakia, Polonia
+  if (lat >= 36.74) return 'north';
+  // Gulf: Rivari, Achivadolimni, Agios Sostis (lat 36.68-36.74)
+  return 'gulf';
+}
+
 const allFacilities = [...new Set(
   beachesData.flatMap(b => b.facilities)
 )].filter(Boolean).sort();
 
-const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
+const sortedBeaches = [...beachesData]
+  .sort((a, b) => b.rating - a.rating)
+  .map(b => ({
+    ...b,
+    area: getArea(b.coordinates?.lat ?? 0, b.coordinates?.lng ?? 0),
+    isBoat: b.accessType === 'boat',
+  }));
 ---
 
 <Layout
@@ -37,15 +57,20 @@ const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
 <!-- FILTERS -->
 <div class="filters-bar">
   <div class="container filters-inner">
+
     <div class="filter-group">
-      <span class="filter-group-label">Access</span>
-      <div class="filter-chips" id="access-chips">
-        <button class="chip chip--active" data-access="all">All</button>
-        <button class="chip" data-access="road">🚗 By car</button>
-        <button class="chip" data-access="hike">🥾 Hiking</button>
-        <button class="chip" data-access="boat">⛵ Boat only</button>
+      <span class="filter-group-label">Area</span>
+      <div class="filter-chips" id="area-chips">
+        <button class="chip chip--active" data-area="all">All</button>
+        <button class="chip" data-area="north">North</button>
+        <button class="chip" data-area="south">South</button>
+        <button class="chip" data-area="west">West</button>
+        <button class="chip" data-area="east">East</button>
+        <button class="chip" data-area="gulf">Gulf</button>
       </div>
     </div>
+
+    <div class="filter-divider" aria-hidden="true"></div>
 
     <div class="filter-group">
       <span class="filter-group-label">Facilities</span>
@@ -57,9 +82,16 @@ const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
       </div>
     </div>
 
-    <div class="filter-right">
-      <span class="results-count" id="results-count">{beachesData.length} παραλίες</span>
+    <div class="filter-divider" aria-hidden="true"></div>
+
+    <div class="filter-group">
+      <button class="chip" id="boat-toggle">⛵ Boat only</button>
     </div>
+
+    <div class="filter-right">
+      <span class="results-count" id="results-count">{beachesData.length} beaches</span>
+    </div>
+
   </div>
 </div>
 
@@ -68,12 +100,12 @@ const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
   <div class="container">
     <div class="beaches-grid" id="beaches-grid">
       {sortedBeaches.map(beach => {
-        const access = accessLabels[beach.accessType] ?? { icon: '📍', label: beach.accessType };
         return (
           <a
             href={`/beaches/${beach.slug}`}
             class="bc"
-            data-access={beach.accessType}
+            data-area={beach.area}
+            data-boat={String(beach.isBoat)}
             data-facilities={JSON.stringify(beach.facilities)}
           >
             <div class="bc-img-wrap">
@@ -89,7 +121,7 @@ const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
               )}
               <div class="bc-overlay">
                 <div class="bc-chips">
-                  <span class="bc-access-chip">{access.icon} {access.label}</span>
+                  <span class="bc-access-chip">{beach.accessType === "boat" ? "⛵ Boat only" : beach.accessType === "hike" ? "🥾 Hiking" : "🚗 By car"}</span>
                   {beach.rating > 0 && (
                     <span class="bc-rating-chip">★ {beach.rating}</span>
                   )}
@@ -199,6 +231,12 @@ const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
 .chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
 .chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
 .filter-right { margin-left: auto; flex-shrink: 0; }
+.filter-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+}
 .results-count { font-size: 0.78rem; color: var(--muted); }
 
 /* ── GRID ── */
@@ -300,34 +338,38 @@ const grid    = document.getElementById('beaches-grid');
 const empty   = document.getElementById('empty-state');
 const counter = document.getElementById('results-count');
 const reset   = document.getElementById('reset-filters');
+const boatBtn = document.getElementById('boat-toggle');
 
-let activeAccess   = 'all';
+let activeArea     = 'all';
 let activeFacility = 'all';
+let boatOnly       = false;
 
 function applyFilters() {
   const cards = grid?.querySelectorAll<HTMLElement>('.bc') ?? [];
   let visible = 0;
 
   cards.forEach(card => {
-    const access     = card.dataset.access ?? '';
+    const area       = card.dataset.area ?? '';
+    const boat       = card.dataset.boat === 'true';
     const facilities = JSON.parse(card.dataset.facilities ?? '[]') as string[];
     const show =
-      (activeAccess === 'all'   || access === activeAccess) &&
-      (activeFacility === 'all' || facilities.includes(activeFacility));
+      (activeArea     === 'all' || area === activeArea) &&
+      (activeFacility === 'all' || facilities.includes(activeFacility)) &&
+      (!boatOnly || boat);
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   });
 
-  if (counter) counter.textContent = `${visible} beaches`;
+  if (counter) counter.textContent = `${visible} beach${visible !== 1 ? 'es' : ''}`;
   if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
   if (grid)    grid.style.display  = visible === 0 ? 'none'  : '';
 }
 
-document.querySelectorAll<HTMLButtonElement>('#access-chips .chip').forEach(chip => {
+document.querySelectorAll<HTMLButtonElement>('#area-chips .chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    document.querySelectorAll('#access-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
     chip.classList.add('chip--active');
-    activeAccess = chip.dataset.access ?? 'all';
+    activeArea = chip.dataset.area ?? 'all';
     applyFilters();
   });
 });
@@ -341,12 +383,21 @@ document.querySelectorAll<HTMLButtonElement>('#facility-chips .chip').forEach(ch
   });
 });
 
+boatBtn?.addEventListener('click', () => {
+  boatOnly = !boatOnly;
+  boatBtn.classList.toggle('chip--active', boatOnly);
+  applyFilters();
+});
+
 reset?.addEventListener('click', () => {
-  activeAccess   = 'all';
+  activeArea     = 'all';
   activeFacility = 'all';
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('chip--active'));
-  document.querySelector('#access-chips .chip')?.classList.add('chip--active');
+  boatOnly       = false;
+  document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#area-chips .chip')?.classList.add('chip--active');
+  document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
   document.querySelector('#facility-chips .chip')?.classList.add('chip--active');
+  boatBtn?.classList.remove('chip--active');
   applyFilters();
 });
 </script>

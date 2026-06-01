@@ -31,10 +31,24 @@ const facilityIcons: Record<string, string> = {
   'parking':   '🅿️',
 };
 
-// Related: same access type, not this one, up to 3
+// Nearby: sort by geographic distance using coordinates
+function distKm(lat1: number, lng1: number, lat2: number, lng2: number) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
 const related = beachesData
-  .filter(b => b.slug !== beach.slug && b.accessType === beach.accessType)
-  .sort((a, b) => b.rating - a.rating)
+  .filter(b => b.slug !== beach.slug && b.coordinates?.lat && b.coordinates?.lng)
+  .map(b => ({
+    ...b,
+    dist: (beach.coordinates?.lat && beach.coordinates?.lng)
+      ? distKm(beach.coordinates.lat, beach.coordinates.lng, b.coordinates.lat, b.coordinates.lng)
+      : 999,
+  }))
+  .sort((a, b) => a.dist - b.dist)
   .slice(0, 3);
 ---
 
@@ -238,8 +252,8 @@ const related = beachesData
     <div class="container">
       <div class="sec-hdr-row">
         <div>
-          <span class="label">Similar beaches</span>
-          <h2 class="sec-title">Επίσης {access.label.split(' ').slice(-1)[0]}</h2>
+          <span class="label">Close by</span>
+          <h2 class="sec-title">Nearby beaches</h2>
         </div>
         <a href="/beaches" class="see-all">All beaches →</a>
       </div>

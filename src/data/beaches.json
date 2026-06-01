@@ -27,6 +27,31 @@
     ]
   },
   {
+    "slug": "fyropotamos",
+    "name": {
+      "el": "Παραλία Φυροπόταμος",
+      "en": "Fyropotamos"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Φυροπόταμος στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Fyropotamos beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Φυροπόταμος, Φυροπόταμος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=3276925595420770192&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/fyropotamos.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.757727599999996,
+      "lng": 24.427407
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
     "slug": "tsigrado",
     "name": {
       "el": "Παραλία Τσιγκράδο",
@@ -48,7 +73,7 @@
       "lng": 24.4693335
     },
     "rating": 4.6,
-    "accessType": "hike",
+    "accessType": "road",
     "facilities": []
   },
   {
@@ -160,7 +185,7 @@
       "lng": 24.502596
     },
     "rating": 4.5,
-    "accessType": "hike",
+    "accessType": "road",
     "facilities": []
   },
   {
@@ -312,25 +337,25 @@
       "lng": 24.3349092
     },
     "rating": 4.6,
-    "accessType": "hike",
+    "accessType": "road",
     "facilities": []
   },
   {
-    "slug": "sikia-cave",
+    "slug": "sikia-beach",
     "name": {
       "el": "Σπηλιά της Συκιάς",
-      "en": "Sykia Cave"
+      "en": "Sikia beach"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Σπηλιά της Συκιάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A vast sea cave with a partially collapsed ceiling that lets sunlight pour in — the highlight of most boat tours."
+      "en": "Discover Sikia beach beach in Milos."
     },
     "location": {
       "area": "Milos",
       "address": "Sykia Cave 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=9559721524445213177&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/beaches/sikia-cave.jpg",
+    "localPhoto": "/images/beaches/sikia-beach.jpg",
     "website": null,
     "coordinates": {
       "lat": 36.667732699999995,
@@ -516,6 +541,481 @@
       "lng": 24.5257476
     },
     "rating": 4.4,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "mandrakia",
+    "name": {
+      "el": "Παραλία Μανδράκια",
+      "en": "Mandrakia"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Μανδράκια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A beautiful beach with clear blue waters and golden sand, located on the northern coast of Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "QC2W+9F, Μανδράκια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=180284497986615677&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/mandrakia.jpg",
+    "website": "http://milostravel.com/",
+    "coordinates": {
+      "lat": 36.750769,
+      "lng": 24.4460311
+    },
+    "rating": 4.7,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "kalogries-beach",
+    "name": {
+      "el": "Καλογιρος παραλία-Kalogiros Beach",
+      "en": "Kalogries beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Καλογιρος παραλία-Kalogiros Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Kalogries beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Καλογιρος παραλία-Kalogiros Beach, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=13348022850507030127&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/kalogries-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 37.6180812,
+      "lng": 24.2778003
+    },
+    "rating": 4.3,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "aggathia",
+    "name": {
+      "el": "Παραλία Αγγαθια",
+      "en": "Aggathia"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Αγγαθια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Aggathia beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Αγγαθια, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=15839743339564084500&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/aggathia.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7270586,
+      "lng": 24.3418226
+    },
+    "rating": 4.7,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "ammoudaraki-beach",
+    "name": {
+      "el": "Παραλία Αμμουδαρακι",
+      "en": "Ammoudaraki beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Ammoudaraki beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=1855296920998415868&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/ammoudaraki-beach.jpg",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.6988005,
+      "lng": 24.3349092
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "kalamos",
+    "name": {
+      "el": "Kalamos Beach",
+      "en": "Kalamos beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Kalamos Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Kalamos beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Kalamos, Plaka 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=7303830054188815547&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/kalamos.jpg",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.6665091,
+      "lng": 24.481914
+    },
+    "rating": 4.8,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "agios-ioannis-beach",
+    "name": {
+      "el": "Παραλία Άγιος Ιωάννης",
+      "en": "Agios Ioannis beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Ιωάννης στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Agios Ioannis beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Άγιος Ιωάννης, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=8429944784575787374&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/agios-ioannis-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.677900099999995,
+      "lng": 24.3319625
+    },
+    "rating": 4.8,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "kipos-beach",
+    "name": {
+      "el": "Kipos Restaurant",
+      "en": "Kipos beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Kipos Restaurant στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Kipos beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Kipos beach, Πλάκα 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=9117948610271215073&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/kipos-beach.jpg",
+    "website": "https://kiposrestaurant.gr/",
+    "coordinates": {
+      "lat": 36.662526899999996,
+      "lng": 24.429854799999998
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "deep-blue-beach",
+    "name": {
+      "el": "DeepBlue Beach",
+      "en": "Deep blue beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία DeepBlue Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Deep blue beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "MGF7+WR, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12987010637414941436&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/deep-blue-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6748127,
+      "lng": 24.5145904
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "psathi-beach",
+    "name": {
+      "el": "Psathi Beach",
+      "en": "Psathi beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Psathi Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Psathi beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Ios Island- Psathi, Psathi 840 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=17551077846145810864&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/psathi-beach.jpg",
+    "website": "http://www.psathibeach.com/",
+    "coordinates": {
+      "lat": 36.7364229,
+      "lng": 25.3639512
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "kolympionas-beach",
+    "name": {
+      "el": "Pollonia beach, Milos",
+      "en": "Kolympionas beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Kolympionas beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10088736547835518941&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/kolympionas-beach.jpg",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.7639636,
+      "lng": 24.5257476
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "voudia-beach",
+    "name": {
+      "el": "Παραλία Βούδια",
+      "en": "Voudia beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Βούδια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Voudia beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Βούδια, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=8574962511528719037&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/voudia-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7496186,
+      "lng": 24.5347015
+    },
+    "rating": 4,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "pachaina-beach",
+    "name": {
+      "el": "Παραλία Πάχαινα",
+      "en": "Pachaina beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Πάχαινα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Pachaina beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Πάχαινα, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=6509290071401047626&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/pachaina-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.752493,
+      "lng": 24.4966206
+    },
+    "rating": 3.8,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "alogomantra-beach",
+    "name": {
+      "el": "Παραλία Αλογομάντρα",
+      "en": "Alogomantra beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Αλογομάντρα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Alogomantra beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Αλογομάντρα, Μήλος, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=1914431595663703739&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/alogomantra-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.748596,
+      "lng": 24.4877318
+    },
+    "rating": 4.5,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "mytakas-beach",
+    "name": {
+      "el": "Παραλία Τσιγκράδο",
+      "en": "Mytakas beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Mytakas beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/mytakas-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.661895799999996,
+      "lng": 24.4693335
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "nerodafni-beach",
+    "name": {
+      "el": "Παραλία Νεροδάφνη",
+      "en": "Nerodafni beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Νεροδάφνη στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Nerodafni beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Νεροδάφνη, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=2330325346051739744&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/nerodafni-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7675625,
+      "lng": 24.4121797
+    },
+    "rating": 4.3,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "klima",
+    "name": {
+      "el": "Παραλία Κλήμα",
+      "en": "Klima beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Κλήμα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Klima beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Κλήμα, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=14789458472117323918&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/klima.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7348694,
+      "lng": 24.420080799999997
+    },
+    "rating": 4.7,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "papikinou-beach",
+    "name": {
+      "el": "Παραλία Παπικινού",
+      "en": "Papikinou beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Παπικινού στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Papikinou beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Παπικινού, Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5641723821373519984&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/papikinou-beach.jpg",
+    "website": "http://visit.milos.gr/portfolio-items/papikinou-el?portfolioCats=14%2C12%2C15%2C11%2C13",
+    "coordinates": {
+      "lat": 36.721516099999995,
+      "lng": 24.458498799999997
+    },
+    "rating": 4.2,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "fatouraina-beach",
+    "name": {
+      "el": "Παραλία Τσιγκράδο",
+      "en": "Fatouraina Beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Fatouraina Beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/fatouraina-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.661895799999996,
+      "lng": 24.4693335
+    },
+    "rating": 4.6,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "agios-dimitrios-beach",
+    "name": {
+      "el": "Παραλία Άγιος Δημήτριος",
+      "en": "Agios Dimitrios beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Δημήτριος στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "Discover Agios Dimitrios beach beach in Milos."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Άγιος Δημήτριος, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12690319685246534427&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/agios-dimitrios-beach.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7283799,
+      "lng": 24.393426299999998
+    },
+    "rating": 4.3,
     "accessType": "road",
     "facilities": []
   }

@@ -48,25 +48,45 @@ const seedTaverns = [
 
 const seedBeaches = [
   { name: "Sarakiniko", location: "Milos", slug: "sarakiniko", accessType: "road", facilities: ["parking"] },
-  { name: "Tsigrado", location: "Milos", slug: "tsigrado", accessType: "hike", facilities: [] },
+  { name: "Fyropotamos", location: "Milos", slug: "fyropotamos", accessType: "road", facilities: [] },
+  { name: "Tsigrado", location: "Milos", slug: "tsigrado", accessType: "road", facilities: [] },
   { name: "Fyriplaka", location: "Milos", slug: "fyriplaka", accessType: "road", facilities: ["sunbeds", "snack bar", "parking"] },
   { name: "Paleochori", location: "Milos", slug: "paleochori", accessType: "road", facilities: ["sunbeds", "snack bar", "parking"] },
   { name: "Provatas", location: "Milos", slug: "provatas", accessType: "road", facilities: ["sunbeds", "snack bar", "parking"] },
-  { name: "Papafragas", location: "Milos", slug: "papafragas", accessType: "hike", facilities: [] },
+  { name: "Papafragas", location: "Milos", slug: "papafragas", accessType: "road", facilities: [] },
   { name: "Kleftiko", location: "Milos", slug: "kleftiko", accessType: "boat", facilities: [] },
   { name: "Agia Kyriaki", location: "Milos", slug: "agia-kyriaki", accessType: "road", facilities: ["sunbeds"] },
   { name: "Gerontas", location: "Milos", slug: "gerontas", accessType: "road", facilities: [] },
   { name: "Triades", location: "Milos", slug: "triades", accessType: "road", facilities: [] },
   { name: "Rivari", location: "Milos", slug: "rivari", accessType: "road", facilities: [] },
-  { name: "Ammoudaki", location: "Milos", slug: "ammoudaki", accessType: "hike", facilities: [] },
-  { name: "Sikia Cave", location: "Milos", slug: "sikia-cave", accessType: "boat", facilities: [] },
+  { name: "Ammoudaki", location: "Milos", slug: "ammoudaki", accessType: "road", facilities: [] },
+  { name: "Sikia beach", location: "Milos", slug: "sikia-beach", accessType: "boat", facilities: [] },
   { name: "Plathiena", location: "Milos", slug: "plathiena", accessType: "road", facilities: ["sunbeds"] },
   { name: "Paralia theiorycheio", location: "Milos", slug: "theiorycheia", accessType: "road", facilities: [] },
   { name: "Achivadolimni", location: "Milos", slug: "achivadolimni", accessType: "road", facilities: ["sunbeds"] },
   { name: "Agios Sostis", location: "Milos", slug: "agios-sostis", accessType: "road", facilities: [] },
   { name: "Tria pigadia", location: "Milos", slug: "tria-pigadia", accessType: "road", facilities: [] },
   { name: "Kastanas", location: "Milos", slug: "kastanas", accessType: "road", facilities: [] },
-  { name: "Polonia beach", location: "Milos", slug: "polonia-beach", accessType: "road", facilities: [] }
+  { name: "Polonia beach", location: "Milos", slug: "polonia-beach", accessType: "road", facilities: [] },
+  { name: "Mandrakia", location: "Milos", slug: "mandrakia", accessType: "road", facilities: [] },
+  { name: "Kalogries beach", location: "Milos", slug: "kalogries-beach", accessType: "road", facilities: [] },
+  { name: "Aggathia", location: "Milos", slug: "aggathia", accessType: "road", facilities: [] },
+  { name: "Ammoudaraki beach", location: "Milos", slug: "ammoudaraki-beach", accessType: "road", facilities: [] },
+  { name: "Kalamos beach", location: "Milos", slug: "kalamos", accessType: "road", facilities: [] },
+  { name: "Agios Ioannis beach", location: "Milos", slug: "agios-ioannis-beach", accessType: "road", facilities: [] },
+  { name: "Kipos beach", location: "Milos", slug: "kipos-beach", accessType: "road", facilities: [] },
+  { name: "Deep blue beach", location: "Milos", slug: "deep-blue-beach", accessType: "road", facilities: [] },
+  { name: "Psathi beach", location: "Milos", slug: "psathi-beach", accessType: "road", facilities: [] },
+  { name: "Kolympionas beach", location: "Milos", slug: "kolympionas-beach", accessType: "road", facilities: [] },
+  { name: "Voudia beach", location: "Milos", slug: "voudia-beach", accessType: "road", facilities: [] },
+  { name: "Pachaina beach", location: "Milos", slug: "pachaina-beach", accessType: "road", facilities: [] },
+  { name: "Alogomantra beach", location: "Milos", slug: "alogomantra-beach", accessType: "road", facilities: [] },
+  { name: "Mytakas beach", location: "Milos", slug: "mytakas-beach", accessType: "road", facilities: [] },
+  { name: "Nerodafni beach", location: "Milos", slug: "nerodafni-beach", accessType: "road", facilities: [] },
+  { name: "Klima beach", location: "Milos", slug: "klima", accessType: "road", facilities: [] },
+  { name: "Papikinou beach", location: "Milos", slug: "papikinou-beach", accessType: "road", facilities: [] },
+  { name: "Fatouraina Beach", location: "Milos", slug: "fatouraina-beach", accessType: "road", facilities: [] },
+  { name: "Agios Dimitrios beach", location: "Milos", slug: "agios-dimitrios-beach", accessType: "road", facilities: [] },
 ];
 
 const tavernTranslations = {
@@ -119,7 +139,8 @@ const beachTranslations = {
   "agios-sostis": { name: "Agios Sostis", description: "A serene and quiet beach with shallow waters, offering a peaceful escape from the island's busier spots." },
   "tria-pigadia": { name: "Tria Pigadia", description: "A secluded, rugged beach favored by those looking for privacy and untouched natural beauty." },
   "kastanas": { name: "Kastanas", description: "A striking beach with colorful volcanic pebbles and stones, set against dramatic, high cliffs." },
-  "polonia-beach": { name: "Polonia Beach", description: "A convenient, family-friendly beach located in the charming fishing village of Pollonia, close to cafes and tavernas." }
+  "polonia-beach": { name: "Polonia Beach", description: "A convenient, family-friendly beach located in the charming fishing village of Pollonia, close to cafes and tavernas." },
+  "mandrakia": { name: "Mandrakia", description: "A beautiful beach with clear blue waters and golden sand, located on the northern coast of Milos." }
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
