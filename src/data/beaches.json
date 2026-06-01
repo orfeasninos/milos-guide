@@ -10,7 +10,7 @@
       "en": "A lunar landscape of brilliant white volcanic rock — one of the most photographed beaches in the Aegean."
     },
     "location": {
-      "area": "Sarakiniko",
+      "area": "Milos",
       "address": "Μήλος 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=6736049203591420954&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
@@ -91,7 +91,7 @@
       "en": "A unique geothermal beach where volcanic heat warms the sand from below — and the water from beneath the surface."
     },
     "location": {
-      "area": "Paleochori",
+      "area": "Milos",
       "address": "Παραλία Παλαιοχώρι, Μήλος 848 00, Ελλάδα"
     },
     "googleMapsUri": "https://maps.google.com/?cid=1111336641246794871&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
@@ -366,5 +366,157 @@
     "facilities": [
       "sunbeds"
     ]
+  },
+  {
+    "slug": "theiorycheia",
+    "name": {
+      "el": "Παραλία Θειορυχειο",
+      "en": "Paralia Theiorycheio"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Θειορυχειο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A historic beach featuring abandoned sulfur mines and rusted machinery against a backdrop of colorful cliffs."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Θειορυχειο, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=15999282089003033209&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/theiorycheia.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.694101499999995,
+      "lng": 24.544843
+    },
+    "rating": 4.7,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "achivadolimni",
+    "name": {
+      "el": "Παραλία Αχιβαδόλιμνη",
+      "en": "Achivadolimni"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Αχιβαδόλιμνη στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A large, popular beach known for its sandy bottom, crystal clear waters, and ideal conditions for windsurfing."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Αχιβαδόλιμνη, 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16569275019515605883&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/achivadolimni.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6915036,
+      "lng": 24.4527008
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": [
+      "sunbeds"
+    ]
+  },
+  {
+    "slug": "agios-sostis",
+    "name": {
+      "el": "Παραλία Άγιος Σώστης",
+      "en": "Agios Sostis"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Σώστης στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A serene and quiet beach with shallow waters, offering a peaceful escape from the island's busier spots."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=11599869160572417289&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/agios-sostis.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.6697896,
+      "lng": 24.4443792
+    },
+    "rating": 4.8,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "tria-pigadia",
+    "name": {
+      "el": "Παραλία Τρία Πηγάδια",
+      "en": "Tria Pigadia"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Τρία Πηγάδια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A secluded, rugged beach favored by those looking for privacy and untouched natural beauty."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Τρία Πηγάδια, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=6435908235425253070&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/tria-pigadia.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7298476,
+      "lng": 24.5363755
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "kastanas",
+    "name": {
+      "el": "Παραλία Καστανάς",
+      "en": "Kastanas"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Καστανάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A striking beach with colorful volcanic pebbles and stones, set against dramatic, high cliffs."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Καστανάς, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12551203908918583779&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/kastanas.jpg",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7345976,
+      "lng": 24.537876699999998
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": []
+  },
+  {
+    "slug": "polonia-beach",
+    "name": {
+      "el": "Pollonia beach, Milos",
+      "en": "Polonia Beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "en": "A convenient, family-friendly beach located in the charming fishing village of Pollonia, close to cafes and tavernas."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10088736547835518941&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/beaches/polonia-beach.jpg",
+    "website": "https://milostravel.com/",
+    "coordinates": {
+      "lat": 36.7639636,
+      "lng": 24.5257476
+    },
+    "rating": 4.4,
+    "accessType": "road",
+    "facilities": []
   }
 ]
