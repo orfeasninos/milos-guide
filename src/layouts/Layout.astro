@@ -56,17 +56,6 @@ const isEl = lang === 'el';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <meta name="theme-color" content="#0d2b4e" />
-  <script is:inline>
-    if (localStorage.getItem('cookie-consent') === 'accepted') {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
-      document.head.appendChild(s);
-      s.onload = function() { gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX'); };
-    }
-  </script>
 </head>
 
 <body>
@@ -214,31 +203,6 @@ const isEl = lang === 'el';
       </div>
     </div>
   </footer>
-
-  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-modal="true" aria-label={isEl ? 'Συγκατάθεση cookies' : 'Cookie consent'} style="display:none">
-    <div class="cookie-inner">
-      <div class="cookie-text">
-        <p class="cookie-title">🍪 {isEl ? 'Χρησιμοποιούμε cookies' : 'We use cookies'}</p>
-        <p class="cookie-desc">
-          {isEl
-            ? 'Χρησιμοποιούμε cookies ανάλυσης (Google Analytics) για να βελτιώνουμε το site. Τα δεδομένα είναι ανώνυμα.'
-            : 'We use analytics cookies (Google Analytics) to improve the site. Data is anonymous.'}
-        </p>
-      </div>
-      <div class="cookie-actions">
-        <a href={isEl ? '/el/privacy' : '/privacy'} class="cookie-link">
-          {isEl ? 'Πολιτική απορρήτου' : 'Privacy policy'}
-        </a>
-        <button class="cookie-btn cookie-btn--decline" id="cookie-decline" type="button">
-          {isEl ? 'Όχι' : 'Decline'}
-        </button>
-        <button class="cookie-btn cookie-btn--accept" id="cookie-accept" type="button">
-          {isEl ? 'Αποδοχή' : 'Accept'}
-        </button>
-      </div>
-    </div>
-  </div>
-
 </body>
 </html>
 
@@ -378,21 +342,6 @@ nav ul, nav ol { list-style: none; }
 .btn-dark { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.78rem 1.55rem; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: 0.92rem; font-weight: 600; background: var(--deep-blue); color: #fff; transition: background 0.15s var(--ease), transform 0.15s var(--ease-spring); }
 .btn-dark:hover { background: var(--aegean); transform: translateY(-2px); }
 
-.cookie-banner { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; width: calc(100% - 3rem); max-width: 680px; background: var(--deep-blue); color: #fff; border-radius: var(--radius-lg); box-shadow: 0 8px 40px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.06); animation: cookieSlideUp 0.35s var(--ease-out) forwards; }
-@keyframes cookieSlideUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-.cookie-inner { display: flex; align-items: center; gap: 1.25rem; padding: 1.1rem 1.4rem; flex-wrap: wrap; }
-.cookie-text    { flex: 1; min-width: 0; }
-.cookie-title   { font-size: 0.88rem; font-weight: 600; color: #fff; margin-bottom: 0.18rem; }
-.cookie-desc    { font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.5; margin: 0; }
-.cookie-actions { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
-.cookie-link    { font-size: 0.75rem; color: rgba(255,255,255,0.45); text-decoration: underline; white-space: nowrap; transition: color 0.15s; }
-.cookie-link:hover { color: rgba(255,255,255,0.8); }
-.cookie-btn--accept, .cookie-btn--decline { padding: 0.52rem 1.15rem; border: none; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s, transform 0.15s var(--ease-spring); }
-.cookie-btn--accept  { background: #fff; color: var(--deep-blue); }
-.cookie-btn--accept:hover  { background: var(--sand); transform: translateY(-1px); }
-.cookie-btn--decline { background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.18); }
-.cookie-btn--decline:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   html { scroll-behavior: auto; }
@@ -400,7 +349,7 @@ nav ul, nav ol { list-style: none; }
 }
 
 @media (max-width: 720px) {
-  .main-nav { display: none; position: absolute; top: calc(var(--header-h) + 2px); left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 0.6rem; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg); gap: 0.15rem; }
+  .main-nav { display: none; position: absolute; top: calc(var(--header-h) - 5px); left: 0; right: 0; flex-direction: column; background: rgba(255,255,255,0.98); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 0.6rem; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg); gap: 0.15rem; }
   .main-nav.is-open { display: flex; animation: mobileNavIn 0.2s var(--ease-out); }
   @keyframes mobileNavIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
   .nav-link { width: 100%; padding: 0.65rem 1rem; }
@@ -416,14 +365,10 @@ nav ul, nav ol { list-style: none; }
   .footer-top-inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .footer-cols { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .footer-bottom-inner { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
-  .cookie-banner { bottom: 0; left: 0; right: 0; width: 100%; transform: none; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
-  .cookie-inner { flex-direction: column; align-items: flex-start; gap: 0.85rem; }
-  .cookie-actions { width: 100%; justify-content: space-between; }
-  @keyframes cookieSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 }
 
 @media print {
-  .site-header, .site-footer, .skip-link, .nav-toggle, .cookie-banner { display: none !important; }
+  .site-header, .site-footer, .skip-link, .nav-toggle { display: none !important; }
   body { background: #fff; color: #000; }
   .page-main { min-height: auto; }
 }
@@ -450,39 +395,4 @@ document.querySelectorAll<HTMLAnchorElement>('[data-navlink]').forEach(link => {
   const href = link.getAttribute('href') ?? '';
   if (href.length > 1 && path.startsWith(href)) link.classList.add('is-active');
 });
-
-const cookieBanner  = document.getElementById('cookie-banner');
-const cookieAccept  = document.getElementById('cookie-accept');
-const cookieDecline = document.getElementById('cookie-decline');
-const GA_ID = 'G-XXXXXXXXXX';
-
-function hideBanner(): void {
-  if (!cookieBanner) return;
-  cookieBanner.style.transition = 'opacity 0.25s, transform 0.25s';
-  cookieBanner.style.opacity = '0';
-  cookieBanner.style.transform = window.innerWidth <= 480 ? 'translateY(16px)' : 'translateX(-50%) translateY(12px)';
-  setTimeout(() => { cookieBanner.style.display = 'none'; }, 260);
-}
-
-function loadGA4(): void {
-  if (typeof (window as any).gtag === 'function') return;
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-  document.head.appendChild(s);
-  s.onload = () => {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    function gtag(..._args: unknown[]){ (window as any).dataLayer.push(arguments); }
-    (window as any).gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA_ID);
-  };
-}
-
-if (!localStorage.getItem('cookie-consent') && cookieBanner) {
-  setTimeout(() => { cookieBanner.style.display = 'block'; }, 900);
-}
-
-cookieAccept?.addEventListener('click', () => { localStorage.setItem('cookie-consent', 'accepted'); loadGA4(); hideBanner(); });
-cookieDecline?.addEventListener('click', () => { localStorage.setItem('cookie-consent', 'declined'); hideBanner(); });
 </script>

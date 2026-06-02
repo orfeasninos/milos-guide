@@ -143,7 +143,7 @@ const sorted = [...accommodationsData].sort((a, b) => b.rating - a.rating);
 /* Filters */
 .filters-bar {
   position: sticky;
-  top: var(--header-h);
+  top: calc(var(--header-h) - 5px);
   z-index: 100;
   background: rgba(255,255,255,0.95);
   backdrop-filter: blur(12px);

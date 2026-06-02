@@ -36,7 +36,7 @@ const points = [
       slug:  a.slug, type: 'accommodation',
       name:  typeof a.name === 'object' ? a.name.en : a.name,
       area:  a.location.area, rating: a.rating, photo: a.localPhoto ?? null,
-      url:   `/stay/${a.slug}`, lat: a.coordinates.lat, lng: a.coordinates.lng, icon: '🏨🏨&#xFE0E;',
+      url:   `/stay/${a.slug}`, lat: a.coordinates.lat, lng: a.coordinates.lng, icon: '🏨&#xFE0E;',
     })),
 ];
 ---
@@ -143,7 +143,7 @@ const points = [
 .sidebar-empty .empty-text { font-size: 0.875rem; color: var(--muted); }
 
 .map-wrap { flex: 1; position: relative; overflow: hidden; }
-#map { position: absolute; inset: 0; width: 100%; height: 100%; }
+#map { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 
 /* Layer switcher styling */
 :global(.leaflet-control-layers) {
