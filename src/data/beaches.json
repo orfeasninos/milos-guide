@@ -6,7 +6,7 @@
       "en": "Sarakiniko"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Σαρακήνικο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Σαρακήνικο στη Μήλο.",
       "en": "A lunar landscape of brilliant white volcanic rock — one of the most photographed beaches in the Aegean."
     },
     "location": {
@@ -21,7 +21,7 @@
       "lng": 24.458423
     },
     "rating": 4.8,
-    "accessType": "plane",
+    "accessType": "road",
     "facilities": [
       "parking"
     ]
@@ -33,8 +33,8 @@
       "en": "Fyropotamos"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Φυροπόταμος στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Fyropotamos beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Φυροπόταμος στη Μήλο.",
+      "en": "A picturesque bay with crystal clear waters and traditional syrmata boathouses lining the shore."
     },
     "location": {
       "area": "Milos",
@@ -58,7 +58,7 @@
       "en": "Tsigrado"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο.",
       "en": "A hidden gem reached by descending a rope through a narrow cliff crevice, with dazzling turquoise water below."
     },
     "location": {
@@ -83,7 +83,7 @@
       "en": "Fyriplaka"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Φυριπλάκα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Φυριπλάκα στη Μήλο.",
       "en": "A long sandy beach on the south coast, sheltered from the meltemi winds and ideal throughout the summer."
     },
     "location": {
@@ -112,7 +112,7 @@
       "en": "Paleochori"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Παλαιοχώρι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Παλαιοχώρι στη Μήλο.",
       "en": "A unique geothermal beach where volcanic heat warms the sand from below — and the water from beneath the surface."
     },
     "location": {
@@ -141,7 +141,7 @@
       "en": "Provatas"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Προβατάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Προβατάς στη Μήλο.",
       "en": "A family-friendly beach with calm shallow water, full facilities, and easy road access on the south coast."
     },
     "location": {
@@ -170,8 +170,8 @@
       "en": "Papafragas"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Παπαφράγκας στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Not a conventional beach but a series of narrow sea caves carved into the volcanic cliffs — magical for swimming."
+      "el": "Ανακαλύψτε την παραλία Παραλία Παπαφράγκας στη Μήλο.",
+      "en": "A series of narrow sea caves carved into the volcanic cliffs — magical for swimming."
     },
     "location": {
       "area": "Milos",
@@ -195,7 +195,7 @@
       "en": "Kleftiko"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Κλέφτικο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Κλέφτικο στη Μήλο.",
       "en": "The crown jewel of Milos — dramatic sea caves and arches on the southwest tip, accessible only by boat."
     },
     "location": {
@@ -220,7 +220,7 @@
       "en": "Agia Kyriaki"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αγιά Κυριάκη στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Αγιά Κυριάκη στη Μήλο.",
       "en": "A sheltered south-coast beach with calm clear water, sunbeds, and a relaxed atmosphere."
     },
     "location": {
@@ -247,7 +247,7 @@
       "en": "Gerontas"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Γέροντας στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Γέροντας στη Μήλο.",
       "en": "A remote beach with striking red and orange volcanic cliffs — few crowds and spectacular scenery."
     },
     "location": {
@@ -272,7 +272,7 @@
       "en": "Triades"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Triades Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
+      "el": "Ανακαλύψτε την παραλία Triades Beach στη Μήλο.",
       "en": "A long sandy beach on the northwest coast, naturally beautiful and unspoiled, with no facilities."
     },
     "location": {
@@ -297,8 +297,8 @@
       "en": "Rivari Lagoon"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Λιμνοθάλασσα Ριβάρι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A stunning natural lagoon on the west coast where warm shallow water is separated from the open sea by a sand strip."
+      "el": "Ανακαλύψτε την παραλία Λιμνοθάλασσα Ριβάρι στη Μήλο.",
+      "en": "A stunning natural lagoon where warm shallow water is separated from the open sea by a sand strip."
     },
     "location": {
       "area": "Milos",
@@ -322,8 +322,8 @@
       "en": "Ammoudaki"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A tiny remote beach on the southwest coast, reachable only on foot or by boat — pristine and rarely visited."
+      "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο.",
+      "en": "A tiny remote beach reachable only on foot or by boat — pristine and rarely visited."
     },
     "location": {
       "area": "Milos",
@@ -344,11 +344,11 @@
     "slug": "sikia-beach",
     "name": {
       "el": "Σπηλιά της Συκιάς",
-      "en": "Sikia beach"
+      "en": "Sikia Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Σπηλιά της Συκιάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Sikia beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Σπηλιά της Συκιάς στη Μήλο.",
+      "en": "A small beach inside a collapsed sea cave, famous for its emerald waters and natural skylight."
     },
     "location": {
       "area": "Milos",
@@ -372,8 +372,8 @@
       "en": "Plathiena"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Plathiena στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A long sandy beach near Plaka with good facilities and colourful volcanic cliffs, easily accessible by road."
+      "el": "Ανακαλύψτε την παραλία Plathiena στη Μήλο.",
+      "en": "A long sandy beach near Plaka with good facilities and colourful volcanic cliffs."
     },
     "location": {
       "area": "Milos",
@@ -396,11 +396,11 @@
     "slug": "theiorycheia",
     "name": {
       "el": "Παραλία Θειορυχειο",
-      "en": "Paralia Theiorycheio"
+      "en": "Theiorycheia"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Θειορυχειο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A historic beach featuring abandoned sulfur mines and rusted machinery against a backdrop of colorful cliffs."
+      "el": "Ανακαλύψτε την παραλία Παραλία Θειορυχειο στη Μήλο.",
+      "en": "A historic beach featuring abandoned sulfur mines and rusted machinery against colourful cliffs."
     },
     "location": {
       "area": "Milos",
@@ -424,8 +424,8 @@
       "en": "Achivadolimni"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αχιβαδόλιμνη στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A large, popular beach known for its sandy bottom, crystal clear waters, and ideal conditions for windsurfing."
+      "el": "Ανακαλύψτε την παραλία Παραλία Αχιβαδόλιμνη στη Μήλο.",
+      "en": "A large, popular beach with sandy bottom, crystal clear waters and ideal conditions for windsurfing."
     },
     "location": {
       "area": "Milos",
@@ -451,8 +451,8 @@
       "en": "Agios Sostis"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Σώστης στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A serene and quiet beach with shallow waters, offering a peaceful escape from the island's busier spots."
+      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Σώστης στη Μήλο.",
+      "en": "A serene quiet beach with shallow waters, offering a peaceful escape from busier spots."
     },
     "location": {
       "area": "Milos",
@@ -476,8 +476,8 @@
       "en": "Tria Pigadia"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Τρία Πηγάδια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A secluded, rugged beach favored by those looking for privacy and untouched natural beauty."
+      "el": "Ανακαλύψτε την παραλία Παραλία Τρία Πηγάδια στη Μήλο.",
+      "en": "A secluded, rugged beach favoured by those looking for privacy and untouched natural beauty."
     },
     "location": {
       "area": "Milos",
@@ -501,8 +501,8 @@
       "en": "Kastanas"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Καστανάς στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A striking beach with colorful volcanic pebbles and stones, set against dramatic, high cliffs."
+      "el": "Ανακαλύψτε την παραλία Παραλία Καστανάς στη Μήλο.",
+      "en": "A striking beach with colourful volcanic pebbles set against dramatic high cliffs."
     },
     "location": {
       "area": "Milos",
@@ -526,8 +526,8 @@
       "en": "Polonia Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A convenient, family-friendly beach located in the charming fishing village of Pollonia, close to cafes and tavernas."
+      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο.",
+      "en": "A convenient family-friendly beach in the fishing village of Pollonia, close to cafes and tavernas."
     },
     "location": {
       "area": "Milos",
@@ -551,8 +551,8 @@
       "en": "Mandrakia"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Μανδράκια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "A beautiful beach with clear blue waters and golden sand, located on the northern coast of Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Μανδράκια στη Μήλο.",
+      "en": "A beautiful beach with clear blue waters, famous for the traditional colourful syrmata boathouses."
     },
     "location": {
       "area": "Milos",
@@ -573,11 +573,11 @@
     "slug": "kalogries-beach",
     "name": {
       "el": "Καλογιρος παραλία-Kalogiros Beach",
-      "en": "Kalogries beach"
+      "en": "Kalogries Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Καλογιρος παραλία-Kalogiros Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Kalogries beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Καλογιρος παραλία-Kalogiros Beach στη Μήλο.",
+      "en": "A quiet secluded beach with fine sand and shallow crystal-clear waters, perfect for relaxation."
     },
     "location": {
       "area": "Milos",
@@ -601,8 +601,8 @@
       "en": "Aggathia"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αγγαθια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Aggathia beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Αγγαθια στη Μήλο.",
+      "en": "A tranquil lesser-known spot, ideal for those seeking privacy away from the crowds."
     },
     "location": {
       "area": "Milos",
@@ -623,11 +623,11 @@
     "slug": "ammoudaraki-beach",
     "name": {
       "el": "Παραλία Αμμουδαρακι",
-      "en": "Ammoudaraki beach"
+      "en": "Ammoudaraki Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Ammoudaraki beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο.",
+      "en": "A remote and peaceful beach featuring soft sand and beautiful natural surroundings."
     },
     "location": {
       "area": "Milos",
@@ -648,11 +648,11 @@
     "slug": "kalamos",
     "name": {
       "el": "Kalamos Beach",
-      "en": "Kalamos beach"
+      "en": "Kalamos Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Kalamos Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Kalamos beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Kalamos Beach στη Μήλο.",
+      "en": "A beautiful beach with fine golden sand and deep clear blue waters, surrounded by volcanic scenery."
     },
     "location": {
       "area": "Milos",
@@ -673,11 +673,11 @@
     "slug": "agios-ioannis-beach",
     "name": {
       "el": "Παραλία Άγιος Ιωάννης",
-      "en": "Agios Ioannis beach"
+      "en": "Agios Ioannis Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Ιωάννης στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Agios Ioannis beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Ιωάννης στη Μήλο.",
+      "en": "A long wild and mostly secluded beach on the west side of the island."
     },
     "location": {
       "area": "Milos",
@@ -697,25 +697,25 @@
   {
     "slug": "kipos-beach",
     "name": {
-      "el": "Kipos Restaurant",
-      "en": "Kipos beach"
+      "el": "Παραλία Κήπος",
+      "en": "Paralia Kipos"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Kipos Restaurant στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Kipos beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Κήπος στη Μήλο.",
+      "en": "A small serene beach known for its clear waters and proximity to traditional fish tavernas."
     },
     "location": {
       "area": "Milos",
-      "address": "Kipos beach, Πλάκα 848 00, Ελλάδα"
+      "address": "Παραλία Κήπος, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=9117948610271215073&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googleMapsUri": "https://maps.google.com/?cid=3674260685920285201&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/beaches/kipos-beach.jpg",
-    "website": "https://kiposrestaurant.gr/",
+    "website": null,
     "coordinates": {
-      "lat": 36.662526899999996,
-      "lng": 24.429854799999998
+      "lat": 36.663143399999996,
+      "lng": 24.429043099999998
     },
-    "rating": 4.6,
+    "rating": 4.1,
     "accessType": "road",
     "facilities": []
   },
@@ -723,11 +723,11 @@
     "slug": "deep-blue-beach",
     "name": {
       "el": "DeepBlue Beach",
-      "en": "Deep blue beach"
+      "en": "Deep Blue Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία DeepBlue Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Deep blue beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία DeepBlue Beach στη Μήλο.",
+      "en": "A hidden cove with incredibly deep blue waters, offering a sense of isolation and raw beauty."
     },
     "location": {
       "area": "Milos",
@@ -747,25 +747,25 @@
   {
     "slug": "psathi-beach",
     "name": {
-      "el": "Psathi Beach",
-      "en": "Psathi beach"
+      "el": "Παραλία Ψαθί",
+      "en": "Psathi Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Psathi Beach στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Psathi beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Ψαθί στη Μήλο.",
+      "en": "A lovely quiet beach with a calm atmosphere, often visited for a peaceful swim."
     },
     "location": {
       "area": "Milos",
-      "address": "Ios Island- Psathi, Psathi 840 01, Ελλάδα"
+      "address": "Παραλία Ψαθί, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=17551077846145810864&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googleMapsUri": "https://maps.google.com/?cid=8246179585688091747&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
     "localPhoto": "/images/beaches/psathi-beach.jpg",
-    "website": "http://www.psathibeach.com/",
+    "website": null,
     "coordinates": {
-      "lat": 36.7364229,
-      "lng": 25.3639512
+      "lat": 36.6599238,
+      "lng": 24.4193484
     },
-    "rating": 4.6,
+    "rating": 3,
     "accessType": "road",
     "facilities": []
   },
@@ -773,11 +773,11 @@
     "slug": "kolympionas-beach",
     "name": {
       "el": "Pollonia beach, Milos",
-      "en": "Kolympionas beach"
+      "en": "Kolympionas Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Kolympionas beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο.",
+      "en": "A rugged non-organised beach offering a wild landscape for nature lovers."
     },
     "location": {
       "area": "Milos",
@@ -798,11 +798,11 @@
     "slug": "voudia-beach",
     "name": {
       "el": "Παραλία Βούδια",
-      "en": "Voudia beach"
+      "en": "Voudia Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Βούδια στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Voudia beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Βούδια στη Μήλο.",
+      "en": "A unique beach with industrial history and proximity to old mines — a different side of Milos."
     },
     "location": {
       "area": "Milos",
@@ -823,11 +823,11 @@
     "slug": "pachaina-beach",
     "name": {
       "el": "Παραλία Πάχαινα",
-      "en": "Pachaina beach"
+      "en": "Pachaina Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Πάχαινα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Pachaina beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Πάχαινα στη Μήλο.",
+      "en": "A lovely sandy beach with interesting rock formations and views of the Glaronisia islets."
     },
     "location": {
       "area": "Milos",
@@ -848,11 +848,11 @@
     "slug": "alogomantra-beach",
     "name": {
       "el": "Παραλία Αλογομάντρα",
-      "en": "Alogomantra beach"
+      "en": "Alogomantra Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αλογομάντρα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Alogomantra beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Αλογομάντρα στη Μήλο.",
+      "en": "A beach enclosed by high vertical rocks, creating a natural harbour and unique swimming experience."
     },
     "location": {
       "area": "Milos",
@@ -872,25 +872,25 @@
   {
     "slug": "mytakas-beach",
     "name": {
-      "el": "Παραλία Τσιγκράδο",
-      "en": "Mytakas beach"
+      "el": "Παραλία Μύτικας",
+      "en": "Mytakas Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Mytakas beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Μύτικας στη Μήλο.",
+      "en": "A small scenic beach with traditional boat houses, popular for its clear waters."
     },
     "location": {
       "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
+      "address": "Παραλία Μύτικας, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googleMapsUri": "https://maps.google.com/?cid=12326244593845123883&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
     "localPhoto": "/images/beaches/mytakas-beach.jpg",
     "website": null,
     "coordinates": {
-      "lat": 36.661895799999996,
-      "lng": 24.4693335
+      "lat": 36.7419216,
+      "lng": 24.476411199999998
     },
-    "rating": 4.6,
+    "rating": 4.4,
     "accessType": "road",
     "facilities": []
   },
@@ -898,11 +898,11 @@
     "slug": "nerodafni-beach",
     "name": {
       "el": "Παραλία Νεροδάφνη",
-      "en": "Nerodafni beach"
+      "en": "Nerodafni Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Νεροδάφνη στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Nerodafni beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Νεροδάφνη στη Μήλο.",
+      "en": "A secluded natural spot perfect for those who enjoy pristine environments."
     },
     "location": {
       "area": "Milos",
@@ -923,11 +923,11 @@
     "slug": "klima",
     "name": {
       "el": "Παραλία Κλήμα",
-      "en": "Klima beach"
+      "en": "Klima Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Κλήμα στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Klima beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Κλήμα στη Μήλο.",
+      "en": "A unique beach at the famous settlement of Klima, known for the multi-coloured traditional syrmata."
     },
     "location": {
       "area": "Milos",
@@ -948,11 +948,11 @@
     "slug": "papikinou-beach",
     "name": {
       "el": "Παραλία Παπικινού",
-      "en": "Papikinou beach"
+      "en": "Papikinou Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Παπικινού στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Papikinou beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Παπικινού στη Μήλο.",
+      "en": "A long tree-lined sandy beach near Adamas, offering plenty of shade and access to local tavernas."
     },
     "location": {
       "area": "Milos",
@@ -973,11 +973,11 @@
     "slug": "agios-dimitrios-beach",
     "name": {
       "el": "Παραλία Άγιος Δημήτριος",
-      "en": "Agios Dimitrios beach"
+      "en": "Agios Dimitrios Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Δημήτριος στη Μήλο — έναν από τους πιο εντυπωσιακούς προορισμούς του νησιού.",
-      "en": "Discover Agios Dimitrios beach beach in Milos."
+      "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Δημήτριος στη Μήλο.",
+      "en": "A quiet beach named after the local chapel, offering a peaceful setting and shallow waters."
     },
     "location": {
       "area": "Milos",

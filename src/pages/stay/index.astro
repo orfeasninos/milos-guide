@@ -1,0 +1,314 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import accommodationsRaw from '../../data/accommodations.json';
+
+type Accommodation = typeof accommodationsRaw[number] & { localPhoto?: string | null };
+const accommodationsData = accommodationsRaw as Accommodation[];
+
+const getName = (a: any): string => typeof a.name === 'object' ? a.name.en : a.name;
+
+const typeLabels: Record<string, { label: string; icon: string }> = {
+  hotel:      { label: 'Hotel',      icon: '🏨' },
+  studio:     { label: 'Studios',    icon: '🏠' },
+  villa:      { label: 'Villa',      icon: '🏡' },
+  guesthouse: { label: 'Guesthouse', icon: '🛖' },
+};
+
+const areas = [...new Set(accommodationsData.map(a => a.location.area))].sort();
+const sorted = [...accommodationsData].sort((a, b) => b.rating - a.rating);
+---
+
+<Layout
+  lang="en"
+  title="Accommodation in Milos"
+  description={`Find the best hotels, studios and villas in Milos. ${accommodationsData.length}+ options across the island.`}
+>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <p class="page-label">Stay</p>
+    <h1 class="page-title">Accommodation in Milos</h1>
+    <p class="page-desc">
+      Hotels, studios, villas and guesthouses — {accommodationsData.length}+ options
+      across the island, from the port of Adamas to the hilltop villages.
+    </p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="container filters-inner">
+
+    <div class="filter-group">
+      <span class="filter-group-label">Area</span>
+      <div class="filter-chips" id="area-chips">
+        <button class="chip chip--active" data-area="all">All</button>
+        {areas.map(area => (
+          <button class="chip" data-area={area}>{area}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-divider" aria-hidden="true"></div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Type</span>
+      <div class="filter-chips" id="type-chips">
+        <button class="chip chip--active" data-type="all">All</button>
+        {Object.entries(typeLabels).map(([key, val]) => (
+          <button class="chip" data-type={key}>{val.icon} {val.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="filter-right">
+      <span class="results-count" id="results-count">{accommodationsData.length} places</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="acc-grid" id="acc-grid">
+      {sorted.map(a => {
+        const t = typeLabels[a.type] ?? { label: a.type, icon: '🏠' };
+        return (
+          <a
+            href={`/stay/${a.slug}`}
+            class="ac"
+            data-area={a.location.area}
+            data-type={a.type}
+          >
+            <div class="ac-img-wrap">
+              {a.localPhoto ? (
+                <img src={a.localPhoto} alt={getName(a)} class="ac-img" loading="lazy" />
+              ) : (
+                <div class="ac-ph" aria-hidden="true"></div>
+              )}
+              <div class="ac-overlay">
+                <div class="ac-chips">
+                  <span class="ac-type-chip">{t.icon} {t.label}</span>
+                  {a.rating > 0 && <span class="ac-rating-chip">★ {a.rating}</span>}
+                </div>
+                <h2 class="ac-name">{getName(a)}</h2>
+                <p class="ac-area">📍 {a.location.area}</p>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p class="empty-icon">🏨</p>
+      <p class="empty-text">No accommodation found with these filters.</p>
+      <button class="btn-dark" id="reset-filters">Show all</button>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+<style>
+.page-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* Filters */
+.filters-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.filter-group { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.filter-group-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.filter-chips { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.chip {
+  padding: 0.32rem 0.8rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
+.chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+.filter-divider { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
+.filter-right { margin-left: auto; flex-shrink: 0; }
+.results-count { font-size: 0.78rem; color: var(--muted); }
+
+/* Grid */
+.acc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Card */
+.ac {
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 4/3;
+  background: var(--sand-dark);
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+}
+.ac:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.ac-img-wrap { position: absolute; inset: 0; }
+.ac-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.ac:hover .ac-img { transform: scale(1.05); }
+.ac-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #0d2b4e, #1a5c8a); }
+.ac-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.08) 55%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.25rem 1.4rem;
+  color: #fff;
+}
+.ac-chips { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.ac-type-chip,
+.ac-rating-chip {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(6px);
+}
+.ac-name {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  line-height: 1.15;
+  margin: 0 0 0.2rem;
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
+}
+.ac-area { font-size: 0.72rem; color: rgba(255,255,255,.65); margin: 0; }
+
+/* Empty */
+.empty-state { text-align: center; padding: 5rem 0; }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+@media (max-width: 768px) {
+  .filters-inner { gap: 0.75rem; }
+  .acc-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .ac-name { font-size: 1.1rem; }
+}
+@media (max-width: 480px) {
+  .acc-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<script>
+const grid    = document.getElementById('acc-grid');
+const empty   = document.getElementById('empty-state');
+const counter = document.getElementById('results-count');
+const reset   = document.getElementById('reset-filters');
+
+let activeArea = 'all';
+let activeType = 'all';
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.ac') ?? [];
+  let visible = 0;
+
+  cards.forEach(card => {
+    const area = card.dataset.area ?? '';
+    const type = card.dataset.type ?? '';
+    const show =
+      (activeArea === 'all' || area === activeArea) &&
+      (activeType === 'all' || type === activeType);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  if (counter) counter.textContent = `${visible} place${visible !== 1 ? 's' : ''}`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none'  : '';
+}
+
+document.querySelectorAll<HTMLButtonElement>('#area-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeArea = chip.dataset.area ?? 'all';
+    applyFilters();
+  });
+});
+
+document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeType = chip.dataset.type ?? 'all';
+    applyFilters();
+  });
+});
+
+reset?.addEventListener('click', () => {
+  activeArea = 'all';
+  activeType = 'all';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#area-chips .chip')?.classList.add('chip--active');
+  document.querySelector('#type-chips .chip')?.classList.add('chip--active');
+  applyFilters();
+});
+</script>
