@@ -185,22 +185,21 @@ const points = [
     overflow: hidden;
   }
 
-  /* Map on top — bigger */
-  .map-wrap {
-    height: 55vh;
-    flex-shrink: 0;
-    position: relative;
-    order: -1;
-  }
-
-  /* Sidebar below as compact bottom sheet */
+  /* Sidebar on top */
   .map-sidebar {
     width: 100%;
-    flex: 1;
+    height: 45vh;
+    flex-shrink: 0;
     min-height: 0;
     border-right: none;
-    border-top: 2px solid var(--border);
+    border-bottom: 2px solid var(--border);
     background: var(--white);
+  }
+
+  /* Map below */
+  .map-wrap {
+    flex: 1;
+    position: relative;
   }
 
   /* Compact header */
