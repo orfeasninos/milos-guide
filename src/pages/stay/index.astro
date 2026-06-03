@@ -16,12 +16,29 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
 
 const areas = [...new Set(accommodationsData.map(a => a.location.area))].sort();
 const sorted = [...accommodationsData].sort((a, b) => b.rating - a.rating);
+
+const _siteUrl = 'https://milos.guide';
+const stayJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Accommodation in Milos',
+  description: `Find the best hotels, studios and villas in Milos. ${accommodationsData.length}+ options across the island.`,
+  url: `${_siteUrl}/stay`,
+  numberOfItems: sorted.length,
+  itemListElement: sorted.map((a, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: getName(a),
+    url: `${_siteUrl}/stay/${a.slug}`,
+  })),
+};
 ---
 
 <Layout
   lang="en"
   title="Accommodation in Milos"
   description={`Find the best hotels, studios and villas in Milos. ${accommodationsData.length}+ options across the island.`}
+  jsonld={stayJsonld}
 >
 
 <!-- HERO -->

@@ -30,12 +30,46 @@ const related = accommodationsData
   .filter(r => r.slug !== a.slug && r.location.area === a.location.area)
   .sort((x, y) => y.rating - x.rating)
   .slice(0, 3);
+
+const _siteUrl = 'https://milos.guide';
+const schemaTypeMap: Record<string, string> = {
+  hotel:      'Hotel',
+  studio:     'LodgingBusiness',
+  villa:      'LodgingBusiness',
+  guesthouse: 'BedAndBreakfast',
+};
+const stayJsonld = {
+  '@context': 'https://schema.org',
+  '@type': schemaTypeMap[a.type] ?? 'LodgingBusiness',
+  name: getName(a),
+  description: getDesc(a),
+  url: `${_siteUrl}/stay/${a.slug}`,
+  ...(a.localPhoto ? { image: (a.localPhoto as string).startsWith('http') ? a.localPhoto : _siteUrl + a.localPhoto } : {}),
+  ...(a.coordinates?.lat ? {
+    geo: { '@type': 'GeoCoordinates', latitude: a.coordinates.lat, longitude: a.coordinates.lng },
+  } : {}),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: a.location.area ?? 'Milos',
+    streetAddress: a.location.address ?? '',
+    addressRegion: 'South Aegean',
+    addressCountry: 'GR',
+  },
+  ...(a.phone ? { telephone: a.phone } : {}),
+  ...(a.website ? { sameAs: a.website } : {}),
+  ...((a as any).googleMapsUri ? { hasMap: (a as any).googleMapsUri } : {}),
+  ...(a.amenities?.length ? {
+    amenityFeature: a.amenities.map((f: string) => ({ '@type': 'LocationFeatureSpecification', name: f, value: true })),
+  } : {}),
+  containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
+};
 ---
 
 <Layout
   lang="en"
   title={`${getName(a)} — ${typeInfo.label} in Milos`}
   description={`${getName(a)} in ${a.location.area}, Milos. ${typeInfo.label} · Rating ${a.rating}/5.`}
+  jsonld={stayJsonld}
 >
 
 <!-- HERO -->

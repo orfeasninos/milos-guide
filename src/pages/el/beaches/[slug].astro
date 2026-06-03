@@ -36,12 +36,38 @@ const related = beachesData
   .filter(b => b.slug !== beach.slug && b.accessType === beach.accessType)
   .sort((a, b) => b.rating - a.rating)
   .slice(0, 3);
+
+const _siteUrl = 'https://milos.guide';
+const beachJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'TouristAttraction',
+  name: getBeachName(beach),
+  description: getBeachDesc(beach),
+  url: `${_siteUrl}/el/beaches/${beach.slug}`,
+  ...(beach.localPhoto ? { image: beach.localPhoto.startsWith('http') ? beach.localPhoto : _siteUrl + beach.localPhoto } : {}),
+  ...(beach.coordinates?.lat ? {
+    geo: { '@type': 'GeoCoordinates', latitude: beach.coordinates.lat, longitude: beach.coordinates.lng },
+  } : {}),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: (beach as any).location?.area ?? 'Μήλος',
+    addressRegion: 'Νότιο Αιγαίο',
+    addressCountry: 'GR',
+  },
+  ...(beach.facilities?.length ? {
+    amenityFeature: beach.facilities.map((f: string) => ({ '@type': 'LocationFeatureSpecification', name: f, value: true })),
+  } : {}),
+  isAccessibleForFree: true,
+  ...((beach as any).googleMapsUri ? { hasMap: (beach as any).googleMapsUri } : {}),
+  containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Μήλος' },
+};
 ---
 
 <Layout
   lang="el"
   title={`${getBeachName(beach)} — Παραλία στη Μήλο`}
   description={`${getBeachName(beach)}: ${access.label}. ${beach.facilities.length ? 'Παροχές: ' + beach.facilities.join(', ') + '.' : ''} Αξιολόγηση ${beach.rating}/5.`}
+  jsonld={beachJsonld}
 >
 
 <!-- HERO -->

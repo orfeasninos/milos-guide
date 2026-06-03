@@ -40,12 +40,41 @@ const linkedBeaches = beachesData.filter(b => village.nearbyBeaches.includes(b.s
 const otherVillages = villagesData
   .filter(v => v.slug !== village.slug)
   .slice(0, 3);
+
+const _siteUrl = 'https://milos.guide';
+const villageJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  name: (village as any).nameEn ?? village.name,
+  description: ((village as any).descriptionEn ?? village.description)?.slice(0, 300),
+  url: `${_siteUrl}/villages/${village.slug}`,
+  ...(village.coordinates?.lat ? {
+    geo: { '@type': 'GeoCoordinates', latitude: village.coordinates.lat, longitude: village.coordinates.lng },
+  } : {}),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: (village as any).nameEn ?? village.name,
+    addressRegion: 'South Aegean',
+    addressCountry: 'GR',
+  },
+  ...((village as any).population ? {
+    additionalProperty: { '@type': 'PropertyValue', name: 'population', value: (village as any).population },
+  } : {}),
+  containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
+  ...(linkedTaverns.length || linkedBeaches.length ? {
+    containsPlace: [
+      ...linkedTaverns.map(t => ({ '@type': 'Restaurant', name: getName(t), url: `${_siteUrl}/eat/${t.slug}` })),
+      ...linkedBeaches.map(b => ({ '@type': 'TouristAttraction', name: getName(b), url: `${_siteUrl}/beaches/${b.slug}` })),
+    ],
+  } : {}),
+};
 ---
 
 <Layout
   lang="en"
   title={`${village.nameEn ?? village.name} — Village in Milos`}
   description={`${village.nameEn ?? village.name}: ${(village as any).taglineEn ?? village.tagline}. ${((village as any).descriptionEn ?? village.description).slice(0, 120)}…`}
+  jsonld={villageJsonld}
 >
 
 <!-- HERO -->

@@ -17,12 +17,29 @@ const sortedTaverns = [...tavernsData].sort((a, b) => {
 });
 
 const featuredCount = sortedTaverns.filter(t => t.isFeatured).length;
+
+const _siteUrl = 'https://milos.guide';
+const eatJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Restaurants & Tavernas in Milos',
+  description: `The best restaurants and tavernas in Milos — ${tavernsData.length}+ options across the island.`,
+  url: `${_siteUrl}/eat`,
+  numberOfItems: sortedTaverns.length,
+  itemListElement: sortedTaverns.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: getName(t),
+    url: `${_siteUrl}/eat/${t.slug}`,
+  })),
+};
 ---
 
 <Layout
   lang="en"
   title="Food in Milos"
   description={`The best restaurants and tavernas in Milos — ${tavernsData.length}+ options across the island.`}
+  jsonld={eatJsonld}
 >
 
 <!-- PAGE HEADER -->

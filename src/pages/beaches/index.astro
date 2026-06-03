@@ -27,12 +27,30 @@ const sortedBeaches = [...beachesData]
     area: getArea(b.coordinates?.lat ?? 0, b.coordinates?.lng ?? 0),
     isBoat: b.accessType === 'boat',
   }));
+
+const getBeachName = (b: any): string => typeof b.name === 'object' ? b.name.en : b.name;
+const _siteUrl = 'https://milos.guide';
+const beachesJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Beaches in Milos',
+  description: `The best beaches in Milos — ${beachesData.length}+ options. Sarakiniko, Kleftiko, Tsigrado and more.`,
+  url: `${_siteUrl}/beaches`,
+  numberOfItems: sortedBeaches.length,
+  itemListElement: sortedBeaches.map((b, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: getBeachName(b),
+    url: `${_siteUrl}/beaches/${b.slug}`,
+  })),
+};
 ---
 
 <Layout
   lang="en"
   title="Beaches in Milos"
   description={`The best beaches in Milos — ${beachesData.length}+ options. Sarakiniko, Kleftiko, Tsigrado and many more.`}
+  jsonld={beachesJsonld}
 >
 
 <!-- PAGE HERO -->

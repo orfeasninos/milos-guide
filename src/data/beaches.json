@@ -316,31 +316,6 @@
     "facilities": []
   },
   {
-    "slug": "ammoudaki",
-    "name": {
-      "el": "Παραλία Αμμουδαρακι",
-      "en": "Ammoudaki"
-    },
-    "description": {
-      "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο.",
-      "en": "A tiny remote beach reachable only on foot or by boat — pristine and rarely visited."
-    },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα"
-    },
-    "googleMapsUri": "https://maps.google.com/?cid=1855296920998415868&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/beaches/ammoudaki.jpg",
-    "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.6988005,
-      "lng": 24.3349092
-    },
-    "rating": 4.6,
-    "accessType": "road",
-    "facilities": []
-  },
-  {
     "slug": "sikia-beach",
     "name": {
       "el": "Σπηλιά της Συκιάς",
@@ -520,10 +495,10 @@
     "facilities": []
   },
   {
-    "slug": "polonia-beach",
+    "slug": "pollonia-beach",
     "name": {
       "el": "Pollonia beach, Milos",
-      "en": "Polonia Beach"
+      "en": "Pollonia Beach"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο.",
@@ -533,8 +508,8 @@
       "area": "Milos",
       "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10088736547835518941&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/beaches/polonia-beach.jpg",
+    "googleMapsUri": "https://maps.google.com/?cid=10088736547835518941&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+    "localPhoto": null,
     "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.7639636,
@@ -566,31 +541,6 @@
       "lng": 24.4460311
     },
     "rating": 4.7,
-    "accessType": "road",
-    "facilities": []
-  },
-  {
-    "slug": "kalogries-beach",
-    "name": {
-      "el": "Καλογιρος παραλία-Kalogiros Beach",
-      "en": "Kalogries Beach"
-    },
-    "description": {
-      "el": "Ανακαλύψτε την παραλία Καλογιρος παραλία-Kalogiros Beach στη Μήλο.",
-      "en": "A quiet secluded beach with fine sand and shallow crystal-clear waters, perfect for relaxation."
-    },
-    "location": {
-      "area": "Milos",
-      "address": "Καλογιρος παραλία-Kalogiros Beach, Ελλάδα"
-    },
-    "googleMapsUri": "https://maps.google.com/?cid=13348022850507030127&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/beaches/kalogries-beach.jpg",
-    "website": null,
-    "coordinates": {
-      "lat": 37.6180812,
-      "lng": 24.2778003
-    },
-    "rating": 4.3,
     "accessType": "road",
     "facilities": []
   },
@@ -772,25 +722,25 @@
   {
     "slug": "kolympionas-beach",
     "name": {
-      "el": "Pollonia beach, Milos",
+      "el": "Παραλία Κολυμπιώνας",
       "en": "Kolympionas Beach"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο.",
+      "el": "Ανακαλύψτε την παραλία Παραλία Κολυμπιώνας στη Μήλο.",
       "en": "A rugged non-organised beach offering a wild landscape for nature lovers."
     },
     "location": {
       "area": "Milos",
-      "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
+      "address": "Παραλία Κολυμπιώνας, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10088736547835518941&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googleMapsUri": "https://maps.google.com/?cid=15783920385091690700&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
     "localPhoto": "/images/beaches/kolympionas-beach.jpg",
-    "website": "https://milostravel.com/",
+    "website": null,
     "coordinates": {
-      "lat": 36.7639636,
-      "lng": 24.5257476
+      "lat": 36.7234222,
+      "lng": 24.538231699999997
     },
-    "rating": 4.4,
+    "rating": 4.3,
     "accessType": "road",
     "facilities": []
   },

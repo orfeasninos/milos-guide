@@ -1,8 +1,9 @@
 ---
-const { title, description, lang = 'el' } = Astro.props;
+const { title, description, lang = 'el', jsonld: pageJsonld = null } = Astro.props;
 import MilosIcon from '../components/milosicon.astro';
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://milos.guide');
+const siteUrl = (Astro.site?.toString() ?? 'https://milos.guide').replace(/\/$/, '');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 
 const currentPath = Astro.url.pathname;
 const langSwitchHref = lang === 'el'
@@ -10,6 +11,129 @@ const langSwitchHref = lang === 'el'
   : `/el${currentPath === '/' ? '' : currentPath}`;
 
 const isEl = lang === 'el';
+
+// --- BreadcrumbList ---
+const cleanPath = currentPath.replace(/^\/el/, '').replace(/\/$/, '');
+const pathParts = cleanPath.split('/').filter(Boolean);
+
+const segmentLabels: Record<string, { el: string; en: string }> = {
+  beaches:        { el: 'Παραλίες',            en: 'Beaches' },
+  eat:            { el: 'Φαγητό & Εστιατόρια', en: 'Food & Restaurants' },
+  stay:           { el: 'Διαμονή',             en: 'Where to Stay' },
+  villages:       { el: 'Χωριά',               en: 'Villages' },
+  weather:        { el: 'Καιρός Μήλου',        en: 'Milos Weather' },
+  map:            { el: 'Χάρτης Μήλου',        en: 'Milos Map' },
+  about:          { el: 'Σχετικά με τη Μήλο',  en: 'About Milos' },
+  search:         { el: 'Αναζήτηση',           en: 'Search' },
+  contact:        { el: 'Επικοινωνία',         en: 'Contact' },
+  'how-to-reach': { el: 'Πώς να φτάσετε',     en: 'How to Reach Milos' },
+};
+
+const breadcrumbs: { name: string; url: string }[] = [
+  { name: 'Milos.guide', url: siteUrl + (isEl ? '/el' : '/') },
+];
+let accumulated = isEl ? '/el' : '';
+pathParts.forEach((part, i) => {
+  accumulated += '/' + part;
+  const isLast = i === pathParts.length - 1;
+  breadcrumbs.push({
+    name: isLast ? title : (segmentLabels[part]?.[isEl ? 'el' : 'en'] ?? part),
+    url: siteUrl + accumulated,
+  });
+});
+
+const isHome = pathParts.length === 0;
+
+// --- Schema graph ---
+const schemas: object[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': siteUrl + '/#website',
+    name: 'Milos.guide',
+    alternateName: isEl ? 'Οδηγός Μήλου' : 'Milos Island Guide',
+    url: siteUrl,
+    description: isEl
+      ? 'Ο πλήρης οδηγός για τη Μήλο — παραλίες, εστιατόρια, χωριά και διαμονή. Χωρίς διαφημίσεις.'
+      : 'The complete travel guide to Milos island — beaches, restaurants, villages and accommodation. No ads.',
+    inLanguage: isEl ? 'el-GR' : 'en',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: siteUrl + '/search?q={search_term_string}' },
+      'query-input': 'required name=search_term_string',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': siteUrl + '/#organization',
+    name: 'Milos.guide',
+    url: siteUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: siteUrl + '/og-image.jpg',
+      width: 1200,
+      height: 630,
+    },
+    description: isEl
+      ? 'Ανεξάρτητος, αδιαφήμιστος οδηγός για τη Μήλο.'
+      : 'Independent, ad-free travel guide for Milos island.',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': canonicalURL.toString() + '#webpage',
+    url: canonicalURL.toString(),
+    name: title + ' | Milos.guide',
+    description: description,
+    inLanguage: isEl ? 'el-GR' : 'en',
+    isPartOf: { '@type': 'WebSite', '@id': siteUrl + '/#website' },
+    about: { '@type': 'TouristDestination', '@id': siteUrl + '/#milos' },
+    publisher: { '@type': 'Organization', '@id': siteUrl + '/#organization' },
+  },
+  ...(breadcrumbs.length > 1 ? [{
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  }] : []),
+  ...(isHome ? [{
+    '@context': 'https://schema.org',
+    '@type': 'TouristDestination',
+    '@id': siteUrl + '/#milos',
+    name: isEl ? 'Μήλος' : 'Milos',
+    description: isEl
+      ? 'Ηφαιστειογενές νησί στις Κυκλάδες με εξωτικές παραλίες, κρυσταλλένια νερά και τον θρυλικό Σαρακήνικο.'
+      : 'Volcanic Cycladic island with exotic beaches, crystal-clear waters and the legendary Sarakiniko bay.',
+    url: siteUrl + (isEl ? '/el' : '/'),
+    image: siteUrl + '/og-image.jpg',
+    geo: { '@type': 'GeoCoordinates', latitude: 36.7217, longitude: 24.4389 },
+    containedInPlace: {
+      '@type': 'AdministrativeArea',
+      name: isEl ? 'Κυκλάδες' : 'Cyclades',
+      containedInPlace: {
+        '@type': 'Country',
+        name: isEl ? 'Ελλάδα' : 'Greece',
+        sameAs: 'https://www.wikidata.org/wiki/Q41',
+      },
+    },
+    touristType: [
+      { '@type': 'Audience', audienceType: isEl ? 'Παραλία' : 'Beach' },
+      { '@type': 'Audience', audienceType: isEl ? 'Φύση' : 'Nature' },
+      { '@type': 'Audience', audienceType: isEl ? 'Πολιτισμός' : 'Culture' },
+      { '@type': 'Audience', audienceType: isEl ? 'Γαστρονομία' : 'Gastronomy' },
+    ],
+    sameAs: [
+      'https://en.wikipedia.org/wiki/Milos',
+      'https://www.wikidata.org/wiki/Q170579',
+    ],
+  }] : []),
+  ...(pageJsonld ? (Array.isArray(pageJsonld) ? pageJsonld : [pageJsonld]) : []),
+];
 ---
 
 <!DOCTYPE html>
@@ -20,7 +144,7 @@ const isEl = lang === 'el';
   <title>{title} | Milos.guide</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="noindex, nofollow" />
   <meta name="author" content="Milos.guide" />
   <link rel="alternate" hreflang="el"        href={new URL(isEl ? currentPath : `/el${currentPath}`, Astro.site ?? 'https://milos.guide')} />
   <link rel="alternate" hreflang="en"        href={new URL(isEl ? currentPath.replace(/^\/el/, '') || '/' : currentPath, Astro.site ?? 'https://milos.guide')} />
@@ -38,16 +162,9 @@ const isEl = lang === 'el';
   <meta name="twitter:title"       content={`${title} | Milos.guide`} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image"       content="/og-image.jpg" />
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Milos.guide",
-    "url": "https://milos.guide",
-    "description": isEl
-      ? "Ο πλήρης οδηγός για τη Μήλο — παραλίες, εστιατόρια, χωριά."
-      : "The complete guide to Milos — beaches, restaurants, villages.",
-    "inLanguage": lang,
-  })} />
+  {schemas.map(s => (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
   <link rel="icon"             sizes="16x16" href="/favicon-16x16.png" type="image/png" />
   <link rel="icon"             sizes="32x32" href="/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

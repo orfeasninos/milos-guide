@@ -13,12 +13,29 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
 };
 
 const types = [...new Set(villagesData.map(v => v.type))];
+
+const _siteUrl = 'https://milos.guide';
+const villagesJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Villages of Milos',
+  description: `Discover the ${villagesData.length} villages of Milos — Plaka, Klima, Tripiti, Pollonia and more.`,
+  url: `${_siteUrl}/villages`,
+  numberOfItems: villagesData.length,
+  itemListElement: villagesData.map((v, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: (v as any).nameEn ?? v.name,
+    url: `${_siteUrl}/villages/${v.slug}`,
+  })),
+};
 ---
 
 <Layout
   lang="en"
   title="Villages of Milos"
   description={`Discover the ${villagesData.length} villages of Milos — Plaka, Klima, Tripiti, Pollonia and more. History, architecture and authentic island life.`}
+  jsonld={villagesJsonld}
 >
 
 <!-- PAGE HERO -->

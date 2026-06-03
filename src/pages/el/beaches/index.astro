@@ -15,11 +15,30 @@ const allFacilities = [...new Set(
 )].filter(Boolean).sort();
 
 const sortedBeaches = [...beachesData].sort((a, b) => b.rating - a.rating);
+
+const getBeachName = (b: any): string => typeof b.name === 'object' ? b.name.el : b.name;
+const _siteUrl = 'https://milos.guide';
+const beachesJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Παραλίες στη Μήλο',
+  description: `Οι καλύτερες παραλίες στη Μήλο — ${beachesData.length}+ επιλογές.`,
+  url: `${_siteUrl}/el/beaches`,
+  numberOfItems: sortedBeaches.length,
+  itemListElement: sortedBeaches.map((b, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: getBeachName(b),
+    url: `${_siteUrl}/el/beaches/${b.slug}`,
+  })),
+};
 ---
 
 <Layout
+  lang="el"
   title="Παραλίες στη Μήλο"
   description={`Οι καλύτερες παραλίες στη Μήλο — ${beachesData.length}+ επιλογές. Σαρακήνικο, Κλέφτικο, Τσιγκράδο και πολλές ακόμα.`}
+  jsonld={beachesJsonld}
 >
 
 <!-- PAGE HERO -->

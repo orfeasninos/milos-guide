@@ -13,12 +13,29 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
 };
 
 const types = [...new Set(villagesData.map(v => v.type))];
+
+const _siteUrl = 'https://milos.guide';
+const villagesJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Χωριά της Μήλου',
+  description: `Γνωρίστε τα ${villagesData.length} χωριά της Μήλου — Πλάκα, Κλήμα, Τρυπητή, Πολλώνια και άλλα.`,
+  url: `${_siteUrl}/el/villages`,
+  numberOfItems: villagesData.length,
+  itemListElement: villagesData.map((v, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: v.name,
+    url: `${_siteUrl}/el/villages/${v.slug}`,
+  })),
+};
 ---
 
 <Layout
   lang="el"
   title="Χωριά της Μήλου"
   description={`Γνωρίστε τα ${villagesData.length} χωριά της Μήλου — Πλάκα, Κλήμα, Τρυπητή, Πολλώνια και άλλα. Ιστορία, αρχιτεκτονική και αυθεντική ζωή.`}
+  jsonld={villagesJsonld}
 >
 
 <!-- PAGE HERO -->
