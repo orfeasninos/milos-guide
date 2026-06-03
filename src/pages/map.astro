@@ -22,6 +22,14 @@ const points = [
       area:  b.location.area, rating: b.rating, photo: b.localPhoto ?? null,
       url:   `/beaches/${b.slug}`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
     })),
+  ...(accommodationsRaw as any[])
+    .filter((a: any) => a.coordinates?.lat && a.coordinates?.lng)
+    .map((a: any) => ({
+      slug:  a.slug, type: 'accommodation',
+      name:  typeof a.name === 'object' ? a.name.en : a.name,
+      area:  a.location.area, rating: a.rating, photo: a.localPhoto ?? null,
+      url:   `/stay/${a.slug}`, lat: a.coordinates.lat, lng: a.coordinates.lng, icon: '🏨',
+    })),
   ...villagesRaw
     .filter(v => v.coordinates?.lat && v.coordinates?.lng)
     .map(v => ({
@@ -29,14 +37,6 @@ const points = [
       name:  (v as any).nameEn ?? v.name,
       area:  v.area, rating: 0, photo: null,
       url:   `/villages/${v.slug}`, lat: v.coordinates.lat, lng: v.coordinates.lng, icon: '🏘',
-    })),
-  ...(accommodationsRaw as any[])
-    .filter((a: any) => a.coordinates?.lat && a.coordinates?.lng)
-    .map((a: any) => ({
-      slug:  a.slug, type: 'accommodation',
-      name:  typeof a.name === 'object' ? a.name.en : a.name,
-      area:  a.location.area, rating: a.rating, photo: a.localPhoto ?? null,
-      url:   `/stay/${a.slug}`, lat: a.coordinates.lat, lng: a.coordinates.lng, icon: '🏨&#xFE0E;',
     })),
 ];
 ---
@@ -57,7 +57,7 @@ const points = [
       <button class="mf-chip mf-chip--active" data-filter="beach">🏖 Beaches</button>
       <button class="mf-chip mf-chip--active" data-filter="restaurant">🍽 Food</button>
       <button class="mf-chip mf-chip--active" data-filter="village">🏘 Villages</button>
-      <button class="mf-chip" data-filter="accommodation">🏨&#xFE0E; Stay</button>
+      <button class="mf-chip" data-filter="accommodation">🏨 Stay</button>
     </div>
     <div class="sidebar-cards" id="sidebar-cards">
       {points.map(p => (
@@ -92,7 +92,7 @@ const points = [
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
 
 <style>
-.map-page { display: flex; height: calc(100vh - var(--header-h)); overflow: hidden; }
+.map-page { display: flex; height: calc(100vh - var(--header-h)); overflow: hidden; position: relative; z-index: 0; }
 
 .map-sidebar { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--sand); border-right: 1px solid var(--border); overflow: hidden; }
 .sidebar-top { padding: 1.25rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border); background: var(--white); flex-shrink: 0; }
@@ -143,7 +143,7 @@ const points = [
 .sidebar-empty .empty-text { font-size: 0.875rem; color: var(--muted); }
 
 .map-wrap { flex: 1; position: relative; overflow: hidden; }
-#map { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+#map { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 /* Layer switcher styling */
 :global(.leaflet-control-layers) {
@@ -179,9 +179,57 @@ const points = [
 
 /* ── MOBILE ── */
 @media (max-width: 768px) {
-  .map-page { flex-direction: column; height: calc(100vh - var(--header-h)); overflow: hidden; }
-  .map-sidebar { width: 100%; height: 260px; flex-shrink: 0; border-right: none; border-bottom: 1px solid var(--border); }
-  .map-wrap { flex: 1; position: relative; min-height: 0; }
+  .map-page {
+    flex-direction: column;
+    height: calc(100vh - var(--header-h));
+    overflow: hidden;
+  }
+
+  /* Map on top — bigger */
+  .map-wrap {
+    height: 55vh;
+    flex-shrink: 0;
+    position: relative;
+    order: -1;
+  }
+
+  /* Sidebar below as compact bottom sheet */
+  .map-sidebar {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    border-right: none;
+    border-top: 2px solid var(--border);
+    background: var(--white);
+  }
+
+  /* Compact header */
+  .sidebar-top {
+    padding: 0.65rem 1rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-title { font-size: 1.1rem; margin: 0; }
+  .sidebar-count { margin: 0; }
+
+  /* Chips in one scrollable row */
+  .sidebar-filters {
+    padding: 0.4rem 1rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .sidebar-filters::-webkit-scrollbar { display: none; }
+  .mf-chip { font-size: 0.72rem; padding: 0.22rem 0.65rem; flex-shrink: 0; }
+
+  /* Cards compact */
+  .mc { padding: 0.55rem 1rem; gap: 0.65rem; }
+  .mc-img-wrap { width: 40px; height: 40px; border-radius: 8px; }
+  .mc-name { font-size: 0.88rem; }
+  .mc-area { font-size: 0.68rem; }
 }
 </style>
 
@@ -197,7 +245,7 @@ script.onload = () => {
 document.head.appendChild(script);
 
 const markerColors = { beach: '#1a7fc1', restaurant: '#b05230', village: '#2d6a4f', accommodation: '#7b5ea7' };
-const markerEmoji  = { beach: '🏖', restaurant: '🍽', village: '🏘', accommodation: '🏨&#xFE0E;' };
+const markerEmoji  = { beach: '🏖', restaurant: '🍽', village: '🏘', accommodation: '🏨' };
 
 let map, markers = [], clusterGroup, activeSlug = null;
 // All types active by default
@@ -286,6 +334,7 @@ function initMap() {
 
   map.addLayer(clusterGroup);
   setTimeout(() => map.invalidateSize(), 300);
+  applyFilter(); // sync initial state
 
   // Filter chips — multi-select toggle
   document.querySelectorAll('.mf-chip').forEach(chip => {

@@ -110,22 +110,18 @@ const seedBeaches = [
 ];
 
 const seedAccommodations = [
-  { name: "Milos Breeze Boutique Hotel",   location: "Adamas",       slug: "milos-breeze",        type: "hotel"      },
+  { name: "Milos Breeze Boutique Hotel",   location: "Pollonia",       slug: "milos-breeze",        type: "hotel"      },
   { name: "Portiani Hotel",                location: "Adamas",       slug: "portiani-hotel",      type: "hotel"      },
-  { name: "Santa Maria Village",           location: "Adamas",       slug: "santa-maria-village", type: "villa"      },
-  { name: "Agelia Hotel",                  location: "Adamas",       slug: "agelia-hotel",        type: "hotel"      },
-  { name: "Francesca Studios",             location: "Adamas",       slug: "francesca-studios",   type: "studio"     },
-  { name: "Panas Hotel",                   location: "Plaka",        slug: "panas-hotel",         type: "hotel"      },
-  { name: "Windmill of Milos",             location: "Plaka",        slug: "windmill-milos",      type: "villa"      },
-  { name: "Utopia Milos",                  location: "Plaka",        slug: "utopia-milos",        type: "studio"     },
-  { name: "Milos Villas",                  location: "Plaka",        slug: "milos-villas",        type: "villa"      },
-  { name: "Nefeli Hotel Milos",            location: "Pollonia",     slug: "nefeli-hotel",        type: "hotel"      },
+  { name: "Santa Maria Village",           location: "Adamas",       slug: "santa-maria-village", type: "hotel"      },
+  { name: "Hotel Adamas",                  location: "Adamas",       slug: "hotel-adamas",        type: "hotel"      },
+  { name: "Francesca Studio",             location: "Pera Triovasalos",       slug: "francesca-studio",   type: "studio"     },
+  { name: "Milos Vaos Windmill",             location: "Plaka",        slug: "milos-vaos-windmill",      type: "villa"},
+  { name: "Nefeli Sunset Studios",            location: "Pollonia",     slug: "nefeli-sunset-studios",        type: "hotel"      },
   { name: "Kapetan Tasos Studios",         location: "Pollonia",     slug: "kapetan-tasos",       type: "studio"     },
-  { name: "Pollonia Bay Hotel Apartments", location: "Pollonia",     slug: "pollonia-bay",        type: "studio"     },
-  { name: "Milos Heaven Villas",           location: "Triovasalos",  slug: "milos-heaven",        type: "villa"      },
-  { name: "Cori Rigas Suites",             location: "Tripiti",      slug: "cori-rigas",          type: "hotel"      },
-  { name: "Neraida Milos",                 location: "Tripiti",      slug: "neraida-milos",       type: "villa"      },
-  { name: "Sirocco Milos",                 location: "Paleochori",   slug: "sirocco-milos",       type: "studio"     },
+  { name: "Kalea Suites", location: "Pollonia",     slug: "kalea-suites",        type: "hotel"     },
+  { name: "Heavenly Milos",           location: "Agia Kyriaki",  slug: "heavenly-milos",        type: "villa"      },
+  { name: "Hotel Rigas",             location: "Adamas",      slug: "hotel-rigas",          type: "hotel"      },
+  { name: "Niriides Milos",                 location: "Pachaina",      slug: "niriides-milos",       type: "hotel"      },
 ];
 
 // ─── TRANSLATIONS ─────────────────────────────────────────────────────────────
@@ -203,22 +199,18 @@ const beachTranslations = {
 };
 
 const accommodationTranslations = {
-  "milos-breeze":        { name: "Milos Breeze Boutique Hotel",   description: "A stylish boutique hotel in Adamas offering sea views and a relaxed island atmosphere." },
-  "portiani-hotel":      { name: "Portiani Hotel",                description: "A well-located hotel steps from the port of Adamas, ideal as a base for exploring Milos." },
-  "santa-maria-village": { name: "Santa Maria Village",           description: "A charming villa complex near Adamas with traditional Cycladic architecture." },
-  "agelia-hotel":        { name: "Agelia Hotel",                  description: "A comfortable hotel in Adamas with easy access to the island's main amenities." },
-  "francesca-studios":   { name: "Francesca Studios",             description: "Self-catering studios in Adamas, perfect for independent travellers exploring Milos." },
-  "panas-hotel":         { name: "Panas Hotel",                   description: "A classic hotel in the hilltop village of Plaka with panoramic views over the bay." },
-  "windmill-milos":      { name: "Windmill of Milos",             description: "A unique converted windmill in Plaka offering an unforgettable stay with stunning views." },
-  "utopia-milos":        { name: "Utopia Milos",                  description: "Modern studios in Plaka, combining contemporary design with traditional island aesthetics." },
-  "milos-villas":        { name: "Milos Villas",                  description: "Private villas in Plaka surrounded by the typical whitewashed beauty of the Cyclades." },
-  "nefeli-hotel":        { name: "Nefeli Hotel Milos",            description: "A peaceful hotel in Pollonia, the ideal spot for exploring the northeast of the island." },
-  "kapetan-tasos":       { name: "Kapetan Tasos Studios",         description: "Cosy studios in Pollonia run by a local family, offering authentic hospitality." },
-  "pollonia-bay":        { name: "Pollonia Bay Hotel Apartments",  description: "Comfortable sea-view apartments in Pollonia, walking distance from the beach." },
-  "milos-heaven":        { name: "Milos Heaven Villas",           description: "Secluded villas in Triovasalos offering privacy and stunning views across the island." },
-  "cori-rigas":          { name: "Cori Rigas Suites",             description: "Elegant suites in the historic village of Tripiti, blending local tradition with modern comfort." },
-  "neraida-milos":       { name: "Neraida Milos",                 description: "A beautiful villa property in Tripiti with views of the sea and traditional architecture." },
-  "sirocco-milos":       { name: "Sirocco Milos",                 description: "Studios near the geothermal beach of Paleochori — a unique base for south Milos." },
+  "milos-breeze":          { name: "Milos Breeze Boutique Hotel",   description: "A stylish boutique hotel in Pollonia offering sea views and a relaxed island atmosphere." },
+  "portiani-hotel":        { name: "Portiani Hotel",                description: "A well-located hotel steps from the port of Adamas, ideal as a base for exploring Milos." },
+  "santa-maria-village":   { name: "Santa Maria Village",           description: "A charming villa complex near Adamas with traditional Cycladic architecture." },
+  "hotel-adamas":          { name: "Hotel Adamas",                  description: "A comfortable hotel in Adamas with easy access to the island's main amenities." },
+  "francesca-studio":      { name: "Francesca Studio",              description: "Self-catering studios in Pera Triovasalos, perfect for independent travellers exploring Milos." },
+  "milos-vaos-windmill":   { name: "Milos Vaos Windmill",           description: "A unique converted windmill in Plaka offering an unforgettable stay with stunning views." },
+  "nefeli-sunset-studios": { name: "Nefeli Sunset Studios",         description: "A peaceful hotel in Pollonia, the ideal spot for exploring the northeast of the island and enjoying sunsets." },
+  "kapetan-tasos":         { name: "Kapetan Tasos Studios",         description: "Cosy studios in Pollonia run by a local family, offering authentic hospitality." },
+  "kalea-suites":          { name: "Kalea Suites",                  description: "Modern suites in Pollonia, combining contemporary design with traditional island aesthetics." },
+  "heavenly-milos":        { name: "Heavenly Milos",                description: "Secluded villas in Agia Kyriaki offering privacy and stunning views across the island." },
+  "hotel-rigas":           { name: "Hotel Rigas",                   description: "Elegant accommodation in Adamas, blending local tradition with modern comfort." },
+  "niriides-milos":        { name: "Niriides Milos",                description: "A beautiful property in Pachaina with views of the sea and traditional architecture." },
 };
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -420,7 +412,7 @@ async function fetchAccommodations() {
       if (!place) { console.error(`  ❌ Not found: ${acc.name}`); continue; }
 
       const photoRef   = place.photos?.[0]?.name || null;
-      const localPhoto = DOWNLOAD_PHOTOS
+      const localPhoto = (DOWNLOAD_PHOTOS && !acc.skipPhoto)
         ? await downloadPhoto(photoRef, acc.slug, "accommodations")
         : resolveExistingPhoto(acc.slug, "accommodations");
 
