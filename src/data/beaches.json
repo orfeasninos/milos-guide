@@ -49,7 +49,9 @@
     },
     "rating": 4.6,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "sunbeds"
+    ]
   },
   {
     "slug": "tsigrado",
@@ -74,7 +76,9 @@
     },
     "rating": 4.6,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "fyriplaka",
@@ -101,7 +105,6 @@
     "accessType": "road",
     "facilities": [
       "sunbeds",
-      "snack bar",
       "parking"
     ]
   },
@@ -130,7 +133,6 @@
     "accessType": "road",
     "facilities": [
       "sunbeds",
-      "snack bar",
       "parking"
     ]
   },
@@ -159,7 +161,6 @@
     "accessType": "road",
     "facilities": [
       "sunbeds",
-      "snack bar",
       "parking"
     ]
   },
@@ -237,7 +238,8 @@
     "rating": 4.5,
     "accessType": "road",
     "facilities": [
-      "sunbeds"
+      "sunbeds",
+      "parking"
     ]
   },
   {
@@ -364,7 +366,8 @@
     "rating": 4.6,
     "accessType": "road",
     "facilities": [
-      "sunbeds"
+      "sunbeds",
+      "parking"
     ]
   },
   {
@@ -416,7 +419,8 @@
     "rating": 4.4,
     "accessType": "road",
     "facilities": [
-      "sunbeds"
+      "sunbeds",
+      "parking"
     ]
   },
   {
@@ -517,7 +521,9 @@
     },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "mandrakia",
@@ -542,7 +548,9 @@
     },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "aggathia",
@@ -567,7 +575,9 @@
     },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "ammoudaraki-beach",
@@ -642,7 +652,9 @@
     },
     "rating": 4.8,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "kipos-beach",
@@ -658,7 +670,7 @@
       "area": "Milos",
       "address": "Παραλία Κήπος, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=3674260685920285201&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "googleMapsUri": "https://maps.google.com/?cid=3674260685920285201&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
     "localPhoto": "/images/beaches/kipos-beach.jpg",
     "website": null,
     "coordinates": {
@@ -767,7 +779,9 @@
     },
     "rating": 4,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "pachaina-beach",
@@ -792,7 +806,9 @@
     },
     "rating": 3.8,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "alogomantra-beach",
@@ -817,7 +833,9 @@
     },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "mytakas-beach",
@@ -842,7 +860,10 @@
     },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "sunbeds",
+      "parking"
+    ]
   },
   {
     "slug": "nerodafni-beach",
@@ -867,7 +888,9 @@
     },
     "rating": 4.3,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "klima",
@@ -892,7 +915,9 @@
     },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "parking"
+    ]
   },
   {
     "slug": "papikinou-beach",
@@ -917,7 +942,10 @@
     },
     "rating": 4.2,
     "accessType": "road",
-    "facilities": []
+    "facilities": [
+      "sunbeds",
+      "parking"
+    ]
   },
   {
     "slug": "agios-dimitrios-beach",
@@ -941,7 +969,7 @@
       "lng": 24.393426299999998
     },
     "rating": 4.3,
-    "accessType": "road",
+    "accessType": "boat",
     "facilities": []
   }
 ]

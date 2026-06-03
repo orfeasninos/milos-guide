@@ -1,14 +1,31 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import beachesData from '../../data/beaches.json';
+import beachesRaw from '../../data/beaches.json';
+
+interface Beach {
+  slug: string;
+  name: string | { el: string; en: string };
+  description: string | { el: string; en: string };
+  location: { area: string; address: string };
+  googleMapsUri: string | null;
+  localPhoto: string | null;
+  website: string | null;
+  coordinates?: { lat: number; lng: number };
+  rating: number;
+  accessType: string;
+  facilities: string[];
+}
+
+const beachesData = beachesRaw as Beach[];
 
 export function getStaticPaths() {
-  return beachesData.map((beach) => ({
+  return (beachesRaw as Beach[]).map((beach) => ({
     params: { slug: beach.slug },
     props:  { beach },
   }));
 }
 
+export interface Props { beach: Beach }
 const { beach } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
@@ -45,7 +62,7 @@ const related = beachesData
   .map(b => ({
     ...b,
     dist: (beach.coordinates?.lat && beach.coordinates?.lng)
-      ? distKm(beach.coordinates.lat, beach.coordinates.lng, b.coordinates.lat, b.coordinates.lng)
+      ? distKm(beach.coordinates.lat, beach.coordinates.lng, b.coordinates!.lat, b.coordinates!.lng)
       : 999,
   }))
   .sort((a, b) => a.dist - b.dist)

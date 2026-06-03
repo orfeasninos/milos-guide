@@ -69,42 +69,42 @@ const seedTaverns = [
 
 const seedBeaches = [
   { name: "Sarakiniko",          slug: "sarakiniko",          accessType: "road", facilities: ["parking"] },
-  { name: "Fyropotamos",         slug: "fyropotamos",         accessType: "road", facilities: [] },
-  { name: "Tsigrado",            slug: "tsigrado",            accessType: "road", facilities: [] },
-  { name: "Fyriplaka",           slug: "fyriplaka",           accessType: "road", facilities: ["sunbeds", "snack bar", "parking"] },
-  { name: "Paleochori",          slug: "paleochori",          accessType: "road", facilities: ["sunbeds", "snack bar", "parking"] },
-  { name: "Provatas",            slug: "provatas",            accessType: "road", facilities: ["sunbeds", "snack bar", "parking"] },
+  { name: "Fyropotamos",         slug: "fyropotamos",         accessType: "road", facilities: ["sunbeds"] },
+  { name: "Tsigrado",            slug: "tsigrado",            accessType: "road", facilities: ["parking"] },
+  { name: "Fyriplaka",           slug: "fyriplaka",           accessType: "road", facilities: ["sunbeds", "parking"] },
+  { name: "Paleochori",          slug: "paleochori",          accessType: "road", facilities: ["sunbeds", "parking"] },
+  { name: "Provatas",            slug: "provatas",            accessType: "road", facilities: ["sunbeds", "parking"] },
   { name: "Papafragas",          slug: "papafragas",          accessType: "road", facilities: [] },
   { name: "Kleftiko",            slug: "kleftiko",            accessType: "boat", facilities: [] },
-  { name: "Agia Kyriaki",        slug: "agia-kyriaki",        accessType: "road", facilities: ["sunbeds"] },
+  { name: "Agia Kyriaki",        slug: "agia-kyriaki",        accessType: "road", facilities: ["sunbeds", "parking"] },
   { name: "Gerontas",            slug: "gerontas",            accessType: "road", facilities: [] },
   { name: "Triades",             slug: "triades",             accessType: "road", facilities: [] },
   { name: "Rivari",              slug: "rivari",              accessType: "road", facilities: [] },
   { name: "Sikia beach",         slug: "sikia-beach",         accessType: "boat", facilities: [] },
-  { name: "Plathiena",           slug: "plathiena",           accessType: "road", facilities: ["sunbeds"] },
+  { name: "Plathiena",           slug: "plathiena",           accessType: "road", facilities: ["sunbeds", "parking"] },
   { name: "Paralia theiorycheio",slug: "theiorycheia",        accessType: "road", facilities: [] },
-  { name: "Achivadolimni",       slug: "achivadolimni",       accessType: "road", facilities: ["sunbeds"] },
+  { name: "Achivadolimni",       slug: "achivadolimni",       accessType: "road", facilities: ["sunbeds", "parking"] },
   { name: "Agios Sostis",        slug: "agios-sostis",        accessType: "road", facilities: [] },
   { name: "Tria pigadia",        slug: "tria-pigadia",        accessType: "road", facilities: [] },
   { name: "Kastanas",            slug: "kastanas",            accessType: "road", facilities: [] },
-  { name: "Pollonia beach",       slug: "pollonia-beach",       accessType: "road", facilities: [], cid:"ChIJeyxG4KfgmBQR3Z88FnBkAow" },
-  { name: "Mandrakia",           slug: "mandrakia",           accessType: "road", facilities: [] },
-  { name: "Aggathia",            slug: "aggathia",            accessType: "road", facilities: [] },
+  { name: "Pollonia beach",       slug: "pollonia-beach",       accessType: "road", facilities: ["parking"], cid:"ChIJeyxG4KfgmBQR3Z88FnBkAow" },
+  { name: "Mandrakia",           slug: "mandrakia",           accessType: "road", facilities: ["parking"] },
+  { name: "Aggathia",            slug: "aggathia",            accessType: "road", facilities: ["parking"] },
   { name: "Ammoudaraki beach",   slug: "ammoudaraki-beach",   accessType: "road", facilities: [] },
   { name: "Kalamos beach",       slug: "kalamos",             accessType: "road", facilities: [] },
-  { name: "Agios Ioannis beach", slug: "agios-ioannis-beach", accessType: "road", facilities: [] },
-  { name: "Paralia Kipos",       slug: "kipos-beach",         accessType: "road", facilities: [] },
+  { name: "Agios Ioannis beach", slug: "agios-ioannis-beach", accessType: "road", facilities: ["parking"] },
+  { name: "Paralia Kipos",       slug: "kipos-beach",         accessType: "road", facilities: [], cid:"ChIJW_iGVM0mmRQRETJ2dKCY_TI" },
   { name: "Deep blue beach",     slug: "deep-blue-beach",     accessType: "road", facilities: [] },
   { name: "Psathi beach",        slug: "psathi-beach",        accessType: "road", facilities: [], cid:"ChIJVw0Mz8gmmRQRYzwEn6RQcHI" },
   { name: "Kolympionas beach",   slug: "kolympionas-beach",   accessType: "road", facilities: [], cid:"ChIJSXzY4mTgmBQRzOBvpPa_C9s" },
-  { name: "Voudia beach",        slug: "voudia-beach",        accessType: "road", facilities: [] },
-  { name: "Pachaina beach",      slug: "pachaina-beach",      accessType: "road", facilities: [] },
-  { name: "Alogomantra beach",   slug: "alogomantra-beach",   accessType: "road", facilities: [] },
-  { name: "Mytakas beach",       slug: "mytakas-beach",       accessType: "road", facilities: [], cid:"ChIJH4sPfgDfmBQRK7u3niaeD6s" },
-  { name: "Nerodafni beach",     slug: "nerodafni-beach",     accessType: "road", facilities: [] },
-  { name: "Klima beach",         slug: "klima",               accessType: "road", facilities: [] },
-  { name: "Papikinou beach",     slug: "papikinou-beach",     accessType: "road", facilities: [] },
-  { name: "Agios Dimitrios beach",slug: "agios-dimitrios-beach", accessType: "road", facilities: [] },
+  { name: "Voudia beach",        slug: "voudia-beach",        accessType: "road", facilities: ["parking"] },
+  { name: "Pachaina beach",      slug: "pachaina-beach",      accessType: "road", facilities: ["parking"] },
+  { name: "Alogomantra beach",   slug: "alogomantra-beach",   accessType: "road", facilities: ["parking"] },
+  { name: "Mytakas beach",       slug: "mytakas-beach",       accessType: "road", facilities: ["sunbeds", "parking"], cid:"ChIJH4sPfgDfmBQRK7u3niaeD6s" },
+  { name: "Nerodafni beach",     slug: "nerodafni-beach",     accessType: "road", facilities: ["parking"] },
+  { name: "Klima beach",         slug: "klima",               accessType: "road", facilities: ["parking"] },
+  { name: "Papikinou beach",     slug: "papikinou-beach",     accessType: "road", facilities: ["sunbeds", "parking"] },
+  { name: "Agios Dimitrios beach",slug: "agios-dimitrios-beach", accessType: "boat", facilities: [] },
 ];
 
 const seedAccommodations = [
@@ -405,7 +405,7 @@ async function fetchAccommodations() {
       console.log(`  🔍 ${acc.name}`);
       const place = acc.cid
         ? await fetchPlaceByCid(acc.cid)
-        : await fetchPlace(`${acc.name}, ${acc.location}, Milos`);
+        : await fetchPlace(`${acc.name}, ${acc.location}, Milos`); 
       if (!place) { console.error(`  ❌ Not found: ${acc.name}`); continue; }
 
       const photoRef   = place.photos?.[0]?.name || null;
