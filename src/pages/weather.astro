@@ -33,12 +33,10 @@ const shelterMeta: Record<string, { shelter: string; note: string }> = {
   'deep-blue-beach':       { shelter: 'north', note: 'Deep blue waters' },
   'psathi-beach':          { shelter: 'north', note: 'Near Psathi village' },
   'kolympionas-beach':     { shelter: 'west',  note: 'Protected east bay' },
-  'voudia-beach':          { shelter: 'south', note: 'Volcanic red rock' },
   'pachaina-beach':        { shelter: 'south', note: 'Quiet north beach' },
   'alogomantra-beach':     { shelter: 'south', note: 'Secluded north cove' },
   'mytakas-beach':         { shelter: 'south', note: 'Calm north shore' },
   'nerodafni-beach':       { shelter: 'south', note: 'Far north coast' },
-  'klima':                 { shelter: 'south', note: 'Colourful syrmata' },
   'papikinou-beach':       { shelter: 'any',   note: 'Town beach near Adamas' },
 };
 
@@ -833,14 +831,19 @@ function windCat(deg) {
   return 'west';
 }
 function beaufort(kmh) {
-  if (kmh < 2)  return 'Calm';
-  if (kmh < 12) return 'Light';
-  if (kmh < 20) return 'Light breeze';
-  if (kmh < 29) return 'Gentle';
-  if (kmh < 39) return 'Moderate';
-  if (kmh < 50) return 'Fresh';
-  if (kmh < 62) return 'Strong';
-  return 'Near gale';
+  if (kmh < 1)   return '0Bft - Calm';
+  if (kmh < 6)   return '1Bft - Light air';
+  if (kmh < 12)  return '2Bft - Light breeze';
+  if (kmh < 20)  return '3Bft - Gentle breeze';
+  if (kmh < 29)  return '4Bft - Moderate breeze';
+  if (kmh < 39)  return '5Bft - Fresh breeze'; 
+  if (kmh < 50)  return '6Bft - Strong breeze';
+  if (kmh < 62)  return '7Bft - High wind';    
+  if (kmh < 75)  return '8Bft - Gale';         
+  if (kmh < 89)  return '9Bft - Strong gale';  
+  if (kmh < 103) return '10Bft - Storm';        
+  if (kmh < 118) return '11Bft - Violent storm';
+  return '12Bft - Hurricane force';
 }
 function uvLevel(uv) {
   if (uv <= 2)  return ['Low', 'No protection needed'];

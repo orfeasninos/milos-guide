@@ -64,7 +64,9 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
     </svg>
   </div>
   <div class="scroll-hint" aria-hidden="true">
-    <span>scroll</span><div class="scroll-line"></div>
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="6,10 14,19 22,10" stroke="rgba(255,255,255,0.6)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </section>
 
@@ -409,10 +411,8 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 .stat-l { font-size:.68rem; font-weight:500; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.06em; }
 .hero-waves { position:absolute; bottom:-1px; left:0; right:0; height:100px; z-index:1; }
 .hero-waves svg { width:100%; height:100%; display:block; }
-.scroll-hint { position:absolute; bottom:2rem; right:2.5rem; z-index:2; display:flex; flex-direction:column; align-items:center; gap:.5rem; animation:fadeUp 1s ease .9s both; }
-.scroll-hint span { font-size:.58rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.28); writing-mode:vertical-rl; }
-.scroll-line { width:1px; height:52px; background:linear-gradient(to bottom,rgba(255,255,255,.28),transparent); animation:scrollAnim 2s ease-in-out infinite; }
-@keyframes scrollAnim { 0%{transform:scaleY(0);transform-origin:top;opacity:1}100%{transform:scaleY(1);transform-origin:top;opacity:0} }
+.scroll-hint { position:absolute; bottom:5rem; left:50%; transform:translateX(-50%); z-index:2; display:flex; align-items:center; justify-content:center; animation:scrollBounce 1.8s ease-in-out infinite; }
+@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:.6} 50%{transform:translateX(-50%) translateY(7px);opacity:1} }
 @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
 .explore-head { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:3.5rem; border-bottom:1px solid rgba(0,0,0,.1); padding-bottom:1.25rem; }
 .explore-head-title { font-family:var(--font-serif); font-size:clamp(1.1rem,2vw,1.35rem); color:var(--ink); font-weight:400; }

@@ -321,7 +321,7 @@ async function fetchTaverns() {
       if (place.priceLevel === "PRICE_LEVEL_VERY_EXPENSIVE") priceRange = "€€€€";
 
       const photoRef   = place.photos?.[0]?.name || null;
-      const localPhoto = DOWNLOAD_PHOTOS
+      const localPhoto = (DOWNLOAD_PHOTOS && !tavern.skipPhoto)
         ? await downloadPhoto(photoRef, tavern.slug, "taverns")
         : resolveExistingPhoto(tavern.slug, "taverns");
 
@@ -368,7 +368,7 @@ async function fetchBeaches() {
       if (!place) { console.error(`  ❌ Not found: ${beach.name}`); continue; }
 
       const photoRef   = place.photos?.[0]?.name || null;
-      const localPhoto = DOWNLOAD_PHOTOS
+      const localPhoto = (DOWNLOAD_PHOTOS && !beach.skipPhoto)
         ? await downloadPhoto(photoRef, beach.slug, "beaches")
         : resolveExistingPhoto(beach.slug, "beaches");
 
