@@ -1,9 +1,57 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import beachesRaw from '../data/beaches.json';
 
-// Milos coordinates
 const LAT = 36.7257;
 const LNG = 24.4496;
+
+const shelterMeta: Record<string, { shelter: string; note: string }> = {
+  'sarakiniko':            { shelter: 'south',   note: 'Iconic white volcanic rocks' },
+  'fyropotamos':           { shelter: 'south', note: 'Colourful fishing boats' },
+  'tsigrado':              { shelter: 'north', note: 'Secluded & scenic' },
+  'fyriplaka':             { shelter: 'north', note: 'Long sandy beach' },
+  'paleochori':            { shelter: 'north', note: 'Geothermal sands' },
+  'provatas':              { shelter: 'north', note: 'Family-friendly' },
+  'papafragas':            { shelter: 'south', note: 'Sea caves & cliffs' },
+  'kleftiko':              { shelter: 'north',  note: 'Sea caves & arches' },
+  'agia-kyriaki':          { shelter: 'north', note: 'Crystal turquoise water' },
+  'gerontas':              { shelter: 'east',  note: 'Off the beaten path' },
+  'triades':               { shelter: 'south', note: 'Wild & uncrowded' },
+  'sikia-beach':           { shelter: 'east',  note: 'Hidden sea cave' },
+  'plathiena':             { shelter: 'south', note: 'North coast gem' },
+  'theiorycheia':          { shelter: 'west',  note: 'Remote east coast' },
+  'achivadolimni':         { shelter: 'north', note: 'Shallow crystal lagoon' },
+  'agios-sostis':          { shelter: 'north', note: 'Quiet & peaceful' },
+  'tria-pigadia':          { shelter: 'west',  note: 'Three springs beach' },
+  'kastanas':              { shelter: 'west',  note: 'Remote & unspoiled' },
+  'pollonia-beach':        { shelter: 'west',  note: 'Pollonia harbour beach' },
+  'mandrakia':             { shelter: 'south', note: 'Picturesque fishing village' },
+  'aggathia':              { shelter: 'east',  note: 'West coast escape' },
+  'ammoudaraki-beach':     { shelter: 'east',  note: 'Sandy west coast beach' },
+  'kalamos':               { shelter: 'north', note: 'Clear turquoise water' },
+  'agios-ioannis-beach':   { shelter: 'east',  note: 'Rugged & wild' },
+  'kipos-beach':           { shelter: 'north', note: 'Volcanic rock formations' },
+  'deep-blue-beach':       { shelter: 'north', note: 'Deep blue waters' },
+  'psathi-beach':          { shelter: 'north', note: 'Near Psathi village' },
+  'kolympionas-beach':     { shelter: 'west',  note: 'Protected east bay' },
+  'voudia-beach':          { shelter: 'south', note: 'Volcanic red rock' },
+  'pachaina-beach':        { shelter: 'south', note: 'Quiet north beach' },
+  'alogomantra-beach':     { shelter: 'south', note: 'Secluded north cove' },
+  'mytakas-beach':         { shelter: 'south', note: 'Calm north shore' },
+  'nerodafni-beach':       { shelter: 'south', note: 'Far north coast' },
+  'klima':                 { shelter: 'south', note: 'Colourful syrmata' },
+  'papikinou-beach':       { shelter: 'any',   note: 'Town beach near Adamas' },
+};
+
+const BEACHES_DATA = (beachesRaw as any[])
+  .filter(b => b.localPhoto && shelterMeta[b.slug])
+  .map(b => ({
+    slug:    b.slug as string,
+    name:    typeof b.name === 'object' ? (b.name as any).en : b.name as string,
+    img:     b.localPhoto as string,
+    shelter: shelterMeta[b.slug].shelter,
+    note:    shelterMeta[b.slug].note,
+  }));
 ---
 
 <Layout
@@ -12,74 +60,138 @@ const LNG = 24.4496;
   description="Current weather in Milos and beach recommendations based on today's wind and sea conditions."
 >
 
-<section class="weather-hero">
+<section class="weather-hero" id="weather-hero">
   <div class="container">
-    <p class="page-label">Today in Milos</p>
-    <h1 class="page-title">Weather & Beach Guide</h1>
-    <p class="page-desc">Real-time conditions to help you pick the right beach today.</p>
+    <p class="hero-label">Live conditions · Milos, Cyclades</p>
+    <div class="hero-body">
+      <div class="hero-left">
+        <div class="hero-top">
+          <div class="hero-icon" id="hero-icon">☀️</div>
+          <div class="hero-temp" id="hero-temp">–</div>
+        </div>
+        <p class="hero-condition" id="hero-condition">Loading…</p>
+        <p class="hero-feels" id="hero-feels">&nbsp;</p>
+      </div>
+      <div class="hero-stats">
+        <div class="hs-item">
+          <span class="hs-lbl">Wind</span>
+          <span class="hs-val" id="hs-wind">–</span>
+        </div>
+        <div class="hs-item">
+          <span class="hs-lbl">Sea temp</span>
+          <span class="hs-val" id="hs-sea">–</span>
+        </div>
+        <div class="hs-item">
+          <span class="hs-lbl">Waves</span>
+          <span class="hs-val" id="hs-waves">–</span>
+        </div>
+        <div class="hs-item">
+          <span class="hs-lbl">UV index</span>
+          <span class="hs-val" id="hs-uv">–</span>
+        </div>
+        <div class="hs-item">
+          <span class="hs-lbl">Humidity</span>
+          <span class="hs-val" id="hs-humidity">–</span>
+        </div>
+      </div>
+    </div>
+    <p class="hero-updated" id="hero-updated"></p>
   </div>
 </section>
 
 <section class="sec sec-sand weather-sec">
   <div class="container">
 
-    <!-- Loading state -->
     <div class="w-loading" id="w-loading">
       <div class="w-spinner"></div>
       <p>Fetching current conditions…</p>
     </div>
 
-    <!-- Error state -->
     <div class="w-error" id="w-error" style="display:none">
-      <p class="w-error-icon">⚠️</p>
+      <div class="w-error-icon">⚠️</div>
       <p>Could not load weather data. Please try again later.</p>
+      <button class="w-retry-btn" onclick="loadWeather()">Try again</button>
     </div>
 
-    <!-- Weather content -->
     <div class="w-content" id="w-content" style="display:none">
 
-      <!-- Main weather card -->
-      <div class="w-main-grid">
+      <!-- Stats grid -->
+      <div class="w-stats-grid">
 
-        <div class="w-card w-card--temp">
-          <p class="w-card-label">Temperature</p>
-          <div class="w-card-val" id="w-temp">–</div>
-          <p class="w-card-sub" id="w-feels">Feels like –</p>
-        </div>
-
-        <div class="w-card w-card--wind">
-          <p class="w-card-label">Wind</p>
-          <div class="w-card-val-wrap">
-            <span class="w-wind-arrow" id="w-wind-arrow">↑</span>
-            <div>
-              <div class="w-card-val" id="w-wind-speed">–</div>
-              <p class="w-card-sub" id="w-wind-dir">–</p>
+        <div class="w-stat w-stat--wind">
+          <p class="w-stat-label">Wind</p>
+          <div class="w-stat-body">
+            <svg class="wind-compass" viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="0.75" opacity="0.15"/>
+              <circle cx="24" cy="3.5" r="1.2" fill="currentColor" opacity="0.25"/>
+              <circle cx="44.5" cy="24" r="1.2" fill="currentColor" opacity="0.25"/>
+              <circle cx="24" cy="44.5" r="1.2" fill="currentColor" opacity="0.25"/>
+              <circle cx="3.5" cy="24" r="1.2" fill="currentColor" opacity="0.25"/>
+              <text x="24" y="10.5" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.45" font-family="DM Sans, sans-serif" font-weight="600">N</text>
+              <text x="39" y="25.5" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.3" font-family="DM Sans, sans-serif">E</text>
+              <text x="24" y="41" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.3" font-family="DM Sans, sans-serif">S</text>
+              <text x="9" y="25.5" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.3" font-family="DM Sans, sans-serif">W</text>
+              <g id="compass-needle-g" style="transform-origin:24px 24px; transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1);">
+                <polygon points="24,10 21.5,24 24,21 26.5,24" fill="var(--aegean)"/>
+                <polygon points="24,38 21.5,24 24,27 26.5,24" fill="currentColor" opacity="0.35"/>
+                <circle cx="24" cy="24" r="2.5" fill="var(--white)" stroke="var(--aegean)" stroke-width="1"/>
+              </g>
+            </svg>
+            <div class="w-stat-vals">
+              <div class="w-stat-val" id="w-wind-speed">–</div>
+              <p class="w-stat-sub" id="w-wind-dir">–</p>
+              <span class="w-badge" id="w-wind-tag">–</span>
             </div>
           </div>
         </div>
 
-        <div class="w-card w-card--sea">
-          <p class="w-card-label">Sea</p>
-          <div class="w-card-val" id="w-sea-temp">–</div>
-          <p class="w-card-sub">Sea temperature</p>
+        <div class="w-stat w-stat--sea">
+          <p class="w-stat-label">Sea & Waves</p>
+          <div class="w-stat-val" id="w-sea-temp">–</div>
+          <p class="w-stat-sub">Sea temperature</p>
+          <div class="w-wave-track" title="Wave height — scale 0 to 3m">
+            <div class="w-wave-fill" id="w-wave-fill"></div>
+          </div>
+          <div class="w-sub-row">
+            <span class="w-stat-sub" id="w-wave-val">–</span>
+            <span class="w-badge" id="w-wave-tag">–</span>
+          </div>
         </div>
 
-        <div class="w-card w-card--waves">
-          <p class="w-card-label">Wave height</p>
-          <div class="w-card-val" id="w-waves">–</div>
-          <p class="w-card-sub" id="w-wave-desc">–</p>
+        <div class="w-stat w-stat--uv">
+          <p class="w-stat-label">UV Index</p>
+          <div class="w-stat-val" id="w-uv">–</div>
+          <div class="uv-track" title="UV index scale 0–11+">
+            <div class="uv-gradient"></div>
+            <div class="uv-marker" id="uv-marker"></div>
+          </div>
+          <p class="w-stat-sub" id="w-uv-level">–</p>
+          <span class="w-badge" id="w-uv-tag">–</span>
         </div>
 
-        <div class="w-card w-card--uv">
-          <p class="w-card-label">UV Index</p>
-          <div class="w-card-val" id="w-uv">–</div>
-          <p class="w-card-sub" id="w-uv-desc">–</p>
+        <div class="w-stat w-stat--humidity">
+          <p class="w-stat-label">Humidity</p>
+          <div class="w-stat-val" id="w-humidity">–</div>
+          <p class="w-stat-sub" id="w-humidity-sub">–</p>
         </div>
 
-        <div class="w-card w-card--condition">
-          <p class="w-card-label">Conditions</p>
-          <div class="w-condition-icon" id="w-icon">☀️</div>
-          <p class="w-card-sub" id="w-condition-text">–</p>
+        <div class="w-stat w-stat--range">
+          <p class="w-stat-label">Today's range</p>
+          <div class="w-minmax">
+            <div class="w-mm-block w-mm-high">
+              <span class="w-mm-arrow">↑</span>
+              <span class="w-mm-val" id="w-temp-max">–</span>
+            </div>
+            <div class="w-mm-sep"></div>
+            <div class="w-mm-block w-mm-low">
+              <span class="w-mm-arrow">↓</span>
+              <span class="w-mm-val" id="w-temp-min">–</span>
+            </div>
+          </div>
+          <div class="w-sun-row">
+            <span class="w-sun-item">🌅 <span id="w-sunrise">–</span></span>
+            <span class="w-sun-item">🌇 <span id="w-sunset">–</span></span>
+          </div>
         </div>
 
       </div>
@@ -94,50 +206,128 @@ const LNG = 24.4496;
           </div>
         </div>
         <p class="w-rec-desc" id="w-rec-desc">–</p>
-
         <div class="w-beaches-grid" id="w-beaches-grid"></div>
       </div>
 
-      <!-- Hourly forecast -->
-      <div class="w-forecast-wrap">
+      <!-- 12-hour forecast -->
+      <div class="w-block">
         <p class="w-section-title">Next 12 hours</p>
-        <div class="w-forecast" id="w-forecast"></div>
+        <div class="w-hourly-scroll">
+          <div class="w-hourly" id="w-hourly"></div>
+        </div>
+      </div>
+
+      <!-- 7-day forecast -->
+      <div class="w-block">
+        <p class="w-section-title">7-day outlook</p>
+        <div class="w-week-scroll">
+          <div class="w-week" id="w-week"></div>
+        </div>
       </div>
 
     </div>
-
   </div>
 </section>
 
 </Layout>
 
-<style>
+<style is:global>
+
+/* ── Hero ─────────────────────────────────────────── */
 .weather-hero {
-  background: var(--white);
-  padding: 3rem 0 2.5rem;
-  border-bottom: 1px solid var(--border);
+  background-image: linear-gradient(135deg, var(--deep-blue) 0%, var(--aegean) 100%);
+  padding: 3.5rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  transition: background-image 0.5s ease;
 }
-.page-label {
-  display: block;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+.weather-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(255,255,255,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.weather-hero.is-sunny  { background-image: linear-gradient(135deg, #c97a10 0%, #e0921c 40%, #1a6ca8 100%); }
+.weather-hero.is-partly { background-image: linear-gradient(135deg, #2d6a9f 0%, #1a5c8a 100%); }
+.weather-hero.is-cloudy { background-image: linear-gradient(135deg, #4a5e72 0%, #2d3f52 100%); }
+.weather-hero.is-rain   { background-image: linear-gradient(135deg, #1a3f7a 0%, #0d2b4e 100%); }
+.weather-hero.is-storm  { background-image: linear-gradient(135deg, #18202c 0%, #2a3545 100%); }
+
+.hero-label {
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--sea);
-  margin-bottom: 0.4rem;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 1.5rem;
+  display: block;
 }
-.page-title {
+.hero-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.hero-left {}
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+.hero-icon { font-size: 3.75rem; line-height: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2)); }
+.hero-temp {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: var(--deep-blue);
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.2);
 }
-.page-desc { font-size: 1rem; color: var(--muted); line-height: 1.7; }
+.hero-condition {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 0.3rem;
+}
+.hero-feels {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.5);
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 2rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.75rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.hs-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.hs-lbl {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+}
+.hs-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+}
+.hero-updated {
+  margin-top: 1.75rem;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.28);
+}
 
-.weather-sec { min-height: 60vh; }
-
-/* Loading */
+/* ── Loading / Error ──────────────────────────────── */
+.weather-sec { min-height: 40vh; }
 .w-loading {
   display: flex;
   flex-direction: column;
@@ -158,335 +348,740 @@ const LNG = 24.4496;
 
 .w-error { text-align: center; padding: 4rem 0; color: var(--muted); }
 .w-error-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.w-retry-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--aegean);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: var(--font-sans);
+}
+.w-retry-btn:hover { background: var(--aegean); color: #fff; border-color: var(--aegean); }
 
-/* Main grid */
-.w-main-grid {
+/* ── Content fade-in ──────────────────────────────── */
+.w-content {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.w-content.is-ready { opacity: 1; }
+
+/* ── Stats grid ───────────────────────────────────── */
+.w-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
-.w-card {
+.w-stat--range { grid-column: span 2; }
+
+.w-stat {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 1.4rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
+  position: relative;
+  overflow: hidden;
 }
-.w-card-label {
-  font-size: 0.65rem;
+.w-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+.w-stat--wind::before    { background: linear-gradient(90deg, var(--deep-blue), var(--aegean)); }
+.w-stat--sea::before     { background: linear-gradient(90deg, #00b4d8, #0077b6); }
+.w-stat--uv::before      { background: linear-gradient(90deg, #4caf50, #ffeb3b, #ff9800, #f44336); }
+.w-stat--humidity::before{ background: linear-gradient(90deg, var(--sky), var(--sea)); }
+.w-stat--range::before   { background: linear-gradient(90deg, var(--sand-dark), var(--muted)); }
+
+.w-stat-label {
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--muted);
 }
-.w-card-val {
+.w-stat-val {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   color: var(--deep-blue);
   line-height: 1;
 }
-.w-card-sub { font-size: 0.78rem; color: var(--muted); }
-
-.w-card-val-wrap { display: flex; align-items: center; gap: 0.75rem; }
-.w-wind-arrow {
-  font-size: 2rem;
+.w-stat-sub { font-size: 0.76rem; color: var(--muted); }
+.w-badge {
   display: inline-block;
-  transition: transform 0.5s ease;
-  color: var(--aegean);
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  background: var(--sand);
+  color: var(--muted);
+  border: 1px solid var(--sand-dark);
+  align-self: flex-start;
+  margin-top: auto;
+}
+.w-sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
 }
 
-.w-condition-icon { font-size: 2.5rem; line-height: 1; margin: 0.2rem 0; }
+/* Wind compass */
+.w-stat-body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+.wind-compass {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.w-stat-vals { display: flex; flex-direction: column; gap: 0.3rem; }
+.w-stat-vals .w-stat-val { font-size: 1.75rem; }
+.w-stat-vals .w-badge { margin-top: 0.2rem; }
 
-/* Recommendation */
+/* Wave bar */
+.w-wave-track {
+  height: 5px;
+  background: var(--sand-dark);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 0.2rem;
+}
+.w-wave-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00b4d8, #0077b6);
+  border-radius: 99px;
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  width: 0%;
+}
+
+/* UV bar */
+.uv-track {
+  height: 8px;
+  border-radius: 99px;
+  position: relative;
+  overflow: visible;
+  margin: 0.2rem 0;
+}
+.uv-gradient {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #4caf50 0%, #cddc39 20%, #ffeb3b 35%, #ffc107 50%, #ff9800 65%, #f44336 80%, #9c27b0 100%);
+}
+.uv-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: var(--white);
+  border: 2.5px solid var(--deep-blue);
+  border-radius: 50%;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+  transition: left 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  left: 0%;
+}
+
+/* Humidity */
+.w-stat--humidity .w-stat-val { font-size: 2.1rem; }
+
+/* Range card */
+.w-stat--range { flex-direction: column; justify-content: space-between; }
+.w-minmax {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0.3rem 0;
+}
+.w-mm-block {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  flex: 1;
+}
+.w-mm-arrow { font-size: 1rem; font-weight: 700; }
+.w-mm-high .w-mm-arrow { color: #e67e22; }
+.w-mm-low .w-mm-arrow  { color: var(--sea); }
+.w-mm-val {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  color: var(--deep-blue);
+  line-height: 1;
+}
+.w-mm-sep {
+  width: 1px;
+  height: 2.2rem;
+  background: var(--border);
+  margin: 0 1rem;
+  flex-shrink: 0;
+}
+.w-sun-row {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.5rem;
+}
+.w-sun-item {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ── Beach recommendation ─────────────────────────── */
 .w-rec {
   background: var(--deep-blue);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  margin-bottom: 2rem;
+  padding: 2rem 2rem 1.75rem;
+  margin-bottom: 1.75rem;
   color: #fff;
 }
 .w-rec-header {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
-.w-rec-emoji { font-size: 2.5rem; flex-shrink: 0; }
+.w-rec-emoji { font-size: 2.25rem; flex-shrink: 0; }
 .w-rec-label {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.45);
   margin-bottom: 0.2rem;
+  display: block;
 }
 .w-rec-title {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.55rem;
   color: #fff;
   line-height: 1.2;
 }
 .w-rec-desc {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.65);
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.62);
   line-height: 1.7;
   margin-bottom: 1.5rem;
-  max-width: 600px;
+  max-width: 580px;
 }
-
 .w-beaches-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
 }
 .w-beach-card {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: var(--radius-md);
-  padding: 1rem 1.25rem;
-  color: #fff;
-  transition: background 0.15s;
-  text-decoration: none;
-}
-.w-beach-card:hover { background: rgba(255,255,255,0.15); }
-.w-beach-name {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  margin-bottom: 0.2rem;
-}
-.w-beach-access { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
-
-/* Forecast */
-.w-section-title {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
-.w-forecast {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0;
-  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.w-beach-img {
+  position: relative;
+  height: 115px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.w-beach-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+.w-beach-card:hover .w-beach-img img { transform: scale(1.07); }
+.w-beach-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.52) 100%);
+}
+.w-beach-info { padding: 0.65rem 0.9rem 0.75rem; }
+.w-beach-name { font-family: var(--font-serif); font-size: 0.95rem; margin-bottom: 0.18rem; color: #fff; }
+.w-beach-meta { font-size: 0.67rem; color: rgba(255,255,255,0.45); }
+
+/* ── Hourly forecast ──────────────────────────────── */
+.w-block { margin-bottom: 1.75rem; }
+.w-section-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.85rem;
+}
+.w-hourly-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem;
+}
+.w-hourly-scroll::-webkit-scrollbar { display: none; }
+.w-hourly {
+  display: flex;
+  gap: 0.6rem;
+  padding-bottom: 0.5rem;
+  min-width: max-content;
 }
 .w-fc-item {
-  padding: 1rem 0.5rem;
-  text-align: center;
-  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+  width: 84px;
+  padding: 1rem 0.5rem 0.85rem;
   background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   align-items: center;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+  box-shadow: var(--shadow-sm);
 }
-.w-fc-item:last-child { border-right: none; }
-.w-fc-time { font-size: 0.68rem; color: var(--muted); font-weight: 600; }
-.w-fc-icon { font-size: 1.4rem; }
-.w-fc-temp { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
-.w-fc-wind { font-size: 0.68rem; color: var(--muted); }
+.w-fc-item:hover { box-shadow: var(--shadow-md); }
+.w-fc-item.is-now {
+  background: var(--deep-blue);
+  border-color: var(--deep-blue);
+  box-shadow: 0 6px 20px rgba(13,43,78,0.35);
+}
+.w-fc-time { font-size: 0.65rem; color: var(--muted); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.w-fc-item.is-now .w-fc-time { color: rgba(255,255,255,0.5); }
+.w-fc-icon { font-size: 1.65rem; line-height: 1; margin: 0.15rem 0; }
+.w-fc-temp { font-size: 1rem; font-weight: 800; color: var(--deep-blue); }
+.w-fc-item.is-now .w-fc-temp { color: #fff; }
+.w-fc-wind { font-size: 0.6rem; color: var(--muted); }
+.w-fc-item.is-now .w-fc-wind { color: rgba(255,255,255,0.42); }
+.w-fc-rain-track {
+  width: 75%;
+  height: 4px;
+  background: rgba(58,155,201,0.12);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 0.05rem 0;
+}
+.w-fc-rain-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sea), var(--sky));
+  border-radius: 99px;
+  transition: width 0.6s var(--ease);
+}
+.w-fc-item.is-now .w-fc-rain-track { background: rgba(125,211,248,0.18); }
+.w-fc-item.is-now .w-fc-rain-fill  { background: linear-gradient(90deg, rgba(58,155,201,0.7), var(--sky)); }
+.w-fc-rain { font-size: 0.6rem; color: var(--sea); font-weight: 700; letter-spacing: 0.02em; }
+.w-fc-item.is-now .w-fc-rain { color: var(--sky); }
+.w-fc-rain-placeholder { height: 0.8rem; display: block; }
 
-@media (max-width: 768px) {
-  .w-main-grid { grid-template-columns: 1fr 1fr; }
-  .w-forecast { grid-template-columns: repeat(4, 1fr); }
-  .w-fc-item:nth-child(n+5) { display: none; }
+/* ── 7-day forecast ───────────────────────────────── */
+.w-week-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin: 0 -1.5rem;
+  padding: 0 1.5rem;
+}
+.w-week-scroll::-webkit-scrollbar { display: none; }
+.w-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+  gap: 0.65rem;
+  min-width: 700px;
+}
+.w-day {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 0.5rem 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  align-items: center;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+  box-shadow: var(--shadow-sm);
+}
+.w-day:hover {box-shadow: var(--shadow-md); }
+.w-day.is-today {
+  background: var(--deep-blue);
+  border-color: var(--deep-blue);
+  box-shadow: 0 6px 20px rgba(13,43,78,0.35);
+}
+.w-day-name {
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.w-day.is-today .w-day-name { color: rgba(255,255,255,0.5); }
+.w-day-icon { font-size: 1.9rem; line-height: 1; margin: 0.2rem 0; }
+.w-day-cond {
+  font-size: 0.58rem;
+  color: var(--muted);
+  line-height: 1.3;
+  min-height: 1.6em;
+}
+.w-day.is-today .w-day-cond { color: rgba(255,255,255,0.38); }
+.w-day-high { font-size: 1.05rem; font-weight: 800; color: var(--deep-blue); }
+.w-day.is-today .w-day-high { color: #fff; }
+.w-day-range-track {
+  width: 70%;
+  height: 5px;
+  background: var(--sand-dark);
+  border-radius: 99px;
+  position: relative;
+  overflow: hidden;
+  margin: 0.05rem 0;
+}
+.w-day.is-today .w-day-range-track { background: rgba(255,255,255,0.15); }
+.w-day-range-fill {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: linear-gradient(90deg, #38b2d4, #e8901a);
+  border-radius: 99px;
+  min-width: 15%;
+}
+.w-day.is-today .w-day-range-fill { background: linear-gradient(90deg, rgba(125,211,248,0.65), rgba(255,255,255,0.9)); }
+.w-day-low { font-size: 0.8rem; color: var(--muted); }
+.w-day.is-today .w-day-low { color: rgba(255,255,255,0.4); }
+.w-day-rain {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--sea);
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.05rem;
+}
+.w-day.is-today .w-day-rain { color: var(--sky); }
+.w-day-rain-ph { height: 0.88rem; display: block; }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 860px) {
+  .w-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .w-stat--range { grid-column: span 2; }
+}
+@media (max-width: 520px) {
+  .w-beaches-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .hero-body { flex-direction: column; align-items: flex-start; }
+  .hero-stats { width: 100%; grid-template-columns: repeat(3, 1fr); padding: 1rem 1.25rem; gap: 0.75rem 1rem; }
+  .w-stats-grid { grid-template-columns: 1fr 1fr; }
+  .w-stat--range { grid-column: span 2; }
+  .w-stat--wind .w-stat-body { flex-direction: column; gap: 0.75rem; }
+  .wind-compass { width: 54px; height: 54px; }
+  .w-minmax { justify-content: flex-start; gap: 0; }
 }
 @media (max-width: 480px) {
-  .w-main-grid { grid-template-columns: 1fr 1fr; }
-  .w-forecast { grid-template-columns: repeat(3, 1fr); }
-  .w-fc-item:nth-child(n+4) { display: none; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .w-stats-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
 
-<script define:vars={{ LAT, LNG }}>
-const BEACHES = {
-  all: [
-    { name: 'Sarakiniko',  slug: 'sarakiniko',  access: '🚗 By car',   wind: 'any' },
-    { name: 'Paleochori',  slug: 'paleochori',  access: '🚗 By car',   wind: 'north' },
-    { name: 'Fyriplaka',   slug: 'fyriplaka',   access: '🚗 By car',   wind: 'north' },
-    { name: 'Provatas',    slug: 'provatas',    access: '🚗 By car',   wind: 'north' },
-    { name: 'Tsigrado',    slug: 'tsigrado',    access: '🥾 Hiking',   wind: 'north' },
-    { name: 'Triades',     slug: 'triades',     access: '🚗 By car',   wind: 'south' },
-    { name: 'Firopotamos', slug: 'firopotamos', access: '🚗 By car',   wind: 'south' },
-    { name: 'Plathiena',   slug: 'plathiena',   access: '🚗 By car',   wind: 'south' },
-    { name: 'Gerontas',    slug: 'gerontas',    access: '🚗 By car',   wind: 'east'  },
-    { name: 'Kleftiko',    slug: 'kleftiko',    access: '⛵ Boat only', wind: 'calm'  },
-    { name: 'Agia Kyriaki',slug: 'agia-kyriaki',access: '🚗 By car',   wind: 'north' },
-  ]
-};
+<script define:vars={{ LAT, LNG, BEACHES_DATA }}>
+const BEACHES = BEACHES_DATA;
 
 const WMO_ICONS = {
-  0: '☀️', 1: '⛅', 2: '🌤', 3: '☁️',
-  45: '🌫', 48: '🌫',
-  51: '🌦', 53: '🌦', 55: '🌧',
-  61: '🌧', 63: '🌧', 65: '🌧',
-  71: '🌨', 73: '🌨', 75: '🌨',
-  80: '🌦', 81: '🌧', 82: '⛈',
-  95: '⛈', 96: '⛈', 99: '⛈',
+  0:'☀️',1:'🌤',2:'⛅',3:'☁️',
+  45:'🌫',48:'🌫',
+  51:'🌦',53:'🌦',55:'🌧',
+  61:'🌧',63:'🌧',65:'🌧',
+  71:'🌨',73:'🌨',75:'🌨',
+  80:'🌦',81:'🌧',82:'⛈',
+  95:'⛈',96:'⛈',99:'⛈',
 };
 const WMO_TEXT = {
-  0: 'Clear sky', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
-  45: 'Fog', 48: 'Fog',
-  51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
-  61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
-  71: 'Light snow', 73: 'Snow', 75: 'Heavy snow',
-  80: 'Showers', 81: 'Heavy showers', 82: 'Violent showers',
-  95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm',
+  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+  45:'Foggy',48:'Foggy',
+  51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',
+  71:'Light snow',73:'Snow',75:'Heavy snow',
+  80:'Showers',81:'Heavy showers',82:'Violent showers',
+  95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm',
 };
 
-function windDirection(deg) {
+function el(id) { return document.getElementById(id); }
+
+function windDir(deg) {
   const dirs = ['N','NE','E','SE','S','SW','W','NW'];
   return dirs[Math.round(deg / 45) % 8];
 }
-function windCategory(deg) {
+function windCat(deg) {
   const d = ((deg % 360) + 360) % 360;
   if (d >= 315 || d < 45)  return 'north';
   if (d >= 45  && d < 135) return 'east';
   if (d >= 135 && d < 225) return 'south';
   return 'west';
 }
-
-function uvLabel(uv) {
-  if (uv <= 2) return 'Low';
-  if (uv <= 5) return 'Moderate';
-  if (uv <= 7) return 'High';
-  if (uv <= 10) return 'Very high';
-  return 'Extreme';
+function beaufort(kmh) {
+  if (kmh < 2)  return 'Calm';
+  if (kmh < 12) return 'Light';
+  if (kmh < 20) return 'Light breeze';
+  if (kmh < 29) return 'Gentle';
+  if (kmh < 39) return 'Moderate';
+  if (kmh < 50) return 'Fresh';
+  if (kmh < 62) return 'Strong';
+  return 'Near gale';
 }
-function waveLabel(h) {
-  if (h < 0.3) return 'Calm — ideal for swimming';
-  if (h < 0.8) return 'Slight — good conditions';
-  if (h < 1.5) return 'Moderate — caution advised';
-  return 'Rough — avoid open beaches';
+function uvLevel(uv) {
+  if (uv <= 2)  return ['Low', 'No protection needed'];
+  if (uv <= 5)  return ['Moderate', 'Wear SPF 30+'];
+  if (uv <= 7)  return ['High', 'SPF 50+ recommended'];
+  if (uv <= 10) return ['Very high', 'Limit time in sun'];
+  return ['Extreme', 'Avoid direct sun'];
+}
+function waveDesc(h) {
+  if (h < 0.3) return ['Calm', 'Perfect for swimming'];
+  if (h < 0.8) return ['Slight', 'Good conditions'];
+  if (h < 1.5) return ['Moderate', 'Caution advised'];
+  return ['Rough', 'Avoid open beaches'];
+}
+function humidityDesc(h) {
+  if (h < 30)  return 'Dry';
+  if (h < 60)  return 'Comfortable';
+  if (h < 75)  return 'Humid';
+  return 'Very humid';
+}
+function heroClass(code) {
+  if (code === 0 || code === 1) return 'is-sunny';
+  if (code === 2) return 'is-partly';
+  if (code === 3) return 'is-cloudy';
+  if (code >= 51 && code <= 82) return 'is-rain';
+  if (code >= 95) return 'is-storm';
+  return '';
+}
+function formatHour(h) {
+  if (h === 0)  return '12 am';
+  if (h < 12)   return `${h} am`;
+  if (h === 12) return '12 pm';
+  return `${h - 12} pm`;
+}
+function formatTime(dtStr) {
+  const d = new Date(dtStr);
+  return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+}
+function dayLabel(dtStr, idx) {
+  if (idx === 0) return 'Today';
+  if (idx === 1) return 'Tomorrow';
+  return new Date(dtStr).toLocaleDateString('en-US', { weekday: 'short' });
 }
 
-function getRecommendation(windSpeedKmh, windDeg, waveH) {
-  const cat = windCategory(windDeg);
-  const isCalm = windSpeedKmh < 15 && waveH < 0.5;
-  const isStrong = windSpeedKmh > 35;
-
-  if (isCalm) {
-    return {
-      emoji: '🏖',
-      title: 'All beaches are great today',
-      desc: 'Calm winds and flat seas — perfect conditions across the island. A great day for boat tours too.',
-      filter: 'any',
-    };
-  }
-  if (isStrong) {
-    return {
-      emoji: '⚠️',
-      title: 'Strong winds — choose sheltered beaches',
-      desc: `Strong ${windDirection(windDeg)} winds today. Stick to sheltered beaches on the opposite coast. Avoid boat tours.`,
-      filter: cat === 'north' ? 'north' : cat === 'south' ? 'south' : 'north',
-    };
-  }
-  if (cat === 'north' || cat === 'NW' || cat === 'NE') {
-    return {
-      emoji: '🌊',
-      title: 'North winds — head to the south coast',
-      desc: 'The meltemi is blowing from the north. Southern beaches like Paleochori, Fyriplaka and Provatas are sheltered and ideal.',
-      filter: 'north',
-    };
-  }
-  if (cat === 'south') {
-    return {
-      emoji: '💨',
-      title: 'South winds — north coast is better',
-      desc: 'Winds from the south today. Head to Triades, Firopotamos or Plathiena on the north coast for calmer conditions.',
-      filter: 'south',
-    };
-  }
+function recommendation(windKmh, windDeg, waveH) {
+  const cat = windCat(windDeg);
+  if (windKmh < 15 && waveH < 0.5) return {
+    emoji:'🏖', title:'All beaches are great today',
+    desc:'Calm winds and flat seas — perfect conditions across the island. Great day for boat tours to Kleftiko.',
+    filter:'any',
+  };
+  if (windKmh > 40) return {
+    emoji:'⚠️', title:'Strong winds — choose sheltered beaches',
+    desc:`${windDir(windDeg)} winds at ${Math.round(windKmh)} km/h. Stick to protected beaches on the leeward coast. Avoid boat tours today.`,
+    filter: cat === 'north' ? 'north' : cat === 'south' ? 'south' : 'north',
+  };
+  if (cat === 'north') return {
+    emoji:'🌊', title:'North winds — head to the south coast',
+    desc:'The meltemi is blowing from the north. Paleochori, Fyriplaka and Provatas are sheltered and calm.',
+    filter:'north',
+  };
+  if (cat === 'south') return {
+    emoji:'💨', title:'South winds — north coast is better',
+    desc:'Winds from the south today. Head to Triades, Firopotamos or Plathiena on the north coast.',
+    filter:'south',
+  };
   return {
-    emoji: '🏖',
-    title: 'Conditions are decent today',
-    desc: 'Moderate winds — most beaches are accessible. Check individual beach orientation before heading out.',
-    filter: 'any',
+    emoji:'🏖', title:'Good conditions today',
+    desc:'Moderate winds — most beaches are accessible. Check wind direction before heading to exposed beaches.',
+    filter:'any',
   };
 }
 
 async function loadWeather() {
+  el('w-loading').style.display = 'flex';
+  el('w-error').style.display   = 'none';
+  el('w-content').style.display = 'none';
+  el('w-content').classList.remove('is-ready');
+
   try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LNG}&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m,uv_index&hourly=temperature_2m,weathercode,windspeed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=Europe%2FAthens&forecast_days=1&models=best_match`;
-    const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${LAT}&longitude=${LNG}&current=wave_height,sea_surface_temperature&hourly=wave_height&timezone=Europe%2FAthens&forecast_days=1`;
+    const weatherUrl = [
+      `https://api.open-meteo.com/v1/forecast`,
+      `?latitude=${LAT}&longitude=${LNG}`,
+      `&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m,uv_index,relative_humidity_2m`,
+      `&hourly=temperature_2m,weathercode,windspeed_10m,precipitation_probability`,
+      `&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max,sunrise,sunset`,
+      `&timezone=Europe%2FAthens&forecast_days=7&models=best_match`,
+    ].join('');
+    const marineUrl = [
+      `https://marine-api.open-meteo.com/v1/marine`,
+      `?latitude=${LAT}&longitude=${LNG}`,
+      `&current=wave_height,sea_surface_temperature`,
+      `&timezone=Europe%2FAthens&forecast_days=1`,
+    ].join('');
 
-    const [weatherRes, marineRes] = await Promise.all([fetch(url), fetch(marineUrl)]);
-    const weather = await weatherRes.json();
-    const marine = await marineRes.json();
+    const [wRes, mRes] = await Promise.all([fetch(weatherUrl), fetch(marineUrl)]);
+    const w = await wRes.json();
+    const m = await mRes.json();
 
-    const c = weather.current;
-    const waveH = marine.current?.wave_height ?? 0;
-    const seaTemp = marine.current?.sea_surface_temperature ?? null;
+    const c = w.current;
+    const waveH   = m.current?.wave_height ?? 0;
+    const seaTemp = m.current?.sea_surface_temperature ?? null;
 
-    // Fill in cards
-    document.getElementById('w-temp').textContent = `${Math.round(c.temperature_2m)}°C`;
-    document.getElementById('w-feels').textContent = `Feels like ${Math.round(c.apparent_temperature)}°C`;
-    document.getElementById('w-wind-speed').textContent = `${Math.round(c.windspeed_10m)} km/h`;
-    document.getElementById('w-wind-dir').textContent = `${windDirection(c.winddirection_10m)} wind`;
-    document.getElementById('w-waves').textContent = `${waveH.toFixed(1)} m`;
-    document.getElementById('w-wave-desc').textContent = waveLabel(waveH);
-    document.getElementById('w-uv').textContent = Math.round(c.uv_index);
-    document.getElementById('w-uv-desc').textContent = uvLabel(c.uv_index);
-    document.getElementById('w-icon').textContent = WMO_ICONS[c.weathercode] ?? '🌤';
-    document.getElementById('w-condition-text').textContent = WMO_TEXT[c.weathercode] ?? 'Unknown';
-    document.getElementById('w-sea-temp').textContent = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
+    // ── Hero
+    const heroEl = document.getElementById('weather-hero');
+    heroEl.classList.add(heroClass(c.weathercode));
+    el('hero-icon').textContent      = WMO_ICONS[c.weathercode] ?? '🌤';
+    el('hero-temp').textContent      = `${Math.round(c.temperature_2m)}°`;
+    el('hero-condition').textContent = WMO_TEXT[c.weathercode] ?? 'Unknown';
+    el('hero-feels').textContent     = `Feels like ${Math.round(c.apparent_temperature)}°C`;
+    el('hs-wind').textContent        = `${Math.round(c.windspeed_10m)} km/h ${windDir(c.winddirection_10m)}`;
+    el('hs-sea').textContent         = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
+    el('hs-waves').textContent       = `${waveH.toFixed(1)} m`;
+    el('hs-uv').textContent          = `${Math.round(c.uv_index)} — ${uvLevel(c.uv_index)[0]}`;
+    el('hs-humidity').textContent    = `${Math.round(c.relative_humidity_2m)}%`;
+    const now = new Date();
+    el('hero-updated').textContent   = `Updated at ${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
 
-    // Wind arrow rotation
-    document.getElementById('w-wind-arrow').style.transform = `rotate(${c.winddirection_10m}deg)`;
+    // ── Wind card
+    el('compass-needle-g').style.transform = `rotate(${c.winddirection_10m}deg)`;
+    el('w-wind-speed').textContent = `${Math.round(c.windspeed_10m)} km/h`;
+    el('w-wind-dir').textContent   = `${windDir(c.winddirection_10m)} wind`;
+    el('w-wind-tag').textContent   = beaufort(c.windspeed_10m);
 
-    // Recommendation
-    const rec = getRecommendation(c.windspeed_10m, c.winddirection_10m, waveH);
-    document.getElementById('w-rec-emoji').textContent = rec.emoji;
-    document.getElementById('w-rec-title').textContent = rec.title;
-    document.getElementById('w-rec-desc').textContent = rec.desc;
+    // ── Sea & Waves card
+    el('w-sea-temp').textContent  = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
+    const wavePct = Math.min(waveH / 3, 1) * 100;
+    el('w-wave-fill').style.width = `${wavePct}%`;
+    el('w-wave-val').textContent  = `${waveH.toFixed(1)} m`;
+    const [waveTag] = waveDesc(waveH);
+    el('w-wave-tag').textContent  = waveTag;
 
-    const beachGrid = document.getElementById('w-beaches-grid');
-    const filtered = BEACHES.all.filter(b => rec.filter === 'any' || b.wind === rec.filter || b.wind === 'any');
-    beachGrid.innerHTML = filtered.slice(0, 6).map(b => `
+    // ── UV card
+    const uvVal = Math.round(c.uv_index);
+    const [uvLvl, uvTip] = uvLevel(c.uv_index);
+    el('w-uv').textContent       = uvVal;
+    el('w-uv-level').textContent = uvTip;
+    el('w-uv-tag').textContent   = uvLvl;
+    const uvPct = Math.min(c.uv_index / 11, 1) * 100;
+    el('uv-marker').style.left   = `${uvPct}%`;
+
+    // ── Humidity card
+    el('w-humidity').textContent    = `${Math.round(c.relative_humidity_2m)}%`;
+    el('w-humidity-sub').textContent = humidityDesc(c.relative_humidity_2m);
+
+    // ── Range + Sun card
+    el('w-temp-max').textContent = `${Math.round(w.daily.temperature_2m_max[0])}°C`;
+    el('w-temp-min').textContent = `${Math.round(w.daily.temperature_2m_min[0])}°C`;
+    el('w-sunrise').textContent  = formatTime(w.daily.sunrise[0]);
+    el('w-sunset').textContent   = formatTime(w.daily.sunset[0]);
+
+    // ── Beach recommendation
+    const rec = recommendation(c.windspeed_10m, c.winddirection_10m, waveH);
+    el('w-rec-emoji').textContent = rec.emoji;
+    el('w-rec-title').textContent = rec.title;
+    el('w-rec-desc').textContent  = rec.desc;
+    let filtered = BEACHES.filter(b => rec.filter === 'any' || b.shelter === rec.filter || b.shelter === 'any');
+    if (filtered.length < 6) {
+      const extras = BEACHES.filter(b => !filtered.includes(b));
+      filtered = [...filtered, ...extras];
+    }
+    el('w-beaches-grid').innerHTML = filtered.slice(0, 6).map(b => `
       <a href="/beaches/${b.slug}" class="w-beach-card">
-        <p class="w-beach-name">${b.name}</p>
-        <p class="w-beach-access">${b.access}</p>
+        <div class="w-beach-img">
+          <img src="${b.img}" alt="${b.name} beach, Milos" loading="lazy" width="280" height="160">
+          <div class="w-beach-img-overlay"></div>
+        </div>
+        <div class="w-beach-info">
+          <p class="w-beach-name">${b.name}</p>
+          <p class="w-beach-meta">${b.note}</p>
+        </div>
       </a>
     `).join('');
 
-    // Hourly forecast (next 6 slots from current hour)
-    const now = new Date();
+    // ── 12-hour hourly
+    const times = w.hourly.time;
+    const temps = w.hourly.temperature_2m;
+    const codes = w.hourly.weathercode;
+    const winds = w.hourly.windspeed_10m;
+    const pops  = w.hourly.precipitation_probability;
     const currentHour = now.getHours();
-    const times = weather.hourly.time;
-    const temps = weather.hourly.temperature_2m;
-    const codes = weather.hourly.weathercode;
-    const winds = weather.hourly.windspeed_10m;
-
     let startIdx = times.findIndex(t => new Date(t).getHours() >= currentHour);
     if (startIdx < 0) startIdx = 0;
 
-    const forecast = document.getElementById('w-forecast');
-    forecast.innerHTML = times.slice(startIdx, startIdx + 6).map((t, i) => {
+    el('w-hourly').innerHTML = times.slice(startIdx, startIdx + 12).map((t, i) => {
+      const idx = startIdx + i;
       const h = new Date(t).getHours();
-      const label = h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h - 12}pm`;
-      return `
-        <div class="w-fc-item">
-          <span class="w-fc-time">${label}</span>
-          <span class="w-fc-icon">${WMO_ICONS[codes[startIdx + i]] ?? '🌤'}</span>
-          <span class="w-fc-temp">${Math.round(temps[startIdx + i])}°</span>
-          <span class="w-fc-wind">${Math.round(winds[startIdx + i])} km/h</span>
-        </div>
-      `;
+      const isNow = i === 0;
+      const rainPct = pops?.[idx] ?? 0;
+      const rainBar = `<div class="w-fc-rain-track" title="${rainPct}% chance of rain">
+        <div class="w-fc-rain-fill" style="width:${rainPct}%"></div>
+      </div>`;
+      return `<div class="w-fc-item${isNow ? ' is-now' : ''}">
+        <span class="w-fc-time">${isNow ? 'Now' : formatHour(h)}</span>
+        <span class="w-fc-icon">${WMO_ICONS[codes[idx]] ?? '🌤'}</span>
+        <span class="w-fc-temp">${Math.round(temps[idx])}°</span>
+        <span class="w-fc-wind">${Math.round(winds[idx])} km/h</span>
+        ${rainBar}
+        ${rainPct >= 15 ? `<span class="w-fc-rain">💧 ${rainPct}%</span>` : '<span class="w-fc-rain-placeholder"></span>'}
+      </div>`;
     }).join('');
 
-    document.getElementById('w-loading').style.display = 'none';
-    document.getElementById('w-content').style.display = 'block';
+    // ── 7-day outlook
+    const weekMin   = Math.min(...w.daily.temperature_2m_min);
+    const weekMax   = Math.max(...w.daily.temperature_2m_max);
+    const weekRange = weekMax - weekMin || 1;
+    el('w-week').innerHTML = w.daily.time.map((d, i) => {
+      const isToday  = i === 0;
+      const dayMax   = Math.round(w.daily.temperature_2m_max[i]);
+      const dayMin   = Math.round(w.daily.temperature_2m_min[i]);
+      const rainPct  = w.daily.precipitation_probability_max[i] ?? 0;
+      const barLeft  = ((dayMin - weekMin) / weekRange * 100).toFixed(1);
+      const barWidth = Math.max(((dayMax - dayMin) / weekRange * 100), 15).toFixed(1);
+      const condFull = WMO_TEXT[w.daily.weathercode[i]] ?? '';
+      const condShort = condFull.split(' ').slice(0, 2).join(' ');
+      return `
+      <div class="w-day${isToday ? ' is-today' : ''}">
+        <span class="w-day-name">${dayLabel(d, i)}</span>
+        <span class="w-day-icon">${WMO_ICONS[w.daily.weathercode[i]] ?? '🌤'}</span>
+        <span class="w-day-cond">${condShort}</span>
+        <span class="w-day-high">${dayMax}°</span>
+        <div class="w-day-range-track">
+          <div class="w-day-range-fill" style="left:${barLeft}%;width:${barWidth}%"></div>
+        </div>
+        <span class="w-day-low">${dayMin}°</span>
+        ${rainPct >= 10
+          ? `<span class="w-day-rain">💧 ${rainPct}%</span>`
+          : '<span class="w-day-rain-ph"></span>'}
+      </div>`;
+    }).join('');
+
+    // ── Show content
+    el('w-loading').style.display = 'none';
+    el('w-content').style.display = 'block';
+    requestAnimationFrame(() => el('w-content').classList.add('is-ready'));
 
   } catch (err) {
     console.error(err);
-    document.getElementById('w-loading').style.display = 'none';
-    document.getElementById('w-error').style.display = 'block';
+    el('w-loading').style.display = 'none';
+    el('w-error').style.display   = 'block';
   }
 }
 

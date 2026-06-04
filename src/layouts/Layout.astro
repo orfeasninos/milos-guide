@@ -493,7 +493,12 @@ nav ul, nav ol { list-style: none; }
 
 <script>
 const header = document.getElementById('site-header');
-window.addEventListener('scroll', () => header?.classList.toggle('is-scrolled', window.scrollY > 8), { passive: true });
+let _scrolled = false;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (!_scrolled && y > 60)  { _scrolled = true;  header?.classList.add('is-scrolled'); }
+  if (_scrolled  && y < 20)  { _scrolled = false; header?.classList.remove('is-scrolled'); }
+}, { passive: true });
 
 const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
 const nav    = document.getElementById('main-nav');
