@@ -18,9 +18,8 @@ jobs:
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
-        # Αν χρησιμοποιείς pnpm ή yarn, άλλαξέ το, αλλά με το npm είσαι ready:
-        # with:
-        #   path: .
+        with:
+          node-version: 22
 
   deploy:
     needs: build
