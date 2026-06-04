@@ -77,18 +77,10 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
       <span class="explore-head-title">What do you want to discover in Milos?</span>
     </div>
     <div class="cat-list">
-      <a href="/beaches" class="cat-row">
-        <span class="cat-num">01</span>
-        <div class="cat-info">
-          <span class="cat-name">Beaches</span>
-          <span class="cat-desc">From the volcanic Sarakiniko to hidden sea caves — {beachesData.length}+ shores for every taste</span>
-        </div>
-        <span class="cat-count">{beachesData.length} beaches</span>
-        <span class="cat-arrow">→</span>
-      </a>
+      
       
       <a href="/eat" class="cat-row">
-        <span class="cat-num">02</span>
+        <span class="cat-num">1</span>
         <div class="cat-info">
           <span class="cat-name">Food</span>
           <span class="cat-desc">Tavernas with freshly caught fish, wood-fired grills, white wine by the sea</span>
@@ -97,8 +89,28 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
         <span class="cat-arrow">→</span>
       </a>
 
+            <a href="/stay" class="cat-row">
+        <span class="cat-num">2</span>
+        <div class="cat-info">
+          <span class="cat-name">Stay</span>
+          <span class="cat-desc">From traditional houses to modern hotels — find your perfect base for exploring Milos</span>
+        </div>
+        <span class="cat-count">{accommodationsData.length} options</span>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <a href="/beaches" class="cat-row">
+        <span class="cat-num">3</span>
+        <div class="cat-info">
+          <span class="cat-name">Beaches</span>
+          <span class="cat-desc">From the volcanic Sarakiniko to hidden sea caves — {beachesData.length}+ shores for every taste</span>
+        </div>
+        <span class="cat-count">{beachesData.length} beaches</span>
+        <span class="cat-arrow">→</span>
+      </a>
+
       <a href="/villages" class="cat-row">
-        <span class="cat-num">03</span>
+        <span class="cat-num">4</span>
         <div class="cat-info">
           <span class="cat-name">Villages</span>
           <span class="cat-desc">Plaka, Klima, Tripiti, Pollonia — the island beyond the beaches</span>
@@ -107,25 +119,15 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
         <span class="cat-arrow">→</span>
       </a>
 
-      <a href="/stay" class="cat-row">
-        <span class="cat-num">04</span>
+      <a href="/" class="cat-row">
+        <span class="cat-num">5</span>
         <div class="cat-info">
-          <span class="cat-name">Accommodation</span>
-          <span class="cat-desc">From traditional houses to modern hotels — find your perfect base for exploring Milos</span>
+          <span class="cat-name"></span>
+          <span class="cat-desc"></span>
         </div>
-        <span class="cat-count">{accommodationsData.length} options</span>
+        <span class="cat-count"></span>
         <span class="cat-arrow">→</span>
       </a>
-
-      <div class="cat-row cat-row--dim">
-        <span class="cat-num">05</span>
-        <div class="cat-info">
-          <span class="cat-name">Rentals</span>
-          <span class="cat-desc">Cars, scooters, ATVs — explore at your own pace</span>
-        </div>
-        <span class="soon-tag">Coming soon</span>
-        <span class="cat-arrow">→</span>
-      </div>
     </div>
   </div>
 </section>
@@ -416,21 +418,18 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 .explore-head-title { font-family:var(--font-serif); font-size:clamp(1.1rem,2vw,1.35rem); color:var(--ink); font-weight:400; }
 .cat-list { display:flex; flex-direction:column; }
 .cat-row { display:grid; grid-template-columns:80px 1fr auto auto; align-items:center; gap:2rem; padding:1.75rem 0; border-bottom:1px solid rgba(0,0,0,.08); color:inherit; position:relative; transition:padding-left .3s ease; }
-.cat-row:not(.cat-row--dim) { cursor:pointer; }
-.cat-row:not(.cat-row--dim)::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--deep-blue); transition:width .3s ease; border-radius:0 2px 2px 0; }
-.cat-row:not(.cat-row--dim):hover { padding-left:1rem; }
-.cat-row:not(.cat-row--dim):hover::before { width:3px; }
-.cat-row--dim { opacity:.4; cursor:default; }
+.cat-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--deep-blue); transition:width .3s ease; border-radius:0 2px 2px 0; }
+.cat-row:hover { padding-left:1rem; }
+.cat-row:hover::before { width:3px; }
 .cat-num { font-family:var(--font-serif); font-size:clamp(2.5rem,5vw,3.8rem); color:rgba(0,0,0,.1); line-height:1; transition:color .3s; user-select:none; }
-.cat-row:not(.cat-row--dim):hover .cat-num { color:var(--deep-blue); }
+.cat-row:hover .cat-num { color:var(--deep-blue); }
 .cat-info { display:flex; flex-direction:column; gap:.3rem; }
 .cat-name { font-family:var(--font-serif); font-size:clamp(1.5rem,3vw,2.2rem); color:var(--ink); line-height:1.1; transition:color .3s; }
-.cat-row:not(.cat-row--dim):hover .cat-name { color:var(--deep-blue); }
+.cat-row:hover .cat-name { color:var(--deep-blue); }
 .cat-desc { font-size:.875rem; color:var(--muted); line-height:1.55; max-width:430px; }
 .cat-count { font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
 .cat-arrow { font-size:1.4rem; color:rgba(0,0,0,.15); transition:color .3s,transform .3s; }
-.cat-row:not(.cat-row--dim):hover .cat-arrow { color:var(--deep-blue); transform:translateX(6px); }
-.soon-tag { font-size:.6rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; background:rgba(0,0,0,.07); color:var(--muted); padding:3px 8px; border-radius:4px; }
+.cat-row:hover .cat-arrow { color:var(--deep-blue); transform:translateX(6px); }
 .numbers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
 .num-item { padding:2.5rem; border-right:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
 .num-item:nth-child(3n) { border-right:none; }
@@ -512,7 +511,6 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
   .cat-desc { display:none; }
   .beach-cat-grid { grid-template-columns:1fr; }
   .tav-grid { grid-template-columns:1fr; }
-  .scroll-hint { display:none; }
 }
 @media (max-width:480px) {
   .hero-ctas { flex-direction:column; }

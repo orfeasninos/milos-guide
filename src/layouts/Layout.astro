@@ -191,24 +191,25 @@ const schemas: object[] = [
           <span class="nav-icon" aria-hidden="true">🍽</span>
           <span>{isEl ? 'Φαγητό' : 'Food'}</span>
         </a>
-        <a href={isEl ? '/el/beaches' : '/beaches'} class="nav-link" data-navlink>
-          <span class="nav-icon" aria-hidden="true">🏖</span>
-          <span>{isEl ? 'Παραλίες' : 'Beaches'}</span>
-        </a>
         <a href={isEl ? '/el/stay' : '/stay'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏨&#xFE0E;</span>
           <span>{isEl ? 'Διαμονή' : 'Stay'}</span>
         </a>
+        <a href={isEl ? '/el/beaches' : '/beaches'} class="nav-link" data-navlink>
+          <span class="nav-icon" aria-hidden="true">🏖</span>
+          <span>{isEl ? 'Παραλίες' : 'Beaches'}</span>
+        </a>
+        
 
         <div class="nav-divider" aria-hidden="true"></div>
 
-        <a href={isEl ? '/el/search' : '/search'} class="icon-btn" aria-label={isEl ? 'Αναζήτηση' : 'Search'} data-tooltip={isEl ? 'Αναζήτηση' : 'Search'}>
+        <a href={isEl ? '/el/search' : '/search'} class="icon-btn" aria-label={isEl ? 'Αναζήτηση' : 'Search'} data-tooltip={isEl ? 'Αναζήτηση' : 'Search'} data-navlink>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </a>
-        <a href={isEl ? '/el/map' : '/map'} class="icon-btn" aria-label={isEl ? 'Χάρτης' : 'Map'} data-tooltip={isEl ? 'Χάρτης' : 'Map'}>
+        <a href={isEl ? '/el/map' : '/map'} class="icon-btn" aria-label={isEl ? 'Χάρτης' : 'Map'} data-tooltip={isEl ? 'Χάρτης' : 'Map'} data-navlink>
           <MilosIcon />
         </a>
-        <a href={isEl ? '/el/weather' : '/weather'} class="icon-btn" aria-label={isEl ? 'Καιρός' : 'Weather'} data-tooltip={isEl ? 'Καιρός' : 'Weather'}>
+        <a href={isEl ? '/el/weather' : '/weather'} class="icon-btn" aria-label={isEl ? 'Καιρός' : 'Weather'} data-tooltip={isEl ? 'Καιρός' : 'Weather'} data-navlink>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"/>
             <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -391,6 +392,7 @@ nav ul, nav ol { list-style: none; }
 
 .icon-btn { position: relative; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); color: var(--muted); flex-shrink: 0; transition: background 0.15s var(--ease), color 0.15s var(--ease), transform 0.15s var(--ease-spring); }
 .icon-btn:hover { background: var(--sand); color: var(--aegean); transform: translateY(-1px); }
+.icon-btn.is-active { color: var(--aegean); background: rgba(26,92,138,0.08); }
 .icon-btn[data-tooltip]::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-4px); background: var(--deep-blue); color: #fff; font-size: 0.7rem; font-weight: 500; white-space: nowrap; padding: 4px 8px; border-radius: var(--radius-sm); pointer-events: none; opacity: 0; transition: opacity 0.15s, transform 0.15s var(--ease); z-index: 300; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
 .icon-btn[data-tooltip]::before { content: ''; position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%) translateY(-4px); border: 4px solid transparent; border-bottom-color: var(--deep-blue); pointer-events: none; opacity: 0; transition: opacity 0.15s, transform 0.15s var(--ease); z-index: 300; }
 .icon-btn[data-tooltip]:hover::after, .icon-btn[data-tooltip]:hover::before { opacity: 1; transform: translateX(-50%) translateY(0); }
