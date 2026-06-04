@@ -813,15 +813,6 @@ const BEACHES_DATA = (beachesRaw as any[])
 <script define:vars={{ LAT, LNG, BEACHES_DATA }}>
 const BEACHES = BEACHES_DATA;
 
-const WMO_ICONS = {
-  0:'☀️',1:'🌤',2:'⛅',3:'☁️',
-  45:'🌫',48:'🌫',
-  51:'🌦',53:'🌦',55:'🌧',
-  61:'🌧',63:'🌧',65:'🌧',
-  71:'🌨',73:'🌨',75:'🌨',
-  80:'🌦',81:'🌧',82:'⛈',
-  95:'⛈',96:'⛈',99:'⛈',
-};
 const WMO_TEXT = {
   0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
   45:'Foggy',48:'Foggy',
@@ -932,6 +923,57 @@ function recommendation(windKmh, windDeg, waveH) {
   };
 }
 
+// ── Colorful SVG weather icons ────────────────────────
+const _wmoIcon = (function(){
+  const ns = 'xmlns="http://www.w3.org/2000/svg"';
+  function svg(body){
+    return `<svg ${ns} viewBox="0 0 48 48" width="1em" height="1em" style="display:inline-block;vertical-align:middle;flex-shrink:0">${body}</svg>`;
+  }
+  function cloud(f){
+    return `<circle cx="26" cy="22" r="11" fill="${f}"/><circle cx="15" cy="26" r="8" fill="${f}"/><rect x="7" y="24" width="34" height="14" rx="6" fill="${f}"/>`;
+  }
+  const smallSun =
+    '<circle cx="13" cy="12" r="7" fill="#FFD700" stroke="#FFA000" stroke-width="1"/>' +
+    '<g stroke="#FFB300" stroke-width="2" stroke-linecap="round">' +
+    '<line x1="13" y1="2" x2="13" y2="5"/>' +
+    '<line x1="13" y1="19" x2="13" y2="22"/>' +
+    '<line x1="3" y1="12" x2="6" y2="12"/>' +
+    '<line x1="20" y1="12" x2="23" y2="12"/>' +
+    '<line x1="6" y1="5" x2="8" y2="7"/>' +
+    '<line x1="18" y1="17" x2="20" y2="19"/>' +
+    '<line x1="20" y1="5" x2="18" y2="7"/>' +
+    '<line x1="8" y1="17" x2="6" y2="19"/>' +
+    '</g>';
+  const rain4 = '<g stroke="#1565C0" stroke-width="2.5" stroke-linecap="round"><line x1="14" y1="38" x2="12" y2="44"/><line x1="21" y1="38" x2="19" y2="44"/><line x1="28" y1="38" x2="26" y2="44"/><line x1="35" y1="38" x2="33" y2="44"/></g>';
+  const rain3 = '<g stroke="#42A5F5" stroke-width="2" stroke-linecap="round"><line x1="16" y1="38" x2="14" y2="43"/><line x1="24" y1="38" x2="22" y2="43"/><line x1="32" y1="38" x2="30" y2="43"/></g>';
+  const snow   = '<g fill="#90CAF9"><circle cx="14" cy="40" r="2.5"/><circle cx="24" cy="42" r="2.5"/><circle cx="34" cy="40" r="2.5"/><circle cx="19" cy="46" r="2"/><circle cx="29" cy="46" r="2"/></g>';
+  const bolt   = '<polygon points="22,32 32,32 26,41 31,41 18,48 24,40 19,40" fill="#FFD700" stroke="#FFA000" stroke-width="0.5" stroke-linejoin="round"/>';
+  const fog    = '<g stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"><line x1="8" y1="38" x2="40" y2="38"/><line x1="12" y1="43" x2="42" y2="43"/></g>';
+  const bigSun =
+    '<circle cx="24" cy="24" r="11" fill="#FFD700" stroke="#FFA000" stroke-width="1.5"/>' +
+    '<g stroke="#FFB300" stroke-width="3" stroke-linecap="round">' +
+    '<line x1="24" y1="5" x2="24" y2="11"/>' +
+    '<line x1="24" y1="37" x2="24" y2="43"/>' +
+    '<line x1="5" y1="24" x2="11" y2="24"/>' +
+    '<line x1="37" y1="24" x2="43" y2="24"/>' +
+    '<line x1="10.5" y1="10.5" x2="14" y2="14"/>' +
+    '<line x1="34" y1="34" x2="37.5" y2="37.5"/>' +
+    '<line x1="37.5" y1="10.5" x2="34" y2="14"/>' +
+    '<line x1="14" y1="34" x2="10.5" y2="37.5"/>' +
+    '</g>';
+  return function(code){
+    if (code===0||code===1)                          return svg(bigSun);
+    if (code===2)                                    return svg(smallSun + cloud('#ECEFF1'));
+    if (code===3)                                    return svg(cloud('#90A4AE'));
+    if (code===45||code===48)                        return svg(cloud('#B0BEC5') + fog);
+    if (code>=51&&code<=55)                          return svg(cloud('#7EB0C8') + rain3);
+    if ((code>=61&&code<=65)||(code>=80&&code<=82))  return svg(cloud('#5A7D9A') + rain4);
+    if (code>=71&&code<=75)                          return svg(cloud('#90A4AE') + snow);
+    if (code>=95)                                    return svg(cloud('#455A64') + rain3 + bolt);
+    return svg(smallSun + cloud('#ECEFF1'));
+  };
+})();
+
 let _loading = false;
 async function loadWeather() {
   if (_loading) return;
@@ -993,7 +1035,7 @@ async function loadWeather() {
     // ── Hero
     const heroEl = document.getElementById('weather-hero');
     heroEl.classList.add(heroClass(c.weather_code));
-    el('hero-icon').textContent      = WMO_ICONS[c.weather_code] ?? '🌤';
+    el('hero-icon').innerHTML         = _wmoIcon(c.weather_code);
     el('hero-temp').textContent      = `${Math.round(c.temperature_2m)}°`;
     el('hero-condition').textContent = WMO_TEXT[c.weather_code] ?? 'Unknown';
     el('hero-feels').textContent     = `Feels like ${Math.round(c.apparent_temperature)}°C`;
@@ -1071,6 +1113,14 @@ async function loadWeather() {
     let startIdx = times.findIndex(t => new Date(t).getHours() >= currentHour);
     if (startIdx < 0) startIdx = 0;
 
+    function hourBg(h) {
+      if (h >= 5  && h < 9)  return 'linear-gradient(135deg,#ffedd5 0%,#fed7aa 100%)';
+      if (h >= 9  && h < 13) return 'linear-gradient(135deg,#fef9c3 0%,#fde68a 100%)';
+      if (h >= 13 && h < 17) return 'linear-gradient(135deg,#dbeafe 0%,#bfdbfe 100%)';
+      if (h >= 17 && h < 21) return 'linear-gradient(135deg,#ffe4e6 0%,#fecaca 100%)';
+      return 'linear-gradient(135deg,#ede9fe 0%,#c7d2fe 100%)';
+    }
+
     el('w-hourly').innerHTML = times.slice(startIdx, startIdx + 12).map((t, i) => {
       const idx = startIdx + i;
       const h = new Date(t).getHours();
@@ -1079,9 +1129,10 @@ async function loadWeather() {
       const rainBar = `<div class="w-fc-rain-track" title="${rainPct}% chance of rain">
         <div class="w-fc-rain-fill" style="width:${rainPct}%"></div>
       </div>`;
-      return `<div class="w-fc-item${isNow ? ' is-now' : ''}">
+      const bgStyle = isNow ? '' : `style="background:${hourBg(h)};border-color:transparent"`;
+      return `<div class="w-fc-item${isNow ? ' is-now' : ''}" ${bgStyle}>
         <span class="w-fc-time">${isNow ? 'Now' : formatHour(h)}</span>
-        <span class="w-fc-icon">${WMO_ICONS[codes[idx]] ?? '🌤'}</span>
+        <span class="w-fc-icon">${_wmoIcon(codes[idx])}</span>
         <span class="w-fc-temp">${Math.round(temps[idx])}°</span>
         <span class="w-fc-wind">${Math.round(winds[idx])} km/h</span>
         ${rainBar}
@@ -1090,6 +1141,15 @@ async function loadWeather() {
     }).join('');
 
     // ── 7-day outlook
+    const dayPalette = [
+      'linear-gradient(135deg,#dbeafe 0%,#bfdbfe 100%)',
+      'linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%)',
+      'linear-gradient(135deg,#fef9c3 0%,#fde68a 100%)',
+      'linear-gradient(135deg,#ffedd5 0%,#fed7aa 100%)',
+      'linear-gradient(135deg,#fce7f3 0%,#fbcfe8 100%)',
+      'linear-gradient(135deg,#ede9fe 0%,#ddd6fe 100%)',
+      'linear-gradient(135deg,#ccfbf1 0%,#99f6e4 100%)',
+    ];
     const weekMin   = Math.min(...w.daily.temperature_2m_min);
     const weekMax   = Math.max(...w.daily.temperature_2m_max);
     const weekRange = weekMax - weekMin || 1;
@@ -1102,10 +1162,11 @@ async function loadWeather() {
       const barWidth = Math.max(((dayMax - dayMin) / weekRange * 100), 15).toFixed(1);
       const condFull = WMO_TEXT[w.daily.weather_code[i]] ?? '';
       const condShort = condFull.split(' ').slice(0, 2).join(' ');
+      const dayBgStyle = isToday ? '' : `style="background:${dayPalette[i % dayPalette.length]};border-color:transparent"`;
       return `
-      <div class="w-day${isToday ? ' is-today' : ''}">
+      <div class="w-day${isToday ? ' is-today' : ''}" ${dayBgStyle}>
         <span class="w-day-name">${dayLabel(d, i)}</span>
-        <span class="w-day-icon">${WMO_ICONS[w.daily.weather_code[i]] ?? '🌤'}</span>
+        <span class="w-day-icon">${_wmoIcon(w.daily.weather_code[i])}</span>
         <span class="w-day-cond">${condShort}</span>
         <span class="w-day-high">${dayMax}°</span>
         <div class="w-day-range-track">
