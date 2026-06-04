@@ -1,975 +1,742 @@
 [
   {
     "slug": "sarakiniko",
-    "name": {
-      "el": "Σαρακήνικο",
-      "en": "Sarakiniko"
-    },
+    "name": { "el": "Σαρακήνικο", "en": "Sarakiniko" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Σαρακήνικο στη Μήλο.",
       "en": "A lunar landscape of brilliant white volcanic rock — one of the most photographed beaches in the Aegean."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJ0WiZqZngmBQRGpyewQ9Be10",
     "localPhoto": "/images/beaches/sarakiniko.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.742697199999995,
-      "lng": 24.458423
-    },
+    "coordinates": { "lat": 36.742697199999995, "lng": 24.458423 },
     "rating": 4.8,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Volcanic rock",
+    "shade": false,
+    "bestFor": ["Photography", "Snorkeling"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "fyropotamos",
-    "name": {
-      "el": "Παραλία Φυροπόταμος",
-      "en": "Fyropotamos"
-    },
+    "name": { "el": "Παραλία Φυροπόταμος", "en": "Fyropotamos" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Φυροπόταμος στη Μήλο.",
       "en": "A picturesque bay with crystal clear waters and traditional syrmata boathouses lining the shore."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Φυροπόταμος, Φυροπόταμος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Φυροπόταμος, Φυροπόταμος 848 00, Ελλάδα" },
     "placeId": "ChIJz_JtHivZmBQRkL9wlnf6eS0",
     "localPhoto": "/images/beaches/fyropotamos.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.757727599999996,
-      "lng": 24.427407
-    },
+    "coordinates": { "lat": 36.757727599999996, "lng": 24.427407 },
     "rating": 4.6,
     "accessType": "road",
-    "facilities": [
-      "sunbeds"
-    ]
+    "facilities": ["sunbeds"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Relaxation"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "tsigrado",
-    "name": {
-      "el": "Παραλία Τσιγκράδο",
-      "en": "Tsigrado"
-    },
+    "name": { "el": "Παραλία Τσιγκράδο", "en": "Tsigrado" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Τσιγκράδο στη Μήλο.",
       "en": "A hidden gem reached by descending a rope through a narrow cliff crevice, with dazzling turquoise water below."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJM8fbsgMhmRQRCTwmcIrrbKw",
     "localPhoto": "/images/beaches/tsigrado.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.661895799999996,
-      "lng": 24.4693335
-    },
+    "coordinates": { "lat": 36.661895799999996, "lng": 24.4693335 },
     "rating": 4.6,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Sand",
+    "shade": true,
+    "bestFor": ["Adventure", "Snorkeling"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "fyriplaka",
-    "name": {
-      "el": "Παραλία Φυριπλάκα",
-      "en": "Fyriplaka"
-    },
+    "name": { "el": "Παραλία Φυριπλάκα", "en": "Fyriplaka" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Φυριπλάκα στη Μήλο.",
       "en": "A long sandy beach on the south coast, sheltered from the meltemi winds and ideal throughout the summer."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Φυριπλάκα, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Φυριπλάκα, Ελλάδα" },
     "placeId": "ChIJYXSITf0gmRQRzXZddA1Lm8U",
     "localPhoto": "/images/beaches/fyriplaka.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6662272,
-      "lng": 24.4651858
-    },
+    "coordinates": { "lat": 36.6662272, "lng": 24.4651858 },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Swimming"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "paleochori",
-    "name": {
-      "el": "Παραλία Παλαιοχώρι",
-      "en": "Paleochori"
-    },
+    "name": { "el": "Παραλία Παλαιοχώρι", "en": "Paleochori" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Παλαιοχώρι στη Μήλο.",
       "en": "A unique geothermal beach where volcanic heat warms the sand from below — and the water from beneath the surface."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Παλαιοχώρι, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Παλαιοχώρι, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJV017TR8gmRQRdxRkf8lCbA8",
     "localPhoto": "/images/beaches/paleochori.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6750374,
-      "lng": 24.5184634
-    },
+    "coordinates": { "lat": 36.6750374, "lng": 24.5184634 },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Relaxation"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "provatas",
-    "name": {
-      "el": "Παραλία Προβατάς",
-      "en": "Provatas"
-    },
+    "name": { "el": "Παραλία Προβατάς", "en": "Provatas" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Προβατάς στη Μήλο.",
       "en": "A family-friendly beach with calm shallow water, full facilities, and easy road access on the south coast."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Προβατάς, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Προβατάς, Ελλάδα" },
     "placeId": "ChIJm1vPWN8gmRQRDeezhjIxpfk",
     "localPhoto": "/images/beaches/provatas.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6695517,
-      "lng": 24.4481058
-    },
+    "coordinates": { "lat": 36.6695517, "lng": 24.4481058 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Swimming"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "papafragas",
-    "name": {
-      "el": "Παραλία Παπαφράγκας",
-      "en": "Papafragas"
-    },
+    "name": { "el": "Παραλία Παπαφράγκας", "en": "Papafragas" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Παπαφράγκας στη Μήλο.",
       "en": "A series of narrow sea caves carved into the volcanic cliffs — magical for swimming."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Παπαφράγκας, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Παπαφράγκας, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJO2wQzTjemBQRnWLmDanlY-Q",
     "localPhoto": "/images/beaches/papafragas.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.753791,
-      "lng": 24.502596
-    },
+    "coordinates": { "lat": 36.753791, "lng": 24.502596 },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Volcanic rock",
+    "shade": true,
+    "bestFor": ["Swimming", "Exploring"],
+    "swimDepth": "Deep"
   },
   {
     "slug": "kleftiko",
-    "name": {
-      "el": "Παραλία Κλέφτικο",
-      "en": "Kleftiko"
-    },
+    "name": { "el": "Παραλία Κλέφτικο", "en": "Kleftiko" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Κλέφτικο στη Μήλο.",
       "en": "The crown jewel of Milos — dramatic sea caves and arches on the southwest tip, accessible only by boat."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJm4ngzlUvmRQRoTRDMx9ps0c",
     "localPhoto": "/images/beaches/kleftiko.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6506578,
-      "lng": 24.3324547
-    },
+    "coordinates": { "lat": 36.6506578, "lng": 24.3324547 },
     "rating": 4.9,
     "accessType": "boat",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Volcanic rock",
+    "shade": true,
+    "bestFor": ["Snorkeling", "Photography"],
+    "swimDepth": "Deep"
   },
   {
     "slug": "agia-kyriaki",
-    "name": {
-      "el": "Παραλία Αγιά Κυριάκη",
-      "en": "Agia Kyriaki"
-    },
+    "name": { "el": "Παραλία Αγιά Κυριάκη", "en": "Agia Kyriaki" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αγιά Κυριάκη στη Μήλο.",
       "en": "A sheltered south-coast beach with calm clear water, sunbeds, and a relaxed atmosphere."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Αγιά Κυριάκη, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Αγιά Κυριάκη, Ελλάδα" },
     "placeId": "ChIJ-xX-rkcgmRQRghNadCOYW64",
     "localPhoto": "/images/beaches/agia-kyriaki.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.670763199999996,
-      "lng": 24.498369099999998
-    },
+    "coordinates": { "lat": 36.670763199999996, "lng": 24.498369099999998 },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Relaxation"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "gerontas",
-    "name": {
-      "el": "Παραλία Γέροντας",
-      "en": "Gerontas"
-    },
+    "name": { "el": "Παραλία Γέροντας", "en": "Gerontas" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Γέροντας στη Μήλο.",
       "en": "A remote beach with striking red and orange volcanic cliffs — few crowds and spectacular scenery."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Γέροντας, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Γέροντας, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJrcfgG3AmmRQR98P9y5kUm8A",
     "localPhoto": "/images/beaches/gerontas.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6558418,
-      "lng": 24.3687032
-    },
+    "coordinates": { "lat": 36.6558418, "lng": 24.3687032 },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Photography", "Solitude"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "triades",
-    "name": {
-      "el": "Triades Beach",
-      "en": "Triades"
-    },
+    "name": { "el": "Triades Beach", "en": "Triades" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Triades Beach στη Μήλο.",
       "en": "A long sandy beach on the northwest coast, naturally beautiful and unspoiled, with no facilities."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Triades Beach, Plaka 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Triades Beach, Plaka 848 00, Ελλάδα" },
     "placeId": "ChIJk0GaVNgnmRQRnmaZdSgwmi0",
     "localPhoto": "/images/beaches/triades.jpg",
     "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.7064471,
-      "lng": 24.3368601
-    },
+    "coordinates": { "lat": 36.7064471, "lng": 24.3368601 },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Solitude", "Swimming"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "rivari",
-    "name": {
-      "el": "Λιμνοθάλασσα Ριβάρι",
-      "en": "Rivari Lagoon"
-    },
+    "name": { "el": "Λιμνοθάλασσα Ριβάρι", "en": "Rivari Lagoon" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Λιμνοθάλασσα Ριβάρι στη Μήλο.",
       "en": "A stunning natural lagoon where warm shallow water is separated from the open sea by a sand strip."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJy-vvY2snmRQRmjhzl22zYuU",
     "localPhoto": "/images/beaches/rivari.jpg",
     "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.7022094,
-      "lng": 24.401958399999998
-    },
+    "coordinates": { "lat": 36.7022094, "lng": 24.401958399999998 },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Solitude"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "sikia-beach",
-    "name": {
-      "el": "Σπηλιά της Συκιάς",
-      "en": "Sikia Beach"
-    },
+    "name": { "el": "Σπηλιά της Συκιάς", "en": "Sikia Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Σπηλιά της Συκιάς στη Μήλο.",
       "en": "A small beach inside a collapsed sea cave, famous for its emerald waters and natural skylight."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Sykia Cave 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Sykia Cave 848 00, Ελλάδα" },
     "placeId": "ChIJ30SVkboomRQR-XE2sBP0qoQ",
     "localPhoto": "/images/beaches/sikia-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.667732699999995,
-      "lng": 24.320308999999998
-    },
+    "coordinates": { "lat": 36.667732699999995, "lng": 24.320308999999998 },
     "rating": 4.9,
     "accessType": "boat",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Volcanic rock",
+    "shade": true,
+    "bestFor": ["Photography", "Snorkeling"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "plathiena",
-    "name": {
-      "el": "Plathiena",
-      "en": "Plathiena"
-    },
+    "name": { "el": "Plathiena", "en": "Plathiena" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Plathiena στη Μήλο.",
       "en": "A long sandy beach near Plaka with good facilities and colourful volcanic cliffs."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Plathiena, Plaka 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Plathiena, Plaka 848 00, Ελλάδα" },
     "placeId": "ChIJjRquQtnYmBQRQ7pP7vsncWg",
     "localPhoto": "/images/beaches/plathiena.jpg",
     "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.7540755,
-      "lng": 24.4127023
-    },
+    "coordinates": { "lat": 36.7540755, "lng": 24.4127023 },
     "rating": 4.6,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Swimming"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "theiorycheia",
-    "name": {
-      "el": "Παραλία Θειορυχειο",
-      "en": "Theiorycheia"
-    },
+    "name": { "el": "Παραλία Θειορυχειο", "en": "Theiorycheia" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Θειορυχειο στη Μήλο.",
       "en": "A historic beach featuring abandoned sulfur mines and rusted machinery against colourful cliffs."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Θειορυχειο, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Θειορυχειο, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJYX4EKxngmBQReaJLyEreCN4",
     "localPhoto": "/images/beaches/theiorycheia.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.694101499999995,
-      "lng": 24.544843
-    },
+    "coordinates": { "lat": 36.694101499999995, "lng": 24.544843 },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["History", "Photography"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "achivadolimni",
-    "name": {
-      "el": "Παραλία Αχιβαδόλιμνη",
-      "en": "Achivadolimni"
-    },
+    "name": { "el": "Παραλία Αχιβαδόλιμνη", "en": "Achivadolimni" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αχιβαδόλιμνη στη Μήλο.",
       "en": "A large, popular beach with sandy bottom, crystal clear waters and ideal conditions for windsurfing."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Αχιβαδόλιμνη, 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Αχιβαδόλιμνη, 848 00, Ελλάδα" },
     "placeId": "ChIJewwOoL8gmRQRezP7q9fj8eU",
     "localPhoto": "/images/beaches/achivadolimni.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6915036,
-      "lng": 24.4527008
-    },
+    "coordinates": { "lat": 36.6915036, "lng": 24.4527008 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Windsurfing"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "agios-sostis",
-    "name": {
-      "el": "Παραλία Άγιος Σώστης",
-      "en": "Agios Sostis"
-    },
+    "name": { "el": "Παραλία Άγιος Σώστης", "en": "Agios Sostis" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Σώστης στη Μήλο.",
       "en": "A serene quiet beach with shallow waters, offering a peaceful escape from busier spots."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJ95OKn9ggmRQRCXXt9IoD-6A",
     "localPhoto": "/images/beaches/agios-sostis.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6697896,
-      "lng": 24.4443792
-    },
+    "coordinates": { "lat": 36.6697896, "lng": 24.4443792 },
     "rating": 4.8,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Solitude"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "tria-pigadia",
-    "name": {
-      "el": "Παραλία Τρία Πηγάδια",
-      "en": "Tria Pigadia"
-    },
+    "name": { "el": "Παραλία Τρία Πηγάδια", "en": "Tria Pigadia" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Τρία Πηγάδια στη Μήλο.",
       "en": "A secluded, rugged beach favoured by those looking for privacy and untouched natural beauty."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Τρία Πηγάδια, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Τρία Πηγάδια, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJLX02ymLgmBQRzoaI83DwUFk",
     "localPhoto": "/images/beaches/tria-pigadia.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7298476,
-      "lng": 24.5363755
-    },
+    "coordinates": { "lat": 36.7298476, "lng": 24.5363755 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Solitude", "Photography"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "kastanas",
-    "name": {
-      "el": "Παραλία Καστανάς",
-      "en": "Kastanas"
-    },
+    "name": { "el": "Παραλία Καστανάς", "en": "Kastanas" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Καστανάς στη Μήλο.",
       "en": "A striking beach with colourful volcanic pebbles set against dramatic high cliffs."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Καστανάς, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Καστανάς, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJHx6x64jgmBQR4yGWvnTVLq4",
     "localPhoto": "/images/beaches/kastanas.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7345976,
-      "lng": 24.537876699999998
-    },
+    "coordinates": { "lat": 36.7345976, "lng": 24.537876699999998 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Photography", "Solitude"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "pollonia-beach",
-    "name": {
-      "el": "Pollonia beach, Milos",
-      "en": "Pollonia Beach"
-    },
+    "name": { "el": "Pollonia beach, Milos", "en": "Pollonia Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Pollonia beach, Milos στη Μήλο.",
       "en": "A convenient family-friendly beach in the fishing village of Pollonia, close to cafes and tavernas."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα" },
     "placeId": "ChIJeyxG4KfgmBQR3Z88FnBkAow",
     "localPhoto": "/images/beaches/pollonia-beach.jpg",
     "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.7639636,
-      "lng": 24.5257476
-    },
+    "coordinates": { "lat": 36.7639636, "lng": 24.5257476 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Families", "Relaxation"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "mandrakia",
-    "name": {
-      "el": "Παραλία Μανδράκια",
-      "en": "Mandrakia"
-    },
+    "name": { "el": "Παραλία Μανδράκια", "en": "Mandrakia" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Μανδράκια στη Μήλο.",
       "en": "A beautiful beach with clear blue waters, famous for the traditional colourful syrmata boathouses."
     },
-    "location": {
-      "area": "Milos",
-      "address": "QC2W+9F, Μανδράκια 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "QC2W+9F, Μανδράκια 848 00, Ελλάδα" },
     "placeId": "ChIJzUlGryDfmBQRfXkAtct_gAI",
     "localPhoto": "/images/beaches/mandrakia.jpg",
     "website": "http://milostravel.com/",
-    "coordinates": {
-      "lat": 36.750769,
-      "lng": 24.4460311
-    },
+    "coordinates": { "lat": 36.750769, "lng": 24.4460311 },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Photography", "Swimming"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "aggathia",
-    "name": {
-      "el": "Παραλία Αγγαθια",
-      "en": "Aggathia"
-    },
+    "name": { "el": "Παραλία Αγγαθια", "en": "Aggathia" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αγγαθια στη Μήλο.",
       "en": "A tranquil lesser-known spot, ideal for those seeking privacy away from the crowds."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Αγγαθια, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Αγγαθια, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJDfZlwfsnmRQRFK0TEKUS0ts",
     "localPhoto": "/images/beaches/aggathia.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7270586,
-      "lng": 24.3418226
-    },
+    "coordinates": { "lat": 36.7270586, "lng": 24.3418226 },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Solitude", "Swimming"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "ammoudaraki-beach",
-    "name": {
-      "el": "Παραλία Αμμουδαρακι",
-      "en": "Ammoudaraki Beach"
-    },
+    "name": { "el": "Παραλία Αμμουδαρακι", "en": "Ammoudaraki Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο.",
       "en": "A remote and peaceful beach featuring soft sand and beautiful natural surroundings."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJ1wFU49UnmRQR_I38SLhWvxk",
     "localPhoto": "/images/beaches/ammoudaraki-beach.jpg",
     "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.6988005,
-      "lng": 24.3349092
-    },
+    "coordinates": { "lat": 36.6988005, "lng": 24.3349092 },
     "rating": 4.6,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Solitude", "Relaxation"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "kalamos",
-    "name": {
-      "el": "Kalamos Beach",
-      "en": "Kalamos Beach"
-    },
+    "name": { "el": "Kalamos Beach", "en": "Kalamos Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Kalamos Beach στη Μήλο.",
       "en": "A beautiful beach with fine golden sand and deep clear blue waters, surrounded by volcanic scenery."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Kalamos, Plaka 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Kalamos, Plaka 848 00, Ελλάδα" },
     "placeId": "ChIJnb48OVQgmRQRuxS_p7xqXGU",
     "localPhoto": "/images/beaches/kalamos.jpg",
     "website": "https://milostravel.com/",
-    "coordinates": {
-      "lat": 36.6665091,
-      "lng": 24.481914
-    },
+    "coordinates": { "lat": 36.6665091, "lng": 24.481914 },
     "rating": 4.8,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Swimming", "Photography"],
+    "swimDepth": "Deep"
   },
   {
     "slug": "agios-ioannis-beach",
-    "name": {
-      "el": "Παραλία Άγιος Ιωάννης",
-      "en": "Agios Ioannis Beach"
-    },
+    "name": { "el": "Παραλία Άγιος Ιωάννης", "en": "Agios Ioannis Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Ιωάννης στη Μήλο.",
       "en": "A long wild and mostly secluded beach on the west side of the island."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Άγιος Ιωάννης, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Άγιος Ιωάννης, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJzfZFQ54omRQRbvHLKB4u_XQ",
     "localPhoto": "/images/beaches/agios-ioannis-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.677900099999995,
-      "lng": 24.3319625
-    },
+    "coordinates": { "lat": 36.677900099999995, "lng": 24.3319625 },
     "rating": 4.8,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Solitude", "Sunsets"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "kipos-beach",
-    "name": {
-      "el": "Παραλία Κήπος",
-      "en": "Paralia Kipos"
-    },
+    "name": { "el": "Παραλία Κήπος", "en": "Paralia Kipos" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Κήπος στη Μήλο.",
       "en": "A small serene beach known for its clear waters and proximity to traditional fish tavernas."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Κήπος, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Κήπος, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJW_iGVM0mmRQRETJ2dKCY_TI",
     "localPhoto": null,
     "website": null,
-    "coordinates": {
-      "lat": 36.663143399999996,
-      "lng": 24.429043099999998
-    },
+    "coordinates": { "lat": 36.663143399999996, "lng": 24.429043099999998 },
     "rating": 4.1,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Relaxation", "Families"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "deep-blue-beach",
-    "name": {
-      "el": "DeepBlue Beach",
-      "en": "Deep Blue Beach"
-    },
+    "name": { "el": "DeepBlue Beach", "en": "Deep Blue Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία DeepBlue Beach στη Μήλο.",
       "en": "A hidden cove with incredibly deep blue waters, offering a sense of isolation and raw beauty."
     },
-    "location": {
-      "area": "Milos",
-      "address": "MGF7+WR, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "MGF7+WR, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJEYyudwAhmRQR_EJW2V0hO7Q",
     "localPhoto": "/images/beaches/deep-blue-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.6748127,
-      "lng": 24.5145904
-    },
+    "coordinates": { "lat": 36.6748127, "lng": 24.5145904 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Volcanic rock",
+    "shade": false,
+    "bestFor": ["Snorkeling", "Solitude"],
+    "swimDepth": "Deep"
   },
   {
     "slug": "psathi-beach",
-    "name": {
-      "el": "Παραλία Ψαθί",
-      "en": "Psathi Beach"
-    },
+    "name": { "el": "Παραλία Ψαθί", "en": "Psathi Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Ψαθί στη Μήλο.",
       "en": "A lovely quiet beach with a calm atmosphere, often visited for a peaceful swim."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Ψαθί, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Ψαθί, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJVw0Mz8gmmRQRYzwEn6RQcHI",
     "localPhoto": null,
     "website": null,
-    "coordinates": {
-      "lat": 36.6599238,
-      "lng": 24.4193484
-    },
+    "coordinates": { "lat": 36.6599238, "lng": 24.4193484 },
     "rating": 3,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Relaxation", "Swimming"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "kolympionas-beach",
-    "name": {
-      "el": "Παραλία Κολυμπιώνας",
-      "en": "Kolympionas Beach"
-    },
+    "name": { "el": "Παραλία Κολυμπιώνας", "en": "Kolympionas Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Κολυμπιώνας στη Μήλο.",
       "en": "A rugged non-organised beach offering a wild landscape for nature lovers."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Κολυμπιώνας, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Κολυμπιώνας, Ελλάδα" },
     "placeId": "ChIJSXzY4mTgmBQRzOBvpPa_C9s",
     "localPhoto": "/images/beaches/kolympionas-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7234222,
-      "lng": 24.538231699999997
-    },
+    "coordinates": { "lat": 36.7234222, "lng": 24.538231699999997 },
     "rating": 4.3,
     "accessType": "road",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Solitude", "Nature"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "voudia-beach",
-    "name": {
-      "el": "Παραλία Βούδια",
-      "en": "Voudia Beach"
-    },
+    "name": { "el": "Παραλία Βούδια", "en": "Voudia Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Βούδια στη Μήλο.",
       "en": "A unique beach with industrial history and proximity to old mines — a different side of Milos."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Βούδια, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Βούδια, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJL--PNZjgmBQRvfL13fhiAHc",
     "localPhoto": "/images/beaches/voudia-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7496186,
-      "lng": 24.5347015
-    },
+    "coordinates": { "lat": 36.7496186, "lng": 24.5347015 },
     "rating": 4,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["History", "Photography"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "pachaina-beach",
-    "name": {
-      "el": "Παραλία Πάχαινα",
-      "en": "Pachaina Beach"
-    },
+    "name": { "el": "Παραλία Πάχαινα", "en": "Pachaina Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Πάχαινα στη Μήλο.",
       "en": "A lovely sandy beach with interesting rock formations and views of the Glaronisia islets."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Πάχαινα, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Πάχαινα, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJt22pWUbemBQRSibWDdWkVVo",
     "localPhoto": "/images/beaches/pachaina-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.752493,
-      "lng": 24.4966206
-    },
+    "coordinates": { "lat": 36.752493, "lng": 24.4966206 },
     "rating": 3.8,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Photography", "Relaxation"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "alogomantra-beach",
-    "name": {
-      "el": "Παραλία Αλογομάντρα",
-      "en": "Alogomantra Beach"
-    },
+    "name": { "el": "Παραλία Αλογομάντρα", "en": "Alogomantra Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αλογομάντρα στη Μήλο.",
       "en": "A beach enclosed by high vertical rocks, creating a natural harbour and unique swimming experience."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Αλογομάντρα, Μήλος, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Αλογομάντρα, Μήλος, Ελλάδα" },
     "placeId": "ChIJs3t9w1HemBQRu75RpmRtkRo",
     "localPhoto": "/images/beaches/alogomantra-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.748596,
-      "lng": 24.4877318
-    },
+    "coordinates": { "lat": 36.748596, "lng": 24.4877318 },
     "rating": 4.5,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Pebble",
+    "shade": true,
+    "bestFor": ["Swimming", "Snorkeling"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "mytakas-beach",
-    "name": {
-      "el": "Παραλία Μύτικας",
-      "en": "Mytakas Beach"
-    },
+    "name": { "el": "Παραλία Μύτικας", "en": "Mytakas Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Μύτικας στη Μήλο.",
       "en": "A small scenic beach with traditional boat houses, popular for its clear waters."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Μύτικας, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Μύτικας, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJH4sPfgDfmBQRK7u3niaeD6s",
     "localPhoto": "/images/beaches/mytakas-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7419216,
-      "lng": 24.476411199999998
-    },
+    "coordinates": { "lat": 36.7419216, "lng": 24.476411199999998 },
     "rating": 4.4,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Photography", "Relaxation"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "nerodafni-beach",
-    "name": {
-      "el": "Παραλία Νεροδάφνη",
-      "en": "Nerodafni Beach"
-    },
+    "name": { "el": "Παραλία Νεροδάφνη", "en": "Nerodafni Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Νεροδάφνη στη Μήλο.",
       "en": "A secluded natural spot perfect for those who enjoy pristine environments."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Νεροδάφνη, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Νεροδάφνη, Ελλάδα" },
     "placeId": "ChIJiyOAmCTZmBQRYNCAPo76ViA",
     "localPhoto": "/images/beaches/nerodafni-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7675625,
-      "lng": 24.4121797
-    },
+    "coordinates": { "lat": 36.7675625, "lng": 24.4121797 },
     "rating": 4.3,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Solitude", "Relaxation"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "klima",
-    "name": {
-      "el": "Παραλία Κλήμα",
-      "en": "Klima Beach"
-    },
+    "name": { "el": "Παραλία Κλήμα", "en": "Klima Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Κλήμα στη Μήλο.",
       "en": "A unique beach at the famous settlement of Klima, known for the multi-coloured traditional syrmata."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Κλήμα, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Κλήμα, Ελλάδα" },
     "placeId": "ChIJ3TAOoPfZmBQRjsjxWh-2Ps0",
     "localPhoto": "/images/beaches/klima.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7348694,
-      "lng": 24.420080799999997
-    },
+    "coordinates": { "lat": 36.7348694, "lng": 24.420080799999997 },
     "rating": 4.7,
     "accessType": "road",
-    "facilities": [
-      "parking"
-    ]
+    "facilities": ["parking"],
+    "sandType": "Pebble",
+    "shade": false,
+    "bestFor": ["Photography", "Culture"],
+    "swimDepth": "Moderate"
   },
   {
     "slug": "papikinou-beach",
-    "name": {
-      "el": "Παραλία Παπικινού",
-      "en": "Papikinou Beach"
-    },
+    "name": { "el": "Παραλία Παπικινού", "en": "Papikinou Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Παπικινού στη Μήλο.",
       "en": "A long tree-lined sandy beach near Adamas, offering plenty of shade and access to local tavernas."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Παπικινού, Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Παπικινού, Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα" },
     "placeId": "ChIJGaqqXWnfmBQRcPjTpextS04",
     "localPhoto": "/images/beaches/papikinou-beach.jpg",
     "website": "http://visit.milos.gr/portfolio-items/papikinou-el?portfolioCats=14%2C12%2C15%2C11%2C13",
-    "coordinates": {
-      "lat": 36.721516099999995,
-      "lng": 24.458498799999997
-    },
+    "coordinates": { "lat": 36.721516099999995, "lng": 24.458498799999997 },
     "rating": 4.2,
     "accessType": "road",
-    "facilities": [
-      "sunbeds",
-      "parking"
-    ]
+    "facilities": ["sunbeds", "parking"],
+    "sandType": "Sand",
+    "shade": true,
+    "bestFor": ["Families", "Relaxation"],
+    "swimDepth": "Shallow"
   },
   {
     "slug": "agios-dimitrios-beach",
-    "name": {
-      "el": "Παραλία Άγιος Δημήτριος",
-      "en": "Agios Dimitrios Beach"
-    },
+    "name": { "el": "Παραλία Άγιος Δημήτριος", "en": "Agios Dimitrios Beach" },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Άγιος Δημήτριος στη Μήλο.",
       "en": "A quiet beach named after the local chapel, offering a peaceful setting and shallow waters."
     },
-    "location": {
-      "area": "Milos",
-      "address": "Παραλία Άγιος Δημήτριος, Μήλος 848 00, Ελλάδα"
-    },
+    "location": { "area": "Milos", "address": "Παραλία Άγιος Δημήτριος, Μήλος 848 00, Ελλάδα" },
     "placeId": "ChIJLSbyyoTYmBQRG0NEfYQSHbA",
     "localPhoto": "/images/beaches/agios-dimitrios-beach.jpg",
     "website": null,
-    "coordinates": {
-      "lat": 36.7283799,
-      "lng": 24.393426299999998
-    },
+    "coordinates": { "lat": 36.7283799, "lng": 24.393426299999998 },
     "rating": 4.3,
     "accessType": "boat",
-    "facilities": []
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": ["Solitude", "Families"],
+    "swimDepth": "Shallow"
   }
 ]

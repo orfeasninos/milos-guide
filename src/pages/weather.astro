@@ -101,16 +101,20 @@ const BEACHES_DATA = (beachesRaw as any[])
 
     <div class="w-loading" id="w-loading">
       <div class="w-spinner"></div>
-      <p>Fetching current conditions…</p>
+      <p>Fetching current conditions… Please wait.</p>
     </div>
 
     <div class="w-error" id="w-error" style="display:none">
       <div class="w-error-icon">⚠️</div>
       <p>Could not load weather data. Please try again later.</p>
-      <button class="w-retry-btn" onclick="loadWeather()">Try again</button>
+      <button class="w-retry-btn" id="w-retry-btn">Try again</button>
     </div>
 
     <div class="w-content" id="w-content" style="display:none">
+
+      <div class="w-stale-banner" id="w-stale-banner" style="display:none">
+        ⚠️ Live data unavailable — showing last known conditions from <span id="w-stale-time">–</span>
+      </div>
 
       <!-- Stats grid -->
       <div class="w-stats-grid">
@@ -321,6 +325,17 @@ const BEACHES_DATA = (beachesRaw as any[])
   margin-top: 1.75rem;
   font-size: 0.68rem;
   color: rgba(255,255,255,0.28);
+}
+
+/* ── Stale banner ────────────────────────────────── */
+.w-stale-banner {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+  color: #7a5c00;
+  margin-bottom: 1.25rem;
 }
 
 /* ── Loading / Error ──────────────────────────────── */
@@ -917,19 +932,25 @@ function recommendation(windKmh, windDeg, waveH) {
   };
 }
 
+let _loading = false;
 async function loadWeather() {
+  if (_loading) return;
+  _loading = true;
   el('w-loading').style.display = 'flex';
   el('w-error').style.display   = 'none';
   el('w-content').style.display = 'none';
   el('w-content').classList.remove('is-ready');
+  el('w-stale-banner').style.display = 'none';
+
+  let w, m, cachedAt = null;
 
   try {
     const weatherUrl = [
       `https://api.open-meteo.com/v1/forecast`,
       `?latitude=${LAT}&longitude=${LNG}`,
-      `&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m,winddirection_10m,uv_index,relative_humidity_2m`,
-      `&hourly=temperature_2m,weathercode,windspeed_10m,precipitation_probability`,
-      `&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max,sunrise,sunset`,
+      `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m`,
+      `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability`,
+      `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset`,
       `&timezone=Europe%2FAthens&forecast_days=7&models=best_match`,
     ].join('');
     const marineUrl = [
@@ -940,21 +961,39 @@ async function loadWeather() {
     ].join('');
 
     const [wRes, mRes] = await Promise.all([fetch(weatherUrl), fetch(marineUrl)]);
-    const w = await wRes.json();
-    const m = await mRes.json();
+    w = await wRes.json();
+    if (w.error) throw new Error(w.reason ?? 'Weather API error');
+    m = mRes.ok ? await mRes.json() : { current: null };
+  } catch (liveErr) {
+    console.warn('Live fetch failed, trying cache:', liveErr.message);
+    try {
+      const cacheRes = await fetch('/weather-cache.json');
+      if (!cacheRes.ok) throw new Error('No cache');
+      const cached = await cacheRes.json();
+      w = cached.weather;
+      m = cached.marine ?? { current: null };
+      cachedAt = cached.cachedAt;
+    } catch {
+      el('w-loading').style.display = 'none';
+      el('w-error').style.display   = 'block';
+      _loading = false;
+      return;
+    }
+  }
 
+  try {
     const c = w.current;
     const waveH   = m.current?.wave_height ?? 0;
     const seaTemp = m.current?.sea_surface_temperature ?? null;
 
     // ── Hero
     const heroEl = document.getElementById('weather-hero');
-    heroEl.classList.add(heroClass(c.weathercode));
-    el('hero-icon').textContent      = WMO_ICONS[c.weathercode] ?? '🌤';
+    heroEl.classList.add(heroClass(c.weather_code));
+    el('hero-icon').textContent      = WMO_ICONS[c.weather_code] ?? '🌤';
     el('hero-temp').textContent      = `${Math.round(c.temperature_2m)}°`;
-    el('hero-condition').textContent = WMO_TEXT[c.weathercode] ?? 'Unknown';
+    el('hero-condition').textContent = WMO_TEXT[c.weather_code] ?? 'Unknown';
     el('hero-feels').textContent     = `Feels like ${Math.round(c.apparent_temperature)}°C`;
-    el('hs-wind').textContent        = `${Math.round(c.windspeed_10m)} km/h ${windDir(c.winddirection_10m)}`;
+    el('hs-wind').textContent        = `${Math.round(c.wind_speed_10m)} km/h ${windDir(c.wind_direction_10m)}`;
     el('hs-sea').textContent         = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
     el('hs-waves').textContent       = `${waveH.toFixed(1)} m`;
     el('hs-uv').textContent          = `${Math.round(c.uv_index)} — ${uvLevel(c.uv_index)[0]}`;
@@ -963,10 +1002,10 @@ async function loadWeather() {
     el('hero-updated').textContent   = `Updated at ${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
 
     // ── Wind card
-    el('compass-needle-g').style.transform = `rotate(${c.winddirection_10m}deg)`;
-    el('w-wind-speed').textContent = `${Math.round(c.windspeed_10m)} km/h`;
-    el('w-wind-dir').textContent   = `${windDir(c.winddirection_10m)} wind`;
-    el('w-wind-tag').textContent   = beaufort(c.windspeed_10m);
+    el('compass-needle-g').style.transform = `rotate(${c.wind_direction_10m}deg)`;
+    el('w-wind-speed').textContent = `${Math.round(c.wind_speed_10m)} km/h`;
+    el('w-wind-dir').textContent   = `${windDir(c.wind_direction_10m)} wind`;
+    el('w-wind-tag').textContent   = beaufort(c.wind_speed_10m);
 
     // ── Sea & Waves card
     el('w-sea-temp').textContent  = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
@@ -996,7 +1035,7 @@ async function loadWeather() {
     el('w-sunset').textContent   = formatTime(w.daily.sunset[0]);
 
     // ── Beach recommendation
-    const rec = recommendation(c.windspeed_10m, c.winddirection_10m, waveH);
+    const rec = recommendation(c.wind_speed_10m, c.wind_direction_10m, waveH);
     el('w-rec-emoji').textContent = rec.emoji;
     el('w-rec-title').textContent = rec.title;
     el('w-rec-desc').textContent  = rec.desc;
@@ -1021,8 +1060,8 @@ async function loadWeather() {
     // ── 12-hour hourly
     const times = w.hourly.time;
     const temps = w.hourly.temperature_2m;
-    const codes = w.hourly.weathercode;
-    const winds = w.hourly.windspeed_10m;
+    const codes = w.hourly.weather_code;
+    const winds = w.hourly.wind_speed_10m;
     const pops  = w.hourly.precipitation_probability;
     const currentHour = now.getHours();
     let startIdx = times.findIndex(t => new Date(t).getHours() >= currentHour);
@@ -1057,12 +1096,12 @@ async function loadWeather() {
       const rainPct  = w.daily.precipitation_probability_max[i] ?? 0;
       const barLeft  = ((dayMin - weekMin) / weekRange * 100).toFixed(1);
       const barWidth = Math.max(((dayMax - dayMin) / weekRange * 100), 15).toFixed(1);
-      const condFull = WMO_TEXT[w.daily.weathercode[i]] ?? '';
+      const condFull = WMO_TEXT[w.daily.weather_code[i]] ?? '';
       const condShort = condFull.split(' ').slice(0, 2).join(' ');
       return `
       <div class="w-day${isToday ? ' is-today' : ''}">
         <span class="w-day-name">${dayLabel(d, i)}</span>
-        <span class="w-day-icon">${WMO_ICONS[w.daily.weathercode[i]] ?? '🌤'}</span>
+        <span class="w-day-icon">${WMO_ICONS[w.daily.weather_code[i]] ?? '🌤'}</span>
         <span class="w-day-cond">${condShort}</span>
         <span class="w-day-high">${dayMax}°</span>
         <div class="w-day-range-track">
@@ -1075,17 +1114,28 @@ async function loadWeather() {
       </div>`;
     }).join('');
 
+    // ── Show stale banner if using cache
+    if (cachedAt) {
+      const d = new Date(cachedAt);
+      el('w-stale-time').textContent = d.toLocaleString('en-US', {
+        month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true,
+      });
+      el('w-stale-banner').style.display = 'block';
+    }
+
     // ── Show content
     el('w-loading').style.display = 'none';
     el('w-content').style.display = 'block';
     requestAnimationFrame(() => el('w-content').classList.add('is-ready'));
-
   } catch (err) {
     console.error(err);
     el('w-loading').style.display = 'none';
     el('w-error').style.display   = 'block';
+  } finally {
+    _loading = false;
   }
 }
 
+document.getElementById('w-retry-btn').addEventListener('click', loadWeather);
 loadWeather();
 </script>

@@ -14,6 +14,10 @@ interface Beach {
   rating: number;
   accessType: string;
   facilities: string[];
+  sandType?: string;
+  shade?: boolean;
+  bestFor?: string[];
+  swimDepth?: string;
 }
 
 const beachesData = beachesRaw as Beach[];
@@ -174,49 +178,76 @@ const beachJsonld = {
     <div class="tips-block">
       <h2 class="block-title">Useful information</h2>
       <div class="tips-grid">
+
+        <!-- Getting there -->
         <div class="tip">
           <span class="tip-icon">{access.icon}</span>
           <div>
-            <p class="tip-title">Access</p>
-            <p class="tip-body">{access.label}</p>
+            <p class="tip-title">Getting there</p>
+            <p class="tip-body">
+              {beach.accessType === 'road' && 'Accessible by car or motorbike. Follow road signs from the main island road.'}
+              {beach.accessType === 'hike' && 'Requires a hike over rough terrain. Wear sturdy footwear and bring plenty of water.'}
+              {beach.accessType === 'boat' && 'Only reachable by sea. Book a daily boat tour from Adamas harbour, or arrive by private boat.'}
+            </p>
           </div>
         </div>
-        {beach.facilities.length > 0 && (
+
+        <!-- What to bring -->
+        <div class="tip">
+          <span class="tip-icon">🎒</span>
+          <div>
+            <p class="tip-title">What to bring</p>
+            <p class="tip-body">
+              {beach.facilities.includes('sunbeds')
+                ? 'Sunbeds, umbrellas, and a snack bar are available on site.'
+                : 'No beach facilities — pack your umbrella, towels, snacks, and plenty of water.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Crowds -->
+        <div class="tip">
+          <span class="tip-icon">👥</span>
+          <div>
+            <p class="tip-title">Crowds</p>
+            <p class="tip-body">
+              {beach.accessType === 'boat'
+                ? 'Only accessible by boat — stays naturally uncrowded and pristine year-round.'
+                : beach.accessType === 'hike'
+                  ? 'The trail keeps visitor numbers low — expect peace and quiet even in peak season.'
+                  : beach.rating >= 4.7
+                    ? 'Very popular in July and August — arrive early in the morning to secure a good spot.'
+                    : 'Moderately visited — usually easy to find space even in high season.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Parking (road only) -->
+        {beach.accessType === 'road' && (
           <div class="tip">
-            <span class="tip-icon">✅</span>
+            <span class="tip-icon">🅿️</span>
             <div>
-              <p class="tip-title">Facilities</p>
-              <p class="tip-body">{beach.facilities.join(' · ')}</p>
+              <p class="tip-title">Parking</p>
+              <p class="tip-body">
+                {beach.facilities.includes('parking')
+                  ? 'Free parking area available near the beach.'
+                  : 'No dedicated car park — park along the roadside near the access path.'}
+              </p>
             </div>
           </div>
         )}
-        {beach.facilities.length === 0 && (
-          <div class="tip">
-            <span class="tip-icon">🌿</span>
-            <div>
-              <p class="tip-title">Natural beach</p>
-              <p class="tip-body">No facilities — bring everything you need</p>
-            </div>
-          </div>
-        )}
+
+        <!-- Boat tours note -->
         {beach.accessType === 'boat' && (
           <div class="tip">
-            <span class="tip-icon">ℹ️</span>
+            <span class="tip-icon">🗺️</span>
             <div>
-              <p class="tip-title">Boat Tours</p>
-              <p class="tip-body">Accessible only by private boat or organised boat tour</p>
+              <p class="tip-title">Boat tours</p>
+              <p class="tip-body">Most organised day tours from Adamas include this beach as a stop. Check departure times at the port.</p>
             </div>
           </div>
         )}
-        {beach.accessType === 'hike' && (
-          <div class="tip">
-            <span class="tip-icon">ℹ️</span>
-            <div>
-              <p class="tip-title">Πεζοπορία</p>
-              <p class="tip-body">Wear proper footwear and bring plenty of water</p>
-            </div>
-          </div>
-        )}
+
       </div>
     </div>
 
@@ -245,20 +276,54 @@ const beachJsonld = {
       <ul class="s-info-list">
         <li class="s-info-row">
           <span class="s-info-key">Access</span>
-          <span class="s-info-val">{access.icon} {access.label.split(' ').slice(-1)[0]}</span>
+          <span class="s-info-val">{access.icon} {access.label}</span>
         </li>
-        {beach.location.area && (
+        {beach.facilities.includes('sunbeds') && (
           <li class="s-info-row">
-            <span class="s-info-key">Area</span>
-            <span class="s-info-val">{beach.location.area}</span>
+            <span class="s-info-key">Type</span>
+            <span class="s-info-val">🏖️ Organised</span>
           </li>
         )}
         <li class="s-info-row">
-          <span class="s-info-key">Facilities</span>
+          <span class="s-info-key">Sunbeds</span>
           <span class="s-info-val">
-            {beach.facilities.length > 0 ? beach.facilities.join(', ') : 'None'}
+            {beach.facilities.includes('sunbeds') ? '✅ Available' : '❌ Not available'}
           </span>
         </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Snack bar</span>
+          <span class="s-info-val">
+            {beach.facilities.includes('sunbeds') ? '✅ Available' : '❌ Not available'}
+          </span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Parking</span>
+          <span class="s-info-val">
+            {beach.facilities.includes('parking') ? '✅ Free parking' : '❌ Not available'}
+          </span>
+        </li>
+        {beach.sandType && (
+          <li class="s-info-row">
+            <span class="s-info-key">Surface</span>
+            <span class="s-info-val">{beach.sandType}</span>
+          </li>
+        )}
+        {beach.swimDepth && (
+          <li class="s-info-row">
+            <span class="s-info-key">Water depth</span>
+            <span class="s-info-val">{beach.swimDepth}</span>
+          </li>
+        )}
+        <li class="s-info-row">
+          <span class="s-info-key">Natural shade</span>
+          <span class="s-info-val">{beach.shade ? '✅ Yes' : '❌ No'}</span>
+        </li>
+        {beach.bestFor && beach.bestFor.length > 0 && (
+          <li class="s-info-row">
+            <span class="s-info-key">Best for</span>
+            <span class="s-info-val">{beach.bestFor.join(' · ')}</span>
+          </li>
+        )}
       </ul>
     </div>
 
