@@ -263,16 +263,17 @@ function initMap() {
     zoomControl: true,
   });
 
-  const wikimediaLayer = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+  const streetLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
-    attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a> | &copy; OpenStreetMap'
+    subdomains: 'abcd',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
   });
   const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
     attribution: 'Tiles &copy; Esri'
   });
-  wikimediaLayer.addTo(map);
-  L.control.layers({ "Map": wikimediaLayer, "Satellite": satelliteLayer }, null, { position: 'topright', collapsed: true }).addTo(map);
+  streetLayer.addTo(map);
+  L.control.layers({ "Map": streetLayer, "Satellite": satelliteLayer }, null, { position: 'topright', collapsed: true }).addTo(map);
 
   clusterGroup = L.markerClusterGroup({
     maxClusterRadius: 50,

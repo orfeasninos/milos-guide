@@ -960,7 +960,11 @@ async function loadWeather() {
       `&timezone=Europe%2FAthens&forecast_days=1`,
     ].join('');
 
-    const [wRes, mRes] = await Promise.all([fetch(weatherUrl), fetch(marineUrl)]);
+    const timeout = AbortSignal.timeout(12000);
+    const [wRes, mRes] = await Promise.all([
+      fetch(weatherUrl, { signal: timeout }),
+      fetch(marineUrl,  { signal: timeout }),
+    ]);
     w = await wRes.json();
     if (w.error) throw new Error(w.reason ?? 'Weather API error');
     m = mRes.ok ? await mRes.json() : { current: null };
