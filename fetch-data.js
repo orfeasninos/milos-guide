@@ -225,7 +225,7 @@ async function fetchPlace(query) {
       "Content-Type": "application/json",
       "X-Goog-Api-Key": API_KEY.trim(),
       "X-Goog-FieldMask":
-        "places.displayName,places.googleMapsUri,places.formattedAddress,places.nationalPhoneNumber,places.location,places.rating,places.priceLevel,places.regularOpeningHours,places.photos,places.websiteUri",
+        "places.id,places.displayName,places.formattedAddress,places.nationalPhoneNumber,places.location,places.rating,places.priceLevel,places.regularOpeningHours,places.photos,places.websiteUri",
     },
     body: JSON.stringify({ textQuery: query, languageCode: "el" }),
   });
@@ -235,7 +235,7 @@ async function fetchPlace(query) {
 
 async function fetchPlaceByCid(placeId) {
   // Fetch by Place ID directly — works for both ChIJ... and CID formats
-  const fieldMask = "displayName,googleMapsUri,formattedAddress,nationalPhoneNumber,location,rating,priceLevel,regularOpeningHours,photos,websiteUri";
+  const fieldMask = "id,displayName,formattedAddress,nationalPhoneNumber,location,rating,priceLevel,regularOpeningHours,photos,websiteUri";
   const res = await fetch(
     `https://places.googleapis.com/v1/places/${placeId}?languageCode=el`,
     {
@@ -249,8 +249,8 @@ async function fetchPlaceByCid(placeId) {
   if (!data.location) return null;
   // Normalize to same shape as searchText response
   return {
+    id:                    data.id,
     displayName:           data.displayName,
-    googleMapsUri:         data.googleMapsUri,
     formattedAddress:      data.formattedAddress,
     nationalPhoneNumber:   data.nationalPhoneNumber,
     location:              data.location,
@@ -336,7 +336,7 @@ async function fetchTaverns() {
           en: tr?.description || `Enjoy authentic Greek cuisine at ${tavern.name} in ${tavern.location}, Milos.`,
         },
         location:      { area: tavern.location, address: place.formattedAddress || `${tavern.location}, Milos` },
-        googleMapsUri: place.googleMapsUri || null,
+        placeId: place.id || null,
         localPhoto,
         cuisine:       { el: "Παραδοσιακή Ελληνική", en: "Traditional Greek" },
         servesCuisine: "Greek",
@@ -382,7 +382,7 @@ async function fetchBeaches() {
           en: tr?.description || `Discover ${beach.name} beach in Milos.`,
         },
         location:      { area: "Milos", address: place.formattedAddress || "Milos" },
-        googleMapsUri: place.googleMapsUri || null,
+        placeId: place.id || null,
         localPhoto,
         website:       place.websiteUri || null,
         coordinates:   { lat: place.location?.latitude || 0, lng: place.location?.longitude || 0 },
@@ -424,7 +424,7 @@ async function fetchAccommodations() {
           en: tr?.description || `Discover ${acc.name} in ${acc.location}, Milos.`,
         },
         location:      { area: acc.location, address: place.formattedAddress || `${acc.location}, Milos` },
-        googleMapsUri: place.googleMapsUri || null,
+        placeId: place.id || null,
         localPhoto,
         phone:         place.nationalPhoneNumber || "",
         website:       place.websiteUri || null,

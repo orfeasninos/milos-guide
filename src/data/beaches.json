@@ -13,7 +13,7 @@
       "area": "Milos",
       "address": "Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=6736049203591420954&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJ0WiZqZngmBQRGpyewQ9Be10",
     "localPhoto": "/images/beaches/sarakiniko.jpg",
     "website": null,
     "coordinates": {
@@ -40,7 +40,7 @@
       "area": "Milos",
       "address": "Παραλία Φυροπόταμος, Φυροπόταμος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=3276925595420770192&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJz_JtHivZmBQRkL9wlnf6eS0",
     "localPhoto": "/images/beaches/fyropotamos.jpg",
     "website": null,
     "coordinates": {
@@ -67,7 +67,7 @@
       "area": "Milos",
       "address": "Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12424564451827923977&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJM8fbsgMhmRQRCTwmcIrrbKw",
     "localPhoto": "/images/beaches/tsigrado.jpg",
     "website": null,
     "coordinates": {
@@ -94,7 +94,7 @@
       "area": "Milos",
       "address": "Παραλία Φυριπλάκα, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=14239057168020895437&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJYXSITf0gmRQRzXZddA1Lm8U",
     "localPhoto": "/images/beaches/fyriplaka.jpg",
     "website": null,
     "coordinates": {
@@ -122,7 +122,7 @@
       "area": "Milos",
       "address": "Παραλία Παλαιοχώρι, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=1111336641246794871&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJV017TR8gmRQRdxRkf8lCbA8",
     "localPhoto": "/images/beaches/paleochori.jpg",
     "website": null,
     "coordinates": {
@@ -150,7 +150,7 @@
       "area": "Milos",
       "address": "Παραλία Προβατάς, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=17988838379679377165&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJm1vPWN8gmRQRDeezhjIxpfk",
     "localPhoto": "/images/beaches/provatas.jpg",
     "website": null,
     "coordinates": {
@@ -178,7 +178,7 @@
       "area": "Milos",
       "address": "Παραλία Παπαφράγκας, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=16457249977587360413&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJO2wQzTjemBQRnWLmDanlY-Q",
     "localPhoto": "/images/beaches/papafragas.jpg",
     "website": null,
     "coordinates": {
@@ -203,7 +203,7 @@
       "area": "Milos",
       "address": "Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=5166588780249035937&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJm4ngzlUvmRQRoTRDMx9ps0c",
     "localPhoto": "/images/beaches/kleftiko.jpg",
     "website": null,
     "coordinates": {
@@ -228,7 +228,7 @@
       "area": "Milos",
       "address": "Παραλία Αγιά Κυριάκη, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12563802863523468162&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJ-xX-rkcgmRQRghNadCOYW64",
     "localPhoto": "/images/beaches/agia-kyriaki.jpg",
     "website": null,
     "coordinates": {
@@ -256,7 +256,7 @@
       "area": "Milos",
       "address": "Παραλία Γέροντας, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=13878709327457272823&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJrcfgG3AmmRQR98P9y5kUm8A",
     "localPhoto": "/images/beaches/gerontas.jpg",
     "website": null,
     "coordinates": {
@@ -281,7 +281,7 @@
       "area": "Milos",
       "address": "Triades Beach, Plaka 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=3285991828450010782&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJk0GaVNgnmRQRnmaZdSgwmi0",
     "localPhoto": "/images/beaches/triades.jpg",
     "website": "https://milostravel.com/",
     "coordinates": {
@@ -306,7 +306,7 @@
       "area": "Milos",
       "address": "Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=16528970865676859546&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJy-vvY2snmRQRmjhzl22zYuU",
     "localPhoto": "/images/beaches/rivari.jpg",
     "website": "https://milostravel.com/",
     "coordinates": {
@@ -331,7 +331,7 @@
       "area": "Milos",
       "address": "Sykia Cave 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=9559721524445213177&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJ30SVkboomRQR-XE2sBP0qoQ",
     "localPhoto": "/images/beaches/sikia-beach.jpg",
     "website": null,
     "coordinates": {
@@ -356,7 +356,7 @@
       "area": "Milos",
       "address": "Plathiena, Plaka 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=7525840415301286467&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJjRquQtnYmBQRQ7pP7vsncWg",
     "localPhoto": "/images/beaches/plathiena.jpg",
     "website": "https://milostravel.com/",
     "coordinates": {
@@ -384,7 +384,7 @@
       "area": "Milos",
       "address": "Παραλία Θειορυχειο, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=15999282089003033209&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJYX4EKxngmBQReaJLyEreCN4",
     "localPhoto": "/images/beaches/theiorycheia.jpg",
     "website": null,
     "coordinates": {
@@ -409,7 +409,7 @@
       "area": "Milos",
       "address": "Παραλία Αχιβαδόλιμνη, 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=16569275019515605883&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJewwOoL8gmRQRezP7q9fj8eU",
     "localPhoto": "/images/beaches/achivadolimni.jpg",
     "website": null,
     "coordinates": {
@@ -437,7 +437,7 @@
       "area": "Milos",
       "address": "Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=11599869160572417289&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJ95OKn9ggmRQRCXXt9IoD-6A",
     "localPhoto": "/images/beaches/agios-sostis.jpg",
     "website": null,
     "coordinates": {
@@ -462,7 +462,7 @@
       "area": "Milos",
       "address": "Παραλία Τρία Πηγάδια, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=6435908235425253070&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJLX02ymLgmBQRzoaI83DwUFk",
     "localPhoto": "/images/beaches/tria-pigadia.jpg",
     "website": null,
     "coordinates": {
@@ -487,7 +487,7 @@
       "area": "Milos",
       "address": "Παραλία Καστανάς, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12551203908918583779&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJHx6x64jgmBQR4yGWvnTVLq4",
     "localPhoto": "/images/beaches/kastanas.jpg",
     "website": null,
     "coordinates": {
@@ -512,7 +512,7 @@
       "area": "Milos",
       "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10088736547835518941&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+    "placeId": "ChIJeyxG4KfgmBQR3Z88FnBkAow",
     "localPhoto": "/images/beaches/pollonia-beach.jpg",
     "website": "https://milostravel.com/",
     "coordinates": {
@@ -539,7 +539,7 @@
       "area": "Milos",
       "address": "QC2W+9F, Μανδράκια 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=180284497986615677&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJzUlGryDfmBQRfXkAtct_gAI",
     "localPhoto": "/images/beaches/mandrakia.jpg",
     "website": "http://milostravel.com/",
     "coordinates": {
@@ -566,7 +566,7 @@
       "area": "Milos",
       "address": "Παραλία Αγγαθια, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=15839743339564084500&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJDfZlwfsnmRQRFK0TEKUS0ts",
     "localPhoto": "/images/beaches/aggathia.jpg",
     "website": null,
     "coordinates": {
@@ -593,7 +593,7 @@
       "area": "Milos",
       "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=1855296920998415868&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJ1wFU49UnmRQR_I38SLhWvxk",
     "localPhoto": "/images/beaches/ammoudaraki-beach.jpg",
     "website": "https://milostravel.com/",
     "coordinates": {
@@ -618,7 +618,7 @@
       "area": "Milos",
       "address": "Kalamos, Plaka 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=7303830054188815547&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJnb48OVQgmRQRuxS_p7xqXGU",
     "localPhoto": "/images/beaches/kalamos.jpg",
     "website": "https://milostravel.com/",
     "coordinates": {
@@ -643,7 +643,7 @@
       "area": "Milos",
       "address": "Παραλία Άγιος Ιωάννης, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=8429944784575787374&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJzfZFQ54omRQRbvHLKB4u_XQ",
     "localPhoto": "/images/beaches/agios-ioannis-beach.jpg",
     "website": null,
     "coordinates": {
@@ -670,8 +670,8 @@
       "area": "Milos",
       "address": "Παραλία Κήπος, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=3674260685920285201&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-    "localPhoto": "/images/beaches/kipos-beach.jpg",
+    "placeId": "ChIJW_iGVM0mmRQRETJ2dKCY_TI",
+    "localPhoto": null,
     "website": null,
     "coordinates": {
       "lat": 36.663143399999996,
@@ -695,7 +695,7 @@
       "area": "Milos",
       "address": "MGF7+WR, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12987010637414941436&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJEYyudwAhmRQR_EJW2V0hO7Q",
     "localPhoto": "/images/beaches/deep-blue-beach.jpg",
     "website": null,
     "coordinates": {
@@ -720,8 +720,8 @@
       "area": "Milos",
       "address": "Παραλία Ψαθί, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=8246179585688091747&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
-    "localPhoto": "/images/beaches/psathi-beach.jpg",
+    "placeId": "ChIJVw0Mz8gmmRQRYzwEn6RQcHI",
+    "localPhoto": null,
     "website": null,
     "coordinates": {
       "lat": 36.6599238,
@@ -745,7 +745,7 @@
       "area": "Milos",
       "address": "Παραλία Κολυμπιώνας, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=15783920385091690700&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+    "placeId": "ChIJSXzY4mTgmBQRzOBvpPa_C9s",
     "localPhoto": "/images/beaches/kolympionas-beach.jpg",
     "website": null,
     "coordinates": {
@@ -770,7 +770,7 @@
       "area": "Milos",
       "address": "Παραλία Βούδια, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=8574962511528719037&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJL--PNZjgmBQRvfL13fhiAHc",
     "localPhoto": "/images/beaches/voudia-beach.jpg",
     "website": null,
     "coordinates": {
@@ -797,7 +797,7 @@
       "area": "Milos",
       "address": "Παραλία Πάχαινα, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=6509290071401047626&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJt22pWUbemBQRSibWDdWkVVo",
     "localPhoto": "/images/beaches/pachaina-beach.jpg",
     "website": null,
     "coordinates": {
@@ -824,7 +824,7 @@
       "area": "Milos",
       "address": "Παραλία Αλογομάντρα, Μήλος, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=1914431595663703739&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJs3t9w1HemBQRu75RpmRtkRo",
     "localPhoto": "/images/beaches/alogomantra-beach.jpg",
     "website": null,
     "coordinates": {
@@ -851,7 +851,7 @@
       "area": "Milos",
       "address": "Παραλία Μύτικας, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12326244593845123883&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYBCAA",
+    "placeId": "ChIJH4sPfgDfmBQRK7u3niaeD6s",
     "localPhoto": "/images/beaches/mytakas-beach.jpg",
     "website": null,
     "coordinates": {
@@ -879,7 +879,7 @@
       "area": "Milos",
       "address": "Παραλία Νεροδάφνη, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=2330325346051739744&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJiyOAmCTZmBQRYNCAPo76ViA",
     "localPhoto": "/images/beaches/nerodafni-beach.jpg",
     "website": null,
     "coordinates": {
@@ -906,7 +906,7 @@
       "area": "Milos",
       "address": "Κλήμα, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=14789458472117323918&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJ3TAOoPfZmBQRjsjxWh-2Ps0",
     "localPhoto": "/images/beaches/klima.jpg",
     "website": null,
     "coordinates": {
@@ -933,7 +933,7 @@
       "area": "Milos",
       "address": "Παραλία Παπικινού, Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=5641723821373519984&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJGaqqXWnfmBQRcPjTpextS04",
     "localPhoto": "/images/beaches/papikinou-beach.jpg",
     "website": "http://visit.milos.gr/portfolio-items/papikinou-el?portfolioCats=14%2C12%2C15%2C11%2C13",
     "coordinates": {
@@ -961,7 +961,7 @@
       "area": "Milos",
       "address": "Παραλία Άγιος Δημήτριος, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12690319685246534427&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "placeId": "ChIJLSbyyoTYmBQRG0NEfYQSHbA",
     "localPhoto": "/images/beaches/agios-dimitrios-beach.jpg",
     "website": null,
     "coordinates": {

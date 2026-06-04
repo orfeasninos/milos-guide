@@ -7,7 +7,7 @@ interface Beach {
   name: string | { el: string; en: string };
   description: string | { el: string; en: string };
   location: { area: string; address: string };
-  googleMapsUri: string | null;
+  placeId: string | null;
   localPhoto: string | null;
   website: string | null;
   coordinates?: { lat: number; lng: number };
@@ -41,6 +41,7 @@ const getBeachDesc = (b: any): string =>
   typeof b.description === 'object' ? b.description.en : b.description;
 
 const access = accessMap[beach.accessType] ?? { icon: '📍', label: beach.accessType, color: '#6b7280' };
+const mapsUrl = beach.placeId ? `https://www.google.com/maps/place/?q=place_id:${beach.placeId}` : null;
 
 const facilityIcons: Record<string, string> = {
   'sunbeds':   '🌂',
@@ -89,7 +90,7 @@ const beachJsonld = {
     amenityFeature: beach.facilities.map((f: string) => ({ '@type': 'LocationFeatureSpecification', name: f, value: true })),
   } : {}),
   isAccessibleForFree: true,
-  ...((beach as any).googleMapsUri ? { hasMap: (beach as any).googleMapsUri } : {}),
+  ...(mapsUrl ? { hasMap: mapsUrl } : {}),
   containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
 };
 ---
@@ -262,9 +263,9 @@ const beachJsonld = {
     </div>
 
     <!-- CTA -->
-    {beach.googleMapsUri && (
+    {mapsUrl && (
       <a
-        href={beach.googleMapsUri}
+        href={mapsUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="s-btn s-btn--maps"
