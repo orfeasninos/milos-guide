@@ -367,10 +367,9 @@ nav ul, nav ol { list-style: none; }
 
 .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
 
-.site-header { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease); }
+.site-header { position: sticky; top: 0; z-index: 200; height: var(--header-h); background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease); }
 .site-header.is-scrolled { box-shadow: var(--shadow-md); background: rgba(255,255,255,0.97); }
-.site-header.is-scrolled .header-inner { height: 54px; }
-.header-inner { display: flex; align-items: center; height: var(--header-h); gap: 1.5rem; transition: height 0.3s var(--ease); }
+.header-inner { display: flex; align-items: center; height: var(--header-h); gap: 1.5rem; }
 
 .logo { display: flex; align-items: baseline; flex-shrink: 0; transition: opacity 0.15s, transform 0.2s var(--ease-spring); }
 .logo:hover { opacity: 0.82; transform: scale(1.02); }
@@ -400,7 +399,7 @@ nav ul, nav ol { list-style: none; }
 .lang-btn { display: flex; align-items: center; justify-content: center; min-width: 38px; height: 28px; padding: 0 0.65rem; margin-left: 0.4rem; border-radius: var(--radius-full); border: 1.5px solid var(--border); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; color: var(--muted); background: transparent; white-space: nowrap; transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.15s var(--ease-spring); }
 .lang-btn:hover { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); transform: scale(1.05); }
 
-.header-strip { height: 2px; background: linear-gradient(90deg, var(--deep-blue) 0%, var(--aegean) 35%, var(--sea) 60%, var(--sky) 80%, var(--sand-dark) 100%); background-size: 200% 100%; animation: stripShimmer 6s ease-in-out infinite; }
+.header-strip { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--deep-blue) 0%, var(--aegean) 35%, var(--sea) 60%, var(--sky) 80%, var(--sand-dark) 100%); background-size: 200% 100%; animation: stripShimmer 6s ease-in-out infinite; }
 @keyframes stripShimmer { 0% { background-position: 100% 0; } 50% { background-position: 0% 0; } 100% { background-position: 100% 0; } }
 
 .nav-toggle { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; background: none; border: 1px solid var(--border); border-radius: var(--radius-sm); width: 38px; height: 38px; padding: 7px; margin-left: auto; transition: background 0.15s, border-color 0.15s; }

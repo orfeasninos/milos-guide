@@ -30,24 +30,35 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
   <div class="hero-bg">
     <img src="/images/hero-beach.jpg" alt="Milos beach" class="hero-photo" fetchpriority="high" />
     <div class="hero-photo-overlay"></div>
+    <div class="hero-grain" aria-hidden="true"></div>
   </div>
 
   <div class="hero-content container">
     <div class="hero-eyebrow">
-      <span class="eyedot"></span>
-      <span>Cyclades · Greece · 151 km²</span>
+      <svg class="eyebrow-pin" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>
+      <span>Cyclades · Greece</span>
+      <span class="eyebrow-sep" aria-hidden="true"></span>
+      <span class="eyebrow-tag">Volcanic island</span>
     </div>
     <div class="hero-title">
       <span class="hero-title-main">Milos</span>
+      <span class="hero-title-rule" aria-hidden="true"></span>
       <span class="hero-title-sub">The most authentic guide to the island</span>
     </div>
     <p class="hero-desc">
       Volcanic landscape, 70+ beaches, hidden sea caves, tavernas with freshly caught seafood.
-      Everything you need to experience Milos the right way — no ads.
+      Everything you need to experience Milos the right way.
     </p>
     <div class="hero-ctas">
       <a href="/beaches" class="btn-primary">🏖 Beaches</a>
       <a href="/eat"     class="btn-secondary">🍽 Food</a>
+      <a href="/map"     class="hero-cta-ghost">Map →</a>
+    </div>
+    <div class="hero-no-ads">
+      <span class="hero-no-ads-dot" aria-hidden="true"></span>
+      No ads · No sponsored content
     </div>
   </div>
 
@@ -121,15 +132,6 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
         <span class="cat-arrow">→</span>
       </a>
 
-      <a href="/" class="cat-row">
-        <span class="cat-num">5</span>
-        <div class="cat-info">
-          <span class="cat-name"></span>
-          <span class="cat-desc"></span>
-        </div>
-        <span class="cat-count"></span>
-        <span class="cat-arrow">→</span>
-      </a>
     </div>
   </div>
 </section>
@@ -387,33 +389,106 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 </Layout>
 
 <style>
-.hero { position:relative; min-height:90vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
-.hero-bg { position:absolute; inset:0; z-index:0; background:#0a2040; }
+.hero { position:relative; min-height:92vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; z-index:0; background:#061526; }
 .hero-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 55%; display:block; }
 .hero-photo-overlay {
   position:absolute; inset:0;
   background:
-    linear-gradient(to right, rgba(5,18,38,.88) 0%, rgba(5,18,38,.75) 35%, rgba(5,18,38,.35) 65%, rgba(5,18,38,.15) 100%),
-    linear-gradient(to top, rgba(5,18,38,.65) 0%, transparent 40%);
+    linear-gradient(to right, rgba(4,14,30,.93) 0%, rgba(5,18,38,.8) 30%, rgba(5,18,38,.32) 65%, rgba(5,18,38,.1) 100%),
+    linear-gradient(to top, rgba(4,14,30,.8) 0%, transparent 45%),
+    linear-gradient(to bottom, rgba(4,14,30,.35) 0%, transparent 22%);
 }
-.hero-content { position:relative; z-index:2; padding:4rem 0 2rem; }
-.hero-eyebrow { display:flex; align-items:center; gap:.6rem; font-size:.72rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.48); margin-bottom:1.25rem; animation:fadeUp .7s ease both; }
-.eyedot { width:6px; height:6px; border-radius:50%; background:var(--sea); animation:blink 2.5s infinite; }
-@keyframes blink { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)} }
-.hero-title { margin-bottom:1.5rem; animation:fadeUp .7s ease .1s both; }
-.hero-title-main { display:block; font-family:var(--font-serif); font-size:clamp(4rem,11vw,8.5rem); color:#fff; line-height:.92; letter-spacing:-.02em; }
-.hero-title-sub { display:block; font-size:clamp(.9rem,2vw,1.1rem); font-weight:400; color:rgba(255,255,255,.55); letter-spacing:.02em; margin-top:.55rem; }
-.hero-desc { max-width:510px; font-size:1.05rem; line-height:1.72; color:rgba(255,255,255,.7); margin-bottom:2.25rem; animation:fadeUp .7s ease .2s both; }
-.hero-ctas { display:flex; gap:.85rem; flex-wrap:wrap; animation:fadeUp .7s ease .3s both; }
-.hero-stats { position:relative; z-index:2; display:flex; gap:.85rem; flex-wrap:wrap; padding-top:2.5rem; padding-bottom:5rem; animation:fadeUp .7s ease .4s both; }
-.stat-pill { display:flex; flex-direction:column; gap:.12rem; padding:.7rem 1.2rem; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:var(--radius-md); backdrop-filter:blur(10px); }
-.stat-n { font-family:var(--font-serif); font-size:1.65rem; color:#fff; line-height:1; }
-.stat-l { font-size:.68rem; font-weight:500; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.06em; }
+.hero-grain {
+  position:absolute; inset:0; pointer-events:none; z-index:1; opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px;
+}
+.hero-content { position:relative; z-index:2; padding:4.5rem 0 2rem; }
+
+/* Eyebrow */
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:.55rem;
+  font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(255,255,255,.58);
+  margin-bottom:1.6rem;
+  animation:fadeUp .7s ease both;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.13);
+  padding:.32rem .85rem .32rem .55rem;
+  border-radius:var(--radius-full);
+  backdrop-filter:blur(10px);
+}
+.eyebrow-pin { color:var(--sea); flex-shrink:0; }
+.eyebrow-sep { display:inline-block; width:1px; height:10px; background:rgba(255,255,255,.22); margin:0 .1rem; }
+.eyebrow-tag { color:var(--sky); opacity:.75; }
+
+/* Title */
+.hero-title { margin-bottom:1.6rem; animation:fadeUp .7s ease .1s both; }
+.hero-title-main {
+  display:block;
+  font-family:var(--font-serif);
+  font-size:clamp(4.5rem,12vw,9.5rem);
+  color:#fff;
+  line-height:.88;
+  letter-spacing:-.025em;
+  text-shadow:0 2px 40px rgba(0,0,0,.35), 0 0 100px rgba(58,155,201,.12);
+}
+.hero-title-rule {
+  display:block;
+  width:56px; height:2px;
+  background:linear-gradient(90deg, var(--sea) 0%, rgba(58,155,201,.2) 100%);
+  border-radius:2px;
+  margin:.9rem 0 .7rem;
+}
+.hero-title-sub { display:block; font-size:clamp(.9rem,2vw,1.12rem); font-weight:400; color:rgba(255,255,255,.58); letter-spacing:.025em; }
+
+/* Description */
+.hero-desc { max-width:490px; font-size:1.02rem; line-height:1.76; color:rgba(255,255,255,.66); margin-bottom:2rem; animation:fadeUp .7s ease .2s both; }
+
+/* CTAs */
+.hero-ctas { display:flex; gap:.85rem; flex-wrap:wrap; align-items:center; animation:fadeUp .7s ease .3s both; }
+.hero-cta-ghost {
+  font-size:.875rem; font-weight:600;
+  color:rgba(255,255,255,.48);
+  border-bottom:1px solid rgba(255,255,255,.18);
+  padding-bottom:1px;
+  margin-left:.2rem;
+  transition:color .15s, border-color .15s;
+}
+.hero-cta-ghost:hover { color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.45); }
+
+/* No-ads badge */
+.hero-no-ads {
+  display:inline-flex; align-items:center; gap:.45rem;
+  margin-top:1.6rem;
+  font-size:.64rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+  animation:fadeUp .7s ease .38s both;
+}
+.hero-no-ads-dot { width:5px; height:5px; border-radius:50%; background:var(--sea); opacity:.6; flex-shrink:0; }
+
+/* Stats */
+.hero-stats { position:relative; z-index:2; display:flex; gap:.75rem; flex-wrap:wrap; padding-top:2.5rem; padding-bottom:5.5rem; animation:fadeUp .7s ease .45s both; }
+.stat-pill {
+  display:flex; flex-direction:column; gap:.1rem;
+  padding:.75rem 1.3rem;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-top-color:rgba(58,155,201,.35);
+  border-radius:var(--radius-md);
+  backdrop-filter:blur(14px);
+  transition:background .2s, border-color .2s;
+}
+.stat-pill:hover { background:rgba(255,255,255,.11); }
+.stat-n { font-family:var(--font-serif); font-size:1.7rem; color:#fff; line-height:1; }
+.stat-l { font-size:.65rem; font-weight:500; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.07em; }
+
 .hero-waves { position:absolute; bottom:-1px; left:0; right:0; height:100px; z-index:1; }
 .hero-waves svg { width:100%; height:100%; display:block; }
 .scroll-hint { position:absolute; bottom:5rem; left:50%; transform:translateX(-50%); z-index:2; display:flex; align-items:center; justify-content:center; animation:scrollBounce 1.8s ease-in-out infinite; }
-@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:.6} 50%{transform:translateX(-50%) translateY(7px);opacity:1} }
-@keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:.55} 50%{transform:translateX(-50%) translateY(8px);opacity:1} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)} }
 .explore-head { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:3.5rem; border-bottom:1px solid rgba(0,0,0,.1); padding-bottom:1.25rem; }
 .explore-head-title { font-family:var(--font-serif); font-size:clamp(1.1rem,2vw,1.35rem); color:var(--ink); font-weight:400; }
 .cat-list { display:flex; flex-direction:column; }
