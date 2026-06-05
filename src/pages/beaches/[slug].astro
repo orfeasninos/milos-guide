@@ -1,6 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import beachesRaw from '../../data/beaches.json';
+import tavernsRaw from '../../data/taverns.json';
+
+interface Tavern {
+  slug: string;
+  name: string | { el: string; en: string };
+  rating: number;
+  priceRange?: string;
+  localPhoto?: string | null;
+  coordinates?: { lat: number; lng: number };
+}
 
 interface Beach {
   slug: string;
@@ -8,7 +18,7 @@ interface Beach {
   description: string | { el: string; en: string };
   location: { area: string; address: string };
   placeId: string | null;
-  localPhoto: string | null;
+  image: string | null;
   website: string | null;
   coordinates?: { lat: number; lng: number };
   rating: number;
@@ -18,6 +28,7 @@ interface Beach {
   shade?: boolean;
   bestFor?: string[];
   swimDepth?: string;
+  nearbyFood?: boolean;
 }
 
 const beachesData = beachesRaw as Beach[];
@@ -31,7 +42,6 @@ export function getStaticPaths() {
 
 export interface Props { beach: Beach }
 const { beach } = Astro.props;
-const base = import.meta.env.BASE_URL;
 
 const accessMap: Record<string, { icon: string; label: string; color: string }> = {
   road: { icon: '🚗', label: 'Accessible by car',  color: '#3b6d11' },
@@ -71,7 +81,18 @@ const related = beachesData
       : 999,
   }))
   .sort((a, b) => a.dist - b.dist)
-  .slice(0, 3);
+  .slice(0, 4);
+
+const nearbyTaverns = (beach.nearbyFood && beach.coordinates?.lat && beach.coordinates?.lng)
+  ? (tavernsRaw as Tavern[])
+      .filter(t => t.coordinates?.lat && t.coordinates?.lng)
+      .map(t => ({ ...t, _dist: distKm(beach.coordinates!.lat, beach.coordinates!.lng, t.coordinates!.lat, t.coordinates!.lng) }))
+      .filter(t => t._dist <= 0.5)
+      .sort((a, b) => a._dist - b._dist)
+  : [];
+
+const getTavernName = (t: any): string =>
+  typeof t.name === 'object' ? t.name.en : t.name;
 
 const _siteUrl = 'https://milos.guide';
 const beachJsonld = {
@@ -80,7 +101,7 @@ const beachJsonld = {
   name: getBeachName(beach),
   description: getBeachDesc(beach),
   url: `${_siteUrl}/beaches/${beach.slug}`,
-  ...(beach.localPhoto ? { image: beach.localPhoto.startsWith('http') ? beach.localPhoto : _siteUrl + beach.localPhoto } : {}),
+  ...(beach.image ? { image: beach.image.startsWith('http') ? beach.image : _siteUrl + beach.image } : {}),
   ...(beach.coordinates?.lat ? {
     geo: { '@type': 'GeoCoordinates', latitude: beach.coordinates.lat, longitude: beach.coordinates.lng },
   } : {}),
@@ -108,9 +129,9 @@ const beachJsonld = {
 
 <!-- HERO -->
 <div class="b-hero">
-  {beach.localPhoto ? (
+  {beach.image ? (
     <img
-      src={beach.localPhoto ?? `/images/beaches/${beach.slug}.jpg`}
+      src={beach.image}
       alt={getBeachName(beach)}
       class="b-hero-img"
       fetchpriority="high"
@@ -199,8 +220,21 @@ const beachJsonld = {
             <p class="tip-title">What to bring</p>
             <p class="tip-body">
               {beach.facilities.includes('sunbeds')
-                ? 'Sunbeds, umbrellas, and a snack bar are available on site.'
+                ? 'Sunbeds and umbrellas are available on site.'
                 : 'No beach facilities — pack your umbrella, towels, snacks, and plenty of water.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Food nearby -->
+        <div class="tip">
+          <span class="tip-icon">🍽️</span>
+          <div>
+            <p class="tip-title">Food & drinks</p>
+            <p class="tip-body">
+              {beach.nearbyFood
+                ? 'Tavernas or cafés are available nearby — no need to pack a full lunch.'
+                : 'No food or drinks nearby — bring everything you need before heading down.'}
             </p>
           </div>
         </div>
@@ -251,6 +285,30 @@ const beachJsonld = {
       </div>
     </div>
 
+    <!-- Nearby restaurants -->
+    {nearbyTaverns.length > 0 && (
+      <div class="nearby-eat">
+        <h2 class="block-title">Nearby restaurants</h2>
+        <div class="nearby-eat-list">
+          {nearbyTaverns.map(t => (
+            <a href={`/eat/${t.slug}`} class="nec">
+              <div class="nec-img-wrap">
+                {t.localPhoto
+                  ? <img src={t.localPhoto} alt={getTavernName(t)} class="nec-img" loading="lazy" />
+                  : <div class="nec-img-ph"></div>
+                }
+              </div>
+              <span class="nec-name">{getTavernName(t)}</span>
+              <div class="nec-right">
+                {t.priceRange && <span class="nec-price">{t.priceRange}</span>}
+                {t.rating > 0 && <span class="nec-rating">★ {t.rating}</span>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
   </main>
 
   <!-- SIDEBAR -->
@@ -291,9 +349,9 @@ const beachJsonld = {
           </span>
         </li>
         <li class="s-info-row">
-          <span class="s-info-key">Snack bar</span>
+          <span class="s-info-key">Nearby food</span>
           <span class="s-info-val">
-            {beach.facilities.includes('sunbeds') ? '✅ Available' : '❌ Not available'}
+            {beach.nearbyFood ? '✅ Yes' : '❌ No'}
           </span>
         </li>
         <li class="s-info-row">
@@ -326,6 +384,21 @@ const beachJsonld = {
         )}
       </ul>
     </div>
+
+    <!-- Map embed -->
+    {beach.coordinates?.lat && beach.coordinates?.lng && (
+      <div class="s-map">
+        <iframe
+          src={`https://maps.google.com/maps?q=${beach.coordinates.lat},${beach.coordinates.lng}&z=15&output=embed`}
+          width="100%"
+          height="220"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title={`Map of ${getBeachName(beach)}`}
+        ></iframe>
+      </div>
+    )}
 
     <!-- CTA -->
     {mapsUrl && (
@@ -370,9 +443,9 @@ const beachJsonld = {
         {related.map(r => (
           <a href={`/beaches/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
-              {r.localPhoto ? (
+              {r.image ? (
                 <img
-                  src={r.localPhoto ?? `/images/beaches/${r.slug}.jpg`}
+                  src={r.image}
                   alt={getBeachName(r)}
                   class="rel-img"
                   loading="lazy"
@@ -549,6 +622,37 @@ const beachJsonld = {
 .tip-title { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; }
 .tip-body { font-size: .9rem; color: var(--ink); margin: 0; line-height: 1.5; }
 
+/* ── NEARBY RESTAURANTS ── */
+.nearby-eat { margin-bottom: 1rem; }
+.nearby-eat-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.nec {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .65rem 1.25rem .65rem .65rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  font-size: .9rem;
+  gap: .9rem;
+  transition: background .15s;
+}
+.nec:last-child { border-bottom: none; }
+.nec:nth-child(even) { background: var(--sand); }
+.nec:hover { background: var(--sand-dark); }
+.nec-img-wrap { flex-shrink: 0; width: 48px; height: 48px; border-radius: var(--radius-sm); overflow: hidden; background: var(--sand-dark); }
+.nec-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nec-img-ph { width: 100%; height: 100%; background: linear-gradient(135deg, #1a5c8a, #3a9bc9); }
+.nec-name { font-weight: 600; color: var(--ink); flex: 1; }
+.nec-right { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
+.nec-price { font-size: .8rem; color: var(--muted); }
+.nec-rating { font-size: .8rem; font-weight: 600; color: #d97706; }
+
 /* ── SIDEBAR ── */
 .b-sidebar {
   display: flex;
@@ -595,12 +699,18 @@ const beachJsonld = {
   transition: transform .15s, opacity .15s;
 }
 .s-btn:hover { transform: translateY(-1px); opacity: .9; }
+.s-map {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  line-height: 0;
+}
 .s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
 .s-btn--web  { background: var(--white); color: var(--ink); border: 1px solid var(--border); }
 
 /* ── RELATED ── */
 .related-sec { margin-top: 0; }
-.related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.related-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
 .rel-card {
   display: block;
   border-radius: var(--radius-lg);

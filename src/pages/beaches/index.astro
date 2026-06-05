@@ -121,9 +121,9 @@ const beachesJsonld = {
             data-facilities={JSON.stringify(beach.facilities)}
           >
             <div class="bc-img-wrap">
-              {beach.localPhoto ? (
+              {(beach as any).image ? (
                 <img
-                  src={beach.localPhoto}
+                  src={(beach as any).image}
                   alt={typeof beach.name === 'object' ? (beach.name as any).en : beach.name}
                   class="bc-img"
                   loading="lazy"

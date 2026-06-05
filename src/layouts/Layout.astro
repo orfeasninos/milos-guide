@@ -367,8 +367,10 @@ nav ul, nav ol { list-style: none; }
 
 .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
 
-.site-header { position: sticky; top: 0; z-index: 200; height: var(--header-h); background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease); }
-.site-header.is-scrolled { box-shadow: var(--shadow-md); background: rgba(255,255,255,0.97); }
+.site-header { position: sticky; top: 0; z-index: 200; height: var(--header-h); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s var(--ease); overflow: visible; }
+.site-header::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); z-index: -1; transition: background 0.3s var(--ease); }
+.site-header.is-scrolled { box-shadow: var(--shadow-md); }
+.site-header.is-scrolled::before { background: rgba(255,255,255,0.97); }
 .header-inner { display: flex; align-items: center; height: var(--header-h); gap: 1.5rem; }
 
 .logo { display: flex; align-items: baseline; flex-shrink: 0; transition: opacity 0.15s, transform 0.2s var(--ease-spring); }
@@ -383,7 +385,6 @@ nav ul, nav ol { list-style: none; }
 .nav-link:hover { background: var(--sand); color: var(--aegean); }
 .nav-link.is-active { color: var(--aegean); background: rgba(26,92,138,0.08); font-weight: 600; }
 .nav-link.is-active::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 18px; height: 2px; background: var(--aegean); border-radius: 2px; }
-.nav-link--soon { color: var(--muted); pointer-events: none; opacity: 0.55; }
 .nav-icon { font-size: 1rem; line-height: 1; }
 .badge-soon { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; background: var(--sand-dark); color: var(--muted); padding: 2px 5px; border-radius: 4px; }
 
@@ -392,9 +393,8 @@ nav ul, nav ol { list-style: none; }
 .icon-btn { position: relative; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: var(--radius-sm); color: var(--muted); flex-shrink: 0; transition: background 0.15s var(--ease), color 0.15s var(--ease), transform 0.15s var(--ease-spring); }
 .icon-btn:hover { background: var(--sand); color: var(--aegean); transform: translateY(-1px); }
 .icon-btn.is-active { color: var(--aegean); background: rgba(26,92,138,0.08); }
-.icon-btn[data-tooltip]::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-4px); background: var(--deep-blue); color: #fff; font-size: 0.7rem; font-weight: 500; white-space: nowrap; padding: 4px 8px; border-radius: var(--radius-sm); pointer-events: none; opacity: 0; transition: opacity 0.15s, transform 0.15s var(--ease); z-index: 300; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
-.icon-btn[data-tooltip]::before { content: ''; position: absolute; top: calc(100% + 3px); left: 50%; transform: translateX(-50%) translateY(-4px); border: 4px solid transparent; border-bottom-color: var(--deep-blue); pointer-events: none; opacity: 0; transition: opacity 0.15s, transform 0.15s var(--ease); z-index: 300; }
-.icon-btn[data-tooltip]:hover::after, .icon-btn[data-tooltip]:hover::before { opacity: 1; transform: translateX(-50%) translateY(0); }
+.icon-btn[data-tooltip]::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(-4px); background: var(--deep-blue); color: #fff; font-size: 0.7rem; font-weight: 500; white-space: nowrap; padding: 4px 8px; border-radius: var(--radius-sm); pointer-events: none; opacity: 0; transition: opacity 0.15s, transform 0.15s var(--ease); z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.icon-btn[data-tooltip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); top:48px}
 
 .lang-btn { display: flex; align-items: center; justify-content: center; min-width: 38px; height: 28px; padding: 0 0.65rem; margin-left: 0.4rem; border-radius: var(--radius-full); border: 1.5px solid var(--border); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; color: var(--muted); background: transparent; white-space: nowrap; transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.15s var(--ease-spring); }
 .lang-btn:hover { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); transform: scale(1.05); }
