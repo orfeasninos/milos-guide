@@ -279,21 +279,21 @@
     "nearbyFood": false
   },
   {
-    "slug": "agia-kyriaki",
+    "slug": "agia-kiriaki",
     "name": {
       "el": "Παραλία Αγιά Κυριάκη",
-      "en": "Agia Kyriaki"
+      "en": "Agia Kiriaki"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αγιά Κυριάκη στη Μήλο.",
-      "en": "A sheltered south-coast beach with calm clear water, sunbeds, and a relaxed atmosphere."
+      "en": "Discover Agia Kiriaki beach in Milos."
     },
     "location": {
       "area": "Milos",
       "address": "Παραλία Αγιά Κυριάκη, Ελλάδα"
     },
     "placeId": "ChIJ-xX-rkcgmRQRghNadCOYW64",
-    "image": "/images/beaches/agia-kyriaki.jpg",
+    "image": "/images/beaches/agia-kiriaki.jpg",
     "website": null,
     "coordinates": {
       "lat": 36.670763199999996,
@@ -414,21 +414,21 @@
     "nearbyFood": false
   },
   {
-    "slug": "sikia-beach",
+    "slug": "sikia",
     "name": {
       "el": "Σπηλιά της Συκιάς",
-      "en": "Sikia Beach"
+      "en": "Sikia"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Σπηλιά της Συκιάς στη Μήλο.",
-      "en": "A small beach inside a collapsed sea cave, famous for its emerald waters and natural skylight."
+      "en": "Discover Sikia beach in Milos."
     },
     "location": {
       "area": "Milos",
       "address": "Sykia Cave 848 00, Ελλάδα"
     },
     "placeId": "ChIJ30SVkboomRQR-XE2sBP0qoQ",
-    "image": "/images/beaches/sikia-beach.jpg",
+    "image": "/images/beaches/sikia.jpg",
     "website": null,
     "coordinates": {
       "lat": 36.667732699999995,
@@ -549,7 +549,7 @@
       "Windsurfing"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": false
   },
   {
     "slug": "agios-sostis",
@@ -711,7 +711,7 @@
     "facilities": [
       "parking"
     ],
-    "sandType": "Pebble",
+    "sandType": "Village waterfront",
     "shade": false,
     "bestFor": [
       "Photography",
@@ -1190,7 +1190,7 @@
     "facilities": [
       "parking"
     ],
-    "sandType": "Pebble",
+    "sandType": "Village waterfront",
     "shade": false,
     "bestFor": [
       "Photography",

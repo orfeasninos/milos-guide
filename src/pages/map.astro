@@ -19,7 +19,7 @@ const points = [
     .map(b => ({
       slug:  b.slug, type: 'beach',
       name:  typeof b.name === 'object' ? (b.name as any).en : b.name,
-      area:  b.location.area, rating: b.rating, photo: b.localPhoto ?? null,
+      area:  b.location.area, rating: b.rating, photo: b.image ?? null,
       url:   `/beaches/${b.slug}`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
     })),
   ...(accommodationsRaw as any[])
