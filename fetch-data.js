@@ -330,7 +330,6 @@ async function fetchBeaches() {
         location:      { area: "Milos", address: place.formattedAddress || "Milos" },
         placeId: place.id || null,
         image:         `/images/beaches/${beach.slug}.jpg`,
-        website:       place.websiteUri || null,
         coordinates:   { lat: place.location?.latitude || 0, lng: place.location?.longitude || 0 },
         rating:        place.rating || 0,
         accessType:    beach.accessType,

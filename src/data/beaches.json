@@ -15,7 +15,6 @@
     },
     "placeId": "ChIJ0WiZqZngmBQRGpyewQ9Be10",
     "image": "/images/beaches/sarakiniko.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.742697199999995,
       "lng": 24.458423
@@ -50,7 +49,6 @@
     },
     "placeId": "ChIJz_JtHivZmBQRkL9wlnf6eS0",
     "image": "/images/beaches/fyropotamos.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.757727599999996,
       "lng": 24.427407
@@ -85,7 +83,6 @@
     },
     "placeId": "ChIJM8fbsgMhmRQRCTwmcIrrbKw",
     "image": "/images/beaches/tsigrado.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.661895799999996,
       "lng": 24.4693335
@@ -120,7 +117,6 @@
     },
     "placeId": "ChIJYXSITf0gmRQRzXZddA1Lm8U",
     "image": "/images/beaches/fyriplaka.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6662272,
       "lng": 24.4651858
@@ -156,7 +152,6 @@
     },
     "placeId": "ChIJV017TR8gmRQRdxRkf8lCbA8",
     "image": "/images/beaches/paleochori.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6750374,
       "lng": 24.5184634
@@ -192,7 +187,6 @@
     },
     "placeId": "ChIJm1vPWN8gmRQRDeezhjIxpfk",
     "image": "/images/beaches/provatas.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6695517,
       "lng": 24.4481058
@@ -228,7 +222,6 @@
     },
     "placeId": "ChIJO2wQzTjemBQRnWLmDanlY-Q",
     "image": "/images/beaches/papafragas.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.753791,
       "lng": 24.502596
@@ -261,7 +254,6 @@
     },
     "placeId": "ChIJm4ngzlUvmRQRoTRDMx9ps0c",
     "image": "/images/beaches/kleftiko.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6506578,
       "lng": 24.3324547
@@ -294,7 +286,6 @@
     },
     "placeId": "ChIJ-xX-rkcgmRQRghNadCOYW64",
     "image": "/images/beaches/agia-kiriaki.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.670763199999996,
       "lng": 24.498369099999998
@@ -330,7 +321,6 @@
     },
     "placeId": "ChIJrcfgG3AmmRQR98P9y5kUm8A",
     "image": "/images/beaches/gerontas.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6558418,
       "lng": 24.3687032
@@ -363,7 +353,6 @@
     },
     "placeId": "ChIJk0GaVNgnmRQRnmaZdSgwmi0",
     "image": "/images/beaches/triades.jpg",
-    "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.7064471,
       "lng": 24.3368601
@@ -396,7 +385,6 @@
     },
     "placeId": "ChIJy-vvY2snmRQRmjhzl22zYuU",
     "image": "/images/beaches/rivari.jpg",
-    "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.7022094,
       "lng": 24.401958399999998
@@ -429,7 +417,6 @@
     },
     "placeId": "ChIJ30SVkboomRQR-XE2sBP0qoQ",
     "image": "/images/beaches/sikia.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.667732699999995,
       "lng": 24.320308999999998
@@ -462,7 +449,6 @@
     },
     "placeId": "ChIJjRquQtnYmBQRQ7pP7vsncWg",
     "image": "/images/beaches/plathiena.jpg",
-    "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.7540755,
       "lng": 24.4127023
@@ -498,7 +484,6 @@
     },
     "placeId": "ChIJYX4EKxngmBQReaJLyEreCN4",
     "image": "/images/beaches/theiorycheia.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.694101499999995,
       "lng": 24.544843
@@ -531,7 +516,6 @@
     },
     "placeId": "ChIJewwOoL8gmRQRezP7q9fj8eU",
     "image": "/images/beaches/achivadolimni.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6915036,
       "lng": 24.4527008
@@ -567,7 +551,6 @@
     },
     "placeId": "ChIJ95OKn9ggmRQRCXXt9IoD-6A",
     "image": "/images/beaches/agios-sostis.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6697896,
       "lng": 24.4443792
@@ -600,7 +583,6 @@
     },
     "placeId": "ChIJLX02ymLgmBQRzoaI83DwUFk",
     "image": "/images/beaches/tria-pigadia.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7298476,
       "lng": 24.5363755
@@ -633,7 +615,6 @@
     },
     "placeId": "ChIJHx6x64jgmBQR4yGWvnTVLq4",
     "image": "/images/beaches/kastanas.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7345976,
       "lng": 24.537876699999998
@@ -666,7 +647,6 @@
     },
     "placeId": "ChIJeyxG4KfgmBQR3Z88FnBkAow",
     "image": "/images/beaches/pollonia-beach.jpg",
-    "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.7639636,
       "lng": 24.5257476
@@ -701,7 +681,6 @@
     },
     "placeId": "ChIJzUlGryDfmBQRfXkAtct_gAI",
     "image": "/images/beaches/mandrakia.jpg",
-    "website": "http://milostravel.com/",
     "coordinates": {
       "lat": 36.750769,
       "lng": 24.4460311
@@ -736,7 +715,6 @@
     },
     "placeId": "ChIJDfZlwfsnmRQRFK0TEKUS0ts",
     "image": "/images/beaches/aggathia.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7270586,
       "lng": 24.3418226
@@ -771,7 +749,6 @@
     },
     "placeId": "ChIJ1wFU49UnmRQR_I38SLhWvxk",
     "image": "/images/beaches/ammoudaraki-beach.jpg",
-    "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.6988005,
       "lng": 24.3349092
@@ -804,7 +781,6 @@
     },
     "placeId": "ChIJnb48OVQgmRQRuxS_p7xqXGU",
     "image": "/images/beaches/kalamos.jpg",
-    "website": "https://milostravel.com/",
     "coordinates": {
       "lat": 36.6665091,
       "lng": 24.481914
@@ -837,7 +813,6 @@
     },
     "placeId": "ChIJzfZFQ54omRQRbvHLKB4u_XQ",
     "image": "/images/beaches/agios-ioannis-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.677900099999995,
       "lng": 24.3319625
@@ -872,7 +847,6 @@
     },
     "placeId": "ChIJW_iGVM0mmRQRETJ2dKCY_TI",
     "image": "/images/beaches/kipos-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.663143399999996,
       "lng": 24.429043099999998
@@ -905,7 +879,6 @@
     },
     "placeId": "ChIJEYyudwAhmRQR_EJW2V0hO7Q",
     "image": "/images/beaches/deep-blue-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6748127,
       "lng": 24.5145904
@@ -938,7 +911,6 @@
     },
     "placeId": "ChIJVw0Mz8gmmRQRYzwEn6RQcHI",
     "image": "/images/beaches/psathi-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.6599238,
       "lng": 24.4193484
@@ -971,7 +943,6 @@
     },
     "placeId": "ChIJSXzY4mTgmBQRzOBvpPa_C9s",
     "image": "/images/beaches/kolympionas-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7234222,
       "lng": 24.538231699999997
@@ -1004,7 +975,6 @@
     },
     "placeId": "ChIJL--PNZjgmBQRvfL13fhiAHc",
     "image": "/images/beaches/voudia-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7496186,
       "lng": 24.5347015
@@ -1039,7 +1009,6 @@
     },
     "placeId": "ChIJt22pWUbemBQRSibWDdWkVVo",
     "image": "/images/beaches/pachaina-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.752493,
       "lng": 24.4966206
@@ -1074,7 +1043,6 @@
     },
     "placeId": "ChIJs3t9w1HemBQRu75RpmRtkRo",
     "image": "/images/beaches/alogomantra-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.748596,
       "lng": 24.4877318
@@ -1109,7 +1077,6 @@
     },
     "placeId": "ChIJH4sPfgDfmBQRK7u3niaeD6s",
     "image": "/images/beaches/mytakas-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7419216,
       "lng": 24.476411199999998
@@ -1145,7 +1112,6 @@
     },
     "placeId": "ChIJiyOAmCTZmBQRYNCAPo76ViA",
     "image": "/images/beaches/nerodafni-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7675625,
       "lng": 24.4121797
@@ -1180,7 +1146,6 @@
     },
     "placeId": "ChIJ3TAOoPfZmBQRjsjxWh-2Ps0",
     "image": "/images/beaches/klima.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7348694,
       "lng": 24.420080799999997
@@ -1215,7 +1180,6 @@
     },
     "placeId": "ChIJGaqqXWnfmBQRcPjTpextS04",
     "image": "/images/beaches/papikinou-beach.jpg",
-    "website": "http://visit.milos.gr/portfolio-items/papikinou-el?portfolioCats=14%2C12%2C15%2C11%2C13",
     "coordinates": {
       "lat": 36.721516099999995,
       "lng": 24.458498799999997
@@ -1251,7 +1215,6 @@
     },
     "placeId": "ChIJLSbyyoTYmBQRG0NEfYQSHbA",
     "image": "/images/beaches/agios-dimitrios-beach.jpg",
-    "website": null,
     "coordinates": {
       "lat": 36.7283799,
       "lng": 24.393426299999998

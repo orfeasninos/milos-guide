@@ -19,7 +19,7 @@ interface Beach {
   location: { area: string; address: string };
   placeId: string | null;
   image: string | null;
-  website: string | null;
+  gallery?: string[];
   coordinates?: { lat: number; lng: number };
   rating: number;
   accessType: string;
@@ -93,6 +93,12 @@ const nearbyTaverns = (beach.nearbyFood && beach.coordinates?.lat && beach.coord
 
 const getTavernName = (t: any): string =>
   typeof t.name === 'object' ? t.name.en : t.name;
+
+const galleryImages: string[] = beach.gallery?.length
+  ? beach.gallery.slice(0, 4)
+  : beach.image
+    ? [beach.image, beach.image, beach.image, beach.image]
+    : [];
 
 const _siteUrl = 'https://milos.guide';
 const beachJsonld = {
@@ -194,6 +200,20 @@ const beachJsonld = {
 
     <!-- Description -->
     <p class="b-desc">{getBeachDesc(beach)}</p>
+
+    <!-- Gallery -->
+    {galleryImages.length > 0 && (
+      <div class="gallery-grid">
+        <div class="gallery-main">
+          <img src={galleryImages[0]} alt={`${getBeachName(beach)} 1`} class="gallery-img" loading="lazy" />
+        </div>
+        {galleryImages.slice(1).map((src, i) => (
+          <div class="gallery-thumb">
+            <img src={src} alt={`${getBeachName(beach)} ${i + 2}`} class="gallery-img" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    )}
 
     <!-- Tips block -->
     <div class="tips-block">
@@ -412,16 +432,10 @@ const beachJsonld = {
       </a>
     )}
 
-    {beach.website && (
-      <a
-        href={beach.website}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="s-btn s-btn--web"
-      >
-        <span>🌐</span> More information ↗
-      </a>
-    )}
+    <!-- Share -->
+    <button id="share-btn" class="s-btn s-btn--share" type="button">
+      <span id="share-icon">↗</span> <span id="share-label">Share</span>
+    </button>
 
   </aside>
 
@@ -467,6 +481,30 @@ const beachJsonld = {
 
 </Layout>
 
+<script>
+  const btn = document.getElementById('share-btn') as HTMLButtonElement;
+  const label = document.getElementById('share-label') as HTMLSpanElement;
+  const icon = document.getElementById('share-icon') as HTMLSpanElement;
+
+  btn?.addEventListener('click', async () => {
+    const url = window.location.href;
+    const title = document.title;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(url);
+      label.textContent = 'Copied!';
+      icon.textContent = '✓';
+      setTimeout(() => {
+        label.textContent = 'Share';
+        icon.textContent = '↗';
+      }, 2000);
+    }
+  });
+</script>
 
 <style>
 /* ── HERO ── */
@@ -591,6 +629,36 @@ const beachJsonld = {
   margin-bottom: 2rem;
 }
 
+/* ── GALLERY ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  height: 380px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.gallery-main {
+  grid-row: 1 / 4;
+}
+.gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .35s;
+}
+.gallery-main:hover .gallery-img,
+.gallery-thumb:hover .gallery-img { transform: scale(1.04); }
+.gallery-main,
+.gallery-thumb { overflow: hidden; background: var(--sand-dark); }
+@media (max-width: 600px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, 1fr); height: 260px; }
+  .gallery-main { grid-row: 1 / 3; }
+}
+
 .tips-block { margin-bottom: 1rem; }
 .block-title {
   font-size: .65rem;
@@ -645,7 +713,7 @@ const beachJsonld = {
 .nec:last-child { border-bottom: none; }
 .nec:nth-child(even) { background: var(--sand); }
 .nec:hover { background: var(--sand-dark); }
-.nec-img-wrap { flex-shrink: 0; width: 48px; height: 48px; border-radius: var(--radius-sm); overflow: hidden; background: var(--sand-dark); }
+.nec-img-wrap { flex-shrink: 0; width: 64px; height: 64px; border-radius: var(--radius-sm); overflow: hidden; background: var(--sand-dark); }
 .nec-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nec-img-ph { width: 100%; height: 100%; background: linear-gradient(135deg, #1a5c8a, #3a9bc9); }
 .nec-name { font-weight: 600; color: var(--ink); flex: 1; }
@@ -705,8 +773,9 @@ const beachJsonld = {
   border: 1px solid var(--border);
   line-height: 0;
 }
-.s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
-.s-btn--web  { background: var(--white); color: var(--ink); border: 1px solid var(--border); }
+.s-btn--maps  { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+.s-btn--web   { background: var(--white); color: var(--ink); border: 1px solid var(--border); }
+.s-btn--share { background: var(--white); color: var(--ink); border: 1px solid var(--border); cursor: pointer; width: 100%; font-size: .875rem; }
 
 /* ── RELATED ── */
 .related-sec { margin-top: 0; }
@@ -749,6 +818,7 @@ const beachJsonld = {
   .quick-bar { flex-wrap: wrap; }
   .qb-item { border-bottom: 1px solid var(--border); flex: 1 1 calc(50% - 1px); }
   .related-grid { grid-template-columns: 1fr 1fr; }
+  .s-map iframe { height: 350px; }
 }
 @media (max-width: 480px) {
   .b-hero { height: 280px; }
