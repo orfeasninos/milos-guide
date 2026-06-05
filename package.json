@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fetch:hotels": "node scripts/fetch-cj-hotels.mjs"
   },
   "dependencies": {
     "astro": "^6.3.8",

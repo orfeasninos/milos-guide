@@ -109,30 +109,14 @@ const beachesJsonld = {
 <div class="filters-bar">
   <div class="container">
 
-    <div class="filter-chips-row">
-      <span class="filter-label">Area</span>
+    <div class="filter-row">
       <div class="filter-chips" id="area-chips">
-        <button class="chip chip--active" data-area="all">All</button>
         <button class="chip" data-area="north">North</button>
         <button class="chip" data-area="south">South</button>
         <button class="chip" data-area="west">West</button>
         <button class="chip" data-area="east">East</button>
         <button class="chip" data-area="gulf">Gulf</button>
       </div>
-
-      <div class="filter-divider" aria-hidden="true"></div>
-
-      <span class="filter-label">Facilities</span>
-      <div class="filter-chips" id="facility-chips">
-        <button class="chip chip--active" data-facility="all">All</button>
-        {allFacilities.map(f => (
-          <button class="chip" data-facility={f}>{f}</button>
-        ))}
-      </div>
-
-      <div class="filter-divider" aria-hidden="true"></div>
-
-      <button class="chip" id="boat-toggle">⛵ Boat only</button>
 
       <div class="filter-right">
         <span class="results-count" id="results-count">{beachesData.length} beaches</span>
@@ -141,6 +125,18 @@ const beachesJsonld = {
           <button class="view-btn" id="view-map-btn" title="Map view">🗺</button>
         </div>
       </div>
+    </div>
+
+    <div class="filter-row filter-row--bottom">
+      <div class="filter-chips" id="facility-chips">
+        {allFacilities.map(f => (
+          <button class="chip" data-facility={f}>{f}</button>
+        ))}
+      </div>
+
+      <div class="filter-divider" aria-hidden="true"></div>
+
+      <button class="chip" id="boat-toggle">⛵ Boat only</button>
     </div>
 
   </div>
@@ -301,17 +297,18 @@ const beachesJsonld = {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
-.filter-chips-row {
+.filter-row {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding-top: 0.55rem;
-  padding-bottom: 0.55rem;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.filter-chips-row::-webkit-scrollbar { display: none; }
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-row--bottom { padding-top: 0; padding-bottom: 0.55rem; }
 .filter-right {
   margin-left: auto;
   display: flex;
@@ -455,18 +452,13 @@ const beachesJsonld = {
   .featured-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .filter-chips-row {
-    padding-left: 1rem;
-    padding-right: 5.5rem;
+  .filter-row {
     flex-wrap: wrap;
     overflow-x: visible;
     gap: 0.35rem;
-    row-gap: 0.45rem;
-    position: relative;
+    row-gap: 0.4rem;
   }
-  .filter-chips-row > .filter-label,
-  .filter-chips-row > .filter-divider { display: none; }
-  #area-chips { width: 100%; }
+  .filter-row--bottom > .filter-divider { display: none; }
   .filter-right {
     position: absolute;
     top: 0.5rem;
@@ -499,7 +491,7 @@ const mapSection  = document.getElementById('map-section');
 const viewGridBtn = document.getElementById('view-grid-btn');
 const viewMapBtn  = document.getElementById('view-map-btn');
 
-let activeArea       = 'all';
+let activeAreas      = new Set<string>();
 let activeFacilities = new Set<string>();
 let boatOnly         = false;
 let mapInitialized   = false;
@@ -511,7 +503,7 @@ function matchesFilters(data: {
   area: string; isBoat: boolean; facilities: string[];
 }): boolean {
   return (
-    (activeArea === 'all' || data.area === activeArea) &&
+    (activeAreas.size === 0 || activeAreas.has(data.area)) &&
     (activeFacilities.size === 0 || [...activeFacilities].every(f => data.facilities.includes(f))) &&
     (!boatOnly || data.isBoat)
   );
@@ -535,12 +527,17 @@ function applyFilters() {
   updateMapMarkers();
 }
 
-// Area
+// Area (multi-select)
 document.querySelectorAll<HTMLButtonElement>('#area-chips .chip').forEach(chip => {
   chip.addEventListener('click', () => {
-    document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
-    chip.classList.add('chip--active');
-    activeArea = chip.dataset.area ?? 'all';
+    const val = chip.dataset.area ?? '';
+    if (activeAreas.has(val)) {
+      activeAreas.delete(val);
+      chip.classList.remove('chip--active');
+    } else {
+      activeAreas.add(val);
+      chip.classList.add('chip--active');
+    }
     applyFilters();
   });
 });
@@ -581,11 +578,9 @@ boatBtn?.addEventListener('click', () => {
 
 // Reset
 document.getElementById('reset-filters')?.addEventListener('click', () => {
-  activeArea = 'all'; activeFacilities.clear(); boatOnly = false;
+  activeAreas.clear(); activeFacilities.clear(); boatOnly = false;
   document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
-  document.querySelector('#area-chips .chip')?.classList.add('chip--active');
   document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
-  document.querySelector('#facility-chips .chip[data-facility="all"]')?.classList.add('chip--active');
   boatBtn?.classList.remove('chip--active');
   applyFilters();
 });

@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
 import accommodationsRaw from '../../data/accommodations.json';
+import cjData from '../../data/cj-hotels.json';
 
 type Accommodation = typeof accommodationsRaw[number] & { localPhoto?: string | null };
 const accommodationsData = accommodationsRaw as Accommodation[];
@@ -25,6 +26,24 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
   guesthouse: { label: 'Guesthouse', icon: '🛖' },
 };
 const typeInfo = typeLabels[a.type] ?? { label: a.type, icon: '🏠' };
+
+// ── Booking.com affiliate ─────────────────────────────────────────────────
+const BOOKING_AID = import.meta.env.BOOKING_AID || '';
+const hotelName   = getName(a);
+
+function bookingUrl(query: string): string {
+  const base = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query)}&lang=en-gb`;
+  return BOOKING_AID ? `${base}&aid=${BOOKING_AID}` : `${base}&utm_source=milos.guide`;
+}
+
+const primaryBookingUrl = bookingUrl(`${hotelName} Milos Greece`);
+
+// ── CJ Affiliate data (activated after joining hotel programs on CJ) ───────
+const cjProduct  = ((cjData as any).travelProducts ?? [] as any[]).find((p: any) => {
+  const t = (p.title ?? '').toLowerCase();
+  const n = hotelName.toLowerCase();
+  return t.includes(n.slice(0, 12)) || n.includes(t.slice(0, 12));
+});
 
 // Related: same area, not this one, up to 3
 const related = accommodationsData
@@ -253,6 +272,48 @@ const stayJsonld = {
       </ul>
     </div>
 
+    <!-- Booking.com primary CTA -->
+    <div class="s-book-card">
+      <div class="s-book-header">
+        <svg class="s-book-logo" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Booking.com">
+          <text x="0" y="20" font-family="sans-serif" font-weight="700" font-size="18" fill="#003580">Booking</text>
+          <text x="67" y="20" font-family="sans-serif" font-weight="700" font-size="18" fill="#003580">.</text>
+          <text x="73" y="20" font-family="sans-serif" font-weight="700" font-size="18" fill="#e31e24">com</text>
+        </svg>
+        <span class="s-book-badge">Free cancellation</span>
+      </div>
+      <p class="s-book-desc">Search for available dates and best prices for {hotelName}.</p>
+      <a
+        href={primaryBookingUrl}
+        target="_blank"
+        rel="noopener sponsored"
+        class="s-book-btn"
+      >
+        Check availability →
+      </a>
+      <p class="s-book-note">You'll be redirected to Booking.com</p>
+    </div>
+
+    <!-- CJ deal (shown when hotel programs are joined & fetched) -->
+    {cjProduct && (
+      <div class="s-card s-deal-card">
+        <p class="s-card-label">Available deal</p>
+        <p class="s-deal-name">{cjProduct.title}</p>
+        {cjProduct.price?.amount && (
+          <p class="s-deal-price">
+            {cjProduct.salePrice?.amount && cjProduct.salePrice.amount !== cjProduct.price.amount && (
+              <span class="s-deal-was">{cjProduct.salePrice.amount} {cjProduct.salePrice.currency}</span>
+            )}
+            <span class="s-deal-now">{cjProduct.price.amount} {cjProduct.price.currency}</span>
+          </p>
+        )}
+        <a href={cjProduct.link} target="_blank" rel="noopener sponsored" class="s-btn s-btn--deal">
+          Book this deal ↗
+        </a>
+        <p class="s-deal-via">via {cjProduct.advertiserName}</p>
+      </div>
+    )}
+
     <div class="s-ctas">
       {a.googleMapsUri && (
         <a href={a.googleMapsUri} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--maps">
@@ -264,11 +325,6 @@ const stayJsonld = {
           <span>🌐</span> Website ↗
         </a>
       )}
-      <!-- Booking.com affiliate link placeholder -->
-      <a href={`https://www.booking.com/search.html?ss=${encodeURIComponent(getName(a) + ' Milos')}&utm_source=milos.guide`}
-        target="_blank" rel="noopener sponsored" class="s-btn s-btn--booking">
-        <span>🛏</span> Check availability ↗
-      </a>
     </div>
 
   </aside>
@@ -361,6 +417,61 @@ const stayJsonld = {
 
 /* SIDEBAR */
 .a-sidebar { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: calc(var(--header-h) + 1.5rem); }
+
+/* Booking.com card */
+.s-book-card {
+  background: #fff;
+  border: 2px solid #003580;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+}
+.s-book-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+}
+.s-book-logo { width: 100px; height: 24px; flex-shrink: 0; }
+.s-book-badge {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #0e7a3e;
+  background: #d1fae5;
+  border-radius: 100px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+.s-book-desc {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.s-book-btn {
+  display: block;
+  background: #003580;
+  color: #fff;
+  text-align: center;
+  padding: .85rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: .95rem;
+  font-weight: 700;
+  transition: background .15s, transform .15s;
+  letter-spacing: .01em;
+}
+.s-book-btn:hover { background: #002050; transform: translateY(-1px); }
+.s-book-note {
+  font-size: .65rem;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
 .s-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.25rem; }
 .s-card-label { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .85rem; }
 .s-rating { display: flex; align-items: center; gap: .85rem; }
@@ -380,6 +491,15 @@ const stayJsonld = {
 .s-btn--maps    { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
 .s-btn--web     { background: var(--white); color: var(--ink); border: 1px solid var(--border); }
 .s-btn--booking { background: #003580; color: #fff; box-shadow: var(--shadow-sm); }
+.s-btn--deal    { background: #0e7a3e; color: #fff; box-shadow: var(--shadow-sm); }
+
+/* Deal card */
+.s-deal-card { border-color: #0e7a3e33; }
+.s-deal-name { font-size: .875rem; color: var(--ink); line-height: 1.4; margin-bottom: .6rem; }
+.s-deal-price { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .8rem; }
+.s-deal-was { font-size: .8rem; color: var(--muted); text-decoration: line-through; }
+.s-deal-now { font-size: 1.4rem; font-weight: 700; font-family: var(--font-serif); color: #0e7a3e; }
+.s-deal-via { font-size: .68rem; color: var(--muted); text-align: center; margin-top: .4rem; }
 
 /* RELATED */
 .related-sec { margin-top: 0; }

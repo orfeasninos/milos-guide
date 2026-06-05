@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
 import accommodationsRaw from '../../data/accommodations.json';
+import cjData from '../../data/cj-hotels.json';
 
 type Accommodation = typeof accommodationsRaw[number] & { localPhoto?: string | null };
 const accommodationsData = accommodationsRaw as Accommodation[];
@@ -17,6 +18,16 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
 
 const areas = [...new Set(accommodationsData.map(a => a.location.area))].sort();
 const sorted = [...accommodationsData].sort((a, b) => b.rating - a.rating);
+
+const BOOKING_AID = import.meta.env.BOOKING_AID || '';
+function bkUrl(query: string) {
+  const base = `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query)}&lang=en-gb`;
+  return BOOKING_AID ? `${base}&aid=${BOOKING_AID}` : `${base}&utm_source=milos.guide`;
+}
+const milosSearchUrl = bkUrl('Milos island Greece');
+
+const cjProducts = ((cjData as any).travelProducts ?? (cjData as any).products ?? []).slice(0, 6);
+const hasCjDeals = cjProducts.length > 0;
 
 const _siteUrl = 'https://milos.guide';
 const stayJsonld = {
@@ -54,6 +65,20 @@ const stayJsonld = {
   </div>
 </section>
 
+<!-- BOOKING.COM BANNER -->
+<div class="bk-banner">
+  <div class="container bk-inner">
+    <div class="bk-text">
+      <p class="bk-eyebrow">Best prices guaranteed</p>
+      <p class="bk-title">Find & book hotels in Milos</p>
+      <p class="bk-sub">Compare rates across hundreds of properties — free cancellation on most.</p>
+    </div>
+    <a href={milosSearchUrl} target="_blank" rel="noopener sponsored" class="bk-btn">
+      Search on Booking.com →
+    </a>
+  </div>
+</div>
+
 <!-- FILTERS -->
 <div class="filters-bar">
   <div class="container filters-inner">
@@ -86,6 +111,44 @@ const stayJsonld = {
 
   </div>
 </div>
+
+<!-- CJ DEALS (only rendered when fetch:hotels has been run and products exist) -->
+{hasCjDeals && (
+  <section class="sec sec-deals">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Deals</span>
+          <h2 class="sec-title">Available to book now</h2>
+        </div>
+      </div>
+      <div class="deals-grid">
+        {cjProducts.map((p: any) => (
+          <a href={p.buyUrl} target="_blank" rel="noopener sponsored" class="deal-card">
+            {p.imageUrl && (
+              <div class="deal-img-wrap">
+                <img src={p.imageUrl} alt={p.name} width="400" height="260" class="deal-img" loading="lazy" decoding="async" />
+              </div>
+            )}
+            <div class="deal-body">
+              <p class="deal-adv">{p.advertiserName}</p>
+              <h3 class="deal-name">{p.name}</h3>
+              {(p.price || p.salePrice) && (
+                <p class="deal-price">
+                  {p.salePrice && p.salePrice !== p.price && (
+                    <span class="deal-was">{p.salePrice} {p.currency}</span>
+                  )}
+                  <span class="deal-now">{p.price} {p.currency}</span>
+                </p>
+              )}
+              <span class="deal-cta">Book now →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
 
 <!-- GRID -->
 <section class="sec sec-sand">
@@ -156,6 +219,51 @@ const stayJsonld = {
   color: var(--muted);
   max-width: 540px;
   line-height: 1.7;
+}
+
+/* Booking.com banner */
+.bk-banner {
+  background: #003580;
+  padding: 1.5rem 0;
+}
+.bk-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.bk-eyebrow {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #6ee7b7;
+  margin-bottom: .25rem;
+}
+.bk-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: .25rem;
+}
+.bk-sub { font-size: .82rem; color: rgba(255,255,255,.65); margin: 0; }
+.bk-btn {
+  flex-shrink: 0;
+  background: #fff;
+  color: #003580;
+  font-family: var(--font-sans);
+  font-size: .9rem;
+  font-weight: 700;
+  padding: .8rem 1.5rem;
+  border-radius: var(--radius-md);
+  transition: transform .15s, box-shadow .15s;
+  white-space: nowrap;
+}
+.bk-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+@media (max-width: 600px) {
+  .bk-inner { flex-direction: column; align-items: flex-start; }
+  .bk-btn { align-self: stretch; text-align: center; }
 }
 
 /* Filters */
@@ -272,6 +380,53 @@ const stayJsonld = {
 }
 @media (max-width: 480px) {
   .acc-grid { grid-template-columns: 1fr; }
+}
+
+/* CJ Deals section */
+.sec-deals {
+  background: linear-gradient(135deg, #0d2b4e 0%, #1a5c8a 100%);
+  padding: 3rem 0;
+}
+.sec-deals .sec-title { color: #fff; }
+.sec-deals .label { color: rgba(255,255,255,.65); }
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.deal-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+  color: #fff;
+}
+.deal-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
+.deal-img-wrap { height: 180px; overflow: hidden; }
+.deal-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.deal-card:hover .deal-img { transform: scale(1.05); }
+.deal-body { padding: 1rem 1.1rem 1.25rem; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
+.deal-adv { font-size: .62rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+.deal-name { font-family: var(--font-serif); font-size: 1rem; line-height: 1.3; color: #fff; }
+.deal-price { display: flex; align-items: baseline; gap: .5rem; margin-top: .25rem; }
+.deal-was { font-size: .8rem; color: rgba(255,255,255,.45); text-decoration: line-through; }
+.deal-now { font-size: 1.25rem; font-weight: 700; color: #6ee7b7; }
+.deal-cta {
+  margin-top: auto;
+  padding-top: .75rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #6ee7b7;
+  letter-spacing: .04em;
+}
+@media (max-width: 600px) {
+  .deals-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 380px) {
+  .deals-grid { grid-template-columns: 1fr; }
 }
 </style>
 
