@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SmartImage from '../../components/SmartImage.astro';
 import accommodationsRaw from '../../data/accommodations.json';
 
 type Accommodation = typeof accommodationsRaw[number] & { localPhoto?: string | null };
@@ -75,7 +76,7 @@ const stayJsonld = {
 <!-- HERO -->
 <div class="a-hero">
   {a.localPhoto ? (
-    <img src={a.localPhoto} alt={getName(a)} class="a-hero-img" fetchpriority="high" />
+    <SmartImage src={a.localPhoto} alt={getName(a)} width={1280} height={500} isLCP={true} class="a-hero-img" sizes="100vw" />
   ) : (
     <div class="a-hero-ph"></div>
   )}
@@ -290,7 +291,7 @@ const stayJsonld = {
           <a href={`/stay/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
               {r.localPhoto ? (
-                <img src={r.localPhoto} alt={getName(r)} class="rel-img" loading="lazy" />
+                <SmartImage src={r.localPhoto} alt={getName(r)} width={400} height={300} class="rel-img" sizes="(max-width: 768px) 100vw, 33vw" />
               ) : (
                 <div class="rel-ph"></div>
               )}
@@ -312,7 +313,7 @@ const stayJsonld = {
 <style>
 /* HERO */
 .a-hero { position: relative; height: 500px; overflow: hidden; background: var(--deep-blue); }
-.a-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+:global(.a-hero-img) { width: 100%; height: 100%; object-fit: cover; display: block; }
 .a-hero-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #0d2b4e, #1a5c8a); }
 .a-hero-overlay {
   position: absolute; inset: 0;
@@ -386,8 +387,8 @@ const stayJsonld = {
 .rel-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; transition: transform .2s, box-shadow .2s; }
 .rel-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 .rel-img-wrap { height: 140px; overflow: hidden; background: var(--sand); flex-shrink: 0; }
-.rel-img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-.rel-card:hover .rel-img { transform: scale(1.05); }
+:global(.rel-img) { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.rel-card:hover :global(.rel-img) { transform: scale(1.05); }
 .rel-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #0d2b4e, #1a5c8a); }
 .rel-body { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
 .rel-type { font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sea); }

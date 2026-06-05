@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SmartImage from '../../components/SmartImage.astro';
 import beachesRaw from '../../data/beaches.json';
 import tavernsRaw from '../../data/taverns.json';
 
@@ -136,11 +137,14 @@ const beachJsonld = {
 <!-- HERO -->
 <div class="b-hero">
   {beach.image ? (
-    <img
+    <SmartImage
       src={beach.image}
       alt={getBeachName(beach)}
+      width={1280}
+      height={520}
+      isLCP={true}
       class="b-hero-img"
-      fetchpriority="high"
+      sizes="100vw"
     />
   ) : (
     <div class="b-hero-ph"></div>
@@ -205,11 +209,11 @@ const beachJsonld = {
     {galleryImages.length > 0 && (
       <div class="gallery-grid">
         <div class="gallery-main">
-          <img src={galleryImages[0]} alt={`${getBeachName(beach)} 1`} class="gallery-img" loading="lazy" />
+          <SmartImage src={galleryImages[0]} alt={`${getBeachName(beach)} 1`} width={640} height={380} class="gallery-img" sizes="(max-width: 768px) 50vw, 33vw" />
         </div>
         {galleryImages.slice(1).map((src, i) => (
           <div class="gallery-thumb">
-            <img src={src} alt={`${getBeachName(beach)} ${i + 2}`} class="gallery-img" loading="lazy" />
+            <SmartImage src={src} alt={`${getBeachName(beach)} ${i + 2}`} width={320} height={126} class="gallery-img" sizes="(max-width: 768px) 25vw, 16vw" />
           </div>
         ))}
       </div>
@@ -314,7 +318,7 @@ const beachJsonld = {
             <a href={`/eat/${t.slug}`} class="nec">
               <div class="nec-img-wrap">
                 {t.localPhoto
-                  ? <img src={t.localPhoto} alt={getTavernName(t)} class="nec-img" loading="lazy" />
+                  ? <SmartImage src={t.localPhoto} alt={getTavernName(t)} width={64} height={64} class="nec-img" sizes="64px" />
                   : <div class="nec-img-ph"></div>
                 }
               </div>
@@ -458,11 +462,13 @@ const beachJsonld = {
           <a href={`/beaches/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
               {r.image ? (
-                <img
+                <SmartImage
                   src={r.image}
                   alt={getBeachName(r)}
+                  width={400}
+                  height={300}
                   class="rel-img"
-                  loading="lazy"
+                  sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
                 />
               ) : (
                 <div class="rel-ph"></div>
@@ -514,7 +520,7 @@ const beachJsonld = {
   overflow: hidden;
   background: var(--deep-blue);
 }
-.b-hero-img {
+:global(.b-hero-img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -643,20 +649,20 @@ const beachJsonld = {
 .gallery-main {
   grid-row: 1 / 4;
 }
-.gallery-img {
+:global(.gallery-img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   transition: transform .35s;
 }
-.gallery-main:hover .gallery-img,
-.gallery-thumb:hover .gallery-img { transform: scale(1.04); }
+.gallery-main:hover :global(.gallery-img),
+.gallery-thumb:hover :global(.gallery-img) { transform: scale(1.04); }
 .gallery-main,
 .gallery-thumb { overflow: hidden; background: var(--sand-dark); }
 @media (max-width: 600px) {
   .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, 1fr); height: 260px; }
-  .gallery-main { grid-row: 1 / 3; }
+  .gallery-main { grid-row: auto; }
 }
 
 .tips-block { margin-bottom: 1rem; }
@@ -714,7 +720,7 @@ const beachJsonld = {
 .nec:nth-child(even) { background: var(--sand); }
 .nec:hover { background: var(--sand-dark); }
 .nec-img-wrap { flex-shrink: 0; width: 64px; height: 64px; border-radius: var(--radius-sm); overflow: hidden; background: var(--sand-dark); }
-.nec-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+:global(.nec-img) { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nec-img-ph { width: 100%; height: 100%; background: linear-gradient(135deg, #1a5c8a, #3a9bc9); }
 .nec-name { font-weight: 600; color: var(--ink); flex: 1; }
 .nec-right { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
@@ -791,8 +797,8 @@ const beachJsonld = {
 }
 .rel-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 .rel-img-wrap { position: absolute; inset: 0; }
-.rel-img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-.rel-card:hover .rel-img { transform: scale(1.05); }
+:global(.rel-img) { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.rel-card:hover :global(.rel-img) { transform: scale(1.05); }
 .rel-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #1a5c8a, #3a9bc9); }
 .rel-overlay {
   position: absolute;

@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SmartImage from '../../components/SmartImage.astro';
 import tavernsRaw from '../../data/taverns.json';
 
 type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
@@ -70,11 +71,14 @@ const tavernJsonld = {
 <!-- HERO -->
 <div class="t-hero">
   {tavern.localPhoto ? (
-    <img
+    <SmartImage
       src={tavern.localPhoto}
       alt={getName(tavern)}
+      width={1280}
+      height={520}
+      isLCP={true}
       class="t-hero-img"
-      fetchpriority="high"
+      sizes="100vw"
     />
   ) : (
     <div class="t-hero-ph" aria-hidden="true"></div>
@@ -252,11 +256,13 @@ const tavernJsonld = {
           <a href={`/eat/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
               {r.localPhoto ? (
-                <img
+                <SmartImage
                   src={r.localPhoto}
                   alt={getName(r)}
+                  width={400}
+                  height={140}
                   class="rel-img"
-                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               ) : (
                 <div class="rel-ph" aria-hidden="true">◈</div>
@@ -285,7 +291,7 @@ const tavernJsonld = {
   background: var(--deep-blue);
   overflow: hidden;
 }
-.t-hero-img {
+:global(.t-hero-img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -536,8 +542,8 @@ const tavernJsonld = {
 }
 .rel-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 .rel-img-wrap { height: 140px; overflow: hidden; background: var(--sand); flex-shrink: 0; }
-.rel-img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-.rel-card:hover .rel-img { transform: scale(1.05); }
+:global(.rel-img) { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.rel-card:hover :global(.rel-img) { transform: scale(1.05); }
 .rel-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--sand-dark); background: linear-gradient(140deg, var(--sand), var(--sand-dark)); }
 .rel-body { padding: .9rem 1rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
 .rel-area { font-size: .65rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #c0613a; }

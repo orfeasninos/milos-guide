@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SmartImage from '../components/SmartImage.astro';
 import tavernsRaw from '../data/taverns.json';
 import beachesRaw from '../data/beaches.json';
 import accommodationsData from '../data/accommodations.json';
@@ -28,7 +29,7 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 <!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="/images/hero-beach.jpg" alt="Milos beach" class="hero-photo" fetchpriority="high" />
+    <SmartImage src="/images/hero-beach.jpg" alt="Milos beach" width={1280} height={720} isLCP={true} class="hero-photo" sizes="100vw" objectPosition="center 55%" />
     <div class="hero-photo-overlay"></div>
     <div class="hero-grain" aria-hidden="true"></div>
   </div>
@@ -231,7 +232,7 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
         {featuredTaverns.map(tavern => (
           <a href={`/eat/${tavern.slug}`} class="tav-card">
             {tavern.localPhoto ? (
-              <img src={tavern.localPhoto} alt={typeof tavern.name === 'object' ? tavern.name.en : tavern.name} class="tav-img" loading="lazy"/>
+              <SmartImage src={tavern.localPhoto} alt={typeof tavern.name === 'object' ? tavern.name.en : tavern.name} width={400} height={200} class="tav-img" sizes="(max-width: 600px) 100vw, 33vw" />
             ) : (
               <div class="tav-ph">🍽</div>
             )}
@@ -391,7 +392,7 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 <style>
 .hero { position:relative; min-height:92vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
 .hero-bg { position:absolute; inset:0; z-index:0; background:#061526; }
-.hero-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 55%; display:block; }
+:global(.hero-photo) { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
 .hero-photo-overlay {
   position:absolute; inset:0;
   background:
@@ -555,8 +556,8 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 .tav-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
 .tav-card { display:flex; flex-direction:column; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border); background:var(--white); transition:transform .2s,box-shadow .2s; }
 .tav-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
-.tav-img { width:100%; height:200px; object-fit:cover; display:block; transition:transform .4s ease; }
-.tav-card:hover .tav-img { transform:scale(1.04); }
+:global(.tav-img) { width:100%; height:200px; object-fit:cover; display:block; transition:transform .4s ease; }
+.tav-card:hover :global(.tav-img) { transform:scale(1.04); }
 .tav-ph { height:200px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; background:linear-gradient(140deg,var(--sand),var(--sand-dark)); }
 .tav-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; gap:.3rem; }
 .tav-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:.2rem; }

@@ -1,0 +1,66 @@
+---
+// SmartImage: WebP/AVIF format negotiation + explicit dimensions (zero CLS) + smart LCP loading.
+// isLCP=true  → loading="eager", fetchpriority="high", decoding="sync"  (above-fold hero)
+// isLCP=false → loading="lazy",  decoding="async"                       (everything else)
+//
+// class is applied to <picture> (the root element). With NO <style> block in this component,
+// Astro propagates the parent's scope hash to <picture>, so parent scoped CSS rules apply.
+// Global CSS in Layout.astro handles `picture > img` base styles (fill, object-fit, display).
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  isLCP?: boolean;
+  class?: string;
+  sizes?: string;
+  objectPosition?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  isLCP = false,
+  class: className,
+  sizes = '100vw',
+  objectPosition,
+} = Astro.props;
+
+const toFormat = (path: string, ext: string) =>
+  path.replace(/\.(jpe?g|png|gif|webp|avif)(\?.*)?$/i, `.${ext}$2`);
+
+const isExternal = src.startsWith('http://') || src.startsWith('https://') || src.startsWith('//');
+
+const avifSrc = toFormat(src, 'avif');
+const webpSrc = toFormat(src, 'webp');
+
+const knownAvif = import.meta.glob('/public/images/**/*.avif', { eager: false });
+const knownWebp = import.meta.glob('/public/images/**/*.webp', { eager: false });
+
+const serveAvif = !isExternal && avifSrc !== src && (`/public${avifSrc}` in knownAvif);
+const serveWebp = !isExternal && webpSrc !== src && (`/public${webpSrc}` in knownWebp);
+---
+
+<!--
+  No <style> block → Astro propagates the parent's scope hash to <picture>.
+  Parent scoped CSS (e.g. .feat-img { width:100%; height:100% }) targets <picture> directly.
+  `picture > img` base styles live in Layout.astro's is:global block.
+  objectPosition is forwarded inline to <img> when non-default positioning is needed.
+-->
+<picture class={className}>
+  {serveAvif && <source type="image/avif" srcset={avifSrc} sizes={sizes} />}
+  {serveWebp && <source type="image/webp" srcset={webpSrc} sizes={sizes} />}
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={isLCP ? 'eager' : 'lazy'}
+    fetchpriority={isLCP ? 'high' : undefined}
+    decoding={isLCP ? 'sync' : 'async'}
+    style={objectPosition ? `object-position:${objectPosition}` : undefined}
+  />
+</picture>

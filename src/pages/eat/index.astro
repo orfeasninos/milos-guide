@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SmartImage from '../../components/SmartImage.astro';
 import tavernsRaw from '../../data/taverns.json';
 
 type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
@@ -87,11 +88,13 @@ const eatJsonld = {
         >
           <div class="tav-img-wrap">
             {tavern.localPhoto ? (
-              <img
+              <SmartImage
                 src={tavern.localPhoto}
                 alt={getName(tavern)}
+                width={400}
+                height={240}
                 class="tav-img"
-                loading="lazy"
+                sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
               />
             ) : (
               <div class="tav-ph" aria-hidden="true">◈</div>
@@ -294,14 +297,14 @@ const eatJsonld = {
   background: var(--sand);
   flex-shrink: 0;
 }
-.tav-img {
+:global(.tav-img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
 }
-.tav-card:hover .tav-img { transform: scale(1.05); }
+.tav-card:hover :global(.tav-img) { transform: scale(1.05); }
 .tav-ph {
   width: 100%;
   height: 100%;

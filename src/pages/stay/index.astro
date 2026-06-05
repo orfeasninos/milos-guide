@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SmartImage from '../../components/SmartImage.astro';
 import accommodationsRaw from '../../data/accommodations.json';
 
 type Accommodation = typeof accommodationsRaw[number] & { localPhoto?: string | null };
@@ -101,7 +102,7 @@ const stayJsonld = {
           >
             <div class="ac-img-wrap">
               {a.localPhoto ? (
-                <img src={a.localPhoto} alt={getName(a)} class="ac-img" loading="lazy" />
+                <SmartImage src={a.localPhoto} alt={getName(a)} width={400} height={280} class="ac-img" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" />
               ) : (
                 <div class="ac-ph" aria-hidden="true"></div>
               )}
@@ -224,8 +225,8 @@ const stayJsonld = {
 }
 .ac:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 .ac-img-wrap { position: absolute; inset: 0; }
-.ac-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
-.ac:hover .ac-img { transform: scale(1.05); }
+:global(.ac-img) { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.ac:hover :global(.ac-img) { transform: scale(1.05); }
 .ac-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #0d2b4e, #1a5c8a); }
 .ac-overlay {
   position: absolute;
