@@ -5,7 +5,6 @@ import villagesData from '../data/villages.json';
 import sightsData from '../data/sights.json';
 
 type Village = typeof villagesData[number];
-type Beach   = typeof beachesData[number];
 ---
 
 <Layout
@@ -262,8 +261,8 @@ type Beach   = typeof beachesData[number];
     <div class="villages-mini-grid">
       {villagesData.map((v: Village) => (
         <a href={`/villages/${v.slug}`} class="vmini">
-          <h3 class="vmini-name">{v.name}</h3>
-          <p class="vmini-tag">{v.tagline}</p>
+          <h3 class="vmini-name">{v.nameEn}</h3>
+          <p class="vmini-tag">{v.taglineEn}</p>
         </a>
       ))}
     </div>

@@ -1,21 +1,37 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import SmartImage from '../components/SmartImage.astro';
-import beachesRaw from '../data/beaches.json';
-import sightsData from '../data/sights.json';
+import Layout from "../layouts/Layout.astro";
+import SmartImage from "../components/SmartImage.astro";
+import beachesRaw from "../data/beaches.json";
+import sightsData from "../data/sights.json";
 
-type Beach = typeof beachesRaw[number] & { localPhoto?: string | null };
+type Beach = (typeof beachesRaw)[number] & { localPhoto?: string | null };
 
 const beachesData = beachesRaw as Beach[];
 
-const accessIcon: Record<string, string> = { road: '🚗', boat: '⛵', hike: '🥾' };
+const accessIcon: Record<string, string> = {
+  road: "🚗",
+  boat: "⛵",
+  hike: "🥾",
+};
 
 const beachCategories = [
-  { title: '👨‍👩‍👧 For families',    filter: (b: Beach) => b.bestFor.includes('Families') },
-  { title: '📸 For photos',         filter: (b: Beach) => b.bestFor.includes('Photography') },
-  { title: '🔇 For peace & quiet',  filter: (b: Beach) => b.bestFor.includes('Solitude') },
-  { title: '⛵ Boat access only',   filter: (b: Beach) => b.accessType === 'boat' },
-].map(cat => ({
+  {
+    title: "👨‍👩‍👧 For families",
+    filter: (b: Beach) => b.bestFor.includes("Families"),
+  },
+  {
+    title: "📸 For photos",
+    filter: (b: Beach) => b.bestFor.includes("Photography"),
+  },
+  {
+    title: "🔇 For peace & quiet",
+    filter: (b: Beach) => b.bestFor.includes("Solitude"),
+  },
+  {
+    title: "⛵ Boat access only",
+    filter: (b: Beach) => b.accessType === "boat",
+  },
+].map((cat) => ({
   ...cat,
   beaches: beachesData.filter(cat.filter).slice(0, 3),
 }));
@@ -26,467 +42,1088 @@ const beachCategories = [
   title="The Complete Guide to Milos"
   description="Beaches, restaurants, villages, boat tours — the most complete guide to Milos, Greece. No ads."
 >
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-bg">
+      <SmartImage
+        src="/images/hero-beach.jpg"
+        alt="Milos beach"
+        width={1280}
+        height={720}
+        isLCP={true}
+        class="hero-photo"
+        sizes="100vw"
+        objectPosition="center 55%"
+      />
+      <div class="hero-photo-overlay"></div>
+      <div class="hero-grain" aria-hidden="true"></div>
+    </div>
 
-<!-- ══ HERO ══ -->
-<section class="hero">
-  <div class="hero-bg">
-    <SmartImage src="/images/hero-beach.jpg" alt="Milos beach" width={1280} height={720} isLCP={true} class="hero-photo" sizes="100vw" objectPosition="center 55%" />
-    <div class="hero-photo-overlay"></div>
-    <div class="hero-grain" aria-hidden="true"></div>
-  </div>
+    <div class="hero-content container">
+      <div class="hero-eyebrow">
+        <svg
+          class="eyebrow-pin"
+          width="11"
+          height="11"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+          ></path>
+        </svg>
+        <span>Cyclades · Greece</span>
+        <span class="eyebrow-sep" aria-hidden="true"></span>
+        <span class="eyebrow-tag">Volcanic island</span>
+      </div>
+      <div class="hero-title">
+        <span class="hero-title-main">Milos</span>
+        <span class="hero-title-rule" aria-hidden="true"></span>
+        <span class="hero-title-sub"
+          >The most authentic guide to the island</span
+        >
+      </div>
+      <p class="hero-desc">
+        Volcanic landscape, 70+ beaches, hidden sea caves, tavernas with freshly
+        caught seafood. Everything you need to experience Milos the right way.
+      </p>
+      <div class="hero-ctas">
+        <a href="/beaches" class="btn-primary">🏖 Beaches</a>
+        <a href="/sights" class="btn-secondary">🏛 Sights</a>
+        <a href="/map" class="hero-cta-ghost">Map →</a>
+      </div>
+      <div class="hero-no-ads">
+        <span class="hero-no-ads-dot" aria-hidden="true"></span>
+        No ads · No sponsored content
+      </div>
+    </div>
 
-  <div class="hero-content container">
-    <div class="hero-eyebrow">
-      <svg class="eyebrow-pin" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+    <div class="hero-stats container">
+      <div class="stat-pill">
+        <span class="stat-n">70+</span><span class="stat-l">Beaches</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-n">151</span><span class="stat-l">km²</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-n">125</span><span class="stat-l">km coastline</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-n">~5,000</span><span class="stat-l">Residents</span>
+      </div>
+    </div>
+
+    <div class="hero-waves" aria-hidden="true">
+      <svg
+        viewBox="0 0 1440 100"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M0,40 C360,90 1080,0 1440,50 L1440,100 L0,100 Z" fill="#f5f0e8"
+        ></path>
       </svg>
-      <span>Cyclades · Greece</span>
-      <span class="eyebrow-sep" aria-hidden="true"></span>
-      <span class="eyebrow-tag">Volcanic island</span>
     </div>
-    <div class="hero-title">
-      <span class="hero-title-main">Milos</span>
-      <span class="hero-title-rule" aria-hidden="true"></span>
-      <span class="hero-title-sub">The most authentic guide to the island</span>
+    <div class="scroll-hint" aria-hidden="true">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 28 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="6,10 14,19 22,10"
+          stroke="rgba(255,255,255,0.6)"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"></polyline>
+      </svg>
     </div>
-    <p class="hero-desc">
-      Volcanic landscape, 70+ beaches, hidden sea caves, tavernas with freshly caught seafood.
-      Everything you need to experience Milos the right way.
-    </p>
-    <div class="hero-ctas">
-      <a href="/beaches" class="btn-primary">🏖 Beaches</a>
-      <a href="/sights"  class="btn-secondary">🏛 Sights</a>
-      <a href="/map"     class="hero-cta-ghost">Map →</a>
-    </div>
-    <div class="hero-no-ads">
-      <span class="hero-no-ads-dot" aria-hidden="true"></span>
-      No ads · No sponsored content
-    </div>
-  </div>
+  </section>
 
-  <div class="hero-stats container">
-    <div class="stat-pill"><span class="stat-n">70+</span><span class="stat-l">Beaches</span></div>
-    <div class="stat-pill"><span class="stat-n">151</span><span class="stat-l">km²</span></div>
-    <div class="stat-pill"><span class="stat-n">125</span><span class="stat-l">km coastline</span></div>
-    <div class="stat-pill"><span class="stat-n">~5,000</span><span class="stat-l">Residents</span></div>
-  </div>
-
-  <div class="hero-waves" aria-hidden="true">
-    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,40 C360,90 1080,0 1440,50 L1440,100 L0,100 Z" fill="#f5f0e8"/>
-    </svg>
-  </div>
-  <div class="scroll-hint" aria-hidden="true">
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6,10 14,19 22,10" stroke="rgba(255,255,255,0.6)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
-</section>
-
-
-<!-- ══ EXPLORE ══ -->
-<section class="sec sec-sand" style="padding-top:3.5rem">
-  <div class="container">
-    <div class="explore-head">
-      <span class="label" style="margin:0">Explore</span>
-      <span class="explore-head-title">What do you want to discover in Milos?</span>
-    </div>
-    <div class="cat-list">
-
-      <a href="/beaches" class="cat-row">
-        <span class="cat-num">1</span>
-        <div class="cat-info">
-          <span class="cat-name">Beaches</span>
-          <span class="cat-desc">From the volcanic Sarakiniko to hidden sea caves — {beachesData.length}+ shores for every taste</span>
-        </div>
-        <span class="cat-count">{beachesData.length} beaches</span>
-        <span class="cat-arrow">→</span>
-      </a>
-
-      <a href="/villages" class="cat-row">
-        <span class="cat-num">2</span>
-        <div class="cat-info">
-          <span class="cat-name">Villages</span>
-          <span class="cat-desc">Plaka, Klima, Tripiti, Pollonia — the island beyond the beaches</span>
-        </div>
-        <span class="cat-count">8 villages</span>
-        <span class="cat-arrow">→</span>
-      </a>
-
-      <a href="/sights" class="cat-row">
-        <span class="cat-num">3</span>
-        <div class="cat-info">
-          <span class="cat-name">Sights</span>
-          <span class="cat-desc">Catacombs, ancient theater, Kastro, museums — 2,500 years of history on a volcanic island</span>
-        </div>
-        <span class="cat-count">{sightsData.length} sights</span>
-        <span class="cat-arrow">→</span>
-      </a>
-
-      <a href="/how-to-reach" class="cat-row">
-        <span class="cat-num">4</span>
-        <div class="cat-info">
-          <span class="cat-name">Getting here</span>
-          <span class="cat-desc">Ferries from Piraeus, flights, how to get around the island</span>
-        </div>
-        <span class="cat-count">All routes</span>
-        <span class="cat-arrow">→</span>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-
-
-<!-- ══ QUICK FACTS ══ -->
-<section class="sec sec-dark">
-  <div class="container">
-    <div class="sec-hdr-row">
-      <div>
-        <span class="label label-lt">At a glance</span>
-        <h2 class="sec-title sec-title-lt">Quick Facts</h2>
+  <!-- ══ EXPLORE ══ -->
+  <section class="sec sec-sand" style="padding-top:3.5rem">
+    <div class="container">
+      <div class="explore-head">
+        <span class="label" style="margin:0">Explore</span>
+        <span class="explore-head-title"
+          >What do you want to discover in Milos?</span
+        >
       </div>
-    </div>
-    <div class="facts-grid">
-      <div class="fact-item"><span class="fact-key">Region</span><span class="fact-val">Cyclades</span></div>
-      <div class="fact-item"><span class="fact-key">Capital</span><span class="fact-val">Plaka</span></div>
-      <div class="fact-item"><span class="fact-key">Port</span><span class="fact-val">Adamas</span></div>
-      <div class="fact-item"><span class="fact-key">Population</span><span class="fact-val">5,302 (2021)</span></div>
-      <div class="fact-item"><span class="fact-key">Beaches</span><span class="fact-val">70+</span></div>
-      <div class="fact-item"><span class="fact-key">Area</span><span class="fact-val">151 km²</span></div>
-      <div class="fact-item"><span class="fact-key">Highest peak</span><span class="fact-val">Prophet Elias</span></div>
-      <div class="fact-item"><span class="fact-key">Famous find</span><span class="fact-val">Venus de Milo</span></div>
-      <div class="fact-item"><span class="fact-key">Coastline</span><span class="fact-val">125km</span></div>
-      <div class="fact-item"><span class="fact-key">Time zone</span><span class="fact-val">UTC+2</span></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ WHY DIFFERENT ══ -->
-<section class="sec sec-sand">
-  <div class="container">
-    <div class="sec-hdr-row">
-      <div>
-        <span class="label">Why Milos is different</span>
-        <h2 class="sec-title">What you won't find<br/>anywhere else in the Aegean</h2>
-      </div>
-    </div>
-    <div class="why-grid">
-      <div class="why-item">
-        <div class="why-num">01</div>
-        <div class="why-title">Volcanic origin</div>
-        <p class="why-text">Milos belongs to the Aegean Volcanic Arc and its landscape has been shaped by millions of years of volcanic activity. This explains the white rock formations of Sarakiniko, the warm waters at Paleochori, and the volcanic rock found in every corner of the island.</p>
-      </div>
-      <div class="why-item">
-        <div class="why-num">02</div>
-        <div class="why-title">Obsidian and ancient trade</div>
-        <p class="why-text">Since the Neolithic period, Milos was an important trading hub due to its obsidian — a volcanic rock used for tools and weapons across the entire Mediterranean. Pieces of Milean obsidian have been found as far away as Egypt.</p>
-      </div>
-      <div class="why-item">
-        <div class="why-num">03</div>
-        <div class="why-title">The Venus that is no longer here</div>
-        <p class="why-text">In 1820, a farmer in Milos discovered the statue that now graces the Louvre. The famous Venus de Milo was sculpted around 130 BC and had been hidden for centuries beneath the island's soil.</p>
-      </div>
-      <div class="why-item">
-        <div class="why-num">04</div>
-        <div class="why-title">Natural harbour of a volcanic caldera</div>
-        <p class="why-text">The bay of Milos is essentially a submerged volcanic caldera — one of the largest natural harbours in the Mediterranean. Historically it served as shelter for naval fleets from antiquity through World War II.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ BEACHES BY TYPE ══ -->
-<section class="sec sec-white">
-  <div class="container">
-    <div class="sec-hdr-row">
-      <div>
-        <span class="label">Beaches</span>
-        <h2 class="sec-title">Find your beach</h2>
-      </div>
-      <a href="/beaches" class="see-all">All beaches →</a>
-    </div>
-    <div class="beach-cat-grid">
-      {beachCategories.map(cat => (
-        <div class="beach-cat">
-          <div class="beach-cat-title">{cat.title}</div>
-          <div class="beach-cat-list">
-            {cat.beaches.map(b => (
-              <a href={`/beaches/${b.slug}`} class="beach-link">
-                <span class="beach-link-icon">{accessIcon[b.accessType] ?? '📍'}</span>
-                {typeof b.name === 'object' ? b.name.en : b.name}
-              </a>
-            ))}
+      <div class="cat-list">
+        <a href="/beaches" class="cat-row">
+          <span class="cat-num">1</span>
+          <div class="cat-info">
+            <span class="cat-name">Beaches</span>
+            <span class="cat-desc"
+              >From the volcanic Sarakiniko to hidden sea caves — {
+                beachesData.length
+              }+ shores for every taste</span
+            >
           </div>
+          <span class="cat-count">{beachesData.length} beaches</span>
+          <span class="cat-arrow">→</span>
+        </a>
+
+        <a href="/villages" class="cat-row">
+          <span class="cat-num">2</span>
+          <div class="cat-info">
+            <span class="cat-name">Villages</span>
+            <span class="cat-desc"
+              >Plaka, Klima, Tripiti, Pollonia — the island beyond the beaches</span
+            >
+          </div>
+          <span class="cat-count">8 villages</span>
+          <span class="cat-arrow">→</span>
+        </a>
+
+        <a href="/sights" class="cat-row">
+          <span class="cat-num">3</span>
+          <div class="cat-info">
+            <span class="cat-name">Sights</span>
+            <span class="cat-desc"
+              >Catacombs, ancient theater, Kastro, museums — 2,500 years of
+              history on a volcanic island</span
+            >
+          </div>
+          <span class="cat-count">{sightsData.length} sights</span>
+          <span class="cat-arrow">→</span>
+        </a>
+
+        <a href="/how-to-reach" class="cat-row">
+          <span class="cat-num">4</span>
+          <div class="cat-info">
+            <span class="cat-name">Getting here</span>
+            <span class="cat-desc"
+              >Ferries from Piraeus, flights, how to get around the island</span
+            >
+          </div>
+          <span class="cat-count">All routes</span>
+          <span class="cat-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ QUICK FACTS ══ -->
+  <section class="sec sec-dark">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label label-lt">At a glance</span>
+          <h2 class="sec-title sec-title-lt">Quick Facts</h2>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ VILLAGES ══ -->
-<section class="sec sec-sand">
-  <div class="container">
-    <div class="sec-hdr-row">
-      <div>
-        <span class="label">Villages</span>
-        <h2 class="sec-title">Milos beyond the beaches</h2>
       </div>
-      <a href="/villages" class="see-all">All villages →</a>
-    </div>
-    <div class="villages-grid">
-      <a href="/villages/plaka"       class="village-card"><span class="village-name">Plaka</span><span class="village-note">The capital, perched on a rock with panoramic views</span></a>
-      <a href="/villages/tripiti"     class="village-card"><span class="village-name">Tripiti</span><span class="village-note">Catacombs, ancient theatre, atmospheric village</span></a>
-      <a href="/villages/pollonia"    class="village-card"><span class="village-name">Pollonia</span><span class="village-note">North coast, fish tavernas and ferries to Kimolos</span></a>
-      <a href="/villages/klima"       class="village-card"><span class="village-name">Klima</span><span class="village-note">The famous syrmata — fishing storehouses over the sea</span></a>
-      <a href="/villages/mandrakia"   class="village-card"><span class="village-name">Mandrakia</span><span class="village-note">A small harbour with colourful syrmata</span></a>
-      <a href="/villages/firopotamos" class="village-card"><span class="village-name">Firopotamos</span><span class="village-note">Quiet, authentic, far from the tourist trail</span></a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ KNOWN PLACES ══ -->
-<section class="sec sec-white">
-  <div class="container">
-    <div class="sec-hdr-row">
-      <div>
-        <span class="label">Landmarks & highlights</span>
-        <h2 class="sec-title">The most iconic spots</h2>
-      </div>
-    </div>
-    <div class="places-strip">
-      <a href="/beaches/sarakiniko"   class="place-chip"><span class="place-chip-name">Sarakiniko</span><span class="place-chip-type">🏖 Beach</span></a>
-      <a href="/beaches/kleftiko"     class="place-chip"><span class="place-chip-name">Kleftiko</span><span class="place-chip-type">⛵ Sea cave</span></a>
-      <a href="/villages/plaka"       class="place-chip"><span class="place-chip-name">Plaka</span><span class="place-chip-type">🏘 Village</span></a>
-      <a href="/villages/pollonia"    class="place-chip"><span class="place-chip-name">Pollonia</span><span class="place-chip-type">🍽 Food & sea</span></a>
-      <a href="/villages/klima"       class="place-chip"><span class="place-chip-name">Klima</span><span class="place-chip-type">🏠 Syrmata</span></a>
-      <a href="/villages/firopotamos" class="place-chip"><span class="place-chip-name">Firopotamos</span><span class="place-chip-type">📷 Photogenic</span></a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ WHEN TO VISIT ══ -->
-<section class="sec sec-sand">
-  <div class="container">
-    <div class="sec-hdr-row">
-      <div>
-        <span class="label">When to visit</span>
-        <h2 class="sec-title">Every month has<br/>its own character</h2>
+      <div class="facts-grid">
+        <div class="fact-item">
+          <span class="fact-key">Region</span><span class="fact-val"
+            >Cyclades</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Capital</span><span class="fact-val"
+            >Plaka</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Port</span><span class="fact-val">Adamas</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Population</span><span class="fact-val"
+            >5,302 (2021)</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Beaches</span><span class="fact-val">70+</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Area</span><span class="fact-val"
+            >151 km²</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Highest peak</span><span class="fact-val"
+            >Prophet Elias</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Famous find</span><span class="fact-val"
+            >Venus de Milo</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Coastline</span><span class="fact-val"
+            >125km</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-key">Time zone</span><span class="fact-val"
+            >UTC+2</span>
+        </div>
       </div>
     </div>
-    <div class="months-grid">
-      <div class="month-item">
-        <div class="month-name">May</div>
-        <span class="month-tag">Peaceful</span>
-        <p class="month-desc">Few crowds, wildflowers in bloom, ideal for exploring. Sea still fresh.</p>
+  </section>
+
+  <!-- ══ WHY DIFFERENT ══ -->
+  <section class="sec sec-sand">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Why Milos is different</span>
+          <h2 class="sec-title">
+            What you won't find<br />anywhere else in the Aegean
+          </h2>
+        </div>
       </div>
-      <div class="month-item">
-        <div class="month-name">June</div>
-        <span class="month-tag">Ideal</span>
-        <p class="month-desc">The best balance. Warm sea, few crowds, everything open.</p>
-      </div>
-      <div class="month-item month-item--best">
-        <div class="month-name">September</div>
-        <span class="month-tag">Best month</span>
-        <p class="month-desc">Perhaps the perfect month. Warm sea, fewer crowds, lower prices.</p>
-      </div>
-      <div class="month-item month-item--warn">
-        <div class="month-name">August</div>
-        <span class="month-tag">Busy</span>
-        <p class="month-desc">Meltemi winds affect which beaches are suitable each day. Very crowded.</p>
-      </div>
-      <div class="month-item">
-        <div class="month-name">July</div>
-        <span class="month-tag">Peak season</span>
-        <p class="month-desc">Lively atmosphere, but book everything well in advance.</p>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-num">01</div>
+          <div class="why-title">Volcanic origin</div>
+          <p class="why-text">
+            Milos belongs to the Aegean Volcanic Arc and its landscape has been
+            shaped by millions of years of volcanic activity. This explains the
+            white rock formations of Sarakiniko, the warm waters at Paleochori,
+            and the volcanic rock found in every corner of the island.
+          </p>
+        </div>
+        <div class="why-item">
+          <div class="why-num">02</div>
+          <div class="why-title">Obsidian and ancient trade</div>
+          <p class="why-text">
+            Since the Neolithic period, Milos was an important trading hub due
+            to its obsidian — a volcanic rock used for tools and weapons across
+            the entire Mediterranean. Pieces of Milean obsidian have been found
+            as far away as Egypt.
+          </p>
+        </div>
+        <div class="why-item">
+          <div class="why-num">03</div>
+          <div class="why-title">The Venus that is no longer here</div>
+          <p class="why-text">
+            In 1820, a farmer in Milos discovered the statue that now graces the
+            Louvre. The famous Venus de Milo was sculpted around 130 BC and had
+            been hidden for centuries beneath the island's soil.
+          </p>
+        </div>
+        <div class="why-item">
+          <div class="why-num">04</div>
+          <div class="why-title">Natural harbour of a volcanic caldera</div>
+          <p class="why-text">
+            The bay of Milos is essentially a submerged volcanic caldera — one
+            of the largest natural harbours in the Mediterranean. Historically
+            it served as shelter for naval fleets from antiquity through World
+            War II.
+          </p>
+        </div>
       </div>
     </div>
-    <p class="meltemia-note">⚠️ <strong>Meltemi winds:</strong> The northern winds directly affect which beaches are good each day — southern beaches (Paleochori, Fyriplaka) are sheltered, while northern ones can have waves.</p>
-  </div>
-</section>
+  </section>
 
+  <!-- ══ BEACHES BY TYPE ══ -->
+  <section class="sec sec-white">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Beaches</span>
+          <h2 class="sec-title">Find your beach</h2>
+        </div>
+        <a href="/beaches" class="see-all">All beaches →</a>
+      </div>
+      <div class="beach-cat-grid">
+        {
+          beachCategories.map((cat) => (
+            <div class="beach-cat">
+              <div class="beach-cat-title">{cat.title}</div>
+              <div class="beach-cat-list">
+                {cat.beaches.map((b) => (
+                  <a href={`/beaches/${b.slug}`} class="beach-link">
+                    <span class="beach-link-icon">
+                      {accessIcon[b.accessType] ?? "📍"}
+                    </span>
+                    {typeof b.name === "object" ? b.name.en : b.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VILLAGES ══ -->
+  <section class="sec sec-sand">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Villages</span>
+          <h2 class="sec-title">Milos beyond the beaches</h2>
+        </div>
+        <a href="/villages" class="see-all">All villages →</a>
+      </div>
+      <div class="villages-grid">
+        <a href="/villages/plaka" class="village-card"
+          ><span class="village-name">Plaka</span><span class="village-note"
+            >The capital, perched on a rock with panoramic views</span
+          ></a
+        >
+        <a href="/villages/tripiti" class="village-card"
+          ><span class="village-name">Tripiti</span><span class="village-note"
+            >Catacombs, ancient theatre, atmospheric village</span
+          ></a
+        >
+        <a href="/villages/pollonia" class="village-card"
+          ><span class="village-name">Pollonia</span><span class="village-note"
+            >North coast, fish tavernas and ferries to Kimolos</span
+          ></a
+        >
+        <a href="/villages/klima" class="village-card"
+          ><span class="village-name">Klima</span><span class="village-note"
+            >The famous syrmata — fishing storehouses over the sea</span
+          ></a
+        >
+        <a href="/villages/mandrakia" class="village-card"
+          ><span class="village-name">Mandrakia</span><span class="village-note"
+            >A small harbour with colourful syrmata</span
+          ></a
+        >
+        <a href="/villages/firopotamos" class="village-card"
+          ><span class="village-name">Firopotamos</span><span
+            class="village-note"
+            >Quiet, authentic, far from the tourist trail</span
+          ></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ KNOWN PLACES ══ -->
+  <section class="sec sec-white">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Landmarks & highlights</span>
+          <h2 class="sec-title">The most iconic spots</h2>
+        </div>
+      </div>
+      <div class="places-strip">
+        <a href="/beaches/sarakiniko" class="place-chip"
+          ><span class="place-chip-name">Sarakiniko</span><span
+            class="place-chip-type">🏖 Beach</span
+          ></a
+        >
+        <a href="/beaches/kleftiko" class="place-chip"
+          ><span class="place-chip-name">Kleftiko</span><span
+            class="place-chip-type">⛵ Sea cave</span
+          ></a
+        >
+        <a href="/villages/plaka" class="place-chip"
+          ><span class="place-chip-name">Plaka</span><span
+            class="place-chip-type">🏘 Village</span
+          ></a
+        >
+        <a href="/villages/pollonia" class="place-chip"
+          ><span class="place-chip-name">Pollonia</span><span
+            class="place-chip-type">🍽 Food & sea</span
+          ></a
+        >
+        <a href="/villages/klima" class="place-chip"
+          ><span class="place-chip-name">Klima</span><span
+            class="place-chip-type">🏠 Syrmata</span
+          ></a
+        >
+        <a href="/villages/firopotamos" class="place-chip"
+          ><span class="place-chip-name">Firopotamos</span><span
+            class="place-chip-type">📷 Photogenic</span
+          ></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHEN TO VISIT ══ -->
+  <section class="sec sec-sand">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">When to visit</span>
+          <h2 class="sec-title">Every month has<br />its own character</h2>
+        </div>
+      </div>
+      <div class="months-grid">
+        <div class="month-item">
+          <div class="month-name">May</div>
+          <span class="month-tag">Peaceful</span>
+          <p class="month-desc">
+            Few crowds, wildflowers in bloom, ideal for exploring. Sea still
+            fresh.
+          </p>
+        </div>
+        <div class="month-item">
+          <div class="month-name">June</div>
+          <span class="month-tag">Ideal</span>
+          <p class="month-desc">
+            The best balance. Warm sea, few crowds, everything open.
+          </p>
+        </div>
+        <div class="month-item">
+          <div class="month-name">July</div>
+          <span class="month-tag">Peak season</span>
+          <p class="month-desc">
+            Lively atmosphere, but book everything well in advance.
+          </p>
+        </div>
+        <div class="month-item month-item--warn">
+          <div class="month-name">August</div>
+          <span class="month-tag">Busy</span>
+          <p class="month-desc">
+            Meltemi winds affect which beaches are suitable each day. Very
+            crowded.
+          </p>
+        </div>
+        <div class="month-item">
+          <div class="month-name">September</div>
+          <span class="month-tag">Best month</span>
+          <p class="month-desc">
+            Perhaps the perfect month. Warm sea, fewer crowds, lower prices.
+          </p>
+        </div>
+      </div>
+      <p class="meltemia-note">
+        ⚠️ <strong>Meltemi winds:</strong> The northern winds directly affect which
+        beaches are good each day — southern beaches (Paleochori, Fyriplaka) are sheltered,
+        while northern ones can have waves.
+      </p>
+    </div>
+  </section>
 </Layout>
 
 <style>
-.hero { position:relative; min-height:92vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
-.hero-bg { position:absolute; inset:0; z-index:0; background:#061526; }
-:global(.hero-photo) { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
-.hero-photo-overlay {
-  position:absolute; inset:0;
-  background:
-    linear-gradient(to right, rgba(4,14,30,.93) 0%, rgba(5,18,38,.8) 30%, rgba(5,18,38,.32) 65%, rgba(5,18,38,.1) 100%),
-    linear-gradient(to top, rgba(4,14,30,.8) 0%, transparent 45%),
-    linear-gradient(to bottom, rgba(4,14,30,.35) 0%, transparent 22%);
-}
-.hero-grain {
-  position:absolute; inset:0; pointer-events:none; z-index:1; opacity:.04;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:256px 256px;
-}
-.hero-content { position:relative; z-index:2; padding:4.5rem 0 2rem; }
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: #061526;
+  }
+  :global(.hero-photo) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-photo-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        to right,
+        rgba(4, 14, 30, 0.93) 0%,
+        rgba(5, 18, 38, 0.8) 30%,
+        rgba(5, 18, 38, 0.32) 65%,
+        rgba(5, 18, 38, 0.1) 100%
+      ),
+      linear-gradient(to top, rgba(4, 14, 30, 0.8) 0%, transparent 45%),
+      linear-gradient(to bottom, rgba(4, 14, 30, 0.35) 0%, transparent 22%);
+  }
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 4.5rem 0 2rem;
+  }
 
-/* Eyebrow */
-.hero-eyebrow {
-  display:inline-flex; align-items:center; gap:.55rem;
-  font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
-  color:rgba(255,255,255,.58);
-  margin-bottom:1.6rem;
-  animation:fadeUp .7s ease both;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.13);
-  padding:.32rem .85rem .32rem .55rem;
-  border-radius:var(--radius-full);
-  backdrop-filter:blur(10px);
-}
-.eyebrow-pin { color:var(--sea); flex-shrink:0; }
-.eyebrow-sep { display:inline-block; width:1px; height:10px; background:rgba(255,255,255,.22); margin:0 .1rem; }
-.eyebrow-tag { color:var(--sky); opacity:.75; }
+  /* Eyebrow */
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.58);
+    margin-bottom: 1.6rem;
+    animation: fadeUp 0.7s ease both;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    padding: 0.32rem 0.85rem 0.32rem 0.55rem;
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(10px);
+  }
+  .eyebrow-pin {
+    color: var(--sea);
+    flex-shrink: 0;
+  }
+  .eyebrow-sep {
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.22);
+    margin: 0 0.1rem;
+  }
+  .eyebrow-tag {
+    color: var(--sky);
+    opacity: 0.75;
+  }
 
-/* Title */
-.hero-title { margin-bottom:1.6rem; animation:fadeUp .7s ease .1s both; }
-.hero-title-main {
-  display:block;
-  font-family:var(--font-serif);
-  font-size:clamp(4.5rem,12vw,9.5rem);
-  color:#fff;
-  line-height:.88;
-  letter-spacing:-.025em;
-  text-shadow:0 2px 40px rgba(0,0,0,.35), 0 0 100px rgba(58,155,201,.12);
-}
-.hero-title-rule {
-  display:block;
-  width:56px; height:2px;
-  background:linear-gradient(90deg, var(--sea) 0%, rgba(58,155,201,.2) 100%);
-  border-radius:2px;
-  margin:.9rem 0 .7rem;
-}
-.hero-title-sub { display:block; font-size:clamp(.9rem,2vw,1.12rem); font-weight:400; color:rgba(255,255,255,.58); letter-spacing:.025em; }
+  /* Title */
+  .hero-title {
+    margin-bottom: 1.6rem;
+    animation: fadeUp 0.7s ease 0.1s both;
+  }
+  .hero-title-main {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: clamp(4.5rem, 12vw, 9.5rem);
+    color: #fff;
+    line-height: 0.88;
+    letter-spacing: -0.025em;
+    text-shadow:
+      0 2px 40px rgba(0, 0, 0, 0.35),
+      0 0 100px rgba(58, 155, 201, 0.12);
+  }
+  .hero-title-rule {
+    display: block;
+    width: 56px;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--sea) 0%,
+      rgba(58, 155, 201, 0.2) 100%
+    );
+    border-radius: 2px;
+    margin: 0.9rem 0 0.7rem;
+  }
+  .hero-title-sub {
+    display: block;
+    font-size: clamp(0.9rem, 2vw, 1.12rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.58);
+    letter-spacing: 0.025em;
+  }
 
-/* Description */
-.hero-desc { max-width:490px; font-size:1.02rem; line-height:1.76; color:rgba(255,255,255,.66); margin-bottom:2rem; animation:fadeUp .7s ease .2s both; }
+  /* Description */
+  .hero-desc {
+    max-width: 490px;
+    font-size: 1.02rem;
+    line-height: 1.76;
+    color: rgba(255, 255, 255, 0.66);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
 
-/* CTAs */
-.hero-ctas { display:flex; gap:.85rem; flex-wrap:wrap; align-items:center; animation:fadeUp .7s ease .3s both; }
-.hero-cta-ghost {
-  font-size:.875rem; font-weight:600;
-  color:rgba(255,255,255,.48);
-  border-bottom:1px solid rgba(255,255,255,.18);
-  padding-bottom:1px;
-  margin-left:.2rem;
-  transition:color .15s, border-color .15s;
-}
-.hero-cta-ghost:hover { color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.45); }
+  /* CTAs */
+  .hero-ctas {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    align-items: center;
+    animation: fadeUp 0.7s ease 0.3s both;
+  }
+  .hero-cta-ghost {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.48);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding-bottom: 1px;
+    margin-left: 0.2rem;
+    transition:
+      color 0.15s,
+      border-color 0.15s;
+  }
+  .hero-cta-ghost:hover {
+    color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.45);
+  }
 
-/* No-ads badge */
-.hero-no-ads {
-  display:inline-flex; align-items:center; gap:.45rem;
-  margin-top:1.6rem;
-  font-size:.64rem; font-weight:600; letter-spacing:.11em; text-transform:uppercase;
-  color:rgba(255,255,255,.25);
-  animation:fadeUp .7s ease .38s both;
-}
-.hero-no-ads-dot { width:5px; height:5px; border-radius:50%; background:var(--sea); opacity:.6; flex-shrink:0; }
+  /* No-ads badge */
+  .hero-no-ads {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 1.6rem;
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+    animation: fadeUp 0.7s ease 0.38s both;
+  }
+  .hero-no-ads-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--sea);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
 
-/* Stats */
-.hero-stats { position:relative; z-index:2; display:flex; gap:.75rem; flex-wrap:wrap; padding-top:2.5rem; padding-bottom:5.5rem; animation:fadeUp .7s ease .45s both; }
-.stat-pill {
-  display:flex; flex-direction:column; gap:.1rem;
-  padding:.75rem 1.3rem;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.12);
-  border-top-color:rgba(58,155,201,.35);
-  border-radius:var(--radius-md);
-  backdrop-filter:blur(14px);
-  transition:background .2s, border-color .2s;
-}
-.stat-pill:hover { background:rgba(255,255,255,.11); }
-.stat-n { font-family:var(--font-serif); font-size:1.7rem; color:#fff; line-height:1; }
-.stat-l { font-size:.65rem; font-weight:500; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.07em; }
+  /* Stats */
+  .hero-stats {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 2.5rem;
+    padding-bottom: 5.5rem;
+    animation: fadeUp 0.7s ease 0.45s both;
+  }
+  .stat-pill {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.75rem 1.3rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(58, 155, 201, 0.35);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(14px);
+    transition:
+      background 0.2s,
+      border-color 0.2s;
+  }
+  .stat-pill:hover {
+    background: rgba(255, 255, 255, 0.11);
+  }
+  .stat-n {
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+    color: #fff;
+    line-height: 1;
+  }
+  .stat-l {
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
 
-.hero-waves { position:absolute; bottom:-1px; left:0; right:0; height:100px; z-index:1; }
-.hero-waves svg { width:100%; height:100%; display:block; }
-.scroll-hint { position:absolute; bottom:5rem; left:50%; transform:translateX(-50%); z-index:2; display:flex; align-items:center; justify-content:center; animation:scrollBounce 1.8s ease-in-out infinite; }
-@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:.55} 50%{transform:translateX(-50%) translateY(8px);opacity:1} }
-@keyframes fadeUp { from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)} }
-.explore-head { display:flex; align-items:baseline; gap:1.5rem; margin-bottom:3.5rem; border-bottom:1px solid rgba(0,0,0,.1); padding-bottom:1.25rem; }
-.explore-head-title { font-family:var(--font-serif); font-size:clamp(1.1rem,2vw,1.35rem); color:var(--ink); font-weight:400; }
-.cat-list { display:flex; flex-direction:column; }
-.cat-row { display:grid; grid-template-columns:80px 1fr auto auto; align-items:center; gap:2rem; padding:1.75rem 0; border-bottom:1px solid rgba(0,0,0,.08); color:inherit; position:relative; transition:padding-left .3s ease; }
-.cat-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--deep-blue); transition:width .3s ease; border-radius:0 2px 2px 0; }
-.cat-row:hover { padding-left:1rem; }
-.cat-row:hover::before { width:3px; }
-.cat-num { font-family:var(--font-serif); font-size:clamp(2.5rem,5vw,3.8rem); color:rgba(0,0,0,.1); line-height:1; transition:color .3s; user-select:none; }
-.cat-row:hover .cat-num { color:var(--deep-blue); }
-.cat-info { display:flex; flex-direction:column; gap:.3rem; }
-.cat-name { font-family:var(--font-serif); font-size:clamp(1.5rem,3vw,2.2rem); color:var(--ink); line-height:1.1; transition:color .3s; }
-.cat-row:hover .cat-name { color:var(--deep-blue); }
-.cat-desc { font-size:.875rem; color:var(--muted); line-height:1.55; max-width:430px; }
-.cat-count { font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
-.cat-arrow { font-size:1.4rem; color:rgba(0,0,0,.15); transition:color .3s,transform .3s; }
-.cat-row:hover .cat-arrow { color:var(--deep-blue); transform:translateX(6px); }
-.facts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); overflow:hidden; }
-.fact-item { background:transparent; padding:1.25rem 1.5rem; display:flex; flex-direction:column; gap:.2rem; }
-.fact-key { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(58,155,201,.7); }
-.fact-val { font-family:var(--font-serif); font-size:1.15rem; color:#fff; line-height:1.2; }
-.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
-.why-item { padding:2.5rem; border-right:1px solid rgba(0,0,0,.08); border-bottom:1px solid rgba(0,0,0,.08); background:var(--white); }
-.why-item:nth-child(2n) { border-right:none; }
-.why-item:nth-last-child(-n+2) { border-bottom:none; }
-.why-num { font-family:var(--font-serif); font-size:3rem; color:var(--sand-dark); line-height:1; margin-bottom:.75rem; }
-.why-title { font-family:var(--font-serif); font-size:1.2rem; color:var(--deep-blue); margin-bottom:.6rem; line-height:1.2; }
-.why-text { font-size:.875rem; color:var(--muted); line-height:1.7; }
-.beach-cat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
-.beach-cat { border-top:2px solid var(--deep-blue); padding-top:1.25rem; }
-.beach-cat-title { font-family:var(--font-serif); font-size:1.1rem; color:var(--deep-blue); margin-bottom:1rem; }
-.beach-cat-list { display:flex; flex-direction:column; gap:.1rem; }
-.beach-link { display:flex; align-items:center; gap:.6rem; padding:.5rem 0; border-bottom:1px solid var(--border); font-size:.9rem; color:var(--ink); transition:color .15s,padding-left .15s; }
-.beach-link:hover { color:var(--aegean); padding-left:.4rem; }
-.beach-link-icon { font-size:.8rem; color:var(--muted); flex-shrink:0; }
-.villages-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.75rem; }
-.village-card { background:var(--white); border:1px solid var(--sand-dark); border-radius:var(--radius-md); padding:1.5rem 1.25rem; display:flex; flex-direction:column; gap:.35rem; transition:transform .15s,box-shadow .15s,border-color .15s; }
-.village-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--sea); }
-.village-name { font-family:var(--font-serif); font-size:1.15rem; color:var(--deep-blue); }
-.village-note { font-size:.78rem; color:var(--muted); line-height:1.45; }
-.places-strip { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:.75rem; }
-.place-chip { background:var(--white); border:1px solid var(--sand-dark); border-radius:var(--radius-md); padding:1.25rem; display:flex; flex-direction:column; gap:.25rem; transition:transform .15s,box-shadow .15s,border-color .15s; }
-.place-chip:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--sea); }
-.place-chip-name { font-family:var(--font-serif); font-size:1.05rem; color:var(--deep-blue); }
-.place-chip-type { font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
-.months-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0; border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
-.month-item { padding:1.75rem 1.25rem; border-right:1px solid rgba(0,0,0,.08); background:var(--white); }
-.month-item:last-child { border-right:none; }
-.month-item--best { background:var(--deep-blue); }
-.month-item--best .month-name { color:#fff; }
-.month-item--best .month-desc { color:rgba(255,255,255,.6); }
-.month-item--best .month-tag { background:rgba(58,155,201,.25); color:var(--sky); }
-.month-item--warn .month-tag { background:rgba(217,119,6,.12); color:#92400e; }
-.month-name { font-family:var(--font-serif); font-size:1.1rem; color:var(--ink); margin-bottom:.5rem; }
-.month-tag { display:inline-block; font-size:.6rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:.6rem; background:var(--sand-dark); color:var(--muted); }
-.month-desc { font-size:.78rem; color:var(--muted); line-height:1.55; }
-.meltemia-note { margin-top:1.25rem; font-size:.82rem; color:var(--muted); padding:0 .25rem; }
-@media (max-width:900px) {
-  .months-grid { grid-template-columns:1fr 1fr; }
-  .month-item:nth-child(2n) { border-right:none; }
-  .month-item { border-bottom:1px solid rgba(0,0,0,.08); }
-  .why-grid { grid-template-columns:1fr; }
-  .why-item:nth-child(2n) { border-right:none; }
-  .why-item { border-bottom:1px solid rgba(0,0,0,.08); }
-}
-@media (max-width:768px) {
-  .cat-row { grid-template-columns:50px 1fr auto; gap:1rem; }
-  .cat-arrow { display:none; }
-  .cat-num { font-size:2rem; }
-  .cat-name { font-size:1.4rem; }
-  .cat-desc { display:none; }
-  .beach-cat-grid { grid-template-columns:1fr; }
-}
-@media (max-width:480px) {
-  .hero-ctas { flex-direction:column; }
-}
+  .hero-waves {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    z-index: 1;
+  }
+  .hero-waves svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: scrollBounce 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollBounce {
+    0%,
+    100% {
+      transform: translateX(-50%) translateY(0);
+      opacity: 0.55;
+    }
+    50% {
+      transform: translateX(-50%) translateY(8px);
+      opacity: 1;
+    }
+  }
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .explore-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1.25rem;
+  }
+  .explore-head-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .cat-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .cat-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    color: inherit;
+    position: relative;
+    transition: padding-left 0.3s ease;
+  }
+  .cat-row::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--deep-blue);
+    transition: width 0.3s ease;
+    border-radius: 0 2px 2px 0;
+  }
+  .cat-row:hover {
+    padding-left: 1rem;
+  }
+  .cat-row:hover::before {
+    width: 3px;
+  }
+  .cat-num {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    color: rgba(0, 0, 0, 0.1);
+    line-height: 1;
+    transition: color 0.3s;
+    user-select: none;
+  }
+  .cat-row:hover .cat-num {
+    color: var(--deep-blue);
+  }
+  .cat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .cat-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--ink);
+    line-height: 1.1;
+    transition: color 0.3s;
+  }
+  .cat-row:hover .cat-name {
+    color: var(--deep-blue);
+  }
+  .cat-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.55;
+    max-width: 430px;
+  }
+  .cat-count {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .cat-arrow {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.15);
+    transition:
+      color 0.3s,
+      transform 0.3s;
+  }
+  .cat-row:hover .cat-arrow {
+    color: var(--deep-blue);
+    transform: translateX(6px);
+  }
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .fact-item {
+    background: transparent;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .fact-key {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(58, 155, 201, 0.7);
+  }
+  .fact-val {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .why-item {
+    padding: 2.5rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--white);
+  }
+  .why-item:nth-child(2n) {
+    border-right: none;
+  }
+  .why-item:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+  .why-num {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: var(--sand-dark);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+  .why-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--deep-blue);
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
+  .why-text {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .beach-cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .beach-cat {
+    border-top: 2px solid var(--deep-blue);
+    padding-top: 1.25rem;
+  }
+  .beach-cat-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--deep-blue);
+    margin-bottom: 1rem;
+  }
+  .beach-cat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .beach-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--ink);
+    transition:
+      color 0.15s,
+      padding-left 0.15s;
+  }
+  .beach-link:hover {
+    color: var(--aegean);
+    padding-left: 0.4rem;
+  }
+  .beach-link-icon {
+    font-size: 0.8rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .villages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+  .village-card {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s,
+      border-color 0.15s;
+  }
+  .village-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--sea);
+  }
+  .village-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--deep-blue);
+  }
+  .village-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+  .places-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+  .place-chip {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s,
+      border-color 0.15s;
+  }
+  .place-chip:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--sea);
+  }
+  .place-chip-name {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--deep-blue);
+  }
+  .place-chip-type {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .month-item {
+    padding: 1.75rem 1.25rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--white);
+  }
+  .month-item:last-child {
+    border-right: none;
+  }
+  .month-item--warn .month-tag {
+    background: rgba(217, 119, 6, 0.12);
+    color: #92400e;
+  }
+  .month-name {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .month-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.6rem;
+    background: var(--sand-dark);
+    color: var(--muted);
+  }
+  .month-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .meltemia-note {
+    margin-top: 1.25rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding: 0 0.25rem;
+  }
+  @media (max-width: 900px) {
+    .months-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .month-item:nth-child(2n) {
+      border-right: none;
+    }
+    .month-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .why-grid {
+      grid-template-columns: 1fr;
+    }
+    .why-item:nth-child(2n) {
+      border-right: none;
+    }
+    .why-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+  }
+  @media (max-width: 768px) {
+    .cat-row {
+      grid-template-columns: 50px 1fr auto;
+      gap: 1rem;
+    }
+    .cat-arrow {
+      display: none;
+    }
+    .cat-num {
+      font-size: 2rem;
+    }
+    .cat-name {
+      font-size: 1.4rem;
+    }
+    .cat-desc {
+      display: none;
+    }
+    .beach-cat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .hero-ctas {
+      flex-direction: column;
+    }
+  }
 </style>
