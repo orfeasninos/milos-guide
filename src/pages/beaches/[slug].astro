@@ -2,16 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
 import beachesRaw from '../../data/beaches.json';
-import tavernsRaw from '../../data/taverns.json';
-
-interface Tavern {
-  slug: string;
-  name: string | { el: string; en: string };
-  rating: number;
-  priceRange?: string;
-  localPhoto?: string | null;
-  coordinates?: { lat: number; lng: number };
-}
 
 interface Beach {
   slug: string;
@@ -22,8 +12,8 @@ interface Beach {
   image: string | null;
   gallery?: string[];
   coordinates?: { lat: number; lng: number };
-  rating: number;
   accessType: string;
+  easyAccess?: boolean;
   facilities: string[];
   sandType?: string;
   shade?: boolean;
@@ -84,17 +74,6 @@ const related = beachesData
   .sort((a, b) => a.dist - b.dist)
   .slice(0, 4);
 
-const nearbyTaverns = (beach.nearbyFood && beach.coordinates?.lat && beach.coordinates?.lng)
-  ? (tavernsRaw as Tavern[])
-      .filter(t => t.coordinates?.lat && t.coordinates?.lng)
-      .map(t => ({ ...t, _dist: distKm(beach.coordinates!.lat, beach.coordinates!.lng, t.coordinates!.lat, t.coordinates!.lng) }))
-      .filter(t => t._dist <= 0.5)
-      .sort((a, b) => a._dist - b._dist)
-  : [];
-
-const getTavernName = (t: any): string =>
-  typeof t.name === 'object' ? t.name.en : t.name;
-
 const galleryImages: string[] = beach.gallery?.length
   ? beach.gallery.slice(0, 4)
   : beach.image
@@ -130,7 +109,7 @@ const beachJsonld = {
 <Layout
   lang="en"
   title={`${getBeachName(beach)} — Beach in Milos`}
-  description={`${getBeachName(beach)}: ${access.label}. ${beach.facilities.length ? 'Facilities: ' + beach.facilities.join(', ') + '.' : ''} Rating ${beach.rating}/5.`}
+  description={`${getBeachName(beach)}: ${access.label}. ${beach.facilities.length ? 'Facilities: ' + beach.facilities.join(', ') + '.' : ''}`}
   jsonld={beachJsonld}
 >
 
@@ -155,8 +134,8 @@ const beachJsonld = {
       <div class="b-hero-meta">
         <div class="b-hero-chips">
           <span class="b-access-chip">{access.icon} {access.label}</span>
-          {beach.rating > 0 && (
-            <span class="b-rating-chip">★ {beach.rating}</span>
+          {beach.accessType === 'road' && beach.easyAccess === false && (
+            <span class="b-access-chip" style="background:rgba(180,60,0,.45);">⚠️ Rough road</span>
           )}
         </div>
         <h1 class="b-hero-name">{getBeachName(beach)}</h1>
@@ -185,12 +164,11 @@ const beachJsonld = {
           <span class="qb-val">{access.label}</span>
         </div>
       </div>
-      {beach.rating > 0 && (
+      {beach.accessType === 'road' && (
         <div class="qb-item">
-          <span class="qb-icon" style="color:#d97706">★</span>
+          <span class="qb-icon">{beach.easyAccess ? '✅' : '⚠️'}</span>
           <div>
-            <span class="qb-val">{beach.rating}</span>
-            <span class="qb-label">/ 5</span>
+            <span class="qb-val">{beach.easyAccess ? 'Easy road' : 'Rough road'}</span>
           </div>
         </div>
       )}
@@ -230,7 +208,9 @@ const beachJsonld = {
           <div>
             <p class="tip-title">Getting there</p>
             <p class="tip-body">
-              {beach.accessType === 'road' && 'Accessible by car or motorbike. Follow road signs from the main island road.'}
+              {beach.accessType === 'road' && (beach.easyAccess
+                ? 'Paved road all the way — easy to reach by car or motorbike.'
+                : 'The last stretch is a rough dirt road. A high-clearance vehicle or motorbike is recommended.')}
               {beach.accessType === 'hike' && 'Requires a hike over rough terrain. Wear sturdy footwear and bring plenty of water.'}
               {beach.accessType === 'boat' && 'Only reachable by sea. Book a daily boat tour from Adamas harbour, or arrive by private boat.'}
             </p>
@@ -273,9 +253,9 @@ const beachJsonld = {
                 ? 'Only accessible by boat — stays naturally uncrowded and pristine year-round.'
                 : beach.accessType === 'hike'
                   ? 'The trail keeps visitor numbers low — expect peace and quiet even in peak season.'
-                  : beach.rating >= 4.7
-                    ? 'Very popular in July and August — arrive early in the morning to secure a good spot.'
-                    : 'Moderately visited — usually easy to find space even in high season.'}
+                  : beach.easyAccess
+                    ? 'Popular in July and August — arrive early in the morning to secure a good spot.'
+                    : 'The rough road keeps crowds away — usually quiet even in high season.'}
             </p>
           </div>
         </div>
@@ -309,48 +289,11 @@ const beachJsonld = {
       </div>
     </div>
 
-    <!-- Nearby restaurants -->
-    {nearbyTaverns.length > 0 && (
-      <div class="nearby-eat">
-        <h2 class="block-title">Nearby restaurants</h2>
-        <div class="nearby-eat-list">
-          {nearbyTaverns.map(t => (
-            <a href={`/eat/${t.slug}`} class="nec">
-              <div class="nec-img-wrap">
-                {t.localPhoto
-                  ? <SmartImage src={t.localPhoto} alt={getTavernName(t)} width={64} height={64} class="nec-img" sizes="64px" />
-                  : <div class="nec-img-ph"></div>
-                }
-              </div>
-              <span class="nec-name">{getTavernName(t)}</span>
-              <div class="nec-right">
-                {t.priceRange && <span class="nec-price">{t.priceRange}</span>}
-                {t.rating > 0 && <span class="nec-rating">★ {t.rating}</span>}
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    )}
 
   </main>
 
   <!-- SIDEBAR -->
   <aside class="b-sidebar">
-
-    <!-- Rating -->
-    {beach.rating > 0 && (
-      <div class="s-card">
-        <p class="s-card-label">Rating</p>
-        <div class="s-rating">
-          <span class="s-rating-num">{beach.rating}</span>
-          <div class="s-rating-right">
-            <span class="s-rating-stars">{'★'.repeat(Math.round(beach.rating))}{'☆'.repeat(5 - Math.round(beach.rating))}</span>
-            <span class="s-rating-sub">out of 5</span>
-          </div>
-        </div>
-      </div>
-    )}
 
     <!-- Info -->
     <div class="s-card">
@@ -474,7 +417,6 @@ const beachJsonld = {
                 <div class="rel-ph"></div>
               )}
               <div class="rel-overlay">
-                {r.rating > 0 && <span class="rel-rating">★ {r.rating}</span>}
                 <h3 class="rel-name">{getBeachName(r)}</h3>
               </div>
             </div>

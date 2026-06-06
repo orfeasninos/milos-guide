@@ -1,0 +1,172 @@
+[
+  {
+    "slug": "catacombs",
+    "name": "Κατακόμβες Μήλου",
+    "nameEn": "Catacombs of Milos",
+    "type": "archaeology",
+    "area": "Tripiti",
+    "tagline": "Πρωτοχριστιανικό μνημείο",
+    "taglineEn": "One of the most significant early Christian monuments in Greece",
+    "description": "Carved into the volcanic rock of Tripiti, the Catacombs of Milos date from the 1st to 5th century AD. With over 8,000 burials in 291 tombs, they are among the largest Christian catacombs in the Mediterranean and the only ones in Greece.",
+    "highlights": ["8,000+ burials", "1st–5th century AD", "Guided tours only"],
+    "admission": "paid",
+    "icon": "⛪",
+    "coordinates": {
+      "lat": 36.737343,
+      "lng": 24.423744
+    }
+  },
+  {
+    "slug": "ancient-theater",
+    "name": "Αρχαίο Θέατρο Μήλου",
+    "nameEn": "Ancient Theater of Milos",
+    "type": "archaeology",
+    "area": "Tripiti",
+    "tagline": "Ελληνιστικό θέατρο",
+    "taglineEn": "Hellenistic theater overlooking the Gulf of Milos",
+    "description": "Built in the Hellenistic period, this remarkably preserved theater sits on the hillside of Tripiti with sweeping views of the Gulf of Milos. A short walk away is the exact spot where the Venus de Milo statue was discovered by a farmer in 1820.",
+    "highlights": ["Hellenistic period", "Gulf views", "Near Venus discovery site"],
+    "admission": "free",
+    "icon": "🏛",
+    "coordinates": {
+      "lat": 36.737813,
+      "lng": 24.421025
+    }
+  },
+  {
+    "slug": "kastro-plaka",
+    "name": "Κάστρο Πλάκας",
+    "nameEn": "Kastro of Plaka",
+    "type": "medieval",
+    "area": "Plaka",
+    "tagline": "Μεσαιωνικό κάστρο",
+    "taglineEn": "Medieval fortress with the best sunset on the island",
+    "description": "Perched at the highest point of Plaka, the Kastro dates from the 13th-century Venetian occupation. Its whitewashed alleys and the tiny Church of Panagia Thalassitra crown the hilltop. The views from the top — island-wide, 360° — are the most spectacular on Milos.",
+    "highlights": ["13th century Venetian", "Best sunset spot", "360° panorama"],
+    "admission": "free",
+    "icon": "🏰",
+    "coordinates": {
+      "lat": 36.745690,
+      "lng": 24.422695
+    }
+  },
+  {
+    "slug": "archaeological-museum",
+    "name": "Αρχαιολογικό Μουσείο",
+    "nameEn": "Archaeological Museum of Milos",
+    "type": "museum",
+    "area": "Plaka",
+    "tagline": "Αρχαία ευρήματα",
+    "taglineEn": "Home to a replica of the Venus de Milo",
+    "description": "Located in Plaka, this museum houses artifacts spanning the Neolithic era through the Roman period. The centerpiece is a plaster cast of the Venus de Milo, alongside remarkable finds from ancient Filakopi and other sites across the island.",
+    "highlights": ["Venus de Milo replica", "Neolithic to Roman", "Ancient Filakopi finds"],
+    "admission": "paid",
+    "icon": "🏺",
+    "coordinates": {
+      "lat": 36.743861,
+      "lng": 24.423598
+    }
+  },
+  {
+    "slug": "mining-museum",
+    "name": "Μουσείο Μεταλλείων Μήλου",
+    "nameEn": "Mining Museum of Milos",
+    "type": "museum",
+    "area": "Adamas",
+    "tagline": "Μεταλλευτική κληρονομιά",
+    "taglineEn": "8,000 years of mining history on a volcanic island",
+    "description": "Milos has been mined since antiquity for obsidian, bentonite and perlite. The Mining Museum in Adamas tells this remarkable 8,000-year story through exhibits, minerals, tools and scale models — a must for geology and history enthusiasts.",
+    "highlights": ["8,000 years of mining", "Obsidian & perlite", "Unique in Greece"],
+    "admission": "paid",
+    "icon": "⛏",
+    "coordinates": {
+      "lat": 36.725479,
+      "lng": 24.453490
+    }
+  },
+  {
+    "slug": "sarakiniko",
+    "name": "Σαρακήνικο",
+    "nameEn": "Sarakiniko",
+    "type": "geological",
+    "area": "North Milos",
+    "tagline": "Το σεληνιακό τοπίο",
+    "taglineEn": "The iconic lunar landscape — Milos' most photographed sight",
+    "description": "Formed by volcanic ash shaped over millennia by wind and waves, Sarakiniko's brilliant white pumice formations create an otherworldly moonscape unlike anything else in Greece. Popular for swimming, cliff jumping and watching the sun set over the Aegean.",
+    "highlights": ["Volcanic white rock", "Swimming & cliff diving", "Most photographed in Greece"],
+    "admission": "free",
+    "icon": "🌕",
+    "coordinates": {
+      "lat": 36.741748,
+      "lng": 24.458630
+    }
+  },
+  {
+    "slug": "papafragas",
+    "name": "Παπάφραγκας",
+    "nameEn": "Papafragas Caves",
+    "type": "geological",
+    "area": "North Milos",
+    "tagline": "Θαλάσσιες σπηλιές",
+    "taglineEn": "Secret sea caves carved into volcanic cliffs",
+    "description": "Three narrow sea inlets carved into white volcanic rock form natural swimming pools with crystal-clear turquoise water. Steps cut into the cliff lead down to the water. Nearby lie the ruins of ancient Filakopi, one of the oldest Bronze Age settlements in the Aegean.",
+    "highlights": ["Natural sea pools", "Steps to the water", "Near ancient Filakopi"],
+    "admission": "free",
+    "icon": "🌊",
+    "coordinates": {
+      "lat": 36.753738,
+      "lng": 24.502610
+    }
+  },
+  {
+    "slug": "klima-syrmata",
+    "name": "Συρμάτα Κλήμα",
+    "nameEn": "Klima Syrmata",
+    "type": "traditional",
+    "area": "West Milos",
+    "tagline": "Παραδοσιακά ψαράδικα",
+    "taglineEn": "The most colourful traditional fishing village in the Cyclades",
+    "description": "Klima's syrmata are two-storey boathouses built directly into the volcanic rock: ground floor for the fishing boat, upper floor for the family. Painted in vivid reds, blues and ochres, these unique structures are found only on Milos and are among the most photographed subjects in the Cyclades.",
+    "highlights": ["Unique to Milos", "Boat garages + dwellings", "Iconic colours"],
+    "admission": "free",
+    "icon": "🏠",
+    "coordinates": {
+      "lat": 36.735633,
+      "lng": 24.419300
+    }
+  },
+  {
+    "slug": "filakopi",
+    "name": "Αρχαία Φυλακωπή",
+    "nameEn": "Ancient Filakopi",
+    "type": "archaeology",
+    "area": "North Milos",
+    "tagline": "Προϊστορικός οικισμός",
+    "taglineEn": "One of the most important Bronze Age cities in the Aegean",
+    "description": "Occupied from around 2300 to 1100 BC, Filakopi was a leading Aegean city of the early Bronze Age, powered by Milos' abundant obsidian — the steel of the ancient world. Partially excavated by the British School at Athens, the site sits on the northeastern coast and is open to visitors.",
+    "highlights": ["Bronze Age 2300–1100 BC", "Obsidian trade hub", "Open to visitors"],
+    "admission": "free",
+    "icon": "🗿",
+    "coordinates": {
+      "lat": 36.754827,
+      "lng": 24.504701
+    }
+  },
+  {
+    "slug": "venus-discovery-site",
+    "name": "Τόπος Ανακάλυψης Αφροδίτης",
+    "nameEn": "Venus de Milo Discovery Site",
+    "type": "archaeology",
+    "area": "Tripiti",
+    "tagline": "Ιστορικό εύρημα",
+    "taglineEn": "Where the world's most famous sculpture was found in 1820",
+    "description": "In February 1820, a farmer named Yorgos Kentrotas unearthed the Venus de Milo in an ancient niche on his land near Tripiti. The statue — now in the Louvre — left Milos the same year, but a small monument marks the exact spot where one of history's greatest sculptures lay buried for centuries.",
+    "highlights": ["February 1820", "Now in the Louvre", "Marked with a monument"],
+    "admission": "free",
+    "icon": "🪆",
+    "coordinates": {
+      "lat": 36.738482,
+      "lng": 24.422058
+    }
+  }
+]

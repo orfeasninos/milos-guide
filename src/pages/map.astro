@@ -1,42 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import tavernsRaw from '../data/taverns.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
-import accommodationsRaw from '../data/stays.json';
+import sightsRaw from '../data/sights.json';
 
 const points = [
-  ...tavernsRaw
-    .filter(t => t.coordinates?.lat && t.coordinates?.lng)
-    .map(t => ({
-      slug:  t.slug, type: 'restaurant',
-      name:  typeof t.name === 'object' ? (t.name as any).en : t.name,
-      area:  t.location.area, rating: t.rating, photo: t.localPhoto ?? null,
-      url:   `/eat/${t.slug}`, lat: t.coordinates.lat, lng: t.coordinates.lng, icon: '🍽',
-    })),
   ...beachesRaw
     .filter(b => b.coordinates?.lat && b.coordinates?.lng)
     .map(b => ({
       slug:  b.slug, type: 'beach',
       name:  typeof b.name === 'object' ? (b.name as any).en : b.name,
-      area:  b.location.area, rating: b.rating, photo: b.image ?? null,
+      area:  b.location.area, photo: b.image ?? null,
       url:   `/beaches/${b.slug}`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
-    })),
-  ...(accommodationsRaw as any[])
-    .filter((a: any) => a.coordinates?.lat && a.coordinates?.lng)
-    .map((a: any) => ({
-      slug:  a.slug, type: 'accommodation',
-      name:  typeof a.name === 'object' ? a.name.en : a.name,
-      area:  a.location.area, rating: a.rating, photo: a.localPhoto ?? null,
-      url:   `/stay/${a.slug}`, lat: a.coordinates.lat, lng: a.coordinates.lng, icon: '🏨',
     })),
   ...villagesRaw
     .filter(v => v.coordinates?.lat && v.coordinates?.lng)
     .map(v => ({
       slug:  v.slug, type: 'village',
       name:  (v as any).nameEn ?? v.name,
-      area:  v.area, rating: 0, photo: null,
+      area:  v.area, photo: null,
       url:   `/villages/${v.slug}`, lat: v.coordinates.lat, lng: v.coordinates.lng, icon: '🏘',
+    })),
+  ...sightsRaw
+    .filter(s => (s as any).coordinates?.lat && (s as any).coordinates?.lng)
+    .map(s => ({
+      slug: s.slug, type: 'sight',
+      name: s.nameEn, area: s.area, photo: null,
+      url:  `/sights/${s.slug}`, lat: (s as any).coordinates.lat, lng: (s as any).coordinates.lng, icon: s.icon,
     })),
 ];
 ---
@@ -44,7 +34,7 @@ const points = [
 <Layout
   lang="en"
   title="Map of Milos"
-  description="Interactive map of Milos — beaches, restaurants, villages and accommodation."
+  description="Interactive map of Milos — beaches, villages and sights."
 >
 
 <div class="map-page">
@@ -55,9 +45,8 @@ const points = [
     </div>
     <div class="sidebar-filters">
       <button class="mf-chip mf-chip--active" data-filter="beach">🏖 Beaches</button>
-      <button class="mf-chip mf-chip--active" data-filter="restaurant">🍽 Food</button>
       <button class="mf-chip mf-chip--active" data-filter="village">🏘 Villages</button>
-      <button class="mf-chip" data-filter="accommodation">🏨 Stay</button>
+      <button class="mf-chip mf-chip--active" data-filter="sight">🏛 Sights</button>
     </div>
     <div class="sidebar-cards" id="sidebar-cards">
       {points.map(p => (
@@ -69,7 +58,6 @@ const points = [
             <span class="mc-type">{p.type}</span>
             <p class="mc-name">{p.name}</p>
             <p class="mc-area">📍 {p.area}</p>
-            {p.rating > 0 && <p class="mc-rating">★ {p.rating}</p>}
           </div>
         </a>
       ))}
@@ -116,10 +104,9 @@ const points = [
 }
 .mf-chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
 .mf-chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
-.mf-chip[data-filter="beach"].mf-chip--active    { background: #1a7fc1; border-color: #1a7fc1; }
-.mf-chip[data-filter="restaurant"].mf-chip--active { background: #b05230; border-color: #b05230; }
+.mf-chip[data-filter="beach"].mf-chip--active   { background: #1a7fc1; border-color: #1a7fc1; }
 .mf-chip[data-filter="village"].mf-chip--active  { background: #2d6a4f; border-color: #2d6a4f; }
-.mf-chip[data-filter="accommodation"].mf-chip--active { background: #7b5ea7; border-color: #7b5ea7; }
+.mf-chip[data-filter="sight"].mf-chip--active    { background: #7b4f1e; border-color: #7b4f1e; }
 
 .sidebar-cards { flex: 1; overflow-y: auto; padding: 0.5rem 0; }
 .sidebar-cards::-webkit-scrollbar { width: 4px; }
@@ -136,7 +123,6 @@ const points = [
 .mc-type { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sea); display: block; }
 .mc-name { font-family: var(--font-serif); font-size: 0.95rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0.1rem 0; }
 .mc-area { font-size: 0.72rem; color: var(--muted); }
-.mc-rating { font-size: 0.72rem; color: #d97706; margin-top: 0.1rem; }
 
 .sidebar-empty { text-align: center; padding: 3rem 1rem; }
 .sidebar-empty .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
@@ -243,12 +229,11 @@ script.onload = () => {
 };
 document.head.appendChild(script);
 
-const markerColors = { beach: '#1a7fc1', restaurant: '#b05230', village: '#2d6a4f', accommodation: '#7b5ea7' };
-const markerEmoji  = { beach: '🏖', restaurant: '🍽', village: '🏘', accommodation: '🏨' };
+const markerColors = { beach: '#1a7fc1', village: '#2d6a4f', sight: '#7b4f1e' };
+const markerEmoji  = { beach: '🏖', village: '🏘', sight: '🏛' };
 
 let map, markers = [], clusterGroup, activeSlug = null;
-// All types active by default
-let activeFilters = new Set(['beach', 'restaurant', 'village']);
+let activeFilters = new Set(['beach', 'village', 'sight']);
 
 function initMap() {
   const milosBounds = L.latLngBounds(L.latLng(36.60, 24.25), L.latLng(36.85, 24.65));
@@ -277,7 +262,7 @@ function initMap() {
 
   clusterGroup = L.markerClusterGroup({
     maxClusterRadius: 50,
-    disableClusteringAtZoom: 15,
+    disableClusteringAtZoom: 14,
     zoomToBoundsOnClick: true,
     iconCreateFunction: (cluster) => {
       const count = cluster.getChildCount();
@@ -293,7 +278,7 @@ function initMap() {
 
   points.forEach(p => {
     const color = markerColors[p.type] || '#0d2b4e';
-    const emoji = markerEmoji[p.type] || '📍';
+    const emoji = p.icon || markerEmoji[p.type] || '📍';
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="52" viewBox="0 0 40 52">
       <defs><filter id="sh-${p.slug}" x="-30%" y="-20%" width="160%" height="160%">
         <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(0,0,0,0.35)"/>
@@ -313,7 +298,7 @@ function initMap() {
 
     const photoHtml = p.photo
       ? `<img src="${p.photo}" alt="${p.name}" class="map-popup-img" />`
-      : `<div class="map-popup-ph">${markerEmoji[p.type]}</div>`;
+      : `<div class="map-popup-ph">${p.icon || markerEmoji[p.type] || '📍'}</div>`;
 
     marker.bindPopup(L.popup({ maxWidth: 200, minWidth: 200, offset: [0, -8] }).setContent(`
       <div class="map-popup">

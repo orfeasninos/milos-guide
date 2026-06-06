@@ -18,9 +18,8 @@ const pathParts = cleanPath.split('/').filter(Boolean);
 
 const segmentLabels: Record<string, { el: string; en: string }> = {
   beaches:        { el: 'Παραλίες',            en: 'Beaches' },
-  eat:            { el: 'Φαγητό & Εστιατόρια', en: 'Food & Restaurants' },
-  stays:           { el: 'Διαμονή',             en: 'Where to Stay' },
   villages:       { el: 'Χωριά',               en: 'Villages' },
+  sights:         { el: 'Αξιοθέατα',           en: 'Sights & Attractions' },
   weather:        { el: 'Καιρός Μήλου',        en: 'Milos Weather' },
   map:            { el: 'Χάρτης Μήλου',        en: 'Milos Map' },
   about:          { el: 'Σχετικά με τη Μήλο',  en: 'About Milos' },
@@ -54,8 +53,8 @@ const schemas: object[] = [
     alternateName: isEl ? 'Οδηγός Μήλου' : 'Milos Island Guide',
     url: siteUrl,
     description: isEl
-      ? 'Ο πλήρης οδηγός για τη Μήλο — παραλίες, εστιατόρια, χωριά και διαμονή. Χωρίς διαφημίσεις.'
-      : 'The complete travel guide to Milos island — beaches, restaurants, villages and accommodation. No ads.',
+      ? 'Ο πλήρης οδηγός για τη Μήλο — παραλίες, χωριά, αξιοθέατα και ιστορία. Χωρίς διαφημίσεις.'
+      : 'The complete travel guide to Milos island — beaches, villages, sights and history. No ads.',
     inLanguage: isEl ? 'el-GR' : 'en',
     potentialAction: {
       '@type': 'SearchAction',
@@ -107,8 +106,8 @@ const schemas: object[] = [
     '@id': siteUrl + '/#milos',
     name: isEl ? 'Μήλος' : 'Milos',
     description: isEl
-      ? 'Ηφαιστειογενές νησί στις Κυκλάδες με εξωτικές παραλίες, κρυσταλλένια νερά και τον θρυλικό Σαρακήνικο.'
-      : 'Volcanic Cycladic island with exotic beaches, crystal-clear waters and the legendary Sarakiniko bay.',
+      ? 'Ηφαιστειογενές νησί στις Κυκλάδες με εξωτικές παραλίες, κρυσταλλένια νερά, ζωντανά χωριά και 2.500 χρόνια ιστορίας.'
+      : 'Volcanic Cycladic island with exotic beaches, crystal-clear waters, vibrant villages and 2,500 years of history.',
     url: siteUrl + (isEl ? '/el' : '/'),
     image: siteUrl + '/og-image.jpg',
     geo: { '@type': 'GeoCoordinates', latitude: 36.7217, longitude: 24.4389 },
@@ -187,19 +186,18 @@ const schemas: object[] = [
       </a>
 
       <nav class="main-nav" id="main-nav" aria-label={isEl ? 'Κύρια πλοήγηση' : 'Main navigation'}>
-        <a href={isEl ? '/el/eat' : '/eat'} class="nav-link" data-navlink>
-          <span class="nav-icon" aria-hidden="true">🍽</span>
-          <span>{isEl ? 'Φαγητό' : 'Food'}</span>
-        </a>
-        <a href={isEl ? '/el/stays' : '/stays'} class="nav-link" data-navlink>
-          <span class="nav-icon" aria-hidden="true">🏨&#xFE0E;</span>
-          <span>{isEl ? 'Διαμονή' : 'Stays'}</span>
-        </a>
         <a href={isEl ? '/el/beaches' : '/beaches'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏖</span>
           <span>{isEl ? 'Παραλίες' : 'Beaches'}</span>
         </a>
-        
+        <a href={isEl ? '/el/villages' : '/villages'} class="nav-link" data-navlink>
+          <span class="nav-icon" aria-hidden="true">🏘</span>
+          <span>{isEl ? 'Χωριά' : 'Villages'}</span>
+        </a>
+        <a href={isEl ? '/el/sights' : '/sights'} class="nav-link" data-navlink>
+          <span class="nav-icon" aria-hidden="true">🏛</span>
+          <span>{isEl ? 'Αξιοθέατα' : 'Sights'}</span>
+        </a>
 
         <div class="nav-divider" aria-hidden="true"></div>
 
@@ -251,7 +249,7 @@ const schemas: object[] = [
           <div class="footer-facts">
             <span>🌋 {isEl ? 'Κυκλάδες' : 'Cyclades'}</span>
             <span>🏖 70+ {isEl ? 'παραλίες' : 'beaches'}</span>
-            <span>🍽 25+ {isEl ? 'εστιατόρια' : 'restaurants'}</span>
+            <span>🏛 {isEl ? 'αξιοθέατα & ιστορία' : 'sights & history'}</span>
           </div>
         </div>
 
@@ -261,23 +259,12 @@ const schemas: object[] = [
             <a href={isEl ? '/el/beaches' : '/beaches'}>
               <span class="flink-icon" aria-hidden="true">🏖</span>{isEl ? 'Παραλίες' : 'Beaches'}
             </a>
-            <a href={isEl ? '/el/eat' : '/eat'}>
-              <span class="flink-icon" aria-hidden="true">🍽</span>{isEl ? 'Εστιατόρια' : 'Restaurants'}
-            </a>
             <a href={isEl ? '/el/villages' : '/villages'}>
               <span class="flink-icon" aria-hidden="true">🏘</span>{isEl ? 'Χωριά' : 'Villages'}
             </a>
-            <a href={isEl ? '/el/stays' : '/stays'}>
-              <span class="flink-icon" aria-hidden="true">🏨&#xFE0E;</span>{isEl ? 'Διαμονή' : 'Stays'}
+            <a href={isEl ? '/el/sights' : '/sights'}>
+              <span class="flink-icon" aria-hidden="true">🏛</span>{isEl ? 'Αξιοθέατα' : 'Sights'}
             </a>
-            <span class="flink-soon">
-              <span class="flink-icon" aria-hidden="true">🚤</span>Boat Tours
-              <span class="flink-badge">{isEl ? 'Σύντομα' : 'Soon'}</span>
-            </span>
-            <span class="flink-soon">
-              <span class="flink-icon" aria-hidden="true">🚗</span>{isEl ? 'Ενοικιάσεις' : 'Rentals'}
-              <span class="flink-badge">{isEl ? 'Σύντομα' : 'Soon'}</span>
-            </span>
           </div>
 
           <div class="footer-col">
@@ -428,10 +415,9 @@ nav ul, nav ol { list-style: none; }
 .footer-cols { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; }
 .footer-col { display: flex; flex-direction: column; gap: 0.1rem; }
 .footer-col-title { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.22); margin-bottom: 0.9rem; }
-.footer-col a, .footer-col span.flink-soon { display: flex; align-items: center; gap: 0.5rem; padding: 0.28rem 0; font-size: 0.875rem; color: rgba(255,255,255,0.52); transition: color 0.15s, padding-left 0.2s var(--ease); }
+.footer-col a { display: flex; align-items: center; gap: 0.5rem; padding: 0.28rem 0; font-size: 0.875rem; color: rgba(255,255,255,0.52); transition: color 0.15s, padding-left 0.2s var(--ease); }
 .footer-col a:hover { color: #fff; padding-left: 0.35rem; }
 .flink-icon  { font-size: 0.85rem; flex-shrink: 0; }
-.flink-soon  { opacity: 0.3; pointer-events: none; cursor: default; }
 .flink-badge { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); padding: 2px 5px; border-radius: 3px; margin-left: auto; }
 .flink-more  { margin-top: 0.4rem; font-size: 0.78rem !important; color: var(--sea) !important; font-weight: 600; }
 .flink-more:hover { color: var(--sky) !important; }

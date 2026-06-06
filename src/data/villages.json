@@ -166,5 +166,26 @@
     "mustSeeEn": ["Central square","Traditional houses"],
     "nearbyBeaches": [],
     "nearbyTaverns": ["psitolatreia-milos","galanis-mpakalikon","barriello-milos"]
+  },
+    {
+    "slug": "pera-triovasalos",
+    "name": "Πέρα Τριοβάσαλος",
+    "nameEn": " Pera Triovasalos",
+    "tagline": "Παραδοσιακό χωριό της ενδοχώρας",
+    "taglineEn": "Traditional inland village",
+    "description": "Ο Πέρα Τριοβάσαλος είναι ένα από τα παραδοσιακά χωριά της Μήλου, λίγο έξω από την Πλάκα. Ήρεμος και γνήσιος, με παραδοσιακά σπίτια και ατμοσφαιρικές πλατείες. Εδώ βρίσκεται η Ψητολατρεία, ένα από τα πιο αγαπημένα εστιατόρια του νησιού.",
+    "descriptionEn": "Pera Triovasalos is one of the traditional inland villages of Milos, just outside Plaka. Quiet and genuine, with traditional houses and atmospheric squares. This is where you'll find Psitolatreia, one of the island's most beloved restaurants.",
+    "highlights": ["Παραδοσιακή αρχιτεκτονική","Ήρεμη ατμόσφαιρα","Κεντρική τοποθεσία","Εξαιρετικά εστιατόρια"],
+    "highlightsEn": ["Traditional architecture","Quiet atmosphere","Central location","Excellent restaurants"],
+    "type": "village",
+    "area": "Κεντρική Μήλος",
+    "coordinates": { "lat": 36.742764, "lng": 24.432611 },
+    "googleMapsUri": "https://maps.google.com/?q=Triovasalos+Milos+Greece",
+    "population": "~400",
+    "elevation": "160m",
+    "mustSee": ["Κεντρική πλατεία","Παραδοσιακά σπίτια"],
+    "mustSeeEn": ["Central square","Traditional houses"],
+    "nearbyBeaches": [],
+    "nearbyTaverns": ["psitolatreia-milos","galanis-mpakalikon","barriello-milos"]
   }
 ]

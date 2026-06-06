@@ -1,12 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import tavernsData from '../data/taverns.json';
 import beachesData from '../data/beaches.json';
 import villagesData from '../data/villages.json';
-
+import sightsData from '../data/sights.json';
 
 type Village = typeof villagesData[number];
-type Tavern  = typeof tavernsData[number];
 type Beach   = typeof beachesData[number];
 ---
 
@@ -123,7 +121,7 @@ type Beach   = typeof beachesData[number];
           <li><span class="tl-date">1st–5th c.</span><span>Catacombs of Tripiti</span></li>
           <li><span class="tl-date">1820</span><span>Discovery of the Venus de Milo</span></li>
           <li><span class="tl-date">1941–44</span><span>Occupation, bombardments</span></li>
-          <li><span class="tl-date">Today</span><span>~5,000 residents, tourism</span></li>
+          <li><span class="tl-date">Today</span><span>5,302 residents (2021), tourism and mining</span></li>
         </ul>
       </div>
     </aside>
@@ -281,7 +279,7 @@ type Beach   = typeof beachesData[number];
     <div class="big-numbers">
       {[
         { n: `${beachesData.length}+`, label: 'Beaches in the guide', sub: 'catalogued and categorised' },
-        { n: `${tavernsData.length}+`, label: 'Restaurants', sub: 'from across the island' },
+        { n: `${sightsData.length}`,   label: 'Sights & attractions', sub: 'history, geology, culture' },
         { n: `${villagesData.length}`,  label: 'Villages',        sub: 'with detailed guides' },
         { n: '70+',   label: 'Total beaches', sub: 'including undeveloped ones' },
         { n: '125',   label: 'km of coastline',     sub: 'including many sea caves' },
@@ -302,10 +300,10 @@ type Beach   = typeof beachesData[number];
 <section class="sec sec-white">
   <div class="container cta-sec">
     <h2 class="cta-title">Ready to explore?</h2>
-    <p class="cta-sub">Beaches, restaurants, villages — all in the guide.</p>
+    <p class="cta-sub">Beaches, sights, villages — all in the guide.</p>
     <div class="cta-btns">
       <a href="/beaches" class="btn-dark">🏖 Beaches</a>
-      <a href="/eat" class="btn-outline">🍽 Restaurants</a>
+      <a href="/sights" class="btn-outline">🏛 Sights</a>
       <a href="/villages" class="btn-outline">🏘 Villages</a>
     </div>
   </div>

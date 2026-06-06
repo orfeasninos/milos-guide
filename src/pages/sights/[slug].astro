@@ -1,0 +1,617 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import sightsData from '../../data/sights.json';
+
+export function getStaticPaths() {
+  return sightsData.map((sight) => ({
+    params: { slug: sight.slug },
+    props:  { sight },
+  }));
+}
+
+const { sight } = Astro.props;
+
+const typeLabels: Record<string, { label: string; icon: string; color: string }> = {
+  archaeology:  { label: 'Archaeology',  icon: '🏛', color: '#5c4a1e' },
+  museum:       { label: 'Museum',       icon: '🏺', color: '#1a5c8a' },
+  geological:   { label: 'Geological',   icon: '🌋', color: '#7c3f1a' },
+  medieval:     { label: 'Medieval',     icon: '🏰', color: '#374151' },
+  traditional:  { label: 'Traditional',  icon: '🏠', color: '#1a6b4a' },
+  religious:    { label: 'Religious',    icon: '⛪', color: '#4a1a6b' },
+};
+const typeInfo = typeLabels[sight.type] ?? { label: sight.type, icon: '📍', color: '#1a5c8a' };
+
+const admissionLabel: Record<string, string> = {
+  free: 'Free entry',
+  paid: 'Admission fee applies',
+};
+
+// Related: other sights of same type first, then by position
+const related = sightsData
+  .filter(s => s.slug !== sight.slug)
+  .sort((a, b) => (a.type === sight.type ? -1 : b.type === sight.type ? 1 : 0))
+  .slice(0, 3);
+
+const _siteUrl = 'https://milos.guide';
+const sightJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'TouristAttraction',
+  name: sight.nameEn,
+  description: sight.description,
+  url: `${_siteUrl}/sights/${sight.slug}`,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: sight.area,
+    addressRegion: 'South Aegean',
+    addressCountry: 'GR',
+  },
+  isAccessibleForFree: sight.admission === 'free',
+  containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
+};
+---
+
+<Layout
+  lang="en"
+  title={`${sight.nameEn} — Milos`}
+  description={`${sight.nameEn}: ${sight.taglineEn}. ${sight.description.slice(0, 120)}…`}
+  jsonld={sightJsonld}
+>
+
+<!-- HERO -->
+<div class="s-hero">
+  <div class="s-hero-bg"></div>
+  <div class="s-hero-overlay">
+    <div class="container s-hero-inner">
+      <a href="/sights" class="back-link">← All sights</a>
+      <div class="s-hero-content">
+        <span class="s-hero-icon" aria-hidden="true">{sight.icon}</span>
+        <div class="s-hero-meta">
+          <span class="s-type-badge">{typeInfo.icon} {typeInfo.label}</span>
+          <h1 class="s-hero-name">{sight.nameEn}</h1>
+          <p class="s-hero-tagline">{sight.taglineEn}</p>
+          <div class="s-hero-chips">
+            <span class="s-chip">📍 {sight.area}</span>
+            <span class={`s-chip s-chip--${sight.admission}`}>
+              {sight.admission === 'free' ? '✓ Free entry' : '🎟 Admission fee'}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CONTENT -->
+<div class="container s-layout">
+
+  <!-- MAIN -->
+  <main class="s-main">
+
+    <p class="s-desc">{sight.description}</p>
+
+    <!-- Highlights -->
+    {sight.highlights.length > 0 && (
+      <div class="s-block">
+        <h2 class="block-title">Highlights</h2>
+        <div class="highlights-grid">
+          {sight.highlights.map(h => (
+            <div class="highlight-item">
+              <span class="highlight-check">✓</span>
+              <span>{h}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Visitor tips -->
+    <div class="s-block">
+      <h2 class="block-title">Visitor information</h2>
+      <div class="tips-grid">
+
+        <div class="tip">
+          <span class="tip-icon">🎟</span>
+          <div>
+            <p class="tip-title">Entry</p>
+            <p class="tip-body">
+              {sight.admission === 'free'
+                ? 'Free to visit — no ticket or reservation required.'
+                : 'An admission fee applies. Tickets are purchased on site. Check locally for current prices and seasonal hours.'}
+            </p>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">⏰</span>
+          <div>
+            <p class="tip-title">Best time to visit</p>
+            <p class="tip-body">
+              {sight.type === 'geological'
+                ? 'Morning light or late afternoon is ideal for photography. Avoid midday in summer — the rock absorbs heat and shade is scarce.'
+                : sight.type === 'medieval' || sight.type === 'archaeology'
+                  ? 'Visit in the morning or late afternoon to avoid peak heat. The views at golden hour are exceptional.'
+                  : 'Open year-round. Morning visits are quieter — afternoons can get busy in peak season.'}
+            </p>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">🚗</span>
+          <div>
+            <p class="tip-title">Getting there</p>
+            <p class="tip-body">
+              {sight.area === 'Tripiti'
+                ? 'Tripiti is a 15-minute drive from Adamas port. Parking is available in the village square.'
+                : sight.area === 'Plaka'
+                  ? 'Plaka is a 10-minute drive from Adamas. The Kastro is a short walk from the village centre.'
+                  : sight.area === 'Adamas'
+                    ? 'Located in Adamas, the main port — walkable from the ferry terminal and most accommodation.'
+                    : sight.area === 'North Milos'
+                      ? 'Accessible by car from the main island road. A rental car or scooter is recommended.'
+                      : 'Accessible by car or scooter. Parking is generally available nearby.'}
+            </p>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">👟</span>
+          <div>
+            <p class="tip-title">What to wear</p>
+            <p class="tip-body">
+              {sight.type === 'geological'
+                ? 'Wear non-slip footwear — volcanic rock can be slippery. Bring sunscreen and water, as shade is limited.'
+                : sight.type === 'religious'
+                  ? 'Modest dress is expected when entering churches or religious sites. Cover shoulders and knees.'
+                  : 'Comfortable walking shoes are recommended. Bring water and sun protection in summer.'}
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="s-sidebar">
+
+    <!-- Quick info -->
+    <div class="sd-card">
+      <p class="sd-card-label">At a glance</p>
+      <ul class="sd-info-list">
+        <li class="sd-info-row">
+          <span class="sd-info-key">Category</span>
+          <span class="sd-info-val">{typeInfo.icon} {typeInfo.label}</span>
+        </li>
+        <li class="sd-info-row">
+          <span class="sd-info-key">Location</span>
+          <span class="sd-info-val">{sight.area}</span>
+        </li>
+        <li class="sd-info-row">
+          <span class="sd-info-key">Entry</span>
+          <span class={`sd-info-val sd-admission--${sight.admission}`}>
+            {sight.admission === 'free' ? '✓ Free' : '🎟 Paid'}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Map CTA -->
+    <a
+      href={`https://www.google.com/maps/search/${encodeURIComponent(sight.nameEn + ' Milos Greece')}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="sd-btn sd-btn--maps"
+    >
+      <span>📍</span> Google Maps ↗
+    </a>
+
+    <!-- Share -->
+    <button id="share-btn" class="sd-btn sd-btn--share" type="button">
+      <span id="share-icon">↗</span> <span id="share-label">Share</span>
+    </button>
+
+    <!-- Other sights -->
+    <div class="sd-card">
+      <p class="sd-card-label">More sights</p>
+      <div class="sd-related-list">
+        {related.map(s => (
+          <a href={`/sights/${s.slug}`} class="sd-related-link">
+            <span class="sd-related-icon">{s.icon}</span>
+            <span class="sd-related-name">{s.nameEn}</span>
+          </a>
+        ))}
+        <a href="/sights" class="sd-related-all">All sights →</a>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+
+<!-- RELATED (bottom strip) -->
+{related.length > 0 && (
+  <section class="sec sec-sand related-sec">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Explore more</span>
+          <h2 class="sec-title">More sights on Milos</h2>
+        </div>
+        <a href="/sights" class="see-all">All sights →</a>
+      </div>
+      <div class="related-grid">
+        {related.map(s => {
+          const rt = typeLabels[s.type] ?? { label: s.type, icon: '📍', color: '#1a5c8a' };
+          return (
+            <a href={`/sights/${s.slug}`} class="rel-card">
+              <div class="rel-icon-wrap" aria-hidden="true">{s.icon}</div>
+              <div class="rel-body">
+                <span class="rel-type">{rt.icon} {rt.label}</span>
+                <h3 class="rel-name">{s.nameEn}</h3>
+                <p class="rel-area">📍 {s.area}</p>
+                <p class="rel-tagline">{s.taglineEn.slice(0, 60)}{s.taglineEn.length > 60 ? '…' : ''}</p>
+              </div>
+              <span class="rel-arrow">→</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+</Layout>
+
+<script>
+const btn   = document.getElementById('share-btn') as HTMLButtonElement;
+const label = document.getElementById('share-label') as HTMLSpanElement;
+const icon  = document.getElementById('share-icon') as HTMLSpanElement;
+
+btn?.addEventListener('click', async () => {
+  const url  = window.location.href;
+  const title = document.title;
+  if (navigator.share) {
+    try { await navigator.share({ title, url }); } catch {}
+  } else {
+    await navigator.clipboard.writeText(url);
+    label.textContent = 'Copied!';
+    icon.textContent  = '✓';
+    setTimeout(() => { label.textContent = 'Share'; icon.textContent = '↗'; }, 2000);
+  }
+});
+</script>
+
+<style>
+/* ── HERO ── */
+.s-hero {
+  position: relative;
+  height: 460px;
+  overflow: hidden;
+}
+.s-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, #0a1f3c 0%, #0d2b4e 35%, #1a5c8a 75%, #2a7faa 100%);
+}
+.s-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 80% 20%, rgba(58,155,201,.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 80%, rgba(13,43,78,.45) 0%, transparent 45%);
+}
+.s-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.s-hero-inner { padding-bottom: 2.5rem; }
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  padding: .35rem .85rem;
+  border-radius: 100px;
+  transition: background .15s;
+}
+.back-link:hover { background: rgba(0,0,0,.55); }
+
+.s-hero-content {
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+}
+.s-hero-icon {
+  font-size: 5rem;
+  line-height: 1;
+  opacity: .25;
+  flex-shrink: 0;
+  margin-bottom: .25rem;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,.4));
+}
+.s-hero-meta { flex: 1; }
+
+.s-type-badge {
+  display: inline-block;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: .5rem;
+  backdrop-filter: blur(6px);
+}
+.s-hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 7vw, 4.5rem);
+  color: #fff;
+  line-height: .95;
+  margin: 0 0 .4rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,.4);
+}
+.s-hero-tagline {
+  font-size: 1rem;
+  color: rgba(255,255,255,.65);
+  font-style: italic;
+  margin: 0 0 .85rem;
+}
+.s-hero-chips { display: flex; gap: .45rem; flex-wrap: wrap; }
+.s-chip {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0,0,0,.3);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+.s-chip--free { background: rgba(22,163,74,.25); border-color: rgba(134,239,172,.3); }
+.s-chip--paid { background: rgba(0,0,0,.3); }
+
+/* ── LAYOUT ── */
+.s-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+  align-items: start;
+}
+
+/* ── MAIN ── */
+.s-desc {
+  font-size: 1.05rem;
+  line-height: 1.82;
+  color: var(--ink);
+  margin-bottom: 2.5rem;
+}
+.s-block { margin-bottom: 2.5rem; }
+.block-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+/* Highlights */
+.highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  font-size: .875rem;
+  color: var(--ink);
+  padding: .65rem .9rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.highlight-check { color: var(--sea); font-weight: 700; flex-shrink: 0; }
+
+/* Tips */
+.tips-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tip:last-child { border-bottom: none; }
+.tip:nth-child(even) { background: var(--sand); }
+.tip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+.tip-title {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: .2rem;
+}
+.tip-body { font-size: .9rem; color: var(--ink); margin: 0; line-height: 1.55; }
+
+/* ── SIDEBAR ── */
+.s-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+.sd-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.sd-card-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+.sd-info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+.sd-info-row { display: flex; justify-content: space-between; align-items: center; font-size: .875rem; gap: .5rem; }
+.sd-info-key { font-weight: 600; color: var(--muted); flex-shrink: 0; }
+.sd-info-val { color: var(--ink); text-align: right; }
+.sd-admission--free { color: #16a34a; font-weight: 600; }
+.sd-admission--paid { color: var(--muted); }
+
+.sd-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  font-weight: 600;
+  transition: transform .15s, opacity .15s;
+  width: 100%;
+}
+.sd-btn:hover { transform: translateY(-1px); opacity: .9; }
+.sd-btn--maps  { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+.sd-btn--share { background: var(--white); color: var(--ink); border: 1px solid var(--border); cursor: pointer; }
+
+.sd-related-list { display: flex; flex-direction: column; gap: 0; }
+.sd-related-link {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .55rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .875rem;
+  color: var(--ink);
+  transition: color .15s, padding-left .15s;
+}
+.sd-related-link:last-of-type { border-bottom: none; }
+.sd-related-link:hover { color: var(--aegean); padding-left: .3rem; }
+.sd-related-icon { font-size: 1rem; flex-shrink: 0; }
+.sd-related-name { font-weight: 500; }
+.sd-related-all {
+  display: block;
+  margin-top: .75rem;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--aegean);
+  border-bottom: 1.5px solid var(--sea);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: color .15s;
+}
+.sd-related-all:hover { color: var(--sea); }
+
+/* ── RELATED ── */
+.related-sec { margin-top: 0; }
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.rel-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: inherit;
+  position: relative;
+  transition: box-shadow .2s, transform .2s;
+}
+.rel-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.rel-icon-wrap {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  opacity: .3;
+  transition: opacity .2s;
+}
+.rel-card:hover .rel-icon-wrap { opacity: .7; }
+.rel-body { flex: 1; min-width: 0; }
+.rel-type {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sea);
+  display: block;
+  margin-bottom: .2rem;
+}
+.rel-name {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--deep-blue);
+  line-height: 1.2;
+  margin: 0 0 .2rem;
+}
+.rel-area {
+  font-size: .7rem;
+  color: var(--muted);
+  margin: 0 0 .25rem;
+}
+.rel-tagline {
+  font-size: .78rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin: 0;
+}
+.rel-arrow {
+  font-size: 1.1rem;
+  color: rgba(0,0,0,.15);
+  flex-shrink: 0;
+  transition: color .2s, transform .2s;
+}
+.rel-card:hover .rel-arrow { color: var(--deep-blue); transform: translateX(4px); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .s-hero { height: 380px; }
+  .s-hero-icon { font-size: 3.5rem; }
+  .s-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .s-sidebar { position: static; }
+  .highlights-grid { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .s-hero-content { gap: 1rem; }
+}
+@media (max-width: 480px) {
+  .s-hero { height: 300px; }
+  .s-hero-name { font-size: 2rem; }
+  .s-hero-icon { display: none; }
+}
+</style>

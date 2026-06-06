@@ -1,23 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SmartImage from '../components/SmartImage.astro';
-import tavernsRaw from '../data/taverns.json';
 import beachesRaw from '../data/beaches.json';
-import accommodationsData from '../data/stays.json';
+import sightsData from '../data/sights.json';
 
-type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
-type Beach  = typeof beachesRaw[number] & { localPhoto?: string | null };
+type Beach = typeof beachesRaw[number] & { localPhoto?: string | null };
 
-const tavernsData = tavernsRaw as Tavern[];
 const beachesData = beachesRaw as Beach[];
 
-const featuredTaverns = [...tavernsData]
-  .filter(t => t.isFeatured)
-  .sort((a, b) => b.rating - a.rating)
-  .slice(0, 3);
+const accessIcon: Record<string, string> = { road: '🚗', boat: '⛵', hike: '🥾' };
 
-const getName    = (t: Tavern) => typeof t.name === 'object' ? (t.name as any).el : t.name as string;
-const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArray(t.cuisine) ? (t.cuisine as any).el : (t.cuisine as any)?.[0] ?? '';
+const beachCategories = [
+  { title: '👨‍👩‍👧 For families',    filter: (b: Beach) => b.bestFor.includes('Families') },
+  { title: '📸 For photos',         filter: (b: Beach) => b.bestFor.includes('Photography') },
+  { title: '🔇 For peace & quiet',  filter: (b: Beach) => b.bestFor.includes('Solitude') },
+  { title: '⛵ Boat access only',   filter: (b: Beach) => b.accessType === 'boat' },
+].map(cat => ({
+  ...cat,
+  beaches: beachesData.filter(cat.filter).slice(0, 3),
+}));
 ---
 
 <Layout
@@ -54,7 +55,7 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
     </p>
     <div class="hero-ctas">
       <a href="/beaches" class="btn-primary">🏖 Beaches</a>
-      <a href="/eat"     class="btn-secondary">🍽 Food</a>
+      <a href="/sights"  class="btn-secondary">🏛 Sights</a>
       <a href="/map"     class="hero-cta-ghost">Map →</a>
     </div>
     <div class="hero-no-ads">
@@ -91,30 +92,9 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
       <span class="explore-head-title">What do you want to discover in Milos?</span>
     </div>
     <div class="cat-list">
-      
-      
-      <a href="/eat" class="cat-row">
-        <span class="cat-num">1</span>
-        <div class="cat-info">
-          <span class="cat-name">Food</span>
-          <span class="cat-desc">Tavernas with freshly caught fish, wood-fired grills, white wine by the sea</span>
-        </div>
-        <span class="cat-count">{tavernsData.length} restaurants</span>
-        <span class="cat-arrow">→</span>
-      </a>
-
-            <a href="/stay" class="cat-row">
-        <span class="cat-num">2</span>
-        <div class="cat-info">
-          <span class="cat-name">Stay</span>
-          <span class="cat-desc">From traditional houses to modern hotels — find your perfect base for exploring Milos</span>
-        </div>
-        <span class="cat-count">{accommodationsData.length} options</span>
-        <span class="cat-arrow">→</span>
-      </a>
 
       <a href="/beaches" class="cat-row">
-        <span class="cat-num">3</span>
+        <span class="cat-num">1</span>
         <div class="cat-info">
           <span class="cat-name">Beaches</span>
           <span class="cat-desc">From the volcanic Sarakiniko to hidden sea caves — {beachesData.length}+ shores for every taste</span>
@@ -124,7 +104,7 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
       </a>
 
       <a href="/villages" class="cat-row">
-        <span class="cat-num">4</span>
+        <span class="cat-num">2</span>
         <div class="cat-info">
           <span class="cat-name">Villages</span>
           <span class="cat-desc">Plaka, Klima, Tripiti, Pollonia — the island beyond the beaches</span>
@@ -133,50 +113,52 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
         <span class="cat-arrow">→</span>
       </a>
 
+      <a href="/sights" class="cat-row">
+        <span class="cat-num">3</span>
+        <div class="cat-info">
+          <span class="cat-name">Sights</span>
+          <span class="cat-desc">Catacombs, ancient theater, Kastro, museums — 2,500 years of history on a volcanic island</span>
+        </div>
+        <span class="cat-count">{sightsData.length} sights</span>
+        <span class="cat-arrow">→</span>
+      </a>
+
+      <a href="/how-to-reach" class="cat-row">
+        <span class="cat-num">4</span>
+        <div class="cat-info">
+          <span class="cat-name">Getting here</span>
+          <span class="cat-desc">Ferries from Piraeus, flights, how to get around the island</span>
+        </div>
+        <span class="cat-count">All routes</span>
+        <span class="cat-arrow">→</span>
+      </a>
+
     </div>
   </div>
 </section>
 
-
-<!-- ══ NUMBERS ══ -->
-<section class="sec sec-dark">
-  <div class="container">
-    <div class="sec-hdr-row" style="margin-bottom:3rem">
-      <div>
-        <span class="label label-lt">Milos in numbers</span>
-        <h2 class="sec-title sec-title-lt">An island in figures</h2>
-      </div>
-    </div>
-    <div class="numbers-grid">
-      <div class="num-item"><div class="num-label">Beaches</div><div class="num-val">70+</div><div class="num-desc">One of the most beach-rich islands in the Cyclades</div></div>
-      <div class="num-item"><div class="num-label">Coastline</div><div class="num-val">125 km</div><div class="num-desc">Dramatically shaped by millions of years of volcanic activity</div></div>
-      <div class="num-item"><div class="num-label">Area</div><div class="num-val">151 km²</div><div class="num-desc">The 7th largest island in the Cyclades</div></div>
-      <div class="num-item"><div class="num-label">From Piraeus</div><div class="num-val">86 nm</div><div class="num-desc">High-speed ~3.5 hrs, regular ferry ~7 hrs</div></div>
-      <div class="num-item"><div class="num-label">Harbour</div><div class="num-val">Top 5</div><div class="num-desc">One of the largest natural harbours in the Mediterranean</div></div>
-      <div class="num-item"><div class="num-label">Volcanic arc</div><div class="num-val">3M yrs</div><div class="num-desc">Geological history that shaped every rock on the island</div></div>
-    </div>
-  </div>
-</section>
 
 
 <!-- ══ QUICK FACTS ══ -->
-<section class="sec sec-white">
+<section class="sec sec-dark">
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">At a glance</span>
-        <h2 class="sec-title">Quick Facts</h2>
+        <span class="label label-lt">At a glance</span>
+        <h2 class="sec-title sec-title-lt">Quick Facts</h2>
       </div>
     </div>
     <div class="facts-grid">
       <div class="fact-item"><span class="fact-key">Region</span><span class="fact-val">Cyclades</span></div>
       <div class="fact-item"><span class="fact-key">Capital</span><span class="fact-val">Plaka</span></div>
       <div class="fact-item"><span class="fact-key">Port</span><span class="fact-val">Adamas</span></div>
-      <div class="fact-item"><span class="fact-key">Population</span><span class="fact-val">~5,000</span></div>
+      <div class="fact-item"><span class="fact-key">Population</span><span class="fact-val">5,302 (2021)</span></div>
       <div class="fact-item"><span class="fact-key">Beaches</span><span class="fact-val">70+</span></div>
       <div class="fact-item"><span class="fact-key">Area</span><span class="fact-val">151 km²</span></div>
       <div class="fact-item"><span class="fact-key">Highest peak</span><span class="fact-val">Prophet Elias</span></div>
       <div class="fact-item"><span class="fact-key">Famous find</span><span class="fact-val">Venus de Milo</span></div>
+      <div class="fact-item"><span class="fact-key">Coastline</span><span class="fact-val">125km</span></div>
+      <div class="fact-item"><span class="fact-key">Time zone</span><span class="fact-val">UTC+2</span></div>
     </div>
   </div>
 </section>
@@ -217,45 +199,6 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 </section>
 
 
-<!-- ══ FEATURED TAVERNS ══ -->
-{featuredTaverns.length > 0 && (
-  <section class="sec sec-white">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Food</span>
-          <h2 class="sec-title">Featured restaurants</h2>
-        </div>
-        <a href="/eat" class="see-all">All restaurants →</a>
-      </div>
-      <div class="tav-grid">
-        {featuredTaverns.map(tavern => (
-          <a href={`/eat/${tavern.slug}`} class="tav-card">
-            {tavern.localPhoto ? (
-              <SmartImage src={tavern.localPhoto} alt={typeof tavern.name === 'object' ? tavern.name.en : tavern.name} width={400} height={200} class="tav-img" sizes="(max-width: 600px) 100vw, 33vw" />
-            ) : (
-              <div class="tav-ph">🍽</div>
-            )}
-            <div class="tav-body">
-              <div class="tav-top">
-                <span class="tav-badge">⭐ Featured</span>
-                <span class="tav-price">{tavern.priceRange}</span>
-              </div>
-              <h3 class="tav-name">{typeof tavern.name === 'object' ? tavern.name.en : tavern.name}</h3>
-              <p class="tav-loc">◉ {tavern.location.area}</p>
-              <div class="tav-foot">
-                <span class="tav-rating">⭐ {tavern.rating} / 5</span>
-                <span class="tav-cuisine">{typeof tavern.cuisine === 'object' ? tavern.cuisine.en : tavern.cuisine?.[0]}</span>
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
-
-
 <!-- ══ BEACHES BY TYPE ══ -->
 <section class="sec sec-white">
   <div class="container">
@@ -267,38 +210,19 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
       <a href="/beaches" class="see-all">All beaches →</a>
     </div>
     <div class="beach-cat-grid">
-      <div class="beach-cat">
-        <div class="beach-cat-title">👨‍👩‍👧 For families</div>
-        <div class="beach-cat-list">
-          <a href="/beaches/paleochori" class="beach-link"><span class="beach-link-icon">🚗</span>Paleochori</a>
-          <a href="/beaches/provatas"   class="beach-link"><span class="beach-link-icon">🚗</span>Provatas</a>
-          <a href="/beaches/fyriplaka"  class="beach-link"><span class="beach-link-icon">🚗</span>Fyriplaka</a>
+      {beachCategories.map(cat => (
+        <div class="beach-cat">
+          <div class="beach-cat-title">{cat.title}</div>
+          <div class="beach-cat-list">
+            {cat.beaches.map(b => (
+              <a href={`/beaches/${b.slug}`} class="beach-link">
+                <span class="beach-link-icon">{accessIcon[b.accessType] ?? '📍'}</span>
+                {typeof b.name === 'object' ? b.name.en : b.name}
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
-      <div class="beach-cat">
-        <div class="beach-cat-title">📸 For photos</div>
-        <div class="beach-cat-list">
-          <a href="/beaches/sarakiniko" class="beach-link"><span class="beach-link-icon">🚗</span>Sarakiniko</a>
-          <a href="/beaches/kleftiko"   class="beach-link"><span class="beach-link-icon">⛵</span>Kleftiko</a>
-          <a href="/beaches/tsigrado"   class="beach-link"><span class="beach-link-icon">🥾</span>Tsigrado</a>
-        </div>
-      </div>
-      <div class="beach-cat">
-        <div class="beach-cat-title">🔇 For peace & quiet</div>
-        <div class="beach-cat-list">
-          <a href="/beaches/triades"   class="beach-link"><span class="beach-link-icon">🚗</span>Triades</a>
-          <a href="/beaches/gerontas"  class="beach-link"><span class="beach-link-icon">🚗</span>Gerontas</a>
-          <a href="/beaches/ammoudaki" class="beach-link"><span class="beach-link-icon">🥾</span>Ammoudaki</a>
-        </div>
-      </div>
-      <div class="beach-cat">
-        <div class="beach-cat-title">⛵ Boat access only</div>
-        <div class="beach-cat-list">
-          <a href="/beaches/kleftiko"   class="beach-link"><span class="beach-link-icon">⛵</span>Kleftiko</a>
-          <a href="/beaches/sikia-cave" class="beach-link"><span class="beach-link-icon">⛵</span>Sykia Cave</a>
-          <a href="/beaches/ammoudaki"  class="beach-link"><span class="beach-link-icon">⛵</span>Ammoudaki</a>
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
@@ -506,17 +430,10 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 .cat-count { font-size:.72rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
 .cat-arrow { font-size:1.4rem; color:rgba(0,0,0,.15); transition:color .3s,transform .3s; }
 .cat-row:hover .cat-arrow { color:var(--deep-blue); transform:translateX(6px); }
-.numbers-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
-.num-item { padding:2.5rem; border-right:1px solid rgba(255,255,255,.08); border-bottom:1px solid rgba(255,255,255,.08); }
-.num-item:nth-child(3n) { border-right:none; }
-.num-item:nth-last-child(-n+3) { border-bottom:none; }
-.num-label { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(58,155,201,.7); margin-bottom:.2rem; }
-.num-val { font-family:var(--font-serif); font-size:clamp(2.5rem,5vw,4rem); color:#fff; line-height:1; margin-bottom:.4rem; }
-.num-desc { font-size:.82rem; color:rgba(255,255,255,.5); line-height:1.5; }
-.facts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1px; background:rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
-.fact-item { background:var(--white); padding:1.25rem 1.5rem; display:flex; flex-direction:column; gap:.2rem; }
-.fact-key { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--sea); }
-.fact-val { font-family:var(--font-serif); font-size:1.15rem; color:var(--ink); line-height:1.2; }
+.facts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); overflow:hidden; }
+.fact-item { background:transparent; padding:1.25rem 1.5rem; display:flex; flex-direction:column; gap:.2rem; }
+.fact-key { font-size:.68rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(58,155,201,.7); }
+.fact-val { font-family:var(--font-serif); font-size:1.15rem; color:#fff; line-height:1.2; }
 .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid rgba(0,0,0,.08); border-radius:var(--radius-lg); overflow:hidden; }
 .why-item { padding:2.5rem; border-right:1px solid rgba(0,0,0,.08); border-bottom:1px solid rgba(0,0,0,.08); background:var(--white); }
 .why-item:nth-child(2n) { border-right:none; }
@@ -553,28 +470,10 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
 .month-tag { display:inline-block; font-size:.6rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:2px 8px; border-radius:4px; margin-bottom:.6rem; background:var(--sand-dark); color:var(--muted); }
 .month-desc { font-size:.78rem; color:var(--muted); line-height:1.55; }
 .meltemia-note { margin-top:1.25rem; font-size:.82rem; color:var(--muted); padding:0 .25rem; }
-.tav-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
-.tav-card { display:flex; flex-direction:column; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border); background:var(--white); transition:transform .2s,box-shadow .2s; }
-.tav-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
-:global(.tav-img) { width:100%; height:200px; object-fit:cover; display:block; transition:transform .4s ease; }
-.tav-card:hover :global(.tav-img) { transform:scale(1.04); }
-.tav-ph { height:200px; display:flex; align-items:center; justify-content:center; font-size:2.5rem; background:linear-gradient(140deg,var(--sand),var(--sand-dark)); }
-.tav-body { padding:1.25rem; flex:1; display:flex; flex-direction:column; gap:.3rem; }
-.tav-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:.2rem; }
-.tav-badge { font-size:.58rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--aegean); color:#fff; padding:2px 8px; border-radius:100px; }
-.tav-price { font-weight:700; font-size:.85rem; color:#b08d57; }
-.tav-name { font-family:var(--font-serif); font-size:1.1rem; color:var(--ink); line-height:1.25; }
-.tav-loc { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:#c0613a; }
-.tav-foot { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:.7rem; border-top:1px solid var(--border); }
-.tav-rating { font-size:.8rem; color:var(--muted); }
-.tav-cuisine { font-size:.68rem; font-weight:500; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
 @media (max-width:900px) {
-  .numbers-grid { grid-template-columns:repeat(2,1fr); }
-  .numbers-grid .num-item:nth-child(2n) { border-right:none; }
   .months-grid { grid-template-columns:1fr 1fr; }
   .month-item:nth-child(2n) { border-right:none; }
   .month-item { border-bottom:1px solid rgba(0,0,0,.08); }
-  .tav-grid { grid-template-columns:1fr 1fr; }
   .why-grid { grid-template-columns:1fr; }
   .why-item:nth-child(2n) { border-right:none; }
   .why-item { border-bottom:1px solid rgba(0,0,0,.08); }
@@ -586,11 +485,8 @@ const getCuisine = (t: Tavern) => typeof t.cuisine === 'object' && !Array.isArra
   .cat-name { font-size:1.4rem; }
   .cat-desc { display:none; }
   .beach-cat-grid { grid-template-columns:1fr; }
-  .tav-grid { grid-template-columns:1fr; }
 }
 @media (max-width:480px) {
   .hero-ctas { flex-direction:column; }
-  .numbers-grid { grid-template-columns:1fr; }
-  .numbers-grid .num-item { border-right:none; }
 }
 </style>

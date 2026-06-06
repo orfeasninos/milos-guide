@@ -22,7 +22,6 @@ const featuredBeaches = FEATURED_SLUGS
   .filter(Boolean) as typeof beachesData;
 
 const sortedBeaches = [...beachesData]
-  .sort((a, b) => b.rating - a.rating)
   .map(b => ({
     ...b,
     area: getArea(b.coordinates?.lat ?? 0, b.coordinates?.lng ?? 0),
@@ -36,7 +35,6 @@ const beachMapData = sortedBeaches.map(b => ({
   name: getBeachName(b),
   lat: b.coordinates?.lat ?? 0,
   lng: b.coordinates?.lng ?? 0,
-  rating: b.rating,
   area: b.area,
   isBoat: b.isBoat,
   facilities: b.facilities,
@@ -96,7 +94,6 @@ const beachesJsonld = {
             )}
           </div>
           <div class="feat-overlay">
-            {b.rating > 0 && <span class="feat-rating">★ {b.rating}</span>}
             <h3 class="feat-name">{getBeachName(b)}</h3>
           </div>
         </a>
@@ -172,9 +169,6 @@ const beachesJsonld = {
               <div class="bc-chips">
                 {beach.accessType === 'boat' && (
                   <span class="bc-access-chip">⛵ Boat only</span>
-                )}
-                {beach.rating > 0 && (
-                  <span class="bc-rating-chip">★ {beach.rating}</span>
                 )}
               </div>
               <h2 class="bc-name">{getBeachName(beach)}</h2>

@@ -19,7 +19,6 @@
       "lat": 36.742697199999995,
       "lng": 24.458423
     },
-    "rating": 4.8,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -31,7 +30,8 @@
       "Snorkeling"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": true
   },
   {
     "slug": "fyropotamos",
@@ -53,7 +53,6 @@
       "lat": 36.757727599999996,
       "lng": 24.427407
     },
-    "rating": 4.6,
     "accessType": "road",
     "facilities": [
       "sunbeds"
@@ -65,7 +64,8 @@
       "Relaxation"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": true
   },
   {
     "slug": "tsigrado",
@@ -87,7 +87,6 @@
       "lat": 36.661895799999996,
       "lng": 24.4693335
     },
-    "rating": 4.6,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -99,7 +98,8 @@
       "Snorkeling"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "fyriplaka",
@@ -121,7 +121,6 @@
       "lat": 36.6662272,
       "lng": 24.4651858
     },
-    "rating": 4.7,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -134,7 +133,8 @@
       "Swimming"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "paleochori",
@@ -156,7 +156,6 @@
       "lat": 36.6750374,
       "lng": 24.5184634
     },
-    "rating": 4.5,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -169,7 +168,8 @@
       "Relaxation"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "provatas",
@@ -191,7 +191,6 @@
       "lat": 36.6695517,
       "lng": 24.4481058
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -204,7 +203,8 @@
       "Swimming"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "papafragas",
@@ -226,7 +226,6 @@
       "lat": 36.753791,
       "lng": 24.502596
     },
-    "rating": 4.5,
     "accessType": "road",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -236,7 +235,8 @@
       "Exploring"
     ],
     "swimDepth": "Deep",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": true
   },
   {
     "slug": "kleftiko",
@@ -258,7 +258,6 @@
       "lat": 36.6506578,
       "lng": 24.3324547
     },
-    "rating": 4.9,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -290,7 +289,6 @@
       "lat": 36.670763199999996,
       "lng": 24.498369099999998
     },
-    "rating": 4.5,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -303,7 +301,8 @@
       "Relaxation"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "gerontas",
@@ -325,7 +324,6 @@
       "lat": 36.6558418,
       "lng": 24.3687032
     },
-    "rating": 4.5,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -335,7 +333,8 @@
       "Solitude"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "triades",
@@ -357,7 +356,6 @@
       "lat": 36.7064471,
       "lng": 24.3368601
     },
-    "rating": 4.7,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -367,7 +365,8 @@
       "Swimming"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "rivari",
@@ -389,7 +388,6 @@
       "lat": 36.7022094,
       "lng": 24.401958399999998
     },
-    "rating": 4.5,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -399,7 +397,8 @@
       "Solitude"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "sikia",
@@ -421,7 +420,6 @@
       "lat": 36.667732699999995,
       "lng": 24.320308999999998
     },
-    "rating": 4.9,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -453,7 +451,6 @@
       "lat": 36.7540755,
       "lng": 24.4127023
     },
-    "rating": 4.6,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -466,7 +463,8 @@
       "Swimming"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "theiorycheia",
@@ -488,7 +486,6 @@
       "lat": 36.694101499999995,
       "lng": 24.544843
     },
-    "rating": 4.7,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -498,7 +495,8 @@
       "Photography"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "achivadolimni",
@@ -520,7 +518,6 @@
       "lat": 36.6915036,
       "lng": 24.4527008
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -533,7 +530,8 @@
       "Windsurfing"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": true
   },
   {
     "slug": "agios-sostis",
@@ -555,7 +553,6 @@
       "lat": 36.6697896,
       "lng": 24.4443792
     },
-    "rating": 4.8,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -565,7 +562,8 @@
       "Solitude"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "tria-pigadia",
@@ -587,7 +585,6 @@
       "lat": 36.7298476,
       "lng": 24.5363755
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -597,7 +594,8 @@
       "Photography"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "kastanas",
@@ -619,7 +617,6 @@
       "lat": 36.7345976,
       "lng": 24.537876699999998
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -629,7 +626,8 @@
       "Solitude"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "pollonia-beach",
@@ -651,7 +649,6 @@
       "lat": 36.7639636,
       "lng": 24.5257476
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -663,7 +660,8 @@
       "Relaxation"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "mandrakia",
@@ -685,7 +683,6 @@
       "lat": 36.750769,
       "lng": 24.4460311
     },
-    "rating": 4.7,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -697,7 +694,8 @@
       "Swimming"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "aggathia",
@@ -719,7 +717,6 @@
       "lat": 36.7270586,
       "lng": 24.3418226
     },
-    "rating": 4.7,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -731,7 +728,8 @@
       "Swimming"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "ammoudaraki-beach",
@@ -753,7 +751,6 @@
       "lat": 36.6988005,
       "lng": 24.3349092
     },
-    "rating": 4.6,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -763,7 +760,8 @@
       "Relaxation"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "kalamos",
@@ -785,7 +783,6 @@
       "lat": 36.6665091,
       "lng": 24.481914
     },
-    "rating": 4.8,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -795,7 +792,8 @@
       "Photography"
     ],
     "swimDepth": "Deep",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "agios-ioannis-beach",
@@ -817,7 +815,6 @@
       "lat": 36.677900099999995,
       "lng": 24.3319625
     },
-    "rating": 4.8,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -829,7 +826,8 @@
       "Sunsets"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "kipos-beach",
@@ -851,7 +849,6 @@
       "lat": 36.663143399999996,
       "lng": 24.429043099999998
     },
-    "rating": 4.1,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -861,7 +858,8 @@
       "Families"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": false
   },
   {
     "slug": "deep-blue-beach",
@@ -883,7 +881,6 @@
       "lat": 36.6748127,
       "lng": 24.5145904
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -893,7 +890,8 @@
       "Solitude"
     ],
     "swimDepth": "Deep",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "psathi-beach",
@@ -915,7 +913,6 @@
       "lat": 36.6599238,
       "lng": 24.4193484
     },
-    "rating": 3,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -925,7 +922,8 @@
       "Swimming"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "kolympionas-beach",
@@ -947,7 +945,6 @@
       "lat": 36.7234222,
       "lng": 24.538231699999997
     },
-    "rating": 4.3,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -957,7 +954,8 @@
       "Nature"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "voudia-beach",
@@ -979,7 +977,6 @@
       "lat": 36.7496186,
       "lng": 24.5347015
     },
-    "rating": 4,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -991,7 +988,8 @@
       "Photography"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "pachaina-beach",
@@ -1013,7 +1011,6 @@
       "lat": 36.752493,
       "lng": 24.4966206
     },
-    "rating": 3.8,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1025,7 +1022,8 @@
       "Relaxation"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "alogomantra-beach",
@@ -1047,7 +1045,6 @@
       "lat": 36.748596,
       "lng": 24.4877318
     },
-    "rating": 4.5,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1059,7 +1056,8 @@
       "Snorkeling"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "mytakas-beach",
@@ -1081,7 +1079,6 @@
       "lat": 36.7419216,
       "lng": 24.476411199999998
     },
-    "rating": 4.4,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -1094,7 +1091,8 @@
       "Relaxation"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "nerodafni-beach",
@@ -1116,7 +1114,6 @@
       "lat": 36.7675625,
       "lng": 24.4121797
     },
-    "rating": 4.3,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1128,7 +1125,8 @@
       "Relaxation"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "easyAccess": false
   },
   {
     "slug": "klima",
@@ -1150,7 +1148,6 @@
       "lat": 36.7348694,
       "lng": 24.420080799999997
     },
-    "rating": 4.7,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1162,7 +1159,8 @@
       "Culture"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "papikinou-beach",
@@ -1184,7 +1182,6 @@
       "lat": 36.721516099999995,
       "lng": 24.458498799999997
     },
-    "rating": 4.2,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -1197,7 +1194,8 @@
       "Relaxation"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": true
+    "nearbyFood": true,
+    "easyAccess": true
   },
   {
     "slug": "agios-dimitrios-beach",
@@ -1219,7 +1217,6 @@
       "lat": 36.7283799,
       "lng": 24.393426299999998
     },
-    "rating": 4.3,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Sand",
@@ -1227,6 +1224,66 @@
     "bestFor": [
       "Solitude",
       "Families"
+    ],
+    "swimDepth": "Shallow",
+    "nearbyFood": false
+  },
+  {
+    "slug": "kalogries",
+    "name": {
+      "el": "Παραλία Καλογριές",
+      "en": "Kalogries Beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Καλογριές στη Μήλο.",
+      "en": "A very quiet beach, offering a peaceful setting and blue aegean waters."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Καλογριές, Μήλος 848 00, Ελλάδα"
+    },
+    "placeId": "ChIJQ6F4bQDZmBQRh3fTTCWHgt0",
+    "image": "/images/beaches/kalogries-beach.jpg",
+    "coordinates": {
+      "lat": 36.736574,
+      "lng": 24.343665
+    },
+    "accessType": "boat",
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": [
+      "Solitude"
+    ],
+    "swimDepth": "Shallow",
+    "nearbyFood": false
+  },
+  {
+    "slug": "krotiraki",
+    "name": {
+      "el": "Παραλία Κροτιράκι",
+      "en": "Krotiraki Beach"
+    },
+    "description": {
+      "el": "Ανακαλύψτε την παραλία Παραλία Κροτιράκι στη Μήλο.",
+      "en": "A very quiet beach, offering a peaceful setting and blue aegean waters."
+    },
+    "location": {
+      "area": "Milos",
+      "address": "Παραλία Κροτιράκι, Μήλος 848 00, Ελλάδα"
+    },
+    "placeId": "ChIJQ6F4bQDZmBQRh3fTTCWHgt0",
+    "image": "/images/beaches/krotiraki-beach.jpg",
+    "coordinates": {
+      "lat": 36.658554,
+      "lng": 24.396558
+    },
+    "accessType": "boat",
+    "facilities": [],
+    "sandType": "Sand",
+    "shade": false,
+    "bestFor": [
+      "Solitude"
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false

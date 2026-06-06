@@ -1,13 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import villagesData from '../../data/villages.json';
-import tavernsRaw from '../../data/taverns.json';
 import beachesRaw from '../../data/beaches.json';
 
-
-type Tavern = typeof tavernsRaw[number] & { localPhoto?: string | null };
-type Beach  = typeof beachesRaw[number] & { localPhoto?: string | null };
-const tavernsData = tavernsRaw as Tavern[];
+type Beach = typeof beachesRaw[number] & { localPhoto?: string | null };
 const beachesData = beachesRaw as Beach[];
 
 const getName = (item: any): string => typeof item.name === 'object' ? item.name.en : item.name;
@@ -32,8 +28,6 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
 };
 const typeInfo = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
 
-// Linked taverns & beaches from JSON
-const linkedTaverns = tavernsData.filter(t => village.nearbyTaverns.includes(t.slug));
 const linkedBeaches = beachesData.filter(b => village.nearbyBeaches.includes(b.slug));
 
 // Other villages for related
@@ -61,11 +55,8 @@ const villageJsonld = {
     additionalProperty: { '@type': 'PropertyValue', name: 'population', value: (village as any).population },
   } : {}),
   containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
-  ...(linkedTaverns.length || linkedBeaches.length ? {
-    containsPlace: [
-      ...linkedTaverns.map(t => ({ '@type': 'Restaurant', name: getName(t), url: `${_siteUrl}/eat/${t.slug}` })),
-      ...linkedBeaches.map(b => ({ '@type': 'TouristAttraction', name: getName(b), url: `${_siteUrl}/beaches/${b.slug}` })),
-    ],
+  ...(linkedBeaches.length ? {
+    containsPlace: linkedBeaches.map(b => ({ '@type': 'TouristAttraction', name: getName(b), url: `${_siteUrl}/beaches/${b.slug}` })),
   } : {}),
 };
 ---
@@ -138,38 +129,6 @@ const villageJsonld = {
       </div>
     )}
 
-    <!-- Nearby Taverns -->
-    {linkedTaverns.length > 0 && (
-      <div class="v-block">
-        <div class="block-hdr">
-          <h2 class="block-title">Food in {village.nameEn ?? village.name}</h2>
-          <a href="/eat" class="see-all">All restaurants →</a>
-        </div>
-        <div class="nearby-list">
-          {linkedTaverns.map(t => (
-            <a href={`/eat/${t.slug}`} class="nearby-item">
-              <div class="nearby-img-wrap">
-                {t.localPhoto ? (
-                  <img
-                    src={t.localPhoto}
-                    alt={getName(t)}
-                    class="nearby-img"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="nearby-ph">🍽</div>
-                )}
-              </div>
-              <div class="nearby-body">
-                <p class="nearby-name">{getName(t)}</p>
-                {t.rating > 0 && <p class="nearby-rating">★ {t.rating}</p>}
-              </div>
-              <span class="nearby-arrow">→</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    )}
 
     <!-- Nearby Beaches -->
     {linkedBeaches.length > 0 && (
@@ -233,12 +192,6 @@ const villageJsonld = {
             <span class="s-info-val">
               {village.elevation === 'sea level' ? 'Sea level' : village.elevation}
             </span>
-          </li>
-        )}
-        {linkedTaverns.length > 0 && (
-          <li class="s-info-row">
-            <span class="s-info-key">Restaurants</span>
-            <span class="s-info-val">{linkedTaverns.length}</span>
           </li>
         )}
         {linkedBeaches.length > 0 && (

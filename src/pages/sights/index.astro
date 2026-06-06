@@ -1,0 +1,407 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import sightsData from '../../data/sights.json';
+
+const typeLabels: Record<string, { label: string; icon: string }> = {
+  archaeology:  { label: 'Archaeology',  icon: '🏛' },
+  museum:       { label: 'Museum',       icon: '🏺' },
+  geological:   { label: 'Geological',   icon: '🌋' },
+  medieval:     { label: 'Medieval',     icon: '🏰' },
+  traditional:  { label: 'Traditional',  icon: '🏠' },
+  religious:    { label: 'Religious',    icon: '⛪' },
+};
+
+const types = [...new Set(sightsData.map(s => s.type))];
+
+const admissionLabel: Record<string, string> = {
+  free: 'Free entry',
+  paid: 'Admission fee',
+};
+
+const _siteUrl = 'https://milos.guide';
+const sightsJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Sights & Attractions of Milos',
+  description: `Discover the top ${sightsData.length} sights and attractions of Milos — catacombs, ancient theater, Kastro and more.`,
+  url: `${_siteUrl}/sights`,
+  numberOfItems: sightsData.length,
+  itemListElement: sightsData.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: s.nameEn,
+    url: `${_siteUrl}/sights/${s.slug}`,
+  })),
+};
+---
+
+<Layout
+  lang="en"
+  title="Sights & Attractions of Milos"
+  description={`Discover the top ${sightsData.length} sights of Milos — the Catacombs, Ancient Theater, Kastro of Plaka, Sarakiniko and more. History, geology and culture on a volcanic island.`}
+  jsonld={sightsJsonld}
+>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <p class="page-label">Explore</p>
+    <h1 class="page-title">Sights & Attractions</h1>
+    <p class="page-desc">
+      Beyond the beaches, Milos holds 2,500 years of history — catacombs carved
+      in volcanic rock, a Hellenistic theater, Venetian castles and the spot
+      where the Venus de Milo was found.
+    </p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="container filters-inner">
+    <div class="filter-chips" id="type-chips">
+      <button class="chip chip--active" data-type="all">All</button>
+      {types.map(type => {
+        const t = typeLabels[type] ?? { label: type, icon: '📍' };
+        return (
+          <button class="chip" data-type={type}>
+            {t.icon} {t.label}
+          </button>
+        );
+      })}
+    </div>
+    <span class="results-count" id="results-count">{sightsData.length} sights</span>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sights-grid" id="sights-grid">
+      {sightsData.map((sight, i) => {
+        const t = typeLabels[sight.type] ?? { label: sight.type, icon: '📍' };
+        return (
+          <a href={`/sights/${sight.slug}`} class="sc" data-type={sight.type}>
+            <div class="sc-num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </div>
+            <div class="sc-body">
+              <div class="sc-top">
+                <span class="sc-type">{t.icon} {t.label}</span>
+                <span class="sc-area">{sight.area}</span>
+                <span class={`sc-admission sc-admission--${sight.admission}`}>
+                  {admissionLabel[sight.admission] ?? sight.admission}
+                </span>
+              </div>
+              <h2 class="sc-name">{sight.nameEn}</h2>
+              <p class="sc-tagline">{sight.taglineEn}</p>
+              <p class="sc-desc">{sight.description.slice(0, 140)}…</p>
+              <div class="sc-highlights">
+                {sight.highlights.map(h => (
+                  <span class="sc-highlight">{h}</span>
+                ))}
+              </div>
+            </div>
+            <span class="sc-icon" aria-hidden="true">{sight.icon}</span>
+          </a>
+        );
+      })}
+    </div>
+
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p class="empty-icon">🏛</p>
+      <p class="empty-text">No sights found with this filter.</p>
+      <button class="btn-dark" id="reset-filters">Show all</button>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="info-icon">🗺</span>
+        <h3 class="info-title">Getting Around</h3>
+        <p class="info-text">Most sights are concentrated around Plaka and Tripiti (10 min from Adamas), with geological wonders spread across the north coast. A rental car or scooter makes it easy.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-icon">⏰</span>
+        <h3 class="info-title">Best Time to Visit</h3>
+        <p class="info-text">Museums and archaeological sites are best visited in the morning before the heat. The Kastro of Plaka is magical at sunset. Sarakiniko is stunning at any hour.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-icon">🎟</span>
+        <h3 class="info-title">Entry & Tickets</h3>
+        <p class="info-text">The Catacombs require a guided tour (tickets on site). The Archaeological Museum and Mining Museum charge a small admission fee. All outdoor sights are free.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Layout>
+
+
+<style>
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* ── FILTERS ── */
+.filters-bar {
+  position: sticky;
+  top: calc(var(--header-h) - 5px);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.filter-chips { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.chip {
+  padding: 0.32rem 0.85rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
+.chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+.results-count { font-size: 0.78rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+/* ── SIGHT CARDS ── */
+.sights-grid { display: flex; flex-direction: column; }
+
+.sc {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  position: relative;
+  transition: padding-left 0.3s var(--ease);
+}
+.sc::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--deep-blue);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.3s var(--ease);
+}
+.sc:hover { padding-left: 1rem; color: inherit; }
+.sc:hover::before { width: 3px; }
+
+.sc-num {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  color: rgba(0,0,0,0.08);
+  line-height: 1;
+  user-select: none;
+  transition: color 0.3s;
+  text-align: center;
+}
+.sc:hover .sc-num { color: var(--deep-blue); }
+
+.sc-body { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+
+.sc-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.sc-type {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+.sc-area {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sc-admission {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 100px;
+}
+.sc-admission--free { background: rgba(34,197,94,0.1); color: #15803d; }
+.sc-admission--paid { background: rgba(0,0,0,0.05); color: var(--muted); }
+
+.sc-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 0;
+  transition: color 0.3s;
+}
+.sc:hover .sc-name { color: var(--deep-blue); }
+
+.sc-tagline {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--muted);
+  font-style: italic;
+}
+.sc-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 580px;
+}
+.sc-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+.sc-highlight {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 100px;
+  background: var(--sand-dark);
+  color: var(--muted);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.sc-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  opacity: 0.18;
+  transition: opacity 0.3s;
+  line-height: 1;
+}
+.sc:hover .sc-icon { opacity: 0.55; }
+
+/* ── EMPTY ── */
+.empty-state { text-align: center; padding: 5rem 0; }
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+/* ── INFO STRIP ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.info-card {
+  padding: 1.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--sand);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.info-icon { font-size: 1.75rem; line-height: 1; }
+.info-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--deep-blue);
+}
+.info-text {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sc { grid-template-columns: 48px 1fr; gap: 1rem; }
+  .sc-icon { display: none; }
+  .sc-num { font-size: 1.8rem; }
+  .sc-name { font-size: 1.5rem; }
+  .sc-desc { display: none; }
+  .info-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+
+<script>
+const grid    = document.getElementById('sights-grid');
+const empty   = document.getElementById('empty-state');
+const counter = document.getElementById('results-count');
+const reset   = document.getElementById('reset-filters');
+
+let activeType = 'all';
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.sc') ?? [];
+  let visible = 0;
+  cards.forEach(card => {
+    const type = card.dataset.type ?? '';
+    const show = activeType === 'all' || type === activeType;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (counter) counter.textContent = `${visible} sight${visible !== 1 ? 's' : ''}`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
+}
+
+document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeType = chip.dataset.type ?? 'all';
+    applyFilters();
+  });
+});
+
+reset?.addEventListener('click', () => {
+  activeType = 'all';
+  document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#type-chips .chip')?.classList.add('chip--active');
+  applyFilters();
+});
+</script>
