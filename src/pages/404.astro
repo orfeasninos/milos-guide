@@ -26,7 +26,7 @@ const isEl = Astro.url.pathname.startsWith('/el');
       <div class="nf-ctas">
         <a href={isEl ? '/el' : '/'} class="btn-dark">← {isEl ? 'Αρχική' : 'Homepage'}</a>
         <a href={isEl ? '/el/beaches'  : '/beaches'}  class="nf-link">{isEl ? 'Παραλίες' : 'Beaches'} →</a>
-        <a href={isEl ? '/el/eat'      : '/eat'}      class="nf-link">{isEl ? 'Φαγητό' : 'Food'} →</a>
+        <a href={isEl ? '/el/sights'   : '/sights'}   class="nf-link">{isEl ? 'Αξιοθέατα' : 'Sights'} →</a>
         <a href={isEl ? '/el/villages' : '/villages'} class="nf-link">{isEl ? 'Χωριά' : 'Villages'} →</a>
       </div>
     </div>

@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import tavernsRaw from '../data/taverns.json';
+import sightsRaw from '../data/sights.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 
@@ -8,16 +8,16 @@ const isEl = Astro.url.pathname.startsWith('/el');
 
 // Build a flat search index at build time
 const index = [
-  ...tavernsRaw.map(t => ({
-    slug:     t.slug,
-    type:     'restaurant',
-    typeEl:   'Εστιατόριο',
-    typeEn:   'Restaurant',
-    nameEl:   typeof t.name === 'object' ? (t.name as any).el : t.name,
-    nameEn:   typeof t.name === 'object' ? (t.name as any).en : t.name,
-    area:     t.location.area,
-    url:      `/eat/${t.slug}`,
-    icon:     '🍽',
+  ...sightsRaw.map(s => ({
+    slug:     s.slug,
+    type:     'sight',
+    typeEl:   'Αξιοθέατο',
+    typeEn:   'Sight',
+    nameEl:   s.name,
+    nameEn:   s.nameEn,
+    area:     s.area,
+    url:      `/sights/${s.slug}`,
+    icon:     s.icon,
   })),
   ...beachesRaw.map(b => ({
     slug:     b.slug,
@@ -47,7 +47,7 @@ const index = [
 <Layout
   lang={isEl ? 'el' : 'en'}
   title={isEl ? 'Αναζήτηση — Milos Guide' : 'Search — Milos Guide'}
-  description={isEl ? 'Αναζητήστε παραλίες, εστιατόρια και χωριά στη Μήλο.' : 'Search beaches, restaurants and villages in Milos.'}
+  description={isEl ? 'Αναζητήστε παραλίες, αξιοθέατα και χωριά στη Μήλο.' : 'Search beaches, sights and villages in Milos.'}
 >
 
 <section class="search-hero">
@@ -69,7 +69,7 @@ const index = [
     <div class="search-filters">
       <button class="sf-chip sf-chip--active" data-filter="all">{isEl ? 'Όλα' : 'All'}</button>
       <button class="sf-chip" data-filter="beach">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</button>
-      <button class="sf-chip" data-filter="restaurant">🍽 {isEl ? 'Εστιατόρια' : 'Restaurants'}</button>
+      <button class="sf-chip" data-filter="sight">🏛 {isEl ? 'Αξιοθέατα' : 'Sights'}</button>
       <button class="sf-chip" data-filter="village">🏘 {isEl ? 'Χωριά' : 'Villages'}</button>
     </div>
   </div>
@@ -85,12 +85,12 @@ const index = [
       <p class="empty-sub">{isEl ? 'Δοκίμασε διαφορετική αναζήτηση ή περιήγησε στις κατηγορίες.' : 'Try a different search term or browse the categories below.'}</p>
       <div class="empty-links">
         <a href={isEl ? '/el/beaches' : '/beaches'} class="btn-dark">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</a>
-        <a href={isEl ? '/el/eat' : '/eat'} class="btn-outline-dark">🍽 {isEl ? 'Φαγητό' : 'Food'}</a>
+        <a href={isEl ? '/el/sights' : '/sights'} class="btn-outline-dark">🏛 {isEl ? 'Αξιοθέατα' : 'Sights'}</a>
         <a href={isEl ? '/el/villages' : '/villages'} class="btn-outline-dark">🏘 {isEl ? 'Χωριά' : 'Villages'}</a>
       </div>
     </div>
     <div class="results-initial" id="results-initial">
-      <p class="initial-hint">{isEl ? 'Πληκτρολόγησε για να αναζητήσεις παραλίες, εστιατόρια και χωριά.' : 'Start typing to search beaches, restaurants and villages.'}</p>
+      <p class="initial-hint">{isEl ? 'Πληκτρολόγησε για να αναζητήσεις παραλίες, αξιοθέατα και χωριά.' : 'Start typing to search beaches, sights and villages.'}</p>
     </div>
   </div>
 </section>
