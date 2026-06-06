@@ -19,7 +19,7 @@ const pathParts = cleanPath.split('/').filter(Boolean);
 const segmentLabels: Record<string, { el: string; en: string }> = {
   beaches:        { el: 'Παραλίες',            en: 'Beaches' },
   eat:            { el: 'Φαγητό & Εστιατόρια', en: 'Food & Restaurants' },
-  stay:           { el: 'Διαμονή',             en: 'Where to Stay' },
+  stays:           { el: 'Διαμονή',             en: 'Where to Stay' },
   villages:       { el: 'Χωριά',               en: 'Villages' },
   weather:        { el: 'Καιρός Μήλου',        en: 'Milos Weather' },
   map:            { el: 'Χάρτης Μήλου',        en: 'Milos Map' },
@@ -191,9 +191,9 @@ const schemas: object[] = [
           <span class="nav-icon" aria-hidden="true">🍽</span>
           <span>{isEl ? 'Φαγητό' : 'Food'}</span>
         </a>
-        <a href={isEl ? '/el/stay' : '/stay'} class="nav-link" data-navlink>
+        <a href={isEl ? '/el/stays' : '/stays'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏨&#xFE0E;</span>
-          <span>{isEl ? 'Διαμονή' : 'Stay'}</span>
+          <span>{isEl ? 'Διαμονή' : 'Stays'}</span>
         </a>
         <a href={isEl ? '/el/beaches' : '/beaches'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏖</span>
@@ -267,8 +267,8 @@ const schemas: object[] = [
             <a href={isEl ? '/el/villages' : '/villages'}>
               <span class="flink-icon" aria-hidden="true">🏘</span>{isEl ? 'Χωριά' : 'Villages'}
             </a>
-            <a href={isEl ? '/el/stay' : '/stay'}>
-              <span class="flink-icon" aria-hidden="true">🏨&#xFE0E;</span>{isEl ? 'Διαμονή' : 'Stay'}
+            <a href={isEl ? '/el/stays' : '/stays'}>
+              <span class="flink-icon" aria-hidden="true">🏨&#xFE0E;</span>{isEl ? 'Διαμονή' : 'Stays'}
             </a>
             <span class="flink-soon">
               <span class="flink-icon" aria-hidden="true">🚤</span>Boat Tours

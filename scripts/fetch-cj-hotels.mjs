@@ -235,7 +235,7 @@ async function main() {
 
   // 4 ── Build deep links for each accommodation
   const accommodations = JSON.parse(
-    readFileSync(join(ROOT, 'src/data/accommodations.json'), 'utf-8')
+    readFileSync(join(ROOT, 'src/data/stays.json'), 'utf-8')
   );
 
   console.log('\n🔗  Building deep links per accommodation…');

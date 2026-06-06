@@ -30,18 +30,18 @@ const cjProducts = ((cjData as any).travelProducts ?? (cjData as any).products ?
 const hasCjDeals = cjProducts.length > 0;
 
 const _siteUrl = 'https://milos.guide';
-const stayJsonld = {
+const staysJsonld = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Accommodation in Milos',
   description: `Find the best hotels, studios and villas in Milos. ${accommodationsData.length}+ options across the island.`,
-  url: `${_siteUrl}/stay`,
+  url: `${_siteUrl}/stays`,
   numberOfItems: sorted.length,
   itemListElement: sorted.map((a, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: getName(a),
-    url: `${_siteUrl}/stay/${a.slug}`,
+    url: `${_siteUrl}/stays/${a.slug}`,
   })),
 };
 ---
@@ -50,13 +50,13 @@ const stayJsonld = {
   lang="en"
   title="Accommodation in Milos"
   description={`Find the best hotels, studios and villas in Milos. ${accommodationsData.length}+ options across the island.`}
-  jsonld={stayJsonld}
+  jsonld={staysJsonld}
 >
 
 <!-- HERO -->
 <section class="page-hero">
   <div class="container">
-    <p class="page-label">Stay</p>
+    <p class="page-label">Stays</p>
     <h1 class="page-title">Accommodation in Milos</h1>
     <p class="page-desc">
       Hotels, studios, villas and guesthouses — {accommodationsData.length}+ options
@@ -158,7 +158,7 @@ const stayJsonld = {
         const t = typeLabels[a.type] ?? { label: a.type, icon: '🏠' };
         return (
           <a
-            href={`/stay/${a.slug}`}
+            href={`/stays/${a.slug}`}
             class="ac"
             data-area={a.location.area}
             data-type={a.type}

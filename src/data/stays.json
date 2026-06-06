@@ -1,0 +1,326 @@
+[
+  {
+    "slug": "milos-breeze",
+    "type": "hotel",
+    "name": {
+      "el": "Milos Breeze Boutique Hotel",
+      "en": "Milos Breeze Boutique Hotel"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Milos Breeze Boutique Hotel στη Pollonia της Μήλου.",
+      "en": "A stylish boutique hotel in Pollonia offering sea views and a relaxed island atmosphere."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Πολλώνια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5193389888187084598&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/milos-breeze.jpg",
+    "phone": "2287 041085",
+    "website": "http://www.milosbreeze.gr/en",
+    "coordinates": {
+      "lat": 36.7622302,
+      "lng": 24.5222341
+    },
+    "rating": 4.8,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "portiani-hotel",
+    "type": "hotel",
+    "name": {
+      "el": "PORTIANI HOTEL Ξενοδοχείο",
+      "en": "Portiani Hotel"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το PORTIANI HOTEL Ξενοδοχείο στη Adamas της Μήλου.",
+      "en": "A well-located hotel steps from the port of Adamas, ideal as a base for exploring Milos."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Μήλος 848 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10686378929218751948&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/portiani-hotel.jpg",
+    "phone": "2287 022940",
+    "website": "http://www.hotelportiani.gr/",
+    "coordinates": {
+      "lat": 36.7254648,
+      "lng": 24.4472837
+    },
+    "rating": 4.6,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "santa-maria-village",
+    "type": "hotel",
+    "name": {
+      "el": "Santa Maria Village Resort & Spa",
+      "en": "Santa Maria Village"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Santa Maria Village Resort & Spa στη Adamas της Μήλου.",
+      "en": "A charming villa complex near Adamas with traditional Cycladic architecture."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Adamas Area, Cyclades 848 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16264289097693188546&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/santa-maria-village.jpg",
+    "phone": "2287 021949",
+    "website": "https://www.santamaria-milos.gr/",
+    "coordinates": {
+      "lat": 36.7279895,
+      "lng": 24.4554911
+    },
+    "rating": 4.8,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "hotel-adamas",
+    "type": "hotel",
+    "name": {
+      "el": "Hotel Adamas",
+      "en": "Hotel Adamas"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Hotel Adamas στη Adamas της Μήλου.",
+      "en": "A comfortable hotel in Adamas with easy access to the island's main amenities."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Αδάμαντα-Ζεφυρία, Μήλος 848 01, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10982182991781892633&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/hotel-adamas.jpg",
+    "phone": "693 410 0807",
+    "website": "http://www.hoteladamas-milos.gr/",
+    "coordinates": {
+      "lat": 36.7246508,
+      "lng": 24.4447354
+    },
+    "rating": 4.1,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "francesca-studio",
+    "type": "studio",
+    "name": {
+      "el": "Studio Francesca",
+      "en": "Francesca Studio"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Studio Francesca στη Pera Triovasalos της Μήλου.",
+      "en": "Self-catering studios in Pera Triovasalos, perfect for independent travellers exploring Milos."
+    },
+    "location": {
+      "area": "Pera Triovasalos",
+      "address": "ΠΕΡΑ ΤΡΙΟΒΑΣΑΛΟΣ ΜΗΛΟΥ, Μήλος 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=12755001533824260902&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/francesca-studio.jpg",
+    "phone": "694 622 0488",
+    "website": null,
+    "coordinates": {
+      "lat": 36.7420787,
+      "lng": 24.436017500000002
+    },
+    "rating": 5,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "milos-vaos-windmill",
+    "type": "villa",
+    "name": {
+      "el": "Milos Vaos Windmill",
+      "en": "Milos Vaos Windmill"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Milos Vaos Windmill στη Plaka της Μήλου.",
+      "en": "A unique converted windmill in Plaka offering an unforgettable stay with stunning views."
+    },
+    "location": {
+      "area": "Plaka",
+      "address": "Τρυπητή 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=6491999565046201127&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/milos-vaos-windmill.jpg",
+    "phone": "261 032 1742",
+    "website": "https://detailhotel.eu/milos-vaos-39-windmill-greece",
+    "coordinates": {
+      "lat": 36.738126199999996,
+      "lng": 24.4277308
+    },
+    "rating": 5,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "nefeli-sunset-studios",
+    "type": "hotel",
+    "name": {
+      "el": "Nefeli Sunset Studios",
+      "en": "Nefeli Sunset Studios"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Nefeli Sunset Studios στη Pollonia της Μήλου.",
+      "en": "A peaceful hotel in Pollonia, the ideal spot for exploring the northeast of the island and enjoying sunsets."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Πολλώνια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=16895787358867251145&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/nefeli-sunset-studios.jpg",
+    "phone": "2287 041466",
+    "website": "http://www.milos-nefelistudios.gr/",
+    "coordinates": {
+      "lat": 36.76802,
+      "lng": 24.5234626
+    },
+    "rating": 4.8,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "kapetan-tasos",
+    "type": "studio",
+    "name": {
+      "el": "Kapetan Tasos Suites",
+      "en": "Kapetan Tasos Studios"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Kapetan Tasos Suites στη Pollonia της Μήλου.",
+      "en": "Cosy studios in Pollonia run by a local family, offering authentic hospitality."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Adamanta, Apollonion, Πολλώνια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=2532190398770597564&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/kapetan-tasos.jpg",
+    "phone": "2287 041287",
+    "website": "https://www.kapetantasos.gr/suites/?page_id=14",
+    "coordinates": {
+      "lat": 36.760732499999996,
+      "lng": 24.527930599999998
+    },
+    "rating": 4.9,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "kalea-suites",
+    "type": "hotel",
+    "name": {
+      "el": "Kalea Suites",
+      "en": "Kalea Suites"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Kalea Suites στη Pollonia της Μήλου.",
+      "en": "Modern suites in Pollonia, combining contemporary design with traditional island aesthetics."
+    },
+    "location": {
+      "area": "Pollonia",
+      "address": "Πολλώνια 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=5919519275457935350&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/kalea-suites.jpg",
+    "phone": "694 484 5408",
+    "website": "https://kaleasuites.gr/en/",
+    "coordinates": {
+      "lat": 36.7667814,
+      "lng": 24.5232183
+    },
+    "rating": 5,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "heavenly-milos",
+    "type": "villa",
+    "name": {
+      "el": "Heavenly Milos",
+      "en": "Heavenly Milos"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Heavenly Milos στη Agia Kyriaki της Μήλου.",
+      "en": "Secluded villas in Agia Kyriaki offering privacy and stunning views across the island."
+    },
+    "location": {
+      "area": "Agia Kyriaki",
+      "address": "Agia Kyriaki 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=9564076196487071716&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/heavenly-milos.jpg",
+    "phone": "",
+    "website": "https://heavenlymilos.gr/",
+    "coordinates": {
+      "lat": 36.6722922,
+      "lng": 24.5061666
+    },
+    "rating": 5,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "hotel-rigas",
+    "type": "hotel",
+    "name": {
+      "el": "Ξενοδοχείο Ρήγας",
+      "en": "Hotel Rigas"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Ξενοδοχείο Ρήγας στη Adamas της Μήλου.",
+      "en": "Elegant accommodation in Adamas, blending local tradition with modern comfort."
+    },
+    "location": {
+      "area": "Adamas",
+      "address": "Αδάμας 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=18224894235743703832&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/hotel-rigas.jpg",
+    "phone": "2287 023450",
+    "website": "http://www.hotelrigas.com/",
+    "coordinates": {
+      "lat": 36.7259759,
+      "lng": 24.453955999999998
+    },
+    "rating": 4.9,
+    "priceLevel": null,
+    "amenities": []
+  },
+  {
+    "slug": "niriides-milos",
+    "type": "hotel",
+    "name": {
+      "el": "Νηρηίδες",
+      "en": "Niriides Milos"
+    },
+    "description": {
+      "el": "Ανακαλύψτε το Νηρηίδες στη Pachaina της Μήλου.",
+      "en": "A beautiful property in Pachaina with views of the sea and traditional architecture."
+    },
+    "location": {
+      "area": "Pachaina",
+      "address": "Πάχαινα 848 00, Ελλάδα"
+    },
+    "googleMapsUri": "https://maps.google.com/?cid=10107734957886749123&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "localPhoto": "/images/accommodations/niriides-milos.jpg",
+    "phone": "2287 041352",
+    "website": "https://www.hotelscheck-in.com/nirevel-apartments-milos/en/",
+    "coordinates": {
+      "lat": 36.7537984,
+      "lng": 24.498824499999998
+    },
+    "rating": 4.9,
+    "priceLevel": null,
+    "amenities": []
+  }
+]

@@ -58,12 +58,12 @@ const schemaTypeMap: Record<string, string> = {
   villa:      'LodgingBusiness',
   guesthouse: 'BedAndBreakfast',
 };
-const stayJsonld = {
+const staysJsonld = {
   '@context': 'https://schema.org',
   '@type': schemaTypeMap[a.type] ?? 'LodgingBusiness',
   name: getName(a),
   description: getDesc(a),
-  url: `${_siteUrl}/stay/${a.slug}`,
+  url: `${_siteUrl}/stays/${a.slug}`,
   ...(a.localPhoto ? { image: (a.localPhoto as string).startsWith('http') ? a.localPhoto : _siteUrl + a.localPhoto } : {}),
   ...(a.coordinates?.lat ? {
     geo: { '@type': 'GeoCoordinates', latitude: a.coordinates.lat, longitude: a.coordinates.lng },
@@ -89,7 +89,7 @@ const stayJsonld = {
   lang="en"
   title={`${getName(a)} — ${typeInfo.label} in Milos`}
   description={`${getName(a)} in ${a.location.area}, Milos. ${typeInfo.label} · Rating ${a.rating}/5.`}
-  jsonld={stayJsonld}
+  jsonld={staysJsonld}
 >
 
 <!-- HERO -->
@@ -101,7 +101,7 @@ const stayJsonld = {
   )}
   <div class="a-hero-overlay">
     <div class="container a-hero-inner">
-      <a href="/stay" class="back-link">← All accommodation</a>
+      <a href="/stays" class="back-link">← All accommodation</a>
       <div class="a-hero-meta">
         <span class="a-type-badge">{typeInfo.icon} {typeInfo.label}</span>
         <h1 class="a-hero-name">{getName(a)}</h1>
@@ -340,11 +340,11 @@ const stayJsonld = {
           <span class="label">Same area</span>
           <h2 class="sec-title">More in {a.location.area}</h2>
         </div>
-        <a href="/stay" class="see-all">All accommodation →</a>
+        <a href="/stays" class="see-all">All accommodation →</a>
       </div>
       <div class="related-grid">
         {related.map(r => (
-          <a href={`/stay/${r.slug}`} class="rel-card">
+          <a href={`/stays/${r.slug}`} class="rel-card">
             <div class="rel-img-wrap">
               {r.localPhoto ? (
                 <SmartImage src={r.localPhoto} alt={getName(r)} width={400} height={300} class="rel-img" sizes="(max-width: 768px) 100vw, 33vw" />
