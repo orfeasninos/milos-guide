@@ -16,7 +16,7 @@ const allFacilities = [...new Set(
   beachesData.flatMap(b => b.facilities)
 )].filter(f => Boolean(f) && f !== 'snack bar').sort();
 
-const FEATURED_SLUGS = ['sarakiniko', 'kleftiko', 'provatas', 'fyropotamos'];
+const FEATURED_SLUGS = ['sarakiniko', 'kleftiko', 'provatas', 'firopotamos'];
 const featuredBeaches = FEATURED_SLUGS
   .map(slug => beachesData.find(b => b.slug === slug))
   .filter(Boolean) as typeof beachesData;

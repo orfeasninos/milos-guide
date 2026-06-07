@@ -34,10 +34,10 @@
     "easyAccess": true
   },
   {
-    "slug": "fyropotamos",
+    "slug": "firopotamos",
     "name": {
       "el": "Παραλία Φυροπόταμος",
-      "en": "Fyropotamos"
+      "en": "Firopotamos"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Φυροπόταμος στη Μήλο.",
@@ -48,7 +48,7 @@
       "address": "Παραλία Φυροπόταμος, Φυροπόταμος 848 00, Ελλάδα"
     },
     "placeId": "ChIJz_JtHivZmBQRkL9wlnf6eS0",
-    "image": "/images/beaches/fyropotamos.jpg",
+    "image": "/images/beaches/firopotamos.jpg",
     "coordinates": {
       "lat": 36.757727599999996,
       "lng": 24.427407
@@ -102,10 +102,10 @@
     "easyAccess": false
   },
   {
-    "slug": "fyriplaka",
+    "slug": "firiplaka",
     "name": {
       "el": "Παραλία Φυριπλάκα",
-      "en": "Fyriplaka"
+      "en": "Firiplaka"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Φυριπλάκα στη Μήλο.",
@@ -116,7 +116,7 @@
       "address": "Παραλία Φυριπλάκα, Ελλάδα"
     },
     "placeId": "ChIJYXSITf0gmRQRzXZddA1Lm8U",
-    "image": "/images/beaches/fyriplaka.jpg",
+    "image": "/images/beaches/firiplaka.jpg",
     "coordinates": {
       "lat": 36.6662272,
       "lng": 24.4651858
@@ -467,10 +467,10 @@
     "easyAccess": true
   },
   {
-    "slug": "theiorycheia",
+    "slug": "thiorichia",
     "name": {
       "el": "Παραλία Θειορυχειο",
-      "en": "Theiorycheia"
+      "en": "Thiorichia"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Θειορυχειο στη Μήλο.",
@@ -481,7 +481,7 @@
       "address": "Παραλία Θειορυχειο, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJYX4EKxngmBQReaJLyEreCN4",
-    "image": "/images/beaches/theiorycheia.jpg",
+    "image": "/images/beaches/thiorichia.jpg",
     "coordinates": {
       "lat": 36.694101499999995,
       "lng": 24.544843

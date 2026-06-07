@@ -18,6 +18,18 @@ export function getStaticPaths() {
 const { village } = Astro.props;
 const base = import.meta.env.BASE_URL;
 
+const pageLang: string = 'en';
+function formatPopulation(raw: any): string {
+  if (!raw) return '';
+  const str = String(raw);
+  const match = str.match(/^(\d[\d\s]*)(.*)$/);
+  if (!match) return str;
+  const num = parseInt(match[1].replace(/\s/g, ''), 10);
+  const suffix = match[2];
+  const locale = pageLang === 'el' ? 'el-GR' : 'en-US';
+  return num.toLocaleString(locale) + suffix;
+}
+
 const typeLabels: Record<string, { label: string; icon: string }> = {
   capital:  { label: 'Capital',      icon: '👑' },
   historic: { label: 'Historic',     icon: '🏛' },
@@ -80,7 +92,7 @@ const villageJsonld = {
         <p class="v-hero-tagline">{(village as any).taglineEn ?? village.tagline}</p>
         <div class="v-hero-chips">
           <span class="v-chip">📍 {village.area}</span>
-          {village.population && <span class="v-chip">👥 {village.population} residents</span>}
+          {village.population && <span class="v-chip">👥 {formatPopulation(village.population)} residents</span>}
           {village.elevation && village.elevation !== 'sea level' && (
             <span class="v-chip">⛰ {village.elevation}</span>
           )}
@@ -154,7 +166,6 @@ const villageJsonld = {
               </div>
               <div class="nearby-body">
                 <p class="nearby-name">{getName(b)}</p>
-                {b.rating > 0 && <p class="nearby-rating">★ {b.rating}</p>}
               </div>
               <span class="nearby-arrow">→</span>
             </a>
@@ -183,7 +194,7 @@ const villageJsonld = {
         {village.population && (
           <li class="s-info-row">
             <span class="s-info-key">Population</span>
-            <span class="s-info-val">{village.population}</span>
+            <span class="s-info-val">{formatPopulation(village.population)}</span>
           </li>
         )}
         {village.elevation && (
