@@ -150,7 +150,11 @@ const BEACHES_DATA = (beachesRaw as any[])
           <p class="w-stat-label">Sea & Waves</p>
           <div class="w-stat-val" id="w-sea-temp">–</div>
           <p class="w-stat-sub">Sea temperature</p>
-          <div class="w-wave-track" title="Wave height — scale 0 to 3m">
+          <div class="w-wave-header">
+            <span class="w-stat-sub">Wave height</span>
+            <span class="w-stat-sub">0 – 3 m</span>
+          </div>
+          <div class="w-wave-track">
             <div class="w-wave-fill" id="w-wave-fill"></div>
           </div>
           <div class="w-sub-row">
@@ -468,12 +472,18 @@ const BEACHES_DATA = (beachesRaw as any[])
 .w-stat-vals .w-badge { margin-top: 0.2rem; }
 
 /* Wave bar */
+.w-wave-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.2rem;
+}
 .w-wave-track {
-  height: 5px;
+  height: 7px;
   background: var(--sand-dark);
   border-radius: 99px;
   overflow: hidden;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 .w-wave-fill {
   height: 100%;
@@ -923,56 +933,36 @@ function recommendation(windKmh, windDeg, waveH) {
   };
 }
 
-// ── Colorful SVG weather icons ────────────────────────
-const _wmoIcon = (function(){
-  const ns = 'xmlns="http://www.w3.org/2000/svg"';
-  function svg(body){
-    return `<svg ${ns} viewBox="0 0 48 48" width="1em" height="1em" style="display:inline-block;vertical-align:middle;flex-shrink:0">${body}</svg>`;
-  }
-  function cloud(f){
-    return `<circle cx="26" cy="22" r="11" fill="${f}"/><circle cx="15" cy="26" r="8" fill="${f}"/><rect x="7" y="24" width="34" height="14" rx="6" fill="${f}"/>`;
-  }
-  const smallSun =
-    '<circle cx="13" cy="12" r="7" fill="#FFD700" stroke="#FFA000" stroke-width="1"/>' +
-    '<g stroke="#FFB300" stroke-width="2" stroke-linecap="round">' +
-    '<line x1="13" y1="2" x2="13" y2="5"/>' +
-    '<line x1="13" y1="19" x2="13" y2="22"/>' +
-    '<line x1="3" y1="12" x2="6" y2="12"/>' +
-    '<line x1="20" y1="12" x2="23" y2="12"/>' +
-    '<line x1="6" y1="5" x2="8" y2="7"/>' +
-    '<line x1="18" y1="17" x2="20" y2="19"/>' +
-    '<line x1="20" y1="5" x2="18" y2="7"/>' +
-    '<line x1="8" y1="17" x2="6" y2="19"/>' +
-    '</g>';
-  const rain4 = '<g stroke="#1565C0" stroke-width="2.5" stroke-linecap="round"><line x1="14" y1="38" x2="12" y2="44"/><line x1="21" y1="38" x2="19" y2="44"/><line x1="28" y1="38" x2="26" y2="44"/><line x1="35" y1="38" x2="33" y2="44"/></g>';
-  const rain3 = '<g stroke="#42A5F5" stroke-width="2" stroke-linecap="round"><line x1="16" y1="38" x2="14" y2="43"/><line x1="24" y1="38" x2="22" y2="43"/><line x1="32" y1="38" x2="30" y2="43"/></g>';
-  const snow   = '<g fill="#90CAF9"><circle cx="14" cy="40" r="2.5"/><circle cx="24" cy="42" r="2.5"/><circle cx="34" cy="40" r="2.5"/><circle cx="19" cy="46" r="2"/><circle cx="29" cy="46" r="2"/></g>';
-  const bolt   = '<polygon points="22,32 32,32 26,41 31,41 18,48 24,40 19,40" fill="#FFD700" stroke="#FFA000" stroke-width="0.5" stroke-linejoin="round"/>';
-  const fog    = '<g stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"><line x1="8" y1="38" x2="40" y2="38"/><line x1="12" y1="43" x2="42" y2="43"/></g>';
-  const bigSun =
-    '<circle cx="24" cy="24" r="11" fill="#FFD700" stroke="#FFA000" stroke-width="1.5"/>' +
-    '<g stroke="#FFB300" stroke-width="3" stroke-linecap="round">' +
-    '<line x1="24" y1="5" x2="24" y2="11"/>' +
-    '<line x1="24" y1="37" x2="24" y2="43"/>' +
-    '<line x1="5" y1="24" x2="11" y2="24"/>' +
-    '<line x1="37" y1="24" x2="43" y2="24"/>' +
-    '<line x1="10.5" y1="10.5" x2="14" y2="14"/>' +
-    '<line x1="34" y1="34" x2="37.5" y2="37.5"/>' +
-    '<line x1="37.5" y1="10.5" x2="34" y2="14"/>' +
-    '<line x1="14" y1="34" x2="10.5" y2="37.5"/>' +
-    '</g>';
-  return function(code){
-    if (code===0||code===1)                          return svg(bigSun);
-    if (code===2)                                    return svg(smallSun + cloud('#ECEFF1'));
-    if (code===3)                                    return svg(cloud('#90A4AE'));
-    if (code===45||code===48)                        return svg(cloud('#B0BEC5') + fog);
-    if (code>=51&&code<=55)                          return svg(cloud('#7EB0C8') + rain3);
-    if ((code>=61&&code<=65)||(code>=80&&code<=82))  return svg(cloud('#5A7D9A') + rain4);
-    if (code>=71&&code<=75)                          return svg(cloud('#90A4AE') + snow);
-    if (code>=95)                                    return svg(cloud('#455A64') + rain3 + bolt);
-    return svg(smallSun + cloud('#ECEFF1'));
-  };
-})();
+// ── Meteocons weather icons ────────────────────────────
+const CDN = '/icons/weather';
+const WMO_DAY = {
+  0:'clear-day', 1:'clear-day',
+  2:'partly-cloudy-day',
+  3:'overcast',
+  45:'fog-day', 48:'fog-day',
+  51:'drizzle', 53:'drizzle', 55:'overcast-drizzle',
+  61:'rain', 63:'rain', 65:'overcast-rain',
+  71:'partly-cloudy-day-snow', 73:'snow', 75:'overcast-snow',
+  80:'partly-cloudy-day-rain', 81:'overcast-rain', 82:'overcast-rain',
+  95:'thunderstorms', 96:'thunderstorms-rain', 99:'thunderstorms-rain',
+};
+const WMO_NIGHT = {
+  0:'clear-night', 1:'clear-night',
+  2:'partly-cloudy-night',
+  3:'overcast-night',
+  45:'fog-night', 48:'fog-night',
+  51:'drizzle', 53:'drizzle', 55:'overcast-drizzle',
+  61:'rain', 63:'rain', 65:'overcast-rain',
+  71:'partly-cloudy-night-snow', 73:'snow', 75:'overcast-snow',
+  80:'partly-cloudy-night-rain', 81:'overcast-night-rain', 82:'overcast-night-rain',
+  95:'thunderstorms', 96:'thunderstorms-rain', 99:'thunderstorms-rain',
+};
+function _wmoIcon(code, hour) {
+  const isNight = hour !== undefined && (hour >= 20 || hour < 6);
+  const map = isNight ? WMO_NIGHT : WMO_DAY;
+  const name = map[code] ?? (isNight ? 'clear-night' : 'partly-cloudy-day');
+  return `<img src="${CDN}/${name}.svg" width="48" height="48" alt="" style="display:inline-block;vertical-align:middle;flex-shrink:0" loading="lazy">`;
+}
 
 let _loading = false;
 async function loadWeather() {
@@ -993,7 +983,7 @@ async function loadWeather() {
       `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m`,
       `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability`,
       `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset`,
-      `&timezone=Europe%2FAthens&forecast_days=7&models=best_match`,
+      `&timezone=Europe%2FAthens&forecast_days=7&models=ecmwf_ifs025`,
     ].join('');
     const marineUrl = [
       `https://marine-api.open-meteo.com/v1/marine`,
@@ -1132,7 +1122,7 @@ async function loadWeather() {
       const bgStyle = isNow ? '' : `style="background:${hourBg(h)};border-color:transparent"`;
       return `<div class="w-fc-item${isNow ? ' is-now' : ''}" ${bgStyle}>
         <span class="w-fc-time">${isNow ? 'Now' : formatHour(h)}</span>
-        <span class="w-fc-icon">${_wmoIcon(codes[idx])}</span>
+        <span class="w-fc-icon">${_wmoIcon(codes[idx], h)}</span>
         <span class="w-fc-temp">${Math.round(temps[idx])}°</span>
         <span class="w-fc-wind">${Math.round(winds[idx])} km/h</span>
         ${rainBar}
