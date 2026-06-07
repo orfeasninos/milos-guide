@@ -1116,16 +1116,12 @@ async function loadWeather() {
       const h = new Date(t).getHours();
       const isNow = i === 0;
       const rainPct = pops?.[idx] ?? 0;
-      const rainBar = `<div class="w-fc-rain-track" title="${rainPct}% chance of rain">
-        <div class="w-fc-rain-fill" style="width:${rainPct}%"></div>
-      </div>`;
       const bgStyle = isNow ? '' : `style="background:${hourBg(h)};border-color:transparent"`;
       return `<div class="w-fc-item${isNow ? ' is-now' : ''}" ${bgStyle}>
         <span class="w-fc-time">${isNow ? 'Now' : formatHour(h)}</span>
         <span class="w-fc-icon">${_wmoIcon(codes[idx], h)}</span>
         <span class="w-fc-temp">${Math.round(temps[idx])}°</span>
         <span class="w-fc-wind">${Math.round(winds[idx])} km/h</span>
-        ${rainBar}
         ${rainPct >= 15 ? `<span class="w-fc-rain">💧 ${rainPct}%</span>` : '<span class="w-fc-rain-placeholder"></span>'}
       </div>`;
     }).join('');
@@ -1140,16 +1136,11 @@ async function loadWeather() {
       'linear-gradient(135deg,#ede9fe 0%,#ddd6fe 100%)',
       'linear-gradient(135deg,#ccfbf1 0%,#99f6e4 100%)',
     ];
-    const weekMin   = Math.min(...w.daily.temperature_2m_min);
-    const weekMax   = Math.max(...w.daily.temperature_2m_max);
-    const weekRange = weekMax - weekMin || 1;
     el('w-week').innerHTML = w.daily.time.map((d, i) => {
       const isToday  = i === 0;
       const dayMax   = Math.round(w.daily.temperature_2m_max[i]);
       const dayMin   = Math.round(w.daily.temperature_2m_min[i]);
       const rainPct  = w.daily.precipitation_probability_max[i] ?? 0;
-      const barLeft  = ((dayMin - weekMin) / weekRange * 100).toFixed(1);
-      const barWidth = Math.max(((dayMax - dayMin) / weekRange * 100), 15).toFixed(1);
       const condFull = WMO_TEXT[w.daily.weather_code[i]] ?? '';
       const condShort = condFull.split(' ').slice(0, 2).join(' ');
       const dayBgStyle = isToday ? '' : `style="background:${dayPalette[i % dayPalette.length]};border-color:transparent"`;
@@ -1159,9 +1150,6 @@ async function loadWeather() {
         <span class="w-day-icon">${_wmoIcon(w.daily.weather_code[i])}</span>
         <span class="w-day-cond">${condShort}</span>
         <span class="w-day-high">${dayMax}°</span>
-        <div class="w-day-range-track">
-          <div class="w-day-range-fill" style="left:${barLeft}%;width:${barWidth}%"></div>
-        </div>
         <span class="w-day-low">${dayMin}°</span>
         ${rainPct >= 10
           ? `<span class="w-day-rain">💧 ${rainPct}%</span>`
