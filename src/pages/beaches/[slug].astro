@@ -286,6 +286,59 @@ const beachJsonld = {
           </div>
         )}
 
+        <!-- Swimming note -->
+        <div class="tip">
+          <span class="tip-icon">🏊</span>
+          <div>
+            <p class="tip-title">Swimming</p>
+            <p class="tip-body">
+              {beach.bestFor.includes('Swimming')
+                ? 'A great spot for a swim — conditions are generally suitable for most swimmers.'
+                : 'This beach is not particularly recommended for swimming — it\'s best enjoyed for its scenery and atmosphere.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Water depth -->
+        <div class="tip">
+          <span class="tip-icon">📏</span>
+          <div>
+            <p class="tip-title">Water depth</p>
+            <p class="tip-body">
+              {beach.swimDepth === 'Shallow' && 'Shallow waters — ideal for children and non-swimmers.'}
+              {beach.swimDepth === 'Moderate' && 'Moderate depth — comfortable for most swimmers.'}
+              {beach.swimDepth === 'Deep' && 'Deep waters — not suitable for young children; best for confident swimmers.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Beach surface -->
+        <div class="tip">
+          <span class="tip-icon">🏖️</span>
+          <div>
+            <p class="tip-title">Beach surface</p>
+            <p class="tip-body">
+              {beach.sandType === 'Sand' && 'Soft sandy beach — comfortable for barefoot walking.'}
+              {beach.sandType === 'Pebble' && 'Pebbly beach — water shoes are recommended for comfort.'}
+              {beach.sandType === 'Volcanic rock' && 'Volcanic rock surface — water shoes are essential.'}
+              {beach.sandType === 'Village waterfront' && 'Village waterfront — not a traditional sandy beach, but a charming setting.'}
+            </p>
+          </div>
+        </div>
+
+        <!-- Shade -->
+        <div class="tip">
+          <span class="tip-icon">⛱️</span>
+          <div>
+            <p class="tip-title">Shade</p>
+            <p class="tip-body">
+              {beach.shade
+                ? 'Natural shade is available from rocks or cliffs — a welcome relief on hot days.'
+                : 'No natural shade — bring your own umbrella or sunshade.'}
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
 
