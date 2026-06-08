@@ -1,11 +1,11 @@
 ---
-// SmartImage: WebP/AVIF format negotiation + explicit dimensions (zero CLS) + smart LCP loading.
+// SmartImage: responsive WebP/AVIF srcset + format negotiation + zero CLS + smart LCP loading.
+// Looks for pre-converted width variants ({name}-800w, -1200w, -1920w) from convert-images.mjs.
 // isLCP=true  → loading="eager", fetchpriority="high", decoding="sync"  (above-fold hero)
 // isLCP=false → loading="lazy",  decoding="async"                       (everything else)
 //
-// class is applied to <picture> (the root element). With NO <style> block in this component,
-// Astro propagates the parent's scope hash to <picture>, so parent scoped CSS rules apply.
-// Global CSS in Layout.astro handles `picture > img` base styles (fill, object-fit, display).
+// No <style> block → Astro propagates the parent's scope hash to <picture>.
+// Parent scoped CSS targets <picture> directly; Layout.astro handles `picture > img` base styles.
 
 interface Props {
   src: string;
@@ -29,30 +29,31 @@ const {
   objectPosition,
 } = Astro.props;
 
-const toFormat = (path: string, ext: string) =>
-  path.replace(/\.(jpe?g|png|gif|webp|avif)(\?.*)?$/i, `.${ext}$2`);
+const WIDTHS = [800, 1200, 1920];
 
 const isExternal = src.startsWith('http://') || src.startsWith('https://') || src.startsWith('//');
 
-const avifSrc = toFormat(src, 'avif');
-const webpSrc = toFormat(src, 'webp');
+const toVariant = (path: string, ext: string, w: number) =>
+  path.replace(/\.(jpe?g|png|gif|webp|avif)(\?.*)?$/i, `-${w}w.${ext}$2`);
 
-const knownAvif = import.meta.glob('/public/images/**/*.avif', { eager: false });
-const knownWebp = import.meta.glob('/public/images/**/*.webp', { eager: false });
+const knownAvif = import.meta.glob('/public/images/**/*-*w.avif', { eager: false });
+const knownWebp = import.meta.glob('/public/images/**/*-*w.webp', { eager: false });
 
-const serveAvif = !isExternal && avifSrc !== src && (`/public${avifSrc}` in knownAvif);
-const serveWebp = !isExternal && webpSrc !== src && (`/public${webpSrc}` in knownWebp);
+const buildSrcset = (known: Record<string, unknown>, ext: string): string | null => {
+  if (isExternal) return null;
+  const entries = WIDTHS
+    .map(w => ({ w, path: toVariant(src, ext, w) }))
+    .filter(({ path }) => `/public${path}` in known);
+  return entries.length ? entries.map(({ w, path }) => `${path} ${w}w`).join(', ') : null;
+};
+
+const avifSrcset = buildSrcset(knownAvif, 'avif');
+const webpSrcset = buildSrcset(knownWebp, 'webp');
 ---
 
-<!--
-  No <style> block → Astro propagates the parent's scope hash to <picture>.
-  Parent scoped CSS (e.g. .feat-img { width:100%; height:100% }) targets <picture> directly.
-  `picture > img` base styles live in Layout.astro's is:global block.
-  objectPosition is forwarded inline to <img> when non-default positioning is needed.
--->
 <picture class={className}>
-  {serveAvif && <source type="image/avif" srcset={avifSrc} sizes={sizes} />}
-  {serveWebp && <source type="image/webp" srcset={webpSrc} sizes={sizes} />}
+  {avifSrcset && <source type="image/avif" srcset={avifSrcset} sizes={sizes} />}
+  {webpSrcset && <source type="image/webp" srcset={webpSrcset} sizes={sizes} />}
   <img
     src={src}
     alt={alt}

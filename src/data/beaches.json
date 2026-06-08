@@ -340,7 +340,7 @@
   {
     "slug": "triades",
     "name": {
-      "el": "Triades Beach",
+      "el": "Triades",
       "en": "Triades"
     },
     "description": {
@@ -733,10 +733,10 @@
     "easyAccess": false
   },
   {
-    "slug": "ammoudaraki-beach",
+    "slug": "ammoudaraki",
     "name": {
       "el": "Παραλία Αμμουδαρακι",
-      "en": "Ammoudaraki Beach"
+      "en": "Ammoudaraki"
     },
     "description": {
       "el": "Ανακαλύψτε την παραλία Παραλία Αμμουδαρακι στη Μήλο.",
@@ -767,11 +767,11 @@
   {
     "slug": "kalamos",
     "name": {
-      "el": "Kalamos Beach",
-      "en": "Kalamos Beach"
+      "el": "Kalamos",
+      "en": "Kalamos"
     },
     "description": {
-      "el": "Ανακαλύψτε την παραλία Kalamos Beach στη Μήλο.",
+      "el": "Ανακαλύψτε την παραλία Kalamos στη Μήλο.",
       "en": "A beautiful beach with fine golden sand and deep clear blue waters, surrounded by volcanic scenery."
     },
     "location": {
@@ -895,7 +895,7 @@
     "easyAccess": false
   },
   {
-    "slug": "psathi-beach",
+    "slug": "psathi",
     "name": {
       "el": "Παραλία Ψαθί",
       "en": "Psathi Beach"
