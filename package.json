@@ -13,7 +13,7 @@
     "fetch:hotels": "node scripts/fetch-cj-hotels.mjs"
   },
   "dependencies": {
-    "astro": "^6.3.8",
+    "astro": "^6.4.6",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
