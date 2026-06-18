@@ -244,9 +244,9 @@ const schemas: object[] = [
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
         </a>
-        <a href={langSwitchHref} class="lang-btn" aria-label={isEl ? 'Switch to English' : 'Αλλαγή σε Ελληνικά'}>
+        {/* <a href={langSwitchHref} class="lang-btn" aria-label={isEl ? 'Switch to English' : 'Αλλαγή σε Ελληνικά'}>
           {isEl ? 'EN' : 'ΕΛ'}
-        </a>
+        </a> */}
       </nav>
 
       <button class="nav-toggle" id="nav-toggle" aria-label={isEl ? 'Άνοιγμα μενού' : 'Open menu'} aria-expanded="false" aria-controls="main-nav" type="button">
@@ -325,11 +325,11 @@ const schemas: object[] = [
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p class="footer-copy">&copy; 2026 Milos.guide · <a href={isEl ? '/el/privacy' : '/privacy'} class="footer-policy-link">{isEl ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}</a></p>
-        <div class="footer-lang">
+        {/* <div class="footer-lang">
           <a href={langSwitchHref} class="footer-lang-btn">
             {isEl ? '🇬🇧 English' : '🇬🇷 Ελληνικά'}
           </a>
-        </div>
+        </div> */}
         <p class="footer-note">
           {isEl ? 'Φτιαγμένο με αγάπη για τη Μήλο · Χωρίς διαφημίσεις' : 'Made with love for Milos · No ads'}
         </p>
