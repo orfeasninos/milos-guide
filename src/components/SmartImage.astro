@@ -1,12 +1,4 @@
 ---
-// SmartImage: responsive WebP/AVIF srcset + format negotiation + zero CLS + smart LCP loading.
-// Looks for pre-converted width variants ({name}-800w, -1200w, -1920w) from convert-images.mjs.
-// isLCP=true  → loading="eager", fetchpriority="high", decoding="sync"  (above-fold hero)
-// isLCP=false → loading="lazy",  decoding="async"                       (everything else)
-//
-// No <style> block → Astro propagates the parent's scope hash to <picture>.
-// Parent scoped CSS targets <picture> directly; Layout.astro handles `picture > img` base styles.
-
 interface Props {
   src: string;
   alt: string;
@@ -36,8 +28,13 @@ const isExternal = src.startsWith('http://') || src.startsWith('https://') || sr
 const toVariant = (path: string, ext: string, w: number) =>
   path.replace(/\.(jpe?g|png|gif|webp|avif)(\?.*)?$/i, `-${w}w.${ext}$2`);
 
+const toSingleFormat = (path: string, ext: string) =>
+  path.replace(/\.(jpe?g|png|gif|webp|avif)(\?.*)?$/i, `.${ext}$2`);
+
 const knownAvif = import.meta.glob('/public/images/**/*-*w.avif', { eager: false });
 const knownWebp = import.meta.glob('/public/images/**/*-*w.webp', { eager: false });
+const knownSingleAvif = import.meta.glob('/public/images/**/*.avif', { eager: false });
+const knownSingleWebp = import.meta.glob('/public/images/**/*.webp', { eager: false });
 
 const buildSrcset = (known: Record<string, unknown>, ext: string): string | null => {
   if (isExternal) return null;
@@ -49,11 +46,18 @@ const buildSrcset = (known: Record<string, unknown>, ext: string): string | null
 
 const avifSrcset = buildSrcset(knownAvif, 'avif');
 const webpSrcset = buildSrcset(knownWebp, 'webp');
+
+const singleAvifPath = toSingleFormat(src, 'avif');
+const singleWebpPath = toSingleFormat(src, 'webp');
+const hasSingleAvif = !isExternal && !avifSrcset && `/public${singleAvifPath}` in knownSingleAvif;
+const hasSingleWebp = !isExternal && !webpSrcset && `/public${singleWebpPath}` in knownSingleWebp;
 ---
 
 <picture class={className}>
   {avifSrcset && <source type="image/avif" srcset={avifSrcset} sizes={sizes} />}
+  {!avifSrcset && hasSingleAvif && <source type="image/avif" srcset={singleAvifPath} />}
   {webpSrcset && <source type="image/webp" srcset={webpSrcset} sizes={sizes} />}
+  {!webpSrcset && hasSingleWebp && <source type="image/webp" srcset={singleWebpPath} />}
   <img
     src={src}
     alt={alt}

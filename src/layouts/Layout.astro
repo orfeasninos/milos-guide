@@ -1,5 +1,5 @@
 ---
-const { title, description, lang = 'el', jsonld: pageJsonld = null } = Astro.props;
+const { title, description, lang = 'el', jsonld: pageJsonld = null, preloadImage } = Astro.props;
 import MilosIcon from '../components/milosicon.astro';
 import '@fontsource-variable/dm-sans';
 import '@fontsource/dm-serif-display/400.css';
@@ -172,6 +172,9 @@ const schemas: object[] = [
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest"         href="/site.webmanifest" />
   <meta name="theme-color" content="#0d2b4e" />
+  {preloadImage && (
+    <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
+  )}
   <script is:inline data-cfasync="false">
     (function () {
       function loadTP() {
