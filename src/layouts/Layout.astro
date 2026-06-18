@@ -143,7 +143,7 @@ const schemas: object[] = [
   <title>{title} | Milos.guide</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
-  <meta name="robots" content="noindex, nofollow" />
+  <meta name="robots" content="index, follow" />
   <meta name="author" content="Milos.guide" />
   <link rel="alternate" hreflang="el"        href={new URL(isEl ? currentPath : `/el${currentPath}`, Astro.site ?? 'https://milos.guide')} />
   <link rel="alternate" hreflang="en"        href={new URL(isEl ? currentPath.replace(/^\/el/, '') || '/' : currentPath, Astro.site ?? 'https://milos.guide')} />
