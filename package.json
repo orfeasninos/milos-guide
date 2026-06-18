@@ -13,6 +13,7 @@
     "fetch:hotels": "node scripts/fetch-cj-hotels.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/dm-serif-display": "^5.2.8",
     "astro": "^6.4.6",
