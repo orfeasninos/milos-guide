@@ -1,6 +1,12 @@
 ---
 const { title, description, lang = 'el', jsonld: pageJsonld = null } = Astro.props;
 import MilosIcon from '../components/milosicon.astro';
+import '@fontsource/dm-sans/300.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/600.css';
+import '@fontsource/dm-serif-display/400.css';
+import '@fontsource/dm-serif-display/400-italic.css';
 
 const siteUrl = (Astro.site?.toString() ?? 'https://milos.guide').replace(/\/$/, '');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
@@ -168,9 +174,6 @@ const schemas: object[] = [
   <link rel="icon"             sizes="32x32" href="/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest"         href="/site.webmanifest" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
   <meta name="theme-color" content="#0d2b4e" />
   <script is:inline data-cfasync="false">
     (function () {
