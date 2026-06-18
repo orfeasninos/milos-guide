@@ -174,10 +174,17 @@ const schemas: object[] = [
   <meta name="theme-color" content="#0d2b4e" />
   <script is:inline data-cfasync="false">
     (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://emrldtp.cc/NTQxMjY0.js?t=541264';
-      document.head.appendChild(script);
+      function loadTP() {
+        var s = document.createElement("script");
+        s.async = 1;
+        s.src = 'https://emrldtp.cc/NTQxMjY0.js?t=541264';
+        document.head.appendChild(s);
+      }
+      if (document.readyState === 'complete') {
+        loadTP();
+      } else {
+        window.addEventListener('load', loadTP);
+      }
     })();
   </script>
 </head>
