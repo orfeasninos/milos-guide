@@ -110,7 +110,7 @@ const BEACHES_DATA = (beachesRaw as any[])
       <button class="w-retry-btn" id="w-retry-btn">Try again</button>
     </div>
 
-    <div class="w-content" id="w-content" style="display:none">
+    <div class="w-content" id="w-content">
 
       <div class="w-stale-banner" id="w-stale-banner" style="display:none">
         ⚠️ Live data unavailable — showing last known conditions from <span id="w-stale-time">–</span>
@@ -211,7 +211,31 @@ const BEACHES_DATA = (beachesRaw as any[])
           </div>
         </div>
         <p class="w-rec-desc" id="w-rec-desc">–</p>
-        <div class="w-beaches-grid" id="w-beaches-grid"></div>
+        <div class="w-beaches-grid" id="w-beaches-grid">
+          {BEACHES_DATA.map(beach => (
+            <a
+              href={`/beaches/${beach.slug}`}
+              class="w-beach-card"
+              data-shelter={beach.shelter}
+            >
+              <div class="w-beach-img">
+                <img
+                  src={beach.img}
+                  alt={`${beach.name} beach, Milos`}
+                  width="280"
+                  height="160"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div class="w-beach-img-overlay"></div>
+              </div>
+              <div class="w-beach-info">
+                <p class="w-beach-name">{beach.name}</p>
+                <p class="w-beach-meta">{beach.note}</p>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
 
       <!-- 12-hour forecast -->
@@ -343,26 +367,57 @@ const BEACHES_DATA = (beachesRaw as any[])
 }
 
 /* ── Loading / Error ──────────────────────────────── */
-.weather-sec { min-height: 40vh; }
+.weather-sec { min-height: 40vh; position: relative; }
 .w-loading {
+  position: absolute;
+  top: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 5rem 0;
+  gap: 0.75rem;
+  padding: 1.5rem 2.5rem;
+  min-width: 220px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(13,43,78,0.12);
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  text-align: center;
 }
 .w-spinner {
-  width: 36px; height: 36px;
-  border: 3px solid var(--sand-dark);
+  width: 28px; height: 28px;
+  border: 2.5px solid var(--sand-dark);
   border-top-color: var(--aegean);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.w-error { text-align: center; padding: 4rem 0; color: var(--muted); }
+.w-error {
+  position: absolute;
+  top: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  padding: 2rem 3rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(13,43,78,0.12);
+  color: var(--muted);
+  min-width: 240px;
+  max-width: 320px;
+  width: max-content;
+}
 .w-error-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
 .w-retry-btn {
   margin-top: 1rem;
@@ -609,7 +664,10 @@ const BEACHES_DATA = (beachesRaw as any[])
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
+  min-height: 340px;
 }
+/* Cards start hidden; JS toggles display:flex on the correct 6 */
+.w-beaches-grid .w-beach-card { display: none; }
 .w-beach-card {
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -665,6 +723,7 @@ const BEACHES_DATA = (beachesRaw as any[])
   gap: 0.6rem;
   padding-bottom: 0.5rem;
   min-width: max-content;
+  min-height: 132px;
 }
 .w-fc-item {
   flex-shrink: 0;
@@ -727,6 +786,7 @@ const BEACHES_DATA = (beachesRaw as any[])
   grid-template-columns: repeat(7, minmax(100px, 1fr));
   gap: 0.65rem;
   min-width: 700px;
+  min-height: 185px;
 }
 .w-day {
   background: var(--white);
@@ -820,8 +880,7 @@ const BEACHES_DATA = (beachesRaw as any[])
 }
 </style>
 
-<script define:vars={{ LAT, LNG, BEACHES_DATA }}>
-const BEACHES = BEACHES_DATA;
+<script is:inline define:vars={{ LAT, LNG }}>
 
 const WMO_TEXT = {
   0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
@@ -914,7 +973,7 @@ function recommendation(windKmh, windDeg, waveH) {
   if (windKmh > 40) return {
     emoji:'⚠️', title:'Strong winds — choose sheltered beaches',
     desc:`${windDir(windDeg)} winds at ${Math.round(windKmh)} km/h. Stick to protected beaches on the leeward coast. Avoid boat tours today.`,
-    filter: cat === 'north' ? 'north' : cat === 'south' ? 'south' : 'north',
+    filter: cat,
   };
   if (cat === 'north') return {
     emoji:'🌊', title:'North winds — head to the south coast',
@@ -970,7 +1029,6 @@ async function loadWeather() {
   _loading = true;
   el('w-loading').style.display = 'flex';
   el('w-error').style.display   = 'none';
-  el('w-content').style.display = 'none';
   el('w-content').classList.remove('is-ready');
   el('w-stale-banner').style.display = 'none';
 
@@ -1075,23 +1133,15 @@ async function loadWeather() {
     el('w-rec-emoji').textContent = rec.emoji;
     el('w-rec-title').textContent = rec.title;
     el('w-rec-desc').textContent  = rec.desc;
-    let filtered = BEACHES.filter(b => rec.filter === 'any' || b.shelter === rec.filter || b.shelter === 'any');
-    if (filtered.length < 6) {
-      const extras = BEACHES.filter(b => !filtered.includes(b));
-      filtered = [...filtered, ...extras];
-    }
-    el('w-beaches-grid').innerHTML = filtered.slice(0, 6).map(b => `
-      <a href="/beaches/${b.slug}" class="w-beach-card">
-        <div class="w-beach-img">
-          <img src="${b.img}" alt="${b.name} beach, Milos" loading="lazy" width="280" height="160">
-          <div class="w-beach-img-overlay"></div>
-        </div>
-        <div class="w-beach-info">
-          <p class="w-beach-name">${b.name}</p>
-          <p class="w-beach-meta">${b.note}</p>
-        </div>
-      </a>
-    `).join('');
+    const allCards = Array.from(document.querySelectorAll('#w-beaches-grid .w-beach-card'));
+    const priority = allCards.filter(
+      card => rec.filter === 'any' || card.dataset.shelter === rec.filter || card.dataset.shelter === 'any'
+    );
+    const pool = priority.length >= 6
+      ? priority
+      : [...priority, ...allCards.filter(card => !priority.includes(card))];
+    const visible = new Set(pool.slice(0, 6));
+    allCards.forEach(card => { card.style.display = visible.has(card) ? 'flex' : ''; });
 
     // ── 12-hour hourly
     const times = w.hourly.time;
@@ -1168,7 +1218,6 @@ async function loadWeather() {
 
     // ── Show content
     el('w-loading').style.display = 'none';
-    el('w-content').style.display = 'block';
     requestAnimationFrame(() => el('w-content').classList.add('is-ready'));
   } catch (err) {
     console.error(err);
