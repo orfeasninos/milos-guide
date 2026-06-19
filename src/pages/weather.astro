@@ -41,11 +41,11 @@ const shelterMeta: Record<string, { shelter: string; note: string }> = {
 };
 
 const BEACHES_DATA = (beachesRaw as any[])
-  .filter(b => b.localPhoto && shelterMeta[b.slug])
+  .filter(b => b.image && shelterMeta[b.slug])
   .map(b => ({
     slug:    b.slug as string,
     name:    typeof b.name === 'object' ? (b.name as any).en : b.name as string,
-    img:     b.localPhoto as string,
+    img:     b.image as string,
     shelter: shelterMeta[b.slug].shelter,
     note:    shelterMeta[b.slug].note,
   }));
@@ -666,8 +666,6 @@ const BEACHES_DATA = (beachesRaw as any[])
   gap: 0.75rem;
   min-height: 340px;
 }
-/* Cards start hidden; JS toggles display:flex on the correct 6 */
-.w-beaches-grid .w-beach-card { display: none; }
 .w-beach-card {
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -1134,14 +1132,15 @@ async function loadWeather() {
     el('w-rec-title').textContent = rec.title;
     el('w-rec-desc').textContent  = rec.desc;
     const allCards = Array.from(document.querySelectorAll('#w-beaches-grid .w-beach-card'));
+    // Hide every card first — w-content is still opacity:0 so no flash
+    allCards.forEach(card => { card.style.display = 'none'; });
     const priority = allCards.filter(
       card => rec.filter === 'any' || card.dataset.shelter === rec.filter || card.dataset.shelter === 'any'
     );
     const pool = priority.length >= 6
       ? priority
       : [...priority, ...allCards.filter(card => !priority.includes(card))];
-    const visible = new Set(pool.slice(0, 6));
-    allCards.forEach(card => { card.style.display = visible.has(card) ? 'flex' : ''; });
+    pool.slice(0, 6).forEach(card => { card.style.display = 'flex'; });
 
     // ── 12-hour hourly
     const times = w.hourly.time;
