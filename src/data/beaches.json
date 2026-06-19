@@ -14,7 +14,7 @@
       "address": "Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJ0WiZqZngmBQRGpyewQ9Be10",
-    "image": "/images/beaches/sarakiniko.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.742697199999995,
       "lng": 24.458423
@@ -32,7 +32,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "firopotamos",
@@ -49,7 +50,7 @@
       "address": "Παραλία Φυροπόταμος, Φυροπόταμος 848 00, Ελλάδα"
     },
     "placeId": "ChIJz_JtHivZmBQRkL9wlnf6eS0",
-    "image": "/images/beaches/firopotamos.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.757727599999996,
       "lng": 24.427407
@@ -66,7 +67,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "tsigrado",
@@ -83,7 +85,7 @@
       "address": "Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJM8fbsgMhmRQRCTwmcIrrbKw",
-    "image": "/images/beaches/tsigrado.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.661895799999996,
       "lng": 24.4693335
@@ -100,7 +102,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "firiplaka",
@@ -117,7 +120,7 @@
       "address": "Παραλία Φυριπλάκα, Ελλάδα"
     },
     "placeId": "ChIJYXSITf0gmRQRzXZddA1Lm8U",
-    "image": "/images/beaches/firiplaka.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6662272,
       "lng": 24.4651858
@@ -135,7 +138,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "paleochori",
@@ -152,7 +156,7 @@
       "address": "Παραλία Παλαιοχώρι, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJV017TR8gmRQRdxRkf8lCbA8",
-    "image": "/images/beaches/paleochori.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6750374,
       "lng": 24.5184634
@@ -170,7 +174,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "provatas",
@@ -187,7 +192,7 @@
       "address": "Παραλία Προβατάς, Ελλάδα"
     },
     "placeId": "ChIJm1vPWN8gmRQRDeezhjIxpfk",
-    "image": "/images/beaches/provatas.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6695517,
       "lng": 24.4481058
@@ -205,7 +210,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "papafragas",
@@ -222,7 +228,7 @@
       "address": "Παραλία Παπαφράγκας, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJO2wQzTjemBQRnWLmDanlY-Q",
-    "image": "/images/beaches/papafragas.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.753791,
       "lng": 24.502596
@@ -237,7 +243,8 @@
     ],
     "swimDepth": "Deep",
     "nearbyFood": false,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "kleftiko",
@@ -254,7 +261,7 @@
       "address": "Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJm4ngzlUvmRQRoTRDMx9ps0c",
-    "image": "/images/beaches/kleftiko.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6506578,
       "lng": 24.3324547
@@ -268,7 +275,8 @@
       "Photography"
     ],
     "swimDepth": "Deep",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "gallery": []
   },
   {
     "slug": "agia-kiriaki",
@@ -285,7 +293,7 @@
       "address": "Παραλία Αγιά Κυριάκη, Ελλάδα"
     },
     "placeId": "ChIJ-xX-rkcgmRQRghNadCOYW64",
-    "image": "/images/beaches/agia-kiriaki.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.670763199999996,
       "lng": 24.498369099999998
@@ -303,7 +311,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "gerontas",
@@ -320,7 +329,7 @@
       "address": "Παραλία Γέροντας, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJrcfgG3AmmRQR98P9y5kUm8A",
-    "image": "/images/beaches/gerontas.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6558418,
       "lng": 24.3687032
@@ -335,7 +344,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "triades",
@@ -352,7 +362,7 @@
       "address": "Triades Beach, Plaka 848 00, Ελλάδα"
     },
     "placeId": "ChIJk0GaVNgnmRQRnmaZdSgwmi0",
-    "image": "/images/beaches/triades.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7064471,
       "lng": 24.3368601
@@ -367,7 +377,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "rivari",
@@ -384,7 +395,7 @@
       "address": "Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJy-vvY2snmRQRmjhzl22zYuU",
-    "image": "/images/beaches/rivari.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7022094,
       "lng": 24.401958399999998
@@ -399,7 +410,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "sikia",
@@ -416,7 +428,7 @@
       "address": "Sykia Cave 848 00, Ελλάδα"
     },
     "placeId": "ChIJ30SVkboomRQR-XE2sBP0qoQ",
-    "image": "/images/beaches/sikia.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.667732699999995,
       "lng": 24.320308999999998
@@ -430,7 +442,8 @@
       "Snorkeling"
     ],
     "swimDepth": "Moderate",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "gallery": []
   },
   {
     "slug": "plathiena",
@@ -447,7 +460,7 @@
       "address": "Plathiena, Plaka 848 00, Ελλάδα"
     },
     "placeId": "ChIJjRquQtnYmBQRQ7pP7vsncWg",
-    "image": "/images/beaches/plathiena.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7540755,
       "lng": 24.4127023
@@ -465,7 +478,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "thiorichia",
@@ -482,7 +496,7 @@
       "address": "Παραλία Θειορυχειο, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJYX4EKxngmBQReaJLyEreCN4",
-    "image": "/images/beaches/thiorichia.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.694101499999995,
       "lng": 24.544843
@@ -497,7 +511,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "achivadolimni",
@@ -514,7 +529,7 @@
       "address": "Παραλία Αχιβαδόλιμνη, 848 00, Ελλάδα"
     },
     "placeId": "ChIJewwOoL8gmRQRezP7q9fj8eU",
-    "image": "/images/beaches/achivadolimni.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6915036,
       "lng": 24.4527008
@@ -532,7 +547,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "agios-sostis",
@@ -549,7 +565,7 @@
       "address": "Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJ95OKn9ggmRQRCXXt9IoD-6A",
-    "image": "/images/beaches/agios-sostis.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6697896,
       "lng": 24.4443792
@@ -564,7 +580,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "tria-pigadia",
@@ -581,7 +598,7 @@
       "address": "Παραλία Τρία Πηγάδια, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJLX02ymLgmBQRzoaI83DwUFk",
-    "image": "/images/beaches/tria-pigadia.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7298476,
       "lng": 24.5363755
@@ -596,7 +613,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "kastanas",
@@ -613,7 +631,7 @@
       "address": "Παραλία Καστανάς, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJHx6x64jgmBQR4yGWvnTVLq4",
-    "image": "/images/beaches/kastanas.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7345976,
       "lng": 24.537876699999998
@@ -628,7 +646,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "pollonia-beach",
@@ -645,7 +664,7 @@
       "address": "Pollonia beach, Milos, Pollonia 848 00, Ελλάδα"
     },
     "placeId": "ChIJeyxG4KfgmBQR3Z88FnBkAow",
-    "image": "/images/beaches/pollonia-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7639636,
       "lng": 24.5257476
@@ -662,7 +681,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "mandrakia",
@@ -679,7 +699,7 @@
       "address": "QC2W+9F, Μανδράκια 848 00, Ελλάδα"
     },
     "placeId": "ChIJzUlGryDfmBQRfXkAtct_gAI",
-    "image": "/images/beaches/mandrakia.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.750769,
       "lng": 24.4460311
@@ -696,7 +716,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "aggathia",
@@ -713,7 +734,7 @@
       "address": "Παραλία Αγγαθια, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJDfZlwfsnmRQRFK0TEKUS0ts",
-    "image": "/images/beaches/aggathia.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7270586,
       "lng": 24.3418226
@@ -730,7 +751,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "ammoudaraki",
@@ -747,7 +769,7 @@
       "address": "Παραλία Αμμουδαρακι, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJ1wFU49UnmRQR_I38SLhWvxk",
-    "image": "/images/beaches/ammoudaraki-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6988005,
       "lng": 24.3349092
@@ -762,7 +784,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "kalamos",
@@ -779,7 +802,7 @@
       "address": "Kalamos, Plaka 848 00, Ελλάδα"
     },
     "placeId": "ChIJnb48OVQgmRQRuxS_p7xqXGU",
-    "image": "/images/beaches/kalamos.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6665091,
       "lng": 24.481914
@@ -794,7 +817,8 @@
     ],
     "swimDepth": "Deep",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "agios-ioannis-beach",
@@ -811,7 +835,7 @@
       "address": "Παραλία Άγιος Ιωάννης, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJzfZFQ54omRQRbvHLKB4u_XQ",
-    "image": "/images/beaches/agios-ioannis-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.677900099999995,
       "lng": 24.3319625
@@ -828,7 +852,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "kipos-beach",
@@ -845,7 +870,7 @@
       "address": "Παραλία Κήπος, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJW_iGVM0mmRQRETJ2dKCY_TI",
-    "image": "/images/beaches/kipos-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.663143399999996,
       "lng": 24.429043099999998
@@ -860,7 +885,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "deep-blue-beach",
@@ -877,7 +903,7 @@
       "address": "MGF7+WR, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJEYyudwAhmRQR_EJW2V0hO7Q",
-    "image": "/images/beaches/deep-blue-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6748127,
       "lng": 24.5145904
@@ -892,7 +918,8 @@
     ],
     "swimDepth": "Deep",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "psathi",
@@ -909,7 +936,7 @@
       "address": "Παραλία Ψαθί, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJVw0Mz8gmmRQRYzwEn6RQcHI",
-    "image": "/images/beaches/psathi-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.6599238,
       "lng": 24.4193484
@@ -924,7 +951,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "kolympionas-beach",
@@ -941,7 +969,7 @@
       "address": "Παραλία Κολυμπιώνας, Ελλάδα"
     },
     "placeId": "ChIJSXzY4mTgmBQRzOBvpPa_C9s",
-    "image": "/images/beaches/kolympionas-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7234222,
       "lng": 24.538231699999997
@@ -956,7 +984,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "voudia-beach",
@@ -973,7 +1002,7 @@
       "address": "Παραλία Βούδια, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJL--PNZjgmBQRvfL13fhiAHc",
-    "image": "/images/beaches/voudia-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7496186,
       "lng": 24.5347015
@@ -990,7 +1019,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "pachaina-beach",
@@ -1007,7 +1037,7 @@
       "address": "Παραλία Πάχαινα, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJt22pWUbemBQRSibWDdWkVVo",
-    "image": "/images/beaches/pachaina-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.752493,
       "lng": 24.4966206
@@ -1024,7 +1054,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "alogomantra-beach",
@@ -1041,7 +1072,7 @@
       "address": "Παραλία Αλογομάντρα, Μήλος, Ελλάδα"
     },
     "placeId": "ChIJs3t9w1HemBQRu75RpmRtkRo",
-    "image": "/images/beaches/alogomantra-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.748596,
       "lng": 24.4877318
@@ -1058,7 +1089,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "mytakas-beach",
@@ -1075,7 +1107,7 @@
       "address": "Παραλία Μύτικας, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJH4sPfgDfmBQRK7u3niaeD6s",
-    "image": "/images/beaches/mytakas-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7419216,
       "lng": 24.476411199999998
@@ -1093,7 +1125,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "nerodafni-beach",
@@ -1110,7 +1143,7 @@
       "address": "Παραλία Νεροδάφνη, Ελλάδα"
     },
     "placeId": "ChIJiyOAmCTZmBQRYNCAPo76ViA",
-    "image": "/images/beaches/nerodafni-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7675625,
       "lng": 24.4121797
@@ -1127,7 +1160,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": false,
-    "easyAccess": false
+    "easyAccess": false,
+    "gallery": []
   },
   {
     "slug": "klima",
@@ -1144,7 +1178,7 @@
       "address": "Κλήμα, Ελλάδα"
     },
     "placeId": "ChIJ3TAOoPfZmBQRjsjxWh-2Ps0",
-    "image": "/images/beaches/klima.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7348694,
       "lng": 24.420080799999997
@@ -1161,7 +1195,8 @@
     ],
     "swimDepth": "Moderate",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "papikinou-beach",
@@ -1178,7 +1213,7 @@
       "address": "Παραλία Παπικινού, Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
     },
     "placeId": "ChIJGaqqXWnfmBQRcPjTpextS04",
-    "image": "/images/beaches/papikinou-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.721516099999995,
       "lng": 24.458498799999997
@@ -1196,7 +1231,8 @@
     ],
     "swimDepth": "Shallow",
     "nearbyFood": true,
-    "easyAccess": true
+    "easyAccess": true,
+    "gallery": []
   },
   {
     "slug": "agios-dimitrios-beach",
@@ -1213,7 +1249,7 @@
       "address": "Παραλία Άγιος Δημήτριος, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJLSbyyoTYmBQRG0NEfYQSHbA",
-    "image": "/images/beaches/agios-dimitrios-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.7283799,
       "lng": 24.393426299999998
@@ -1227,7 +1263,8 @@
       "Families"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "gallery": []
   },
   {
     "slug": "kalogries",
@@ -1244,7 +1281,7 @@
       "address": "Παραλία Καλογριές, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJQ6F4bQDZmBQRh3fTTCWHgt0",
-    "image": "/images/beaches/kalogries-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.736574,
       "lng": 24.343665
@@ -1257,7 +1294,8 @@
       "Solitude"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "gallery": []
   },
   {
     "slug": "krotiraki",
@@ -1274,7 +1312,7 @@
       "address": "Παραλία Κροτιράκι, Μήλος 848 00, Ελλάδα"
     },
     "placeId": "ChIJQ6F4bQDZmBQRh3fTTCWHgt0",
-    "image": "/images/beaches/krotiraki-beach.jpg",
+    "image": null,
     "coordinates": {
       "lat": 36.658554,
       "lng": 24.396558
@@ -1287,6 +1325,7 @@
       "Solitude"
     ],
     "swimDepth": "Shallow",
-    "nearbyFood": false
+    "nearbyFood": false,
+    "gallery": []
   }
 ]
