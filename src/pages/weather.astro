@@ -1032,32 +1032,52 @@ async function loadWeather() {
 
   let w, m, cachedAt = null;
 
-  try {
-    const weatherUrl = [
-      `https://api.open-meteo.com/v1/forecast`,
-      `?latitude=${LAT}&longitude=${LNG}`,
-      `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m`,
-      `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability`,
-      `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset`,
-      `&timezone=Europe%2FAthens&forecast_days=7&models=ecmwf_ifs025`,
-    ].join('');
-    const marineUrl = [
-      `https://marine-api.open-meteo.com/v1/marine`,
-      `?latitude=${LAT}&longitude=${LNG}`,
-      `&current=wave_height,sea_surface_temperature`,
-      `&timezone=Europe%2FAthens&forecast_days=1`,
-    ].join('');
+  const weatherUrl = [
+    `https://api.open-meteo.com/v1/forecast`,
+    `?latitude=${LAT}&longitude=${LNG}`,
+    `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m`,
+    `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability`,
+    `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset`,
+    `&timezone=Europe%2FAthens&forecast_days=7&models=ecmwf_ifs025`,
+  ].join('');
+  const marineUrl = [
+    `https://marine-api.open-meteo.com/v1/marine`,
+    `?latitude=${LAT}&longitude=${LNG}`,
+    `&current=wave_height,sea_surface_temperature`,
+    `&timezone=Europe%2FAthens&forecast_days=1`,
+  ].join('');
 
-    const timeout = AbortSignal.timeout(12000);
-    const [wRes, mRes] = await Promise.all([
-      fetch(weatherUrl, { signal: timeout }),
-      fetch(marineUrl,  { signal: timeout }),
-    ]);
-    w = await wRes.json();
-    if (w.error) throw new Error(w.reason ?? 'Weather API error');
-    m = mRes.ok ? await mRes.json() : { current: null };
+  // One live attempt: weather must succeed, marine failure is tolerated.
+  const attemptLive = async () => {
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 12000);
+    try {
+      const [wSettled, mSettled] = await Promise.allSettled([
+        fetch(weatherUrl, { signal: ctrl.signal }),
+        fetch(marineUrl,  { signal: ctrl.signal }),
+      ]);
+      if (wSettled.status === 'rejected') throw wSettled.reason;
+      const wData = await wSettled.value.json();
+      if (wData.error) throw new Error(wData.reason ?? 'Weather API error');
+      const mData = (mSettled.status === 'fulfilled' && mSettled.value.ok)
+        ? await mSettled.value.json()
+        : { current: null };
+      return { w: wData, m: mData };
+    } finally {
+      clearTimeout(tid);
+    }
+  };
+
+  try {
+    try {
+      ({ w, m } = await attemptLive());
+    } catch (firstErr) {
+      console.warn('Live fetch attempt 1 failed:', firstErr.message, '— retrying in 2 s…');
+      await new Promise(r => setTimeout(r, 2000));
+      ({ w, m } = await attemptLive());
+    }
   } catch (liveErr) {
-    console.warn('Live fetch failed, trying cache:', liveErr.message);
+    console.warn('Both live attempts failed, falling to cache:', liveErr.message);
     try {
       const cacheRes = await fetch('/weather-cache.json');
       if (!cacheRes.ok) throw new Error('No cache');
