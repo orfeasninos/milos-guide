@@ -2,7 +2,7 @@
   "weather": {
     "latitude": 36.75,
     "longitude": 24.5,
-    "generationtime_ms": 0.958561897277832,
+    "generationtime_ms": 1.6673803329467773,
     "utc_offset_seconds": 10800,
     "timezone": "Europe/Athens",
     "timezone_abbreviation": "GMT+3",
@@ -19,15 +19,15 @@
       "relative_humidity_2m": "%"
     },
     "current": {
-      "time": "2026-08-17T13:15",
+      "time": "2026-08-17T19:00",
       "interval": 900,
-      "temperature_2m": 27.1,
-      "apparent_temperature": 28.4,
+      "temperature_2m": 26.1,
+      "apparent_temperature": 27.3,
       "weather_code": 0,
-      "wind_speed_10m": 19.7,
-      "wind_direction_10m": 332,
-      "uv_index": 7.85,
-      "relative_humidity_2m": 54
+      "wind_speed_10m": 7.9,
+      "wind_direction_10m": 317,
+      "uv_index": 1.05,
+      "relative_humidity_2m": 56
     },
     "hourly_units": {
       "time": "iso8601",
@@ -966,7 +966,7 @@
   "marine": {
     "latitude": 36.708336,
     "longitude": 24.458344,
-    "generationtime_ms": 0.06270408630371094,
+    "generationtime_ms": 0.1302957534790039,
     "utc_offset_seconds": 10800,
     "timezone": "Europe/Athens",
     "timezone_abbreviation": "GMT+3",
@@ -978,11 +978,11 @@
       "sea_surface_temperature": "°C"
     },
     "current": {
-      "time": "2026-08-17T13:15",
+      "time": "2026-08-17T19:00",
       "interval": 900,
-      "wave_height": 0.50,
-      "sea_surface_temperature": 24.4
+      "wave_height": 0.34,
+      "sea_surface_temperature": 24.6
     }
   },
-  "cachedAt": "2026-08-17T10:20:48Z"
+  "cachedAt": "2026-08-17T16:14:28Z"
 }
