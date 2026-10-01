@@ -274,11 +274,6 @@ const schemas: object[] = [
               ? 'Ο πιο πλήρης οδηγός\nγια τη Μήλο — χωρίς διαφημίσεις.'
               : 'The most complete guide\nto Milos — no ads.'}
           </p>
-          <div class="footer-facts">
-            <span>🌋 {isEl ? 'Κυκλάδες' : 'Cyclades'}</span>
-            <span>🏖 70+ {isEl ? 'παραλίες' : 'beaches'}</span>
-            <span>🏛 {isEl ? 'αξιοθέατα & ιστορία' : 'sights & history'}</span>
-          </div>
         </div>
 
         <nav class="footer-cols" aria-label={isEl ? 'Footer πλοήγηση' : 'Footer navigation'}>
@@ -293,15 +288,6 @@ const schemas: object[] = [
             <a href={isEl ? '/el/sights' : '/sights'}>
               <span class="flink-icon" aria-hidden="true">🏛</span>{isEl ? 'Αξιοθέατα' : 'Sights'}
             </a>
-          </div>
-
-          <div class="footer-col">
-            <p class="footer-col-title">{isEl ? 'Παραλίες' : 'Top Beaches'}</p>
-            <a href={isEl ? '/el/beaches/sarakiniko' : '/beaches/sarakiniko'}>{isEl ? 'Σαρακήνικο' : 'Sarakiniko'}</a>
-            <a href={isEl ? '/el/beaches/kleftiko'   : '/beaches/kleftiko'}>{isEl ? 'Κλέφτικο' : 'Kleftiko'}</a>
-            <a href={isEl ? '/el/beaches/tsigrado'   : '/beaches/tsigrado'}>{isEl ? 'Τσιγκράδο' : 'Tsigrado'}</a>
-            <a href={isEl ? '/el/beaches/fyriplaka'  : '/beaches/fyriplaka'}>{isEl ? 'Φυριπλάκα' : 'Fyriplaka'}</a>
-            <a href={isEl ? '/el/beaches' : '/beaches'} class="flink-more">{isEl ? 'Όλες →' : 'All →'}</a>
           </div>
 
           <div class="footer-col">
@@ -438,8 +424,6 @@ nav ul, nav ol { list-style: none; }
 .footer-brand .logo-dot   { color: var(--sea); font-size: 1.4rem; }
 .footer-brand .logo-guide { color: var(--sea); font-size: 0.8rem; }
 .footer-tagline { margin-top: 0.9rem; font-size: 0.875rem; color: rgba(255,255,255,0.42); line-height: 1.7; white-space: pre-line; }
-.footer-facts { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.07); }
-.footer-facts span { font-size: 0.77rem; color: rgba(255,255,255,0.28); letter-spacing: 0.02em; }
 .footer-cols { display: grid; grid-template-columns: repeat(3,1fr); gap: 2.5rem; }
 .footer-col { display: flex; flex-direction: column; gap: 0.1rem; }
 .footer-col-title { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.22); margin-bottom: 0.9rem; }
@@ -447,8 +431,6 @@ nav ul, nav ol { list-style: none; }
 .footer-col a:hover { color: #fff; padding-left: 0.35rem; }
 .flink-icon  { font-size: 0.85rem; flex-shrink: 0; }
 .flink-badge { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); padding: 2px 5px; border-radius: 3px; margin-left: auto; }
-.flink-more  { margin-top: 0.4rem; font-size: 0.78rem !important; color: var(--sea) !important; font-weight: 600; }
-.flink-more:hover { color: var(--sky) !important; }
 .footer-wave { height: 40px; overflow: hidden; }
 .footer-wave svg { width: 100%; height: 100%; display: block; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 1.25rem 0; }
