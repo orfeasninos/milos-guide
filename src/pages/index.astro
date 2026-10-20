@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import SmartImage from "../components/SmartImage.astro";
+import WindBeaches from "../components/WindBeaches.astro";
 import beachesRaw from "../data/beaches.json";
 import sightsData from "../data/sights.json";
 
@@ -205,6 +206,13 @@ const beachCategories = [
           <span class="cat-arrow">→</span>
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- ══ WIND HELPER ══ -->
+  <section class="sec sec-sand" style="padding-top:0">
+    <div class="container">
+      <WindBeaches />
     </div>
   </section>
 

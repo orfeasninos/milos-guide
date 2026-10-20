@@ -1,0 +1,204 @@
+---
+// "Best beaches today" — ranks beaches by shelter from the current wind.
+// Static shell is rendered at build time; the ranking fills in client-side from live wind.
+import beachesRaw from '../data/beaches.json';
+import { getArea, areaLabel, getBeachName } from '../lib/beaches';
+
+interface Props {
+  title?: string;
+  limit?: number;
+  class?: string;
+}
+
+const { title = 'Best beaches today', limit = 6, class: className } = Astro.props;
+
+const beaches = beachesRaw.map(b => ({
+  slug: b.slug,
+  name: getBeachName(b),
+  faces: b.faces,
+  access: b.accessType,
+  area: areaLabel[getArea(b.coordinates?.lat ?? 0, b.coordinates?.lng ?? 0)],
+}));
+---
+
+<section class:list={['wb', className]} data-wind-beaches data-limit={limit} data-beaches={JSON.stringify(beaches)} aria-live="polite">
+  <div class="wb-head">
+    <div>
+      <span class="wb-eyebrow"><span class="wb-dot" aria-hidden="true"></span> <span data-wb-updated>Live wind check</span></span>
+      <h2 class="wb-title">{title}</h2>
+      <p class="wb-wind" data-wb-summary>Checking today's wind over Milos…</p>
+    </div>
+    <div class="wb-compass" aria-hidden="true">
+      <svg viewBox="0 0 48 48" width="56" height="56">
+        <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2" />
+        <text x="24" y="9" text-anchor="middle" font-size="7" fill="currentColor" fill-opacity=".55">N</text>
+        <g data-wb-needle style="transform-origin:24px 24px;transition:transform .6s var(--ease-out)">
+          <path d="M24 10 L28.5 26 L24 23 L19.5 26 Z" fill="var(--sea)" transform="rotate(180 24 24)" />
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <p class="wb-verdict" data-wb-verdict hidden></p>
+
+  <ol class="wb-list" data-wb-list>
+    {Array.from({ length: limit }).map(() => <li class="wb-skel" aria-hidden="true"></li>)}
+  </ol>
+
+  <div class="wb-extra" data-wb-extra hidden>
+    <div class="wb-boat" data-wb-boat></div>
+    <p class="wb-avoid" data-wb-avoid></p>
+  </div>
+
+  <div class="wb-foot">
+    <a href="/weather" class="wb-link" data-umami-event="wind-widget-forecast">Full forecast &amp; sea conditions →</a>
+    <a href="/beaches" class="wb-link wb-link--muted">All beaches</a>
+  </div>
+
+  <noscript><p class="wb-wind">Turn on JavaScript to see which beaches are sheltered from today's wind, or check the <a href="/weather">Milos weather page</a>.</p></noscript>
+</section>
+
+<script>
+  import { getWind, type Wind, exposure, shelterScore, compass, beaufort, exposureLabel, BOAT_TOUR_LIMIT_KMH, CALM_KMH } from '../lib/wind';
+  import { POPULAR_BEACHES } from '../lib/beaches';
+
+  type B = { slug: string; name: string; faces: number; access: string; area: string };
+
+  const popularity = (slug: string) => {
+    const i = POPULAR_BEACHES.indexOf(slug);
+    return i === -1 ? 99 : i;
+  };
+  const accessIcon: Record<string, string> = { road: '🚗', hike: '🥾', boat: '⛵' };
+
+  document.querySelectorAll<HTMLElement>('[data-wind-beaches]').forEach(async root => {
+    const q = <T extends HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const beaches: B[] = JSON.parse(root.dataset.beaches ?? '[]');
+    const limit = Number(root.dataset.limit ?? 6);
+
+    let wind: Wind;
+    try {
+      wind = await getWind();
+    } catch {
+      q('[data-wb-summary]').textContent = "Couldn't load the wind right now.";
+      q('[data-wb-list]').innerHTML = '';
+      return;
+    }
+
+    const dir = compass(wind.direction);
+    const kmh = Math.round(wind.speed);
+    const time = wind.time?.slice(11, 16);
+    q('[data-wb-updated]').textContent = time ? `Wind at ${time} Milos time` : 'Current wind';
+    q('[data-wb-summary]').innerHTML =
+      `<strong>${kmh} km/h</strong> from the <strong>${dir}</strong> · ${beaufort(wind.speed)} Bft`;
+    q('[data-wb-needle]').style.transform = `rotate(${wind.direction}deg)`;
+
+    const calm = wind.speed < CALM_KMH;
+    const verdict = q('[data-wb-verdict]');
+    verdict.hidden = false;
+    verdict.textContent = calm
+      ? 'Light wind everywhere — every beach on the island is swimmable. Go for the exposed north coast (Sarakiniko, Papafragas) while it lasts.'
+      : `${dir} wind today, so beaches facing ${dir} get the waves. These ones are tucked away from it:`;
+
+    const ranked = beaches
+      .map(b => ({ ...b, score: shelterScore(b.faces, wind), exp: exposure(b.faces, wind) }))
+      .sort((a, b) => (b.score - a.score) || (popularity(a.slug) - popularity(b.slug)));
+
+    const picks = ranked
+      .filter(b => b.access !== 'boat')
+      .sort((a, b) => calm ? popularity(a.slug) - popularity(b.slug) : 0)
+      .slice(0, limit);
+
+    q('[data-wb-list]').innerHTML = picks.map(b => `
+      <li>
+        <a class="wb-item" href="/beaches/${b.slug}" data-umami-event="wind-widget-beach" data-umami-event-beach="${b.slug}">
+          <span class="wb-name">${b.name}</span>
+          <span class="wb-meta">${accessIcon[b.access] ?? '📍'} ${b.area}</span>
+          <span class="wb-pill wb-pill--${b.exp}">${exposureLabel[b.exp]}</span>
+        </a>
+      </li>`).join('');
+
+    // Boat tours (Kleftiko / Sikia) run along the exposed SW coast.
+    const boatOk = wind.speed < BOAT_TOUR_LIMIT_KMH;
+    q('[data-wb-boat]').innerHTML = boatOk
+      ? `<span class="wb-boat-icon">⛵</span><span><strong>Good day for a boat trip.</strong> Seas around Kleftiko should be manageable.</span>
+         <a href="/beaches/kleftiko" class="wb-boat-cta" data-umami-event="wind-widget-boat">Kleftiko guide →</a>`
+      : `<span class="wb-boat-icon">⚠️</span><span><strong>Rough sea for boat trips.</strong> Tours to Kleftiko are often cancelled or rerouted in ${kmh} km/h wind — check with your operator.</span>`;
+    q('[data-wb-boat]').classList.toggle('is-warn', !boatOk);
+
+    const avoid = calm ? [] : ranked
+      .filter(b => b.exp === 'exposed' && popularity(b.slug) < 99)
+      .sort((a, b) => popularity(a.slug) - popularity(b.slug))
+      .slice(0, 3);
+    q('[data-wb-avoid]').innerHTML = avoid.length
+      ? `<strong>Skip today:</strong> ${avoid.map(b => `<a href="/beaches/${b.slug}">${b.name}</a>`).join(', ')} — facing straight into the wind.`
+      : '';
+    q('[data-wb-extra]').hidden = false;
+  });
+</script>
+
+<style>
+.wb {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+.wb-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.wb-eyebrow {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .67rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sea);
+}
+.wb-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.18); }
+.wb-title { font-family: var(--font-serif); font-size: clamp(1.6rem, 3vw, 2.1rem); line-height: 1.15; color: var(--ink); margin: .25rem 0 .3rem; }
+.wb-wind { font-size: .95rem; color: var(--muted); }
+.wb-wind :global(strong) { color: var(--ink); }
+.wb-compass { color: var(--deep-blue); flex-shrink: 0; }
+.wb-verdict { font-size: .92rem; color: var(--ink); margin-bottom: 1rem; }
+
+.wb-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .6rem; }
+.wb-skel { height: 64px; border-radius: var(--radius-md); background: linear-gradient(90deg, var(--sand) 0%, var(--sand-dark) 50%, var(--sand) 100%); background-size: 200% 100%; animation: wbShimmer 1.4s ease-in-out infinite; }
+@keyframes wbShimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+.wb-list :global(.wb-item) {
+  display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: .75rem;
+  padding: .75rem 1rem; border-radius: var(--radius-md); background: var(--sand); border: 1px solid transparent;
+  transition: border-color .15s, transform .15s var(--ease-spring), background .15s;
+}
+.wb-list :global(.wb-item:hover) { border-color: var(--sea); background: var(--white); transform: translateY(-2px); }
+.wb-list :global(.wb-name) { font-weight: 600; color: var(--ink); }
+.wb-list :global(.wb-meta) { grid-row: 2; font-size: .78rem; color: var(--muted); }
+.wb-list :global(.wb-pill) { grid-row: 1 / 3; grid-column: 2; align-self: center; }
+
+.wb :global(.wb-pill) {
+  font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: var(--radius-full); white-space: nowrap;
+}
+.wb :global(.wb-pill--calm),
+.wb :global(.wb-pill--sheltered) { background: #dcfce7; color: #166534; }
+.wb :global(.wb-pill--partial)   { background: #fef3c7; color: #92400e; }
+.wb :global(.wb-pill--exposed)   { background: #fee2e2; color: #991b1b; }
+
+.wb-extra { margin-top: 1rem; display: flex; flex-direction: column; gap: .6rem; }
+.wb-boat {
+  display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+  padding: .85rem 1rem; border-radius: var(--radius-md);
+  background: rgba(58,155,201,.08); border: 1px solid rgba(58,155,201,.22); font-size: .9rem;
+}
+.wb-boat.is-warn { background: #fff7ed; border-color: #fed7aa; }
+.wb-boat :global(.wb-boat-icon) { font-size: 1.2rem; }
+.wb-boat :global(span:nth-child(2)) { flex: 1 1 220px; }
+.wb-boat :global(.wb-boat-cta) { font-weight: 600; color: var(--aegean); white-space: nowrap; }
+.wb-avoid { font-size: .85rem; color: var(--muted); }
+.wb-avoid :global(a) { color: var(--aegean); border-bottom: 1px solid rgba(58,155,201,.4); }
+
+.wb-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.wb-link { font-size: .85rem; font-weight: 600; color: var(--aegean); }
+.wb-link--muted { color: var(--muted); }
+
+@media (max-width: 600px) {
+  .wb { padding: 1.25rem 1rem; border-radius: var(--radius-md); }
+  .wb-compass svg { width: 44px; height: 44px; }
+  .wb-list { grid-template-columns: 1fr; }
+}
+</style>

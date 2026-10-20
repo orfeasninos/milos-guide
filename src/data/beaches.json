@@ -19,6 +19,7 @@
       "lat": 36.742697199999995,
       "lng": 24.458423
     },
+    "faces": 0,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -55,6 +56,7 @@
       "lat": 36.757727599999996,
       "lng": 24.427407
     },
+    "faces": 0,
     "accessType": "road",
     "facilities": [
       "sunbeds"
@@ -90,6 +92,7 @@
       "lat": 36.661895799999996,
       "lng": 24.4693335
     },
+    "faces": 180,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -125,6 +128,7 @@
       "lat": 36.6662272,
       "lng": 24.4651858
     },
+    "faces": 190,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -161,6 +165,7 @@
       "lat": 36.6750374,
       "lng": 24.5184634
     },
+    "faces": 160,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -197,6 +202,7 @@
       "lat": 36.6695517,
       "lng": 24.4481058
     },
+    "faces": 180,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -233,6 +239,7 @@
       "lat": 36.753791,
       "lng": 24.502596
     },
+    "faces": 10,
     "accessType": "road",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -266,6 +273,7 @@
       "lat": 36.6506578,
       "lng": 24.3324547
     },
+    "faces": 220,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -298,6 +306,7 @@
       "lat": 36.670763199999996,
       "lng": 24.498369099999998
     },
+    "faces": 175,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -334,6 +343,7 @@
       "lat": 36.6558418,
       "lng": 24.3687032
     },
+    "faces": 200,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -367,6 +377,7 @@
       "lat": 36.7064471,
       "lng": 24.3368601
     },
+    "faces": 270,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -400,6 +411,7 @@
       "lat": 36.7022094,
       "lng": 24.401958399999998
     },
+    "faces": 0,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -433,6 +445,7 @@
       "lat": 36.667732699999995,
       "lng": 24.320308999999998
     },
+    "faces": 250,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -465,6 +478,7 @@
       "lat": 36.7540755,
       "lng": 24.4127023
     },
+    "faces": 0,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -501,6 +515,7 @@
       "lat": 36.694101499999995,
       "lng": 24.544843
     },
+    "faces": 80,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -534,6 +549,7 @@
       "lat": 36.6915036,
       "lng": 24.4527008
     },
+    "faces": 340,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -570,6 +586,7 @@
       "lat": 36.6697896,
       "lng": 24.4443792
     },
+    "faces": 180,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -603,6 +620,7 @@
       "lat": 36.7298476,
       "lng": 24.5363755
     },
+    "faces": 90,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -636,6 +654,7 @@
       "lat": 36.7345976,
       "lng": 24.537876699999998
     },
+    "faces": 90,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -669,6 +688,7 @@
       "lat": 36.7639636,
       "lng": 24.5257476
     },
+    "faces": 120,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -704,6 +724,7 @@
       "lat": 36.750769,
       "lng": 24.4460311
     },
+    "faces": 0,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -739,6 +760,7 @@
       "lat": 36.7270586,
       "lng": 24.3418226
     },
+    "faces": 330,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -774,6 +796,7 @@
       "lat": 36.6988005,
       "lng": 24.3349092
     },
+    "faces": 260,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -807,6 +830,7 @@
       "lat": 36.6665091,
       "lng": 24.481914
     },
+    "faces": 180,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -840,6 +864,7 @@
       "lat": 36.677900099999995,
       "lng": 24.3319625
     },
+    "faces": 270,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -875,6 +900,7 @@
       "lat": 36.663143399999996,
       "lng": 24.429043099999998
     },
+    "faces": 190,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -908,6 +934,7 @@
       "lat": 36.6748127,
       "lng": 24.5145904
     },
+    "faces": 170,
     "accessType": "road",
     "facilities": [],
     "sandType": "Volcanic rock",
@@ -941,6 +968,7 @@
       "lat": 36.6599238,
       "lng": 24.4193484
     },
+    "faces": 180,
     "accessType": "road",
     "facilities": [],
     "sandType": "Sand",
@@ -974,6 +1002,7 @@
       "lat": 36.7234222,
       "lng": 24.538231699999997
     },
+    "faces": 100,
     "accessType": "road",
     "facilities": [],
     "sandType": "Pebble",
@@ -1007,6 +1036,7 @@
       "lat": 36.7496186,
       "lng": 24.5347015
     },
+    "faces": 90,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1042,6 +1072,7 @@
       "lat": 36.752493,
       "lng": 24.4966206
     },
+    "faces": 10,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1077,6 +1108,7 @@
       "lat": 36.748596,
       "lng": 24.4877318
     },
+    "faces": 0,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1112,6 +1144,7 @@
       "lat": 36.7419216,
       "lng": 24.476411199999998
     },
+    "faces": 10,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -1148,6 +1181,7 @@
       "lat": 36.7675625,
       "lng": 24.4121797
     },
+    "faces": 330,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1183,6 +1217,7 @@
       "lat": 36.7348694,
       "lng": 24.420080799999997
     },
+    "faces": 140,
     "accessType": "road",
     "facilities": [
       "parking"
@@ -1218,6 +1253,7 @@
       "lat": 36.721516099999995,
       "lng": 24.458498799999997
     },
+    "faces": 240,
     "accessType": "road",
     "facilities": [
       "sunbeds",
@@ -1254,6 +1290,7 @@
       "lat": 36.7283799,
       "lng": 24.393426299999998
     },
+    "faces": 90,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Sand",
@@ -1286,6 +1323,7 @@
       "lat": 36.736574,
       "lng": 24.343665
     },
+    "faces": 330,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Sand",
@@ -1317,6 +1355,7 @@
       "lat": 36.658554,
       "lng": 24.396558
     },
+    "faces": 180,
     "accessType": "boat",
     "facilities": [],
     "sandType": "Sand",

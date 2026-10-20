@@ -1,16 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
+import WindBeaches from '../../components/WindBeaches.astro';
 import beachesData from '../../data/beaches.json';
-
-function getArea(lat: number, lng: number): string {
-  if (!lat || !lng) return 'north';
-  if (lng < 24.37) return 'west';
-  if (lng > 24.52 && lat > 36.68) return 'east';
-  if (lat < 36.68) return 'south';
-  if (lat >= 36.74) return 'north';
-  return 'gulf';
-}
+import { getArea } from '../../lib/beaches';
 
 const allFacilities = [...new Set(
   beachesData.flatMap(b => b.facilities)
@@ -75,6 +68,11 @@ const beachesJsonld = {
     </p>
   </div>
 </section>
+
+<!-- WIND HELPER -->
+<div class="container wind-wrap">
+  <WindBeaches title="Where to swim today" />
+</div>
 
 <!-- FEATURED -->
 <section class="featured-sec">
@@ -231,6 +229,7 @@ const beachesJsonld = {
 }
 
 /* ── FEATURED ── */
+.wind-wrap { padding-top: 2rem; padding-bottom: 2rem; }
 .featured-sec {
   padding: 3rem 0 2.5rem;
   background: var(--white);
