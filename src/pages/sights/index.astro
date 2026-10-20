@@ -2,13 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import sightsData from '../../data/sights.json';
 
-const typeLabels: Record<string, { label: string; icon: string }> = {
-  archaeology:  { label: 'Archaeology',  icon: '🏛' },
-  museum:       { label: 'Museum',       icon: '🏺' },
-  geological:   { label: 'Geological',   icon: '🌋' },
-  medieval:     { label: 'Medieval',     icon: '🏰' },
-  traditional:  { label: 'Traditional',  icon: '🏠' },
-  religious:    { label: 'Religious',    icon: '⛪' },
+const typeLabels: Record<string, { label: string }> = {
+  archaeology:  { label: 'Archaeology' },
+  museum:       { label: 'Museum' },
+  geological:   { label: 'Geological' },
+  medieval:     { label: 'Medieval' },
+  traditional:  { label: 'Traditional' },
+  religious:    { label: 'Religious' },
 };
 
 const types = [...new Set(sightsData.map(s => s.type))];
@@ -61,10 +61,10 @@ const sightsJsonld = {
     <div class="filter-chips" id="type-chips">
       <button class="chip chip--active" data-type="all">All</button>
       {types.map(type => {
-        const t = typeLabels[type] ?? { label: type, icon: '📍' };
+        const t = typeLabels[type] ?? { label: type };
         return (
           <button class="chip" data-type={type}>
-            {t.icon} {t.label}
+            {t.label}
           </button>
         );
       })}
@@ -78,7 +78,7 @@ const sightsJsonld = {
   <div class="container">
     <div class="sights-grid" id="sights-grid">
       {sightsData.map((sight, i) => {
-        const t = typeLabels[sight.type] ?? { label: sight.type, icon: '📍' };
+        const t = typeLabels[sight.type] ?? { label: sight.type };
         return (
           <a href={`/sights/${sight.slug}`} class="sc" data-type={sight.type}>
             <div class="sc-num" aria-hidden="true">
@@ -86,7 +86,7 @@ const sightsJsonld = {
             </div>
             <div class="sc-body">
               <div class="sc-top">
-                <span class="sc-type">{t.icon} {t.label}</span>
+                <span class="sc-type">{t.label}</span>
                 <span class="sc-area">{sight.area}</span>
                 <span class={`sc-admission sc-admission--${sight.admission}`}>
                   {admissionLabel[sight.admission] ?? sight.admission}
@@ -101,14 +101,12 @@ const sightsJsonld = {
                 ))}
               </div>
             </div>
-            <span class="sc-icon" aria-hidden="true">{sight.icon}</span>
           </a>
         );
       })}
     </div>
 
     <div class="empty-state" id="empty-state" style="display:none">
-      <p class="empty-icon">🏛</p>
       <p class="empty-text">No sights found with this filter.</p>
       <button class="btn-dark" id="reset-filters">Show all</button>
     </div>
@@ -120,17 +118,14 @@ const sightsJsonld = {
   <div class="container">
     <div class="info-grid">
       <div class="info-card">
-        <span class="info-icon">🗺</span>
         <h3 class="info-title">Getting Around</h3>
         <p class="info-text">Most sights are concentrated around Plaka and Tripiti (10 min from Adamas), with geological wonders spread across the north coast. A rental car or scooter makes it easy.</p>
       </div>
       <div class="info-card">
-        <span class="info-icon">⏰</span>
         <h3 class="info-title">Best Time to Visit</h3>
         <p class="info-text">Museums and archaeological sites are best visited in the morning before the heat. The Kastro of Plaka is magical at sunset. Sarakiniko is stunning at any hour.</p>
       </div>
       <div class="info-card">
-        <span class="info-icon">🎟</span>
         <h3 class="info-title">Entry & Tickets</h3>
         <p class="info-text">The Catacombs require a guided tour (tickets on site). The Archaeological Museum and Mining Museum charge a small admission fee. All outdoor sights are free.</p>
       </div>
@@ -314,18 +309,9 @@ const sightsJsonld = {
   border: 1px solid rgba(0,0,0,0.06);
 }
 
-.sc-icon {
-  font-size: 2.5rem;
-  flex-shrink: 0;
-  opacity: 0.18;
-  transition: opacity 0.3s;
-  line-height: 1;
-}
-.sc:hover .sc-icon { opacity: 0.55; }
 
 /* ── EMPTY ── */
 .empty-state { text-align: center; padding: 5rem 0; }
-.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
 .empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
 
 /* ── INFO STRIP ── */
@@ -343,7 +329,6 @@ const sightsJsonld = {
   flex-direction: column;
   gap: 0.6rem;
 }
-.info-icon { font-size: 1.75rem; line-height: 1; }
 .info-title {
   font-family: var(--font-serif);
   font-size: 1.1rem;
@@ -358,7 +343,6 @@ const sightsJsonld = {
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .sc { grid-template-columns: 48px 1fr; gap: 1rem; }
-  .sc-icon { display: none; }
   .sc-num { font-size: 1.8rem; }
   .sc-name { font-size: 1.5rem; }
   .sc-desc { display: none; }
