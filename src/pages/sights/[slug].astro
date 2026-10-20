@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { metaDescription } from '../../lib/seo';
 import sightsData from '../../data/sights.json';
 
 export function getStaticPaths() {
@@ -53,7 +54,7 @@ const sightJsonld = {
 <Layout
   lang="en"
   title={`${sight.nameEn} — Milos`}
-  description={`${sight.nameEn}: ${sight.taglineEn}. ${sight.description.slice(0, 120)}…`}
+  description={metaDescription(`${sight.nameEn}: ${sight.taglineEn}. ${sight.description}`)}
   jsonld={sightJsonld}
 >
 

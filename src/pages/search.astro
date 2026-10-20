@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import sightsRaw from '../data/sights.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
+import { beachAreaLabel } from '../lib/beaches';
 
 const isEl = Astro.url.pathname.startsWith('/el');
 
@@ -26,7 +27,7 @@ const index = [
     typeEn:   'Beach',
     nameEl:   typeof b.name === 'object' ? (b.name as any).el : b.name,
     nameEn:   typeof b.name === 'object' ? (b.name as any).en : b.name,
-    area:     b.location.area,
+    area:     beachAreaLabel(b),
     url:      `/beaches/${b.slug}`,
     icon:     '🏖',
   })),
@@ -47,7 +48,7 @@ const index = [
 <Layout
   lang={isEl ? 'el' : 'en'}
   title={isEl ? 'Αναζήτηση' : 'Search'}
-  description={isEl ? 'Αναζητήστε παραλίες, αξιοθέατα και χωριά στη Μήλο.' : 'Search beaches, sights and villages in Milos.'}
+  description={isEl ? 'Αναζητήστε παραλίες, αξιοθέατα και χωριά στη Μήλο.' : 'Search every beach, village and sight in Milos by name or area, and jump straight to its page in the guide.'}
 >
 
 <section class="search-hero">

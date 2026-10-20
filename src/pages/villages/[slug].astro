@@ -4,6 +4,7 @@ import villagesData from '../../data/villages.json';
 import SmartImage from '../../components/SmartImage.astro';
 import beachesData from '../../data/beaches.json';
 import { beachPhoto } from '../../lib/public-files';
+import { metaDescription } from '../../lib/seo';
 
 const getName = (item: any): string => typeof item.name === 'object' ? item.name.en : item.name;
 
@@ -77,7 +78,7 @@ const villageJsonld = {
 <Layout
   lang="en"
   title={`${village.nameEn ?? village.name} — Village in Milos`}
-  description={`${village.nameEn ?? village.name}: ${(village as any).taglineEn ?? village.tagline}. ${((village as any).descriptionEn ?? village.description).slice(0, 120)}…`}
+  description={metaDescription(`${village.nameEn ?? village.name}: ${(village as any).taglineEn ?? village.tagline}. ${(village as any).descriptionEn ?? village.description}`)}
   jsonld={villageJsonld}
 >
 

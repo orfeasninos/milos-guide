@@ -1,6 +1,6 @@
 ---
 import SmartImage from '../SmartImage.astro';
-import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
+import { getBeachName, beachAreaLabel, type Beach, type BeachAccess } from '../../lib/beaches';
 
 interface Props { beach: Beach; access: BeachAccess }
 const { beach, access } = Astro.props;
@@ -31,11 +31,9 @@ const { beach, access } = Astro.props;
           )}
         </div>
         <h1 class="b-hero-name">{getBeachName(beach)}</h1>
-        {beach.location.area && (
-          <p class="b-hero-area">
-            <span style="color:var(--sky)">◉</span> {beach.location.area}
-          </p>
-        )}
+        <p class="b-hero-area">
+          <span style="color:var(--sky)">◉</span> {beachAreaLabel(beach)}
+        </p>
       </div>
     </div>
   </div>

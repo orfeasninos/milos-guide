@@ -39,6 +39,10 @@ export const areaLabel: Record<Area, string> = {
   gulf: 'Milos Bay',
 };
 
+// Every beach's location.area is just "Milos", so show the coast computed from its coordinates.
+export const beachAreaLabel = (b: { coordinates?: { lat: number; lng: number } }): string =>
+  areaLabel[getArea(b.coordinates?.lat ?? 0, b.coordinates?.lng ?? 0)];
+
 export const getBeachName = (b: { name: string | { en: string } }): string =>
   typeof b.name === 'object' ? b.name.en : b.name;
 

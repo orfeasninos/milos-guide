@@ -9,6 +9,7 @@ import Nearby from '../../components/beach/Nearby.astro';
 import beachesRaw from '../../data/beaches.json';
 import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
 import { beachPhoto } from '../../lib/public-files';
+import { metaDescription } from '../../lib/seo';
 
 const beachesData = (beachesRaw as Beach[]).map(b => ({ ...b, image: beachPhoto(b) }));
 
@@ -30,6 +31,10 @@ const accessMap: Record<string, BeachAccess> = {
 
 const getBeachDesc = (b: any): string =>
   typeof b.description === 'object' ? b.description.en : b.description;
+
+// The beach's own text plus facilities. No access label: the descriptions already say
+// "only by boat" etc., so it read twice.
+const facilitiesText = beach.facilities.length ? ` Facilities: ${beach.facilities.join(', ')}.` : '';
 
 const access: BeachAccess = accessMap[beach.accessType] ?? { icon: '📍', label: beach.accessType, color: '#6b7280' };
 const mapsUrl = beach.placeId ? `https://www.google.com/maps/place/?q=place_id:${beach.placeId}` : null;
@@ -103,7 +108,7 @@ const beachJsonld = {
 <Layout
   lang="en"
   title={`${getBeachName(beach)} — Beach in Milos`}
-  description={`${getBeachName(beach)}: ${access.label}. ${beach.facilities.length ? 'Facilities: ' + beach.facilities.join(', ') + '.' : ''}`}
+  description={metaDescription(getBeachDesc(beach) + facilitiesText)}
   jsonld={beachJsonld}
 >
 <Hero beach={beach} access={access} />

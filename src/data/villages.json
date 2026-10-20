@@ -20,7 +20,7 @@
       "Cafés and tavernas on the cobblestones"
     ],
     "type": "capital",
-    "area": "Κεντρική Μήλος",
+    "area": "Central Milos",
     "coordinates": {
       "lat": 36.7441,
       "lng": 24.4218
@@ -69,7 +69,7 @@
       "Waterfront restaurants and cafés"
     ],
     "type": "port",
-    "area": "Νότια Μήλος",
+    "area": "South Milos",
     "coordinates": {
       "lat": 36.725555,
       "lng": 24.44478
@@ -118,7 +118,7 @@
       "Atmospheric alleyways"
     ],
     "type": "historic",
-    "area": "Κεντρική Μήλος",
+    "area": "Central Milos",
     "coordinates": {
       "lat": 36.7386,
       "lng": 24.4260
@@ -164,7 +164,7 @@
       "Excellent restaurants"
     ],
     "type": "village",
-    "area": "Κεντρική Μήλος",
+    "area": "Central Milos",
     "coordinates": {
       "lat": 36.742764,
       "lng": 24.432611
@@ -208,7 +208,7 @@
       "Excellent restaurants"
     ],
     "type": "village",
-    "area": "Κεντρική Μήλος",
+    "area": "Central Milos",
     "coordinates": {
       "lat": 36.7409198,
       "lng": 24.4374211
@@ -252,7 +252,7 @@
       "Good beaches nearby"
     ],
     "type": "fishing",
-    "area": "Βόρεια Μήλος",
+    "area": "North Milos",
     "coordinates": {
       "lat": 36.7636,
       "lng": 24.5266
@@ -282,18 +282,28 @@
       "rifaki-milos"
     ]
   },
-    {
+  {
     "slug": "zefiria",
     "name": "Ζεφυρία (Χώρα)",
     "nameEn": "Zefiria (Hora)",
-    "tagline": "Χωριό στ",
-    "taglineEn": "village",
-    "description": "",
-    "descriptionEn": "",
-    "highlights": [],
-    "highlightsEn": [],
+    "tagline": "Η παλιά πρωτεύουσα της Μήλου",
+    "taglineEn": "The island’s old capital",
+    "description": "Η Ζεφυρία, γνωστή και ως Χώρα, ήταν για αιώνες η πρωτεύουσα της Μήλου. Εγκαταλείφθηκε στα τέλη του 18ου αιώνα μετά από επιδημίες και οι κάτοικοί της μετακινήθηκαν στα χωριά γύρω από την Πλάκα. Σήμερα είναι ένα ήσυχο χωριό στην ενδοχώρα, ανάμεσα σε χωράφια, με την εκκλησία της Παναγίας Πορτιανής να θυμίζει το παρελθόν του.",
+    "descriptionEn": "Zefiria, also known as Chora, was the capital of Milos for centuries. It was abandoned in the late 18th century after a series of epidemics, and its people moved to the villages around Plaka. Today it is a quiet inland village surrounded by farmland, where the church of Panagia Portiani recalls its past.",
+    "highlights": [
+      "Παλιά πρωτεύουσα του νησιού",
+      "Εκκλησία Παναγίας Πορτιανής",
+      "Ήσυχη ενδοχώρα, μακριά από τον κόσμο",
+      "Κοντά στις παραλίες της νότιας ακτής"
+    ],
+    "highlightsEn": [
+      "Former capital of the island",
+      "Church of Panagia Portiani",
+      "Quiet inland setting away from the crowds",
+      "Close to the south-coast beaches"
+    ],
     "type": "village",
-    "area": "Κεντρική Μήλος",
+    "area": "Central Milos",
     "coordinates": {
       "lat": 36.7006344,
       "lng": 24.490647
@@ -301,9 +311,17 @@
     "googleMapsUri": "https://maps.google.com/?q=Zefiria+Milos+Greece",
     "population": "190 (2021)",
     "elevation": "160m",
-    "mustSee": [],
-    "mustSeeEn": [],
-    "nearbyBeaches": [],
+    "mustSee": [
+      "Παναγία Πορτιανή"
+    ],
+    "mustSeeEn": [
+      "Panagia Portiani church"
+    ],
+    "nearbyBeaches": [
+      "agia-kiriaki",
+      "paleochori",
+      "achivadolimni"
+    ],
     "nearbyTaverns": []
   },
   {
@@ -327,7 +345,7 @@
       "Peaceful atmosphere"
     ],
     "type": "syrmata",
-    "area": "Δυτική Μήλος",
+    "area": "West Milos",
     "coordinates": {
       "lat": 36.7356,
       "lng": 24.4195
@@ -373,7 +391,7 @@
       "Traditional character"
     ],
     "type": "syrmata",
-    "area": "Βόρεια Μήλος",
+    "area": "North Milos",
     "coordinates": {
       "lat": 36.7505,
       "lng": 24.4465
@@ -415,7 +433,7 @@
       "Peace and authenticity"
     ],
     "type": "syrmata",
-    "area": "Βόρεια Μήλος",
+    "area": "North Milos",
     "coordinates": {
       "lat": 36.7578632,
       "lng": 24.4282271

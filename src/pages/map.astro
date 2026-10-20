@@ -4,6 +4,7 @@ import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 import sightsRaw from '../data/sights.json';
 import { beachThumb } from '../lib/public-files';
+import { beachAreaLabel } from '../lib/beaches';
 import { CARTO_VOYAGER_URL } from '../lib/basemap';
 
 const points = [
@@ -12,7 +13,7 @@ const points = [
     .map(b => ({
       slug:  b.slug, type: 'beach',
       name:  typeof b.name === 'object' ? (b.name as any).en : b.name,
-      area:  b.location.area, photo: beachThumb(b),
+      area:  beachAreaLabel(b), photo: beachThumb(b),
       url:   `/beaches/${b.slug}`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
     })),
   ...villagesRaw
@@ -37,7 +38,7 @@ const points = [
 <Layout
   lang="en"
   title="Map of Milos"
-  description="Interactive map of Milos — beaches, villages and sights."
+  description="Interactive map of Milos with every beach, village and sight. Filter by type and tap a pin to see details and open the full guide page."
 >
 <Fragment slot="head">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
