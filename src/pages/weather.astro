@@ -37,11 +37,11 @@ const BEACHES_DATA = beachesRaw.map(b => ({
 
 <section class="weather-hero" id="weather-hero">
   <div class="container">
-    <p class="hero-label">Live conditions · Milos, Cyclades</p>
+    <h1 class="hero-label">Milos weather · Live conditions</h1>
     <div class="hero-body">
       <div class="hero-left">
         <div class="hero-top">
-          <div class="hero-icon" id="hero-icon">☀️</div>
+          <div class="hero-icon" id="hero-icon"></div>
           <div class="hero-temp" id="hero-temp">–</div>
         </div>
         <p class="hero-condition" id="hero-condition">Loading…</p>
@@ -280,6 +280,8 @@ const BEACHES_DATA = beachesRaw.map(b => ({
   color: rgba(255,255,255,0.45);
   margin-bottom: 1.5rem;
   display: block;
+  font-family: inherit;
+  line-height: inherit;
 }
 .hero-body {
   display: flex;
@@ -760,7 +762,9 @@ const BEACHES_DATA = beachesRaw.map(b => ({
 .w-fc-icon { font-size: 1.65rem; line-height: 1; margin: 0.15rem 0; }
 .w-fc-temp { font-size: 1rem; font-weight: 800; color: var(--deep-blue); }
 .w-fc-item.is-now .w-fc-temp { color: #fff; }
-.w-fc-wind { font-size: 0.6rem; color: var(--muted); }
+.w-fc-wind { font-size: 0.6rem; color: var(--muted); display: inline-flex; align-items: center; gap: 3px; }
+.w-fc-wind :global(.w-fc-arrow) { flex-shrink: 0; color: var(--aegean); }
+.w-fc-item.is-now .w-fc-wind :global(.w-fc-arrow) { color: #fff; }
 .w-fc-item.is-now .w-fc-wind { color: rgba(255,255,255,0.42); }
 .w-fc-rain-track {
   width: 75%;
@@ -951,6 +955,20 @@ function heroClass(code) {
   if (code >= 95) return 'is-storm';
   return '';
 }
+// Open-Meteo times are Milos local strings ("2026-10-20T22:00"). Never parse them with
+// the visitor's timezone — compare/slice the strings and format "now" in Europe/Athens.
+function athensNowIso() {
+  return new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Athens' }).replace(' ', 'T').slice(0, 16);
+}
+function athensClock(date) {
+  return date.toLocaleTimeString('en-US', { timeZone: 'Europe/Athens', hour: 'numeric', minute: '2-digit', hour12: true });
+}
+function windArrow(kmh, deg) {
+  // Same convention as the compass: arrow points where the wind blows to.
+  const rot = (deg + 180) % 360;
+  const op = kmh < VARIABLE_KMH ? 0.3 : 1;
+  return `<svg class="w-fc-arrow" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" style="opacity:${op};transform:rotate(${rot}deg)"><path d="M6 1 L9.5 10 L6 8 L2.5 10 Z" fill="currentColor"/></svg>`;
+}
 function formatHour(h) {
   if (h === 0)  return '12 am';
   if (h < 12)   return `${h} am`;
@@ -958,13 +976,13 @@ function formatHour(h) {
   return `${h - 12} pm`;
 }
 function formatTime(dtStr) {
-  const d = new Date(dtStr);
-  return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  const [h, m] = dtStr.slice(11, 16).split(':').map(Number);
+  return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
 }
 function dayLabel(dtStr, idx) {
   if (idx === 0) return 'Today';
   if (idx === 1) return 'Tomorrow';
-  return new Date(dtStr).toLocaleDateString('en-US', { weekday: 'short' });
+  return new Date(`${dtStr}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' });
 }
 
 // ── Meteocons weather icons ────────────────────────────
@@ -998,6 +1016,21 @@ function _wmoIcon(code, hour) {
   return `<img src="${CDN}/${name}.svg" width="48" height="48" alt="" style="display:inline-block;vertical-align:middle;flex-shrink:0" loading="lazy">`;
 }
 
+// Overwrite best_match wind with the ECMWF reading, matching hourly rows by time.
+function mergeWind(w, wind) {
+  if (typeof wind?.current?.wind_speed_10m !== 'number') return;
+  w.current.wind_speed_10m = wind.current.wind_speed_10m;
+  w.current.wind_direction_10m = wind.current.wind_direction_10m;
+  const byTime = new Map(wind.hourly?.time?.map((t, i) => [t, i]) ?? []);
+  w.hourly.wind_direction_10m ??= [];
+  w.hourly.time.forEach((t, i) => {
+    const j = byTime.get(t);
+    if (j === undefined || wind.hourly.wind_speed_10m[j] == null) return;
+    w.hourly.wind_speed_10m[i] = wind.hourly.wind_speed_10m[j];
+    w.hourly.wind_direction_10m[i] = wind.hourly.wind_direction_10m[j];
+  });
+}
+
 let _loading = false;
 async function loadWeather() {
   if (_loading) return;
@@ -1013,9 +1046,19 @@ async function loadWeather() {
     `https://api.open-meteo.com/v1/forecast`,
     `?latitude=${LAT}&longitude=${LNG}`,
     `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m`,
-    `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability`,
+    `&hourly=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,precipitation_probability`,
     `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset`,
     `&timezone=Europe%2FAthens&forecast_days=7&models=best_match`,
+  ].join('');
+  // Wind comes from ECMWF IFS (9 km, grid point on Milos): closer to meteo.gr than
+  // best_match, which reads near-zero with a random direction around the island.
+  // ECMWF has no UV index, so everything else stays on best_match.
+  const windUrl = [
+    `https://api.open-meteo.com/v1/forecast`,
+    `?latitude=${LAT}&longitude=${LNG}`,
+    `&current=wind_speed_10m,wind_direction_10m`,
+    `&hourly=wind_speed_10m,wind_direction_10m`,
+    `&timezone=Europe%2FAthens&forecast_days=7&models=ecmwf_ifs`,
   ].join('');
   const marineUrl = [
     `https://marine-api.open-meteo.com/v1/marine`,
@@ -1029,13 +1072,17 @@ async function loadWeather() {
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 12000);
     try {
-      const [wSettled, mSettled] = await Promise.allSettled([
+      const [wSettled, windSettled, mSettled] = await Promise.allSettled([
         fetch(weatherUrl, { signal: ctrl.signal }),
+        fetch(windUrl,    { signal: ctrl.signal }),
         fetch(marineUrl,  { signal: ctrl.signal }),
       ]);
       if (wSettled.status === 'rejected') throw wSettled.reason;
       const wData = await wSettled.value.json();
       if (wData.error) throw new Error(wData.reason ?? 'Weather API error');
+      if (windSettled.status === 'fulfilled' && windSettled.value.ok) {
+        mergeWind(wData, await windSettled.value.json().catch(() => null));
+      }
       const mData = (mSettled.status === 'fulfilled' && mSettled.value.ok)
         ? await mSettled.value.json()
         : { current: null };
@@ -1078,7 +1125,7 @@ async function loadWeather() {
     // ── Hero
     const heroEl = document.getElementById('weather-hero');
     heroEl.classList.add(heroClass(c.weather_code));
-    el('hero-icon').innerHTML         = _wmoIcon(c.weather_code);
+    el('hero-icon').innerHTML         = _wmoIcon(c.weather_code, Number(c.time.slice(11, 13)));
     el('hero-temp').textContent      = `${Math.round(c.temperature_2m)}°`;
     el('hero-condition').textContent = WMO_TEXT[c.weather_code] ?? 'Unknown';
     el('hero-feels').textContent     = `Feels like ${Math.round(c.apparent_temperature)}°C`;
@@ -1088,8 +1135,9 @@ async function loadWeather() {
     el('hs-waves').textContent       = `${waveH.toFixed(1)} m`;
     el('hs-uv').textContent          = `${Math.round(c.uv_index)} — ${uvLevel(c.uv_index)[0]}`;
     el('hs-humidity').textContent    = `${Math.round(c.relative_humidity_2m)}%`;
-    const now = new Date();
-    el('hero-updated').textContent   = `Updated at ${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
+    el('hero-updated').textContent   = cachedAt
+      ? `Last updated ${athensClock(new Date(cachedAt))} (Milos time)`
+      : `Updated at ${formatTime(c.time)} (Milos time)`;
 
     // ── Wind card
     el('compass-needle-g').style.transform = `rotate(${(c.wind_direction_10m + 180) % 360}deg)`;
@@ -1137,9 +1185,10 @@ async function loadWeather() {
     const temps = w.hourly.temperature_2m;
     const codes = w.hourly.weather_code;
     const winds = w.hourly.wind_speed_10m;
+    const wdirs = w.hourly.wind_direction_10m;
     const pops  = w.hourly.precipitation_probability;
-    const currentHour = now.getHours();
-    let startIdx = times.findIndex(t => new Date(t).getHours() >= currentHour);
+    const nowHour = athensNowIso().slice(0, 13);
+    let startIdx = times.findIndex(t => t.slice(0, 13) >= nowHour);
     if (startIdx < 0) startIdx = 0;
 
     function hourBg(h) {
@@ -1152,7 +1201,7 @@ async function loadWeather() {
 
     el('w-hourly').innerHTML = times.slice(startIdx, startIdx + 12).map((t, i) => {
       const idx = startIdx + i;
-      const h = new Date(t).getHours();
+      const h = Number(t.slice(11, 13));
       const isNow = i === 0;
       const rainPct = pops?.[idx] ?? 0;
       const bgStyle = isNow ? '' : `style="background:${hourBg(h)};border-color:transparent"`;
@@ -1160,7 +1209,7 @@ async function loadWeather() {
         <span class="w-fc-time">${isNow ? 'Now' : formatHour(h)}</span>
         <span class="w-fc-icon">${_wmoIcon(codes[idx], h)}</span>
         <span class="w-fc-temp">${Math.round(temps[idx])}°</span>
-        <span class="w-fc-wind">${Math.round(winds[idx])} km/h</span>
+        <span class="w-fc-wind">${wdirs?.[idx] != null ? windArrow(winds[idx], wdirs[idx]) : ''}${Math.round(winds[idx])} km/h</span>
         ${rainPct >= 15 ? `<span class="w-fc-rain">💧 ${rainPct}%</span>` : '<span class="w-fc-rain-placeholder"></span>'}
       </div>`;
     }).join('');

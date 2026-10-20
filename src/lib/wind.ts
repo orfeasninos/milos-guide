@@ -19,7 +19,9 @@ export const BOAT_TOUR_LIMIT_KMH = 28;
 
 const LAT = 36.7257;
 const LNG = 24.4496;
-const SESSION_KEY = 'mg-wind-v1';
+// ECMWF IFS 9 km: same source as /weather and the cache workflow (best_match reads
+// near-zero with a random direction around Milos).
+const SESSION_KEY = 'mg-wind-v2';
 const SESSION_TTL = 30 * 60 * 1000;
 
 export function angleDiff(a: number, b: number): number {
@@ -71,7 +73,7 @@ async function fetchLive(): Promise<Wind> {
   try {
     const res = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LNG}` +
-        `&current=wind_speed_10m,wind_direction_10m&timezone=Europe%2FAthens`,
+        `&current=wind_speed_10m,wind_direction_10m&timezone=Europe%2FAthens&models=ecmwf_ifs`,
       { signal: ctrl.signal },
     );
     const c = (await res.json()).current;
