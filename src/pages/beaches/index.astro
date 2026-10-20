@@ -2,8 +2,10 @@
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
 import WindBeaches from '../../components/WindBeaches.astro';
-import beachesData from '../../data/beaches.json';
-import { getArea } from '../../lib/beaches';
+import beachesRaw from '../../data/beaches.json';
+import { getArea, beachPhoto, beachThumb } from '../../lib/beaches';
+
+const beachesData = beachesRaw.map(b => ({ ...b, image: beachPhoto(b) }));
 
 const allFacilities = [...new Set(
   beachesData.flatMap(b => b.facilities)
@@ -31,7 +33,7 @@ const beachMapData = sortedBeaches.map(b => ({
   area: b.area,
   isBoat: b.isBoat,
   facilities: b.facilities,
-  image: (b as any).image ?? null,
+  image: beachThumb(b),
 }));
 const _siteUrl = 'https://milos.guide';
 const beachesJsonld = {
@@ -39,13 +41,13 @@ const beachesJsonld = {
   '@type': 'ItemList',
   name: 'Beaches in Milos',
   description: `The best beaches in Milos — ${beachesData.length}+ options. Sarakiniko, Kleftiko, Tsigrado and more.`,
-  url: `${_siteUrl}/beaches`,
+  url: `${_siteUrl}/beaches/`,
   numberOfItems: sortedBeaches.length,
   itemListElement: sortedBeaches.map((b, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: getBeachName(b),
-    url: `${_siteUrl}/beaches/${b.slug}`,
+    url: `${_siteUrl}/beaches/${b.slug}/`,
   })),
 };
 ---
@@ -475,6 +477,8 @@ const beachesJsonld = {
 
 
 <script>
+import { CARTO_VOYAGER_URL } from '../../lib/basemap';
+
 const grid        = document.getElementById('beaches-grid');
 const empty       = document.getElementById('empty-state');
 const counter     = document.getElementById('results-count');
@@ -647,7 +651,7 @@ function setupMap() {
   });
 
   const street = L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    CARTO_VOYAGER_URL,
     { attribution: '© OpenStreetMap, © CARTO', maxZoom: 19, subdomains: 'abcd' },
   );
   const satellite = L.tileLayer(

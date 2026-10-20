@@ -1,0 +1,84 @@
+---
+import SmartImage from '../SmartImage.astro';
+import { getBeachName, type Beach } from '../../lib/beaches';
+
+interface Props { related: Beach[] }
+const { related } = Astro.props;
+---
+<!-- RELATED -->
+{related.length > 0 && (
+  <section class="sec sec-sand related-sec">
+    <div class="container">
+      <div class="sec-hdr-row">
+        <div>
+          <span class="label">Close by</span>
+          <h2 class="sec-title">Nearby beaches</h2>
+        </div>
+        <a href="/beaches" class="see-all">All beaches →</a>
+      </div>
+      <div class="related-grid">
+        {related.map(r => (
+          <a href={`/beaches/${r.slug}`} class="rel-card">
+            <div class="rel-img-wrap">
+              {r.image ? (
+                <SmartImage
+                  src={r.image}
+                  alt={getBeachName(r)}
+                  width={400}
+                  height={300}
+                  class="rel-img"
+                  sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
+                />
+              ) : (
+                <div class="rel-ph"></div>
+              )}
+              <div class="rel-overlay">
+                <h3 class="rel-name">{getBeachName(r)}</h3>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+/* ── RELATED ── */
+.related-sec { margin-top: 0; }
+.related-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.rel-card {
+  display: block;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+  background: var(--sand-dark);
+  transition: transform .2s, box-shadow .2s;
+}
+.rel-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.rel-img-wrap { position: absolute; inset: 0; }
+:global(.rel-img) { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+.rel-card:hover :global(.rel-img) { transform: scale(1.05); }
+.rel-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #1a5c8a, #3a9bc9); }
+.rel-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  color: #fff;
+}
+.rel-name { font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.2; margin: 0; }
+@media (max-width: 900px) {
+  .related-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .related-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .related-grid { grid-template-columns: 1fr; }
+}
+</style>

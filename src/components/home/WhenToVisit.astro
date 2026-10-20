@@ -1,0 +1,118 @@
+<!-- ══ WHEN TO VISIT ══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">When to visit</span>
+        <h2 class="sec-title">Every month has<br />its own character</h2>
+      </div>
+    </div>
+    <div class="months-grid">
+      <div class="month-item">
+        <div class="month-name">May</div>
+        <span class="month-tag">Peaceful</span>
+        <p class="month-desc">
+          Few crowds, wildflowers in bloom, ideal for exploring. Sea still
+          fresh.
+        </p>
+      </div>
+      <div class="month-item">
+        <div class="month-name">June</div>
+        <span class="month-tag">Ideal</span>
+        <p class="month-desc">
+          The best balance. Warm sea, few crowds, everything open.
+        </p>
+      </div>
+      <div class="month-item">
+        <div class="month-name">July</div>
+        <span class="month-tag">Peak season</span>
+        <p class="month-desc">
+          Lively atmosphere, but book everything well in advance.
+        </p>
+      </div>
+      <div class="month-item month-item--warn">
+        <div class="month-name">August</div>
+        <span class="month-tag">Busy</span>
+        <p class="month-desc">
+          Meltemi winds affect which beaches are suitable each day. Very
+          crowded.
+        </p>
+      </div>
+      <div class="month-item">
+        <div class="month-name">September</div>
+        <span class="month-tag">Best month</span>
+        <p class="month-desc">
+          Perhaps the perfect month. Warm sea, fewer crowds, lower prices.
+        </p>
+      </div>
+    </div>
+    <p class="meltemia-note">
+      ⚠️ <strong>Meltemi winds:</strong> The northern winds directly affect which
+      beaches are good each day — southern beaches (Paleochori, Fyriplaka) are sheltered,
+      while northern ones can have waves.
+    </p>
+  </div>
+</section>
+
+<style>
+  .months-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .month-item {
+    padding: 1.75rem 1.25rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--white);
+  }
+  .month-item:last-child {
+    border-right: none;
+  }
+  .month-item--warn .month-tag {
+    background: rgba(217, 119, 6, 0.12);
+    color: #92400e;
+  }
+  .month-name {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .month-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.6rem;
+    background: var(--sand-dark);
+    color: var(--muted);
+  }
+  .month-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  .meltemia-note {
+    margin-top: 1.25rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding: 0 0.25rem;
+  }
+  @media (max-width: 900px) {
+    .months-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .month-item:nth-child(2n) {
+      border-right: none;
+    }
+    .month-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+  }
+</style>

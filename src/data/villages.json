@@ -210,10 +210,10 @@
     "type": "village",
     "area": "Κεντρική Μήλος",
     "coordinates": {
-      "lat": 36.742764,
-      "lng": 24.432611
+      "lat": 36.7409198,
+      "lng": 24.4374211
     },
-    "googleMapsUri": "https://maps.google.com/?q=Triovasalos+Milos+Greece",
+    "googleMapsUri": "https://maps.google.com/?q=Pera+Triovasalos+Milos+Greece",
     "population": "844 (2021)",
     "elevation": "160m",
     "mustSee": [
@@ -295,8 +295,8 @@
     "type": "village",
     "area": "Κεντρική Μήλος",
     "coordinates": {
-      "lat": 36.742764,
-      "lng": 24.432611
+      "lat": 36.7006344,
+      "lng": 24.490647
     },
     "googleMapsUri": "https://maps.google.com/?q=Zefiria+Milos+Greece",
     "population": "190 (2021)",
@@ -417,8 +417,8 @@
     "type": "syrmata",
     "area": "Βόρεια Μήλος",
     "coordinates": {
-      "lat": 36.7540,
-      "lng": 24.4127
+      "lat": 36.7578632,
+      "lng": 24.4282271
     },
     "googleMapsUri": "https://maps.google.com/?q=Firopotamos+Milos+Greece",
     "population": "2 (2021)",

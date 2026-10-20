@@ -38,7 +38,7 @@ const sightJsonld = {
   '@type': 'TouristAttraction',
   name: sight.nameEn,
   description: sight.description,
-  url: `${_siteUrl}/sights/${sight.slug}`,
+  url: `${_siteUrl}/sights/${sight.slug}/`,
   address: {
     '@type': 'PostalAddress',
     addressLocality: sight.area,
@@ -259,20 +259,35 @@ const sightJsonld = {
 </Layout>
 
 <script>
-const btn   = document.getElementById('share-btn') as HTMLButtonElement;
+const btn = document.getElementById('share-btn') as HTMLButtonElement;
 const label = document.getElementById('share-label') as HTMLSpanElement;
-const icon  = document.getElementById('share-icon') as HTMLSpanElement;
+const icon = document.getElementById('share-icon') as HTMLSpanElement;
+
+const flash = (text: string, mark: string) => {
+  label.textContent = text;
+  icon.textContent = mark;
+  setTimeout(() => {
+    label.textContent = 'Share';
+    icon.textContent = '↗';
+  }, 2000);
+};
 
 btn?.addEventListener('click', async () => {
-  const url  = window.location.href;
+  const url = window.location.href;
   const title = document.title;
+
   if (navigator.share) {
-    try { await navigator.share({ title, url }); } catch {}
-  } else {
+    try {
+      await navigator.share({ title, url });
+    } catch {}
+    return;
+  }
+  try {
     await navigator.clipboard.writeText(url);
-    label.textContent = 'Copied!';
-    icon.textContent  = '✓';
-    setTimeout(() => { label.textContent = 'Share'; icon.textContent = '↗'; }, 2000);
+    flash('Copied!', '✓');
+  } catch {
+    // Clipboard can be blocked (permissions, insecure context): let the user copy by hand.
+    window.prompt('Copy this link:', url);
   }
 });
 </script>

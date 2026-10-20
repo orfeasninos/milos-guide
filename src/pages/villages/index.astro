@@ -20,13 +20,13 @@ const villagesJsonld = {
   '@type': 'ItemList',
   name: 'Villages of Milos',
   description: `Discover the ${villagesData.length} villages of Milos — Plaka, Klima, Tripiti, Pollonia and more.`,
-  url: `${_siteUrl}/villages`,
+  url: `${_siteUrl}/villages/`,
   numberOfItems: villagesData.length,
   itemListElement: villagesData.map((v, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: (v as any).nameEn ?? v.name,
-    url: `${_siteUrl}/villages/${v.slug}`,
+    url: `${_siteUrl}/villages/${v.slug}/`,
   })),
 };
 ---

@@ -1,5 +1,5 @@
 ---
-const { title, description, lang = 'el', jsonld: pageJsonld = null, preloadImage, preloadImageSrcset, preloadImageSizes = '100vw' } = Astro.props;
+const { title, description, lang = 'en', jsonld: pageJsonld = null, preloadImage, preloadImageSrcset, preloadImageSizes = '100vw' } = Astro.props;
 import MilosIcon from '../components/milosicon.astro';
 import '@fontsource-variable/dm-sans';
 import '@fontsource/dm-serif-display/400.css';
@@ -40,7 +40,7 @@ pathParts.forEach((part, i) => {
   const isLast = i === pathParts.length - 1;
   breadcrumbs.push({
     name: isLast ? title : (segmentLabels[part]?.[isEl ? 'el' : 'en'] ?? part),
-    url: siteUrl + accumulated,
+    url: siteUrl + accumulated + '/',
   });
 });
 
@@ -154,7 +154,7 @@ const schemas: object[] = [
   <meta property="og:url"          content={canonicalURL} />
   <meta property="og:title"        content={`${title} | Milos.guide`} />
   <meta property="og:description"  content={description} />
-  <meta property="og:image"        content="/og-image.jpg" />
+  <meta property="og:image"        content={siteUrl + "/og-image.jpg"} />
   <meta property="og:image:width"  content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale"       content={isEl ? 'el_GR' : 'en_US'} />
@@ -162,7 +162,7 @@ const schemas: object[] = [
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content={`${title} | Milos.guide`} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image"       content="/og-image.jpg" />
+  <meta name="twitter:image"       content={siteUrl + "/og-image.jpg"} />
   {schemas.map(s => (
     <script is:inline type="application/ld+json" set:html={JSON.stringify(s)} />
   ))}
@@ -199,6 +199,7 @@ const schemas: object[] = [
       }
     })();
   </script>
+  <slot name="head" />
 </head>
 
 <body>

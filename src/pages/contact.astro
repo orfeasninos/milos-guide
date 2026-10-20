@@ -346,8 +346,11 @@ form?.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Sending…';
 
   try {
-    const data = new FormData(form);
-    await fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
+    // The Apps Script must answer with ContentService JSON ({ result: 'success' | 'error' })
+    // so the response is readable cross-origin and failures surface here.
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) });
+    const json = await res.json().catch(() => null);
+    if (!res.ok || json?.result !== 'success') throw new Error(json?.error ?? `HTTP ${res.status}`);
 
     form.reset();
     successBox.style.display = 'flex';

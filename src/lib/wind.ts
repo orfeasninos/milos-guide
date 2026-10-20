@@ -3,6 +3,8 @@
 // wind direction that blows straight onshore. Open-Meteo reports wind as the
 // direction it blows FROM, so a small angle between the two means waves on the beach.
 
+import { CURRENT_WIND_URL } from './openmeteo.js';
+
 export type Exposure = 'calm' | 'sheltered' | 'partial' | 'exposed';
 
 export interface Wind {
@@ -17,10 +19,6 @@ export const CALM_KMH = 12;
 export const VARIABLE_KMH = 4;
 export const BOAT_TOUR_LIMIT_KMH = 28;
 
-const LAT = 36.7257;
-const LNG = 24.4496;
-// ECMWF IFS 9 km: same source as /weather and the cache workflow (best_match reads
-// near-zero with a random direction around Milos).
 const SESSION_KEY = 'mg-wind-v2';
 const SESSION_TTL = 30 * 60 * 1000;
 
@@ -71,11 +69,8 @@ async function fetchLive(): Promise<Wind> {
   const ctrl = new AbortController();
   const tid = setTimeout(() => ctrl.abort(), 6000);
   try {
-    const res = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LNG}` +
-        `&current=wind_speed_10m,wind_direction_10m&timezone=Europe%2FAthens&models=ecmwf_ifs`,
-      { signal: ctrl.signal },
-    );
+    // ECMWF IFS: same source as /weather and the cache workflow.
+    const res = await fetch(CURRENT_WIND_URL, { signal: ctrl.signal });
     const c = (await res.json()).current;
     if (typeof c?.wind_speed_10m !== 'number') throw new Error('bad payload');
     return { speed: c.wind_speed_10m, direction: c.wind_direction_10m, time: c.time, source: 'live' };

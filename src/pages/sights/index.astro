@@ -24,13 +24,13 @@ const sightsJsonld = {
   '@type': 'ItemList',
   name: 'Sights & Attractions of Milos',
   description: `Discover the top ${sightsData.length} sights and attractions of Milos — catacombs, ancient theater, Kastro and more.`,
-  url: `${_siteUrl}/sights`,
+  url: `${_siteUrl}/sights/`,
   numberOfItems: sightsData.length,
   itemListElement: sightsData.map((s, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     name: s.nameEn,
-    url: `${_siteUrl}/sights/${s.slug}`,
+    url: `${_siteUrl}/sights/${s.slug}/`,
   })),
 };
 ---

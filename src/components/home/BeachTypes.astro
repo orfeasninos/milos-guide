@@ -1,0 +1,115 @@
+---
+import beachesRaw from "../../data/beaches.json";
+
+type Beach = (typeof beachesRaw)[number];
+
+const beachesData = beachesRaw as Beach[];
+
+const accessIcon: Record<string, string> = {
+  road: "🚗",
+  boat: "⛵",
+  hike: "🥾",
+};
+
+const beachCategories = [
+  {
+    title: "👨‍👩‍👧 For families",
+    filter: (b: Beach) => b.bestFor.includes("Families"),
+  },
+  {
+    title: "📸 For photos",
+    filter: (b: Beach) => b.bestFor.includes("Photography"),
+  },
+  {
+    title: "🔇 For peace & quiet",
+    filter: (b: Beach) => b.bestFor.includes("Solitude"),
+  },
+  {
+    title: "⛵ Boat access only",
+    filter: (b: Beach) => b.accessType === "boat",
+  },
+].map((cat) => ({
+  ...cat,
+  beaches: beachesData.filter(cat.filter).slice(0, 3),
+}));
+---
+<!-- ══ BEACHES BY TYPE ══ -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Beaches</span>
+        <h2 class="sec-title">Find your beach</h2>
+      </div>
+      <a href="/beaches" class="see-all">All beaches →</a>
+    </div>
+    <div class="beach-cat-grid">
+      {
+        beachCategories.map((cat) => (
+          <div class="beach-cat">
+            <div class="beach-cat-title">{cat.title}</div>
+            <div class="beach-cat-list">
+              {cat.beaches.map((b) => (
+                <a href={`/beaches/${b.slug}`} class="beach-link">
+                  <span class="beach-link-icon">
+                    {accessIcon[b.accessType] ?? "📍"}
+                  </span>
+                  {typeof b.name === "object" ? b.name.en : b.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .beach-cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .beach-cat {
+    border-top: 2px solid var(--deep-blue);
+    padding-top: 1.25rem;
+  }
+  .beach-cat-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--deep-blue);
+    margin-bottom: 1rem;
+  }
+  .beach-cat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .beach-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--ink);
+    transition:
+      color 0.15s,
+      padding-left 0.15s;
+  }
+  .beach-link:hover {
+    color: var(--aegean);
+    padding-left: 0.4rem;
+  }
+  .beach-link-icon {
+    font-size: 0.8rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .beach-cat-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

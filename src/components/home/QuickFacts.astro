@@ -1,0 +1,83 @@
+<!-- ══ QUICK FACTS ══ -->
+<section class="sec sec-dark">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label label-lt">At a glance</span>
+        <h2 class="sec-title sec-title-lt">Quick Facts</h2>
+      </div>
+    </div>
+    <div class="facts-grid">
+      <div class="fact-item">
+        <span class="fact-key">Region</span><span class="fact-val"
+          >Cyclades</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Capital</span><span class="fact-val"
+          >Plaka</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Port</span><span class="fact-val">Adamas</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Population</span><span class="fact-val"
+          >5,302 (2021)</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Beaches</span><span class="fact-val">70+</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Area</span><span class="fact-val"
+          >151 km²</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Highest peak</span><span class="fact-val"
+          >Prophet Elias</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Famous find</span><span class="fact-val"
+          >Venus de Milo</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Coastline</span><span class="fact-val"
+          >125km</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-key">Time zone</span><span class="fact-val"
+          >UTC+2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .fact-item {
+    background: transparent;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .fact-key {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(58, 155, 201, 0.7);
+  }
+  .fact-val {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+</style>

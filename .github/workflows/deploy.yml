@@ -3,18 +3,31 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  # Pushes made with GITHUB_TOKEN don't trigger other workflows,
+  # so redeploy explicitly after the weather cache is refreshed.
+  workflow_run:
+    workflows: [ "Update Weather Cache" ]
+    types: [ completed ]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3

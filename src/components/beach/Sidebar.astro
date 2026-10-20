@@ -1,0 +1,200 @@
+---
+import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
+
+interface Props { beach: Beach; access: BeachAccess; mapsUrl: string | null }
+const { beach, access, mapsUrl } = Astro.props;
+---
+<!-- SIDEBAR -->
+<aside class="b-sidebar">
+
+  <!-- Info -->
+  <div class="s-card">
+    <p class="s-card-label">Details</p>
+    <ul class="s-info-list">
+      <li class="s-info-row">
+        <span class="s-info-key">Access</span>
+        <span class="s-info-val">{access.icon} {access.label}</span>
+      </li>
+      {beach.facilities.includes('sunbeds') && (
+        <li class="s-info-row">
+          <span class="s-info-key">Type</span>
+          <span class="s-info-val">🏖️ Organised</span>
+        </li>
+      )}
+      <li class="s-info-row">
+        <span class="s-info-key">Sunbeds</span>
+        <span class="s-info-val">
+          {beach.facilities.includes('sunbeds') ? '✅ Available' : '❌ Not available'}
+        </span>
+      </li>
+      <li class="s-info-row">
+        <span class="s-info-key">Nearby food</span>
+        <span class="s-info-val">
+          {beach.nearbyFood ? '✅ Yes' : '❌ No'}
+        </span>
+      </li>
+      <li class="s-info-row">
+        <span class="s-info-key">Parking</span>
+        <span class="s-info-val">
+          {beach.facilities.includes('parking') ? '✅ Free parking' : '❌ Not available'}
+        </span>
+      </li>
+      {beach.sandType && (
+        <li class="s-info-row">
+          <span class="s-info-key">Surface</span>
+          <span class="s-info-val">{beach.sandType}</span>
+        </li>
+      )}
+      {beach.swimDepth && (
+        <li class="s-info-row">
+          <span class="s-info-key">Water depth</span>
+          <span class="s-info-val">{beach.swimDepth}</span>
+        </li>
+      )}
+      <li class="s-info-row">
+        <span class="s-info-key">Natural shade</span>
+        <span class="s-info-val">{beach.shade ? '✅ Yes' : '❌ No'}</span>
+      </li>
+      {beach.bestFor && beach.bestFor.length > 0 && (
+        <li class="s-info-row">
+          <span class="s-info-key">Best for</span>
+          <span class="s-info-val">{beach.bestFor.join(' · ')}</span>
+        </li>
+      )}
+    </ul>
+  </div>
+
+  <!-- Map embed -->
+  {beach.coordinates?.lat && beach.coordinates?.lng && (
+    <div class="s-map">
+      <iframe
+        src={`https://maps.google.com/maps?q=${beach.coordinates.lat},${beach.coordinates.lng}&z=15&output=embed`}
+        width="100%"
+        height="220"
+        style="border:0;"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title={`Map of ${getBeachName(beach)}`}
+      ></iframe>
+    </div>
+  )}
+
+  <!-- CTA -->
+  {mapsUrl && (
+    <a
+      href={mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="s-btn s-btn--maps"
+    >
+      <span>📍</span> Google Maps ↗
+    </a>
+  )}
+
+  <!-- Share -->
+  <button id="share-btn" class="s-btn s-btn--share" type="button">
+    <span id="share-icon">↗</span> <span id="share-label">Share</span>
+  </button>
+
+</aside>
+
+<script>
+  const btn = document.getElementById('share-btn') as HTMLButtonElement;
+  const label = document.getElementById('share-label') as HTMLSpanElement;
+  const icon = document.getElementById('share-icon') as HTMLSpanElement;
+
+  const flash = (text: string, mark: string) => {
+    label.textContent = text;
+    icon.textContent = mark;
+    setTimeout(() => {
+      label.textContent = 'Share';
+      icon.textContent = '↗';
+    }, 2000);
+  };
+
+  btn?.addEventListener('click', async () => {
+    const url = window.location.href;
+    const title = document.title;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+      } catch {}
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      flash('Copied!', '✓');
+    } catch {
+      // Clipboard can be blocked (permissions, insecure context): let the user copy by hand.
+      window.prompt('Copy this link:', url);
+    }
+  });
+</script>
+
+<style>
+/* ── SIDEBAR ── */
+
+.b-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+
+.s-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.s-card-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+
+.s-info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+
+.s-info-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: .875rem; gap: .5rem; }
+
+.s-info-key { font-weight: 600; color: var(--muted); flex-shrink: 0; }
+
+.s-info-val { color: var(--ink); text-align: right; font-size: .875rem; }
+
+.s-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  font-weight: 600;
+  transition: transform .15s, opacity .15s;
+}
+
+.s-btn:hover { transform: translateY(-1px); opacity: .9; }
+
+.s-map {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  line-height: 0;
+}
+
+.s-btn--maps  { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+
+.s-btn--share { background: var(--white); color: var(--ink); border: 1px solid var(--border); cursor: pointer; width: 100%; font-size: .875rem; }
+
+@media (max-width: 768px) {
+  .b-sidebar { position: static; }
+  .s-map iframe { height: 350px; }
+}
+</style>

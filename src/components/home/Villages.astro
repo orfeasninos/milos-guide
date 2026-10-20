@@ -1,0 +1,81 @@
+<!-- ══ VILLAGES ══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Villages</span>
+        <h2 class="sec-title">Milos beyond the beaches</h2>
+      </div>
+      <a href="/villages" class="see-all">All villages →</a>
+    </div>
+    <div class="villages-grid">
+      <a href="/villages/plaka" class="village-card"
+        ><span class="village-name">Plaka</span><span class="village-note"
+          >The capital, perched on a rock with panoramic views</span
+        ></a
+      >
+      <a href="/villages/tripiti" class="village-card"
+        ><span class="village-name">Tripiti</span><span class="village-note"
+          >Catacombs, ancient theatre, atmospheric village</span
+        ></a
+      >
+      <a href="/villages/pollonia" class="village-card"
+        ><span class="village-name">Pollonia</span><span class="village-note"
+          >North coast, fish tavernas and ferries to Kimolos</span
+        ></a
+      >
+      <a href="/villages/klima" class="village-card"
+        ><span class="village-name">Klima</span><span class="village-note"
+          >The famous syrmata — fishing storehouses over the sea</span
+        ></a
+      >
+      <a href="/villages/mandrakia" class="village-card"
+        ><span class="village-name">Mandrakia</span><span class="village-note"
+          >A small harbour with colourful syrmata</span
+        ></a
+      >
+      <a href="/villages/firopotamos" class="village-card"
+        ><span class="village-name">Firopotamos</span><span
+          class="village-note"
+          >Quiet, authentic, far from the tourist trail</span
+        ></a
+      >
+    </div>
+  </div>
+</section>
+
+<style>
+  .villages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+  .village-card {
+    background: var(--white);
+    border: 1px solid var(--sand-dark);
+    border-radius: var(--radius-md);
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s,
+      border-color 0.15s;
+  }
+  .village-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--sea);
+  }
+  .village-name {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--deep-blue);
+  }
+  .village-note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+</style>

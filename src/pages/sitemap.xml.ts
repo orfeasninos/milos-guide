@@ -6,7 +6,6 @@ import sightsData from '../data/sights.json';
 export const prerender = true;
 
 const SITE = 'https://milos.guide';
-const today = new Date().toISOString().split('T')[0];
 
 const statics = [
   { en: '/',              priority: '1.0' },
@@ -25,8 +24,6 @@ const statics = [
 function urlPair(en: string, priority: string) {
   return `  <url>
     <loc>${SITE}${en}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>daily</changefreq>
     <priority>${priority}</priority>
   </url>`;
 }

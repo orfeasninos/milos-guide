@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 import sightsRaw from '../data/sights.json';
+import { beachThumb } from '../lib/beaches';
+import { CARTO_VOYAGER_URL } from '../lib/basemap';
 
 const points = [
   ...beachesRaw
@@ -10,7 +12,7 @@ const points = [
     .map(b => ({
       slug:  b.slug, type: 'beach',
       name:  typeof b.name === 'object' ? (b.name as any).en : b.name,
-      area:  b.location.area, photo: b.image ?? null,
+      area:  b.location.area, photo: beachThumb(b),
       url:   `/beaches/${b.slug}`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
     })),
   ...villagesRaw
@@ -28,7 +30,8 @@ const points = [
       name: s.nameEn, area: s.area, photo: null,
       url:  `/sights/${s.slug}`, lat: (s as any).coordinates.lat, lng: (s as any).coordinates.lng, icon: s.icon,
     })),
-];
+// Slugs repeat across types (e.g. Sarakiniko is a beach and a sight), so ids use type + slug.
+].map(p => ({ ...p, key: `${p.type}-${p.slug}` }));
 ---
 
 <Layout
@@ -36,6 +39,11 @@ const points = [
   title="Map of Milos"
   description="Interactive map of Milos — beaches, villages and sights."
 >
+<Fragment slot="head">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
+</Fragment>
 
 <div class="map-page">
   <aside class="map-sidebar" id="map-sidebar">
@@ -44,13 +52,13 @@ const points = [
       <p class="sidebar-count" id="sidebar-count">{points.length} places</p>
     </div>
     <div class="sidebar-filters">
-      <button class="mf-chip mf-chip--active" data-filter="beach">🏖 Beaches</button>
-      <button class="mf-chip mf-chip--active" data-filter="village">🏘 Villages</button>
-      <button class="mf-chip mf-chip--active" data-filter="sight">🏛 Sights</button>
+      <button type="button" class="mf-chip mf-chip--active" data-filter="beach" aria-pressed="true">🏖 Beaches</button>
+      <button type="button" class="mf-chip mf-chip--active" data-filter="village" aria-pressed="true">🏘 Villages</button>
+      <button type="button" class="mf-chip mf-chip--active" data-filter="sight" aria-pressed="true">🏛 Sights</button>
     </div>
     <div class="sidebar-cards" id="sidebar-cards">
       {points.map(p => (
-        <a href={p.url} class="mc" id={`mc-${p.slug}`} data-slug={p.slug} data-type={p.type} data-lat={p.lat} data-lng={p.lng}>
+        <a href={p.url} class="mc" id={`mc-${p.key}`} data-key={p.key} data-type={p.type} data-lat={p.lat} data-lng={p.lng}>
           <div class="mc-img-wrap">
             {p.photo ? <img src={p.photo} alt={p.name} class="mc-img" loading="lazy" /> : <div class="mc-ph">{p.icon}</div>}
           </div>
@@ -70,17 +78,198 @@ const points = [
 
   <div class="map-wrap" id="map-wrap">
     <div id="map"></div>
+    <p class="map-error" id="map-error" hidden>The map couldn't load. Check your connection and refresh the page.</p>
   </div>
 </div>
 
+<script define:vars={{ points, CARTO_VOYAGER_URL }}>
+const showMapError = () => { document.getElementById('map-error').hidden = false; };
+const script = document.createElement('script');
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+script.onerror = showMapError;
+script.onload = () => {
+  const clusterScript = document.createElement('script');
+  clusterScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js';
+  clusterScript.onerror = showMapError;
+  clusterScript.onload = initMap;
+  document.head.appendChild(clusterScript);
+};
+document.head.appendChild(script);
+
+const markerColors = { beach: '#1a7fc1', village: '#2d6a4f', sight: '#7b4f1e' };
+const markerEmoji  = { beach: '🏖', village: '🏘', sight: '🏛' };
+
+let map, markers = [], clusterGroup, activeKey = null;
+let activeFilters = new Set(['beach', 'village', 'sight']);
+
+function initMap() {
+  const milosBounds = L.latLngBounds(L.latLng(36.55, 24.15), L.latLng(36.90, 24.75));
+
+  map = L.map('map', {
+    center: [36.710, 24.430],
+    zoom: 12,
+    minZoom: 10,
+    maxZoom: 18,
+    maxBounds: milosBounds,
+    maxBoundsViscosity: 1.0,
+    zoomControl: true,
+  });
+
+  const streetLayer = L.tileLayer(CARTO_VOYAGER_URL, {
+    maxZoom: 19,
+    subdomains: 'abcd',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  });
+  const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    attribution: 'Tiles &copy; Esri'
+  });
+  streetLayer.addTo(map);
+  L.control.layers({ "Map": streetLayer, "Satellite": satelliteLayer }, null, { position: 'topright', collapsed: true }).addTo(map);
+
+  clusterGroup = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    disableClusteringAtZoom: 14,
+    zoomToBoundsOnClick: true,
+    iconCreateFunction: (cluster) => {
+      const count = cluster.getChildCount();
+      const size = count < 10 ? 36 : count < 20 ? 42 : 48;
+      return L.divIcon({
+        html: `<div class="cluster-icon" style="width:${size}px;height:${size}px"><span>${count}</span></div>`,
+        className: '', iconSize: [size, size], iconAnchor: [size/2, size/2],
+      });
+    },
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+  });
+
+  points.forEach(p => {
+    const color = markerColors[p.type] || '#0d2b4e';
+    const emoji = p.icon || markerEmoji[p.type] || '📍';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="52" viewBox="0 0 40 52">
+      <defs><filter id="sh-${p.key}" x="-30%" y="-20%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(0,0,0,0.35)"/>
+      </filter></defs>
+      <path d="M20 2 C10.06 2 2 10.06 2 20 C2 31 20 50 20 50 C20 50 38 31 38 20 C38 10.06 29.94 2 20 2 Z"
+        fill="${color}" filter="url(#sh-${p.key})"/>
+      <circle cx="20" cy="20" r="13" fill="white" opacity="0.2"/>
+      <text x="20" y="26" text-anchor="middle" font-size="16">${emoji}</text>
+    </svg>`;
+
+    const el = document.createElement('div');
+    el.className = 'custom-marker';
+    el.innerHTML = svg;
+
+    const icon = L.divIcon({ html: el, className: '', iconSize: [40, 52], iconAnchor: [20, 52] });
+    const marker = L.marker([p.lat, p.lng], { icon });
+
+    const photoHtml = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}" class="map-popup-img" />`
+      : `<div class="map-popup-ph">${p.icon || markerEmoji[p.type] || '📍'}</div>`;
+
+    marker.bindPopup(L.popup({ maxWidth: 200, minWidth: 200, offset: [0, -8] }).setContent(`
+      <div class="map-popup">
+        ${photoHtml}
+        <div class="map-popup-body">
+          <span class="map-popup-type">${p.type}</span>
+          <p class="map-popup-name">${p.name}</p>
+          <p class="map-popup-area">📍 ${p.area}</p>
+          <a href="${p.url}" class="map-popup-link">View details →</a>
+        </div>
+      </div>
+    `));
+
+    marker.on('click', () => activateCard(p.key, true));
+    markers.push({ key: p.key, type: p.type, marker, el });
+    clusterGroup.addLayer(marker);
+  });
+
+  map.addLayer(clusterGroup);
+  // Fit every point: a fixed zoom 12 cut the island off on phones.
+  map.fitBounds(clusterGroup.getBounds(), { padding: [24, 24] });
+  setTimeout(() => map.invalidateSize(), 300);
+  applyFilter(); // sync initial state
+
+  // Filter chips — multi-select toggle
+  document.querySelectorAll('.mf-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      if (activeFilters.has(filter)) {
+        // Don't allow deselecting all
+        if (activeFilters.size > 1) {
+          activeFilters.delete(filter);
+          chip.classList.remove('mf-chip--active');
+          chip.setAttribute('aria-pressed', 'false');
+        }
+      } else {
+        activeFilters.add(filter);
+        chip.classList.add('mf-chip--active');
+        chip.setAttribute('aria-pressed', 'true');
+      }
+      applyFilter();
+    });
+  });
+
+  // Sidebar card clicks
+  document.querySelectorAll('.mc').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      const key = card.dataset.key;
+      activateCard(key, true);
+      const m = markers.find(m => m.key === key);
+      if (!m) return;
+      clusterGroup.zoomToShowLayer(m.marker, () => m.marker.openPopup());
+    });
+  });
+}
+
+function activateCard(key, scroll) {
+  if (activeKey) {
+    document.getElementById(`mc-${activeKey}`)?.classList.remove('is-active');
+    const prev = markers.find(m => m.key === activeKey);
+    if (prev) prev.el.classList.remove('custom-marker--active');
+  }
+  activeKey = key;
+  const card = document.getElementById(`mc-${key}`);
+  card?.classList.add('is-active');
+  if (scroll && card) {
+    // Scroll only the sidebar list: scrollIntoView would also scroll the page on mobile.
+    const list = document.getElementById('sidebar-cards');
+    const top = card.offsetTop - list.offsetTop;
+    if (top < list.scrollTop || top + card.offsetHeight > list.scrollTop + list.clientHeight) {
+      list.scrollTo({ top: top - list.clientHeight / 2 + card.offsetHeight / 2, behavior: 'smooth' });
+    }
+  }
+  const m = markers.find(m => m.key === key);
+  if (m) m.el.classList.add('custom-marker--active');
+}
+
+function applyFilter() {
+  let visible = 0;
+  clusterGroup.clearLayers();
+  markers.forEach(m => {
+    const show = activeFilters.has(m.type);
+    if (show) { clusterGroup.addLayer(m.marker); visible++; }
+  });
+  document.querySelectorAll('.mc').forEach(card => {
+    card.style.display = activeFilters.has(card.dataset.type) ? '' : 'none';
+  });
+  const counter = document.getElementById('sidebar-count');
+  if (counter) counter.textContent = `${visible} places`;
+  const empty = document.getElementById('sidebar-empty');
+  const cards = document.getElementById('sidebar-cards');
+  if (empty && cards) {
+    empty.style.display = visible === 0 ? 'block' : 'none';
+    cards.style.display = visible === 0 ? 'none' : '';
+  }
+}
+</script>
+
 </Layout>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
-
 <style>
-.map-page { display: flex; height: calc(100vh - var(--header-h)); overflow: hidden; position: relative; z-index: 0; }
+.map-page { display: flex; height: calc(100vh - var(--header-h)); height: calc(100dvh - var(--header-h)); overflow: hidden; position: relative; z-index: 0; }
 
 .map-sidebar { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--sand); border-right: 1px solid var(--border); overflow: hidden; }
 .sidebar-top { padding: 1.25rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border); background: var(--white); flex-shrink: 0; }
@@ -130,6 +319,8 @@ const points = [
 
 .map-wrap { flex: 1; position: relative; overflow: hidden; }
 #map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-error { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 2rem; text-align: center; color: var(--muted); background: var(--sand); }
+.map-error[hidden] { display: none; }
 
 /* Layer switcher styling */
 :global(.leaflet-control-layers) {
@@ -146,9 +337,9 @@ const points = [
   height: 32px !important;
 }
 
-.custom-marker { cursor: pointer; transition: transform 0.15s; }
-.custom-marker:hover { transform: translateY(-4px) scale(1.12); }
-.custom-marker--active { transform: translateY(-5px) scale(1.2) !important; }
+:global(.custom-marker) { cursor: pointer; transition: transform 0.15s; transform-origin: 50% 100%; }
+:global(.custom-marker:hover) { transform: translateY(-4px) scale(1.12); }
+:global(.custom-marker--active) { transform: translateY(-5px) scale(1.2) !important; }
 
 :global(.cluster-icon) { background: var(--deep-blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem; border: 3px solid #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
 :global(.cluster-icon span) { line-height: 1; }
@@ -167,8 +358,6 @@ const points = [
 @media (max-width: 768px) {
   .map-page {
     flex-direction: column;
-    height: calc(100vh - var(--header-h));
-    overflow: hidden;
   }
 
   /* Sidebar on top */
@@ -217,172 +406,3 @@ const points = [
   .mc-area { font-size: 0.68rem; }
 }
 </style>
-
-<script define:vars={{ points }}>
-const script = document.createElement('script');
-script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-script.onload = () => {
-  const clusterScript = document.createElement('script');
-  clusterScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js';
-  clusterScript.onload = initMap;
-  document.head.appendChild(clusterScript);
-};
-document.head.appendChild(script);
-
-const markerColors = { beach: '#1a7fc1', village: '#2d6a4f', sight: '#7b4f1e' };
-const markerEmoji  = { beach: '🏖', village: '🏘', sight: '🏛' };
-
-let map, markers = [], clusterGroup, activeSlug = null;
-let activeFilters = new Set(['beach', 'village', 'sight']);
-
-function initMap() {
-  const milosBounds = L.latLngBounds(L.latLng(36.60, 24.25), L.latLng(36.85, 24.65));
-
-  map = L.map('map', {
-    center: [36.710, 24.430],
-    zoom: 12,
-    minZoom: 12,
-    maxZoom: 18,
-    maxBounds: milosBounds,
-    maxBoundsViscosity: 1.0,
-    zoomControl: true,
-  });
-
-  const streetLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    subdomains: 'abcd',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-  });
-  const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 19,
-    attribution: 'Tiles &copy; Esri'
-  });
-  streetLayer.addTo(map);
-  L.control.layers({ "Map": streetLayer, "Satellite": satelliteLayer }, null, { position: 'topright', collapsed: true }).addTo(map);
-
-  clusterGroup = L.markerClusterGroup({
-    maxClusterRadius: 50,
-    disableClusteringAtZoom: 14,
-    zoomToBoundsOnClick: true,
-    iconCreateFunction: (cluster) => {
-      const count = cluster.getChildCount();
-      const size = count < 10 ? 36 : count < 20 ? 42 : 48;
-      return L.divIcon({
-        html: `<div class="cluster-icon" style="width:${size}px;height:${size}px"><span>${count}</span></div>`,
-        className: '', iconSize: [size, size], iconAnchor: [size/2, size/2],
-      });
-    },
-    spiderfyOnMaxZoom: true,
-    showCoverageOnHover: false,
-  });
-
-  points.forEach(p => {
-    const color = markerColors[p.type] || '#0d2b4e';
-    const emoji = p.icon || markerEmoji[p.type] || '📍';
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="52" viewBox="0 0 40 52">
-      <defs><filter id="sh-${p.slug}" x="-30%" y="-20%" width="160%" height="160%">
-        <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="rgba(0,0,0,0.35)"/>
-      </filter></defs>
-      <path d="M20 2 C10.06 2 2 10.06 2 20 C2 31 20 50 20 50 C20 50 38 31 38 20 C38 10.06 29.94 2 20 2 Z"
-        fill="${color}" filter="url(#sh-${p.slug})"/>
-      <circle cx="20" cy="20" r="13" fill="white" opacity="0.2"/>
-      <text x="20" y="26" text-anchor="middle" font-size="16">${emoji}</text>
-    </svg>`;
-
-    const el = document.createElement('div');
-    el.className = 'custom-marker';
-    el.innerHTML = svg;
-
-    const icon = L.divIcon({ html: el, className: '', iconSize: [40, 52], iconAnchor: [20, 52] });
-    const marker = L.marker([p.lat, p.lng], { icon });
-
-    const photoHtml = p.photo
-      ? `<img src="${p.photo}" alt="${p.name}" class="map-popup-img" />`
-      : `<div class="map-popup-ph">${p.icon || markerEmoji[p.type] || '📍'}</div>`;
-
-    marker.bindPopup(L.popup({ maxWidth: 200, minWidth: 200, offset: [0, -8] }).setContent(`
-      <div class="map-popup">
-        ${photoHtml}
-        <div class="map-popup-body">
-          <span class="map-popup-type">${p.type}</span>
-          <p class="map-popup-name">${p.name}</p>
-          <p class="map-popup-area">📍 ${p.area}</p>
-          <a href="${p.url}" class="map-popup-link">View details →</a>
-        </div>
-      </div>
-    `));
-
-    marker.on('click', () => activateCard(p.slug, false));
-    markers.push({ slug: p.slug, type: p.type, marker, el });
-    clusterGroup.addLayer(marker);
-  });
-
-  map.addLayer(clusterGroup);
-  setTimeout(() => map.invalidateSize(), 300);
-  applyFilter(); // sync initial state
-
-  // Filter chips — multi-select toggle
-  document.querySelectorAll('.mf-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const filter = chip.dataset.filter;
-      if (activeFilters.has(filter)) {
-        // Don't allow deselecting all
-        if (activeFilters.size > 1) {
-          activeFilters.delete(filter);
-          chip.classList.remove('mf-chip--active');
-        }
-      } else {
-        activeFilters.add(filter);
-        chip.classList.add('mf-chip--active');
-      }
-      applyFilter();
-    });
-  });
-
-  // Sidebar card clicks
-  document.querySelectorAll('.mc').forEach(card => {
-    card.addEventListener('click', e => {
-      e.preventDefault();
-      const slug = card.dataset.slug;
-      activateCard(slug, true);
-      const m = markers.find(m => m.slug === slug);
-      if (!m) return;
-      clusterGroup.zoomToShowLayer(m.marker, () => m.marker.openPopup());
-    });
-  });
-}
-
-function activateCard(slug, scroll) {
-  if (activeSlug) {
-    document.getElementById(`mc-${activeSlug}`)?.classList.remove('is-active');
-    const prev = markers.find(m => m.slug === activeSlug);
-    if (prev) prev.el.classList.remove('custom-marker--active');
-  }
-  activeSlug = slug;
-  const card = document.getElementById(`mc-${slug}`);
-  card?.classList.add('is-active');
-  if (scroll && card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  const m = markers.find(m => m.slug === slug);
-  if (m) m.el.classList.add('custom-marker--active');
-}
-
-function applyFilter() {
-  let visible = 0;
-  clusterGroup.clearLayers();
-  markers.forEach(m => {
-    const show = activeFilters.has(m.type);
-    if (show) { clusterGroup.addLayer(m.marker); visible++; }
-  });
-  document.querySelectorAll('.mc').forEach(card => {
-    card.style.display = activeFilters.has(card.dataset.type) ? '' : 'none';
-  });
-  const counter = document.getElementById('sidebar-count');
-  if (counter) counter.textContent = `${visible} places`;
-  const empty = document.getElementById('sidebar-empty');
-  const cards = document.getElementById('sidebar-cards');
-  if (empty && cards) {
-    empty.style.display = visible === 0 ? 'block' : 'none';
-    cards.style.display = visible === 0 ? 'none' : '';
-  }
-}
-</script>

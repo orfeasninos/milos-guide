@@ -1,52 +1,36 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
+import Hero from '../../components/beach/Hero.astro';
+import WindCheck from '../../components/beach/WindCheck.astro';
+import Tips from '../../components/beach/Tips.astro';
+import Sidebar from '../../components/beach/Sidebar.astro';
+import Nearby from '../../components/beach/Nearby.astro';
 import beachesRaw from '../../data/beaches.json';
+import { getBeachName, beachPhoto, type Beach, type BeachAccess } from '../../lib/beaches';
 
-interface Beach {
-  slug: string;
-  name: string | { el: string; en: string };
-  description: string | { el: string; en: string };
-  location: { area: string; address: string };
-  placeId: string | null;
-  image: string | null;
-  gallery?: string[];
-  coordinates?: { lat: number; lng: number };
-  faces: number;
-  accessType: string;
-  easyAccess?: boolean;
-  facilities: string[];
-  sandType?: string;
-  shade?: boolean;
-  bestFor?: string[];
-  swimDepth?: string;
-  nearbyFood?: boolean;
-}
-
-const beachesData = beachesRaw as Beach[];
+const beachesData = (beachesRaw as Beach[]).map(b => ({ ...b, image: beachPhoto(b) }));
 
 export function getStaticPaths() {
   return (beachesRaw as Beach[]).map((beach) => ({
     params: { slug: beach.slug },
-    props:  { beach },
+    props:  { beach: { ...beach, image: beachPhoto(beach) } },
   }));
 }
 
 export interface Props { beach: Beach }
 const { beach } = Astro.props;
 
-const accessMap: Record<string, { icon: string; label: string; color: string }> = {
+const accessMap: Record<string, BeachAccess> = {
   road: { icon: '🚗', label: 'Accessible by car',  color: '#3b6d11' },
   hike: { icon: '🥾', label: 'Hiking trail',        color: '#854f0b' },
   boat: { icon: '⛵', label: 'Boat access only',    color: '#185fa5' },
 };
 
-const getBeachName = (b: any): string =>
-  typeof b.name === 'object' ? b.name.en : b.name;
 const getBeachDesc = (b: any): string =>
   typeof b.description === 'object' ? b.description.en : b.description;
 
-const access = accessMap[beach.accessType] ?? { icon: '📍', label: beach.accessType, color: '#6b7280' };
+const access: BeachAccess = accessMap[beach.accessType] ?? { icon: '📍', label: beach.accessType, color: '#6b7280' };
 const mapsUrl = beach.placeId ? `https://www.google.com/maps/place/?q=place_id:${beach.placeId}` : null;
 
 const facilityIcons: Record<string, string> = {
@@ -75,7 +59,6 @@ const related = beachesData
   .sort((a, b) => a.dist - b.dist)
   .slice(0, 4);
 
-// Nearest road/hike beaches, offered client-side as sheltered alternatives when this one faces the wind
 const windAlternatives = beachesData
   .filter(b => b.slug !== beach.slug && b.accessType !== 'boat' && b.coordinates?.lat && beach.coordinates?.lat)
   .map(b => ({
@@ -87,11 +70,8 @@ const windAlternatives = beachesData
   .sort((a, b) => a.dist - b.dist)
   .slice(0, 12);
 
-const galleryImages: string[] = beach.gallery?.length
-  ? beach.gallery.slice(0, 4)
-  : beach.image
-    ? [beach.image, beach.image, beach.image, beach.image]
-    : [];
+// The main photo is already in the hero, so only show a gallery when there are extra images.
+const galleryImages: string[] = beach.gallery?.slice(0, 4) ?? [];
 
 const _siteUrl = 'https://milos.guide';
 const beachJsonld = {
@@ -99,7 +79,7 @@ const beachJsonld = {
   '@type': 'TouristAttraction',
   name: getBeachName(beach),
   description: getBeachDesc(beach),
-  url: `${_siteUrl}/beaches/${beach.slug}`,
+  url: `${_siteUrl}/beaches/${beach.slug}/`,
   ...(beach.image ? { image: beach.image.startsWith('http') ? beach.image : _siteUrl + beach.image } : {}),
   ...(beach.coordinates?.lat ? {
     geo: { '@type': 'GeoCoordinates', latitude: beach.coordinates.lat, longitude: beach.coordinates.lng },
@@ -125,43 +105,7 @@ const beachJsonld = {
   description={`${getBeachName(beach)}: ${access.label}. ${beach.facilities.length ? 'Facilities: ' + beach.facilities.join(', ') + '.' : ''}`}
   jsonld={beachJsonld}
 >
-
-<!-- HERO -->
-<div class="b-hero">
-  {beach.image ? (
-    <SmartImage
-      src={beach.image}
-      alt={getBeachName(beach)}
-      width={1280}
-      height={520}
-      isLCP={true}
-      class="b-hero-img"
-      sizes="100vw"
-    />
-  ) : (
-    <div class="b-hero-ph"></div>
-  )}
-  <div class="b-hero-overlay">
-    <div class="container b-hero-inner">
-      <a href="/beaches" class="back-link">← All beaches</a>
-      <div class="b-hero-meta">
-        <div class="b-hero-chips">
-          <span class="b-access-chip">{access.icon} {access.label}</span>
-          {beach.accessType === 'road' && beach.easyAccess === false && (
-            <span class="b-access-chip" style="background:rgba(180,60,0,.45);">⚠️ Rough road</span>
-          )}
-        </div>
-        <h1 class="b-hero-name">{getBeachName(beach)}</h1>
-        {beach.location.area && (
-          <p class="b-hero-area">
-            <span style="color:var(--sky)">◉</span> {beach.location.area}
-          </p>
-        )}
-      </div>
-    </div>
-  </div>
-</div>
-
+<Hero beach={beach} access={access} />
 
 <!-- CONTENT -->
 <div class="container b-layout">
@@ -193,15 +137,7 @@ const beachJsonld = {
       ))}
     </div>
 
-    <!-- Today's wind -->
-    <div class="b-wind" data-beach-wind data-faces={beach.faces} data-name={getBeachName(beach)} data-access={beach.accessType} data-alts={JSON.stringify(windAlternatives)}>
-      <span class="b-wind-icon" aria-hidden="true">🌬️</span>
-      <div class="b-wind-body">
-        <p class="b-wind-title">Today at {getBeachName(beach)} <span class="b-wind-pill" data-bw-pill hidden></span></p>
-        <p class="b-wind-text" data-bw-text>Checking today's wind…</p>
-      </div>
-      <a href="/weather" class="b-wind-link" data-umami-event="beach-wind-forecast">Forecast →</a>
-    </div>
+    <WindCheck beach={beach} alternatives={windAlternatives} />
 
     <!-- Description -->
     <p class="b-desc">{getBeachDesc(beach)}</p>
@@ -220,440 +156,19 @@ const beachJsonld = {
       </div>
     )}
 
-    <!-- Tips block -->
-    <div class="tips-block">
-      <h2 class="block-title">Useful information</h2>
-      <div class="tips-grid">
-
-        <!-- Getting there -->
-        <div class="tip">
-          <span class="tip-icon">{access.icon}</span>
-          <div>
-            <p class="tip-title">Getting there</p>
-            <p class="tip-body">
-              {beach.accessType === 'road' && (beach.easyAccess
-                ? 'Paved road all the way — easy to reach by car or motorbike.'
-                : 'The last stretch is a rough dirt road. A high-clearance vehicle or motorbike is recommended.')}
-              {beach.accessType === 'hike' && 'Requires a hike over rough terrain. Wear sturdy footwear and bring plenty of water.'}
-              {beach.accessType === 'boat' && 'Only reachable by sea. Book a daily boat tour from Adamas harbour, or arrive by private boat.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- What to bring -->
-        <div class="tip">
-          <span class="tip-icon">🎒</span>
-          <div>
-            <p class="tip-title">What to bring</p>
-            <p class="tip-body">
-              {beach.facilities.includes('sunbeds')
-                ? 'Sunbeds and umbrellas are available on site.'
-                : 'No beach facilities — pack your umbrella, towels, snacks, and plenty of water.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- Food nearby -->
-        <div class="tip">
-          <span class="tip-icon">🍽️</span>
-          <div>
-            <p class="tip-title">Food & drinks</p>
-            <p class="tip-body">
-              {beach.nearbyFood
-                ? 'Tavernas or cafés are available nearby — no need to pack a full lunch.'
-                : 'No food or drinks nearby — bring everything you need before heading down.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- Crowds -->
-        <div class="tip">
-          <span class="tip-icon">👥</span>
-          <div>
-            <p class="tip-title">Crowds</p>
-            <p class="tip-body">
-              {beach.accessType === 'boat'
-                ? 'Only accessible by boat — stays naturally uncrowded and pristine year-round.'
-                : beach.accessType === 'hike'
-                  ? 'The trail keeps visitor numbers low — expect peace and quiet even in peak season.'
-                  : beach.easyAccess
-                    ? 'Popular in July and August — arrive early in the morning to secure a good spot.'
-                    : 'The rough road keeps crowds away — usually quiet even in high season.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- Parking (road only) -->
-        {beach.accessType === 'road' && (
-          <div class="tip">
-            <span class="tip-icon">🅿️</span>
-            <div>
-              <p class="tip-title">Parking</p>
-              <p class="tip-body">
-                {beach.facilities.includes('parking')
-                  ? 'Free parking area available near the beach.'
-                  : 'No dedicated car park — park along the roadside near the access path.'}
-              </p>
-            </div>
-          </div>
-        )}
-
-        <!-- Boat tours note -->
-        {beach.accessType === 'boat' && (
-          <div class="tip">
-            <span class="tip-icon">🗺️</span>
-            <div>
-              <p class="tip-title">Boat tours</p>
-              <p class="tip-body">Most organised day tours from Adamas include this beach as a stop. Check departure times at the port.</p>
-            </div>
-          </div>
-        )}
-
-        <!-- Swimming note -->
-        <div class="tip">
-          <span class="tip-icon">🏊</span>
-          <div>
-            <p class="tip-title">Swimming</p>
-            <p class="tip-body">
-              {beach.bestFor?.includes('Swimming')
-                ? 'A great spot for a swim — conditions are generally suitable for most swimmers.'
-                : 'This beach is not particularly recommended for swimming — it\'s best enjoyed for its scenery and atmosphere.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- Water depth -->
-        <div class="tip">
-          <span class="tip-icon">📏</span>
-          <div>
-            <p class="tip-title">Water depth</p>
-            <p class="tip-body">
-              {beach.swimDepth === 'Shallow' && 'Shallow waters — ideal for children and non-swimmers.'}
-              {beach.swimDepth === 'Moderate' && 'Moderate depth — comfortable for most swimmers.'}
-              {beach.swimDepth === 'Deep' && 'Deep waters — not suitable for young children; best for confident swimmers.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- Beach surface -->
-        <div class="tip">
-          <span class="tip-icon">🏖️</span>
-          <div>
-            <p class="tip-title">Beach surface</p>
-            <p class="tip-body">
-              {beach.sandType === 'Sand' && 'Soft sandy beach — comfortable for barefoot walking.'}
-              {beach.sandType === 'Pebble' && 'Pebbly beach — water shoes are recommended for comfort.'}
-              {beach.sandType === 'Volcanic rock' && 'Volcanic rock surface — water shoes are essential.'}
-              {beach.sandType === 'Village waterfront' && 'Village waterfront — not a traditional sandy beach, but a charming setting.'}
-            </p>
-          </div>
-        </div>
-
-        <!-- Shade -->
-        <div class="tip">
-          <span class="tip-icon">⛱️</span>
-          <div>
-            <p class="tip-title">Shade</p>
-            <p class="tip-body">
-              {beach.shade
-                ? 'Natural shade is available from rocks or cliffs — a welcome relief on hot days.'
-                : 'No natural shade — bring your own umbrella or sunshade.'}
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
+    <Tips beach={beach} access={access} />
 
   </main>
 
-  <!-- SIDEBAR -->
-  <aside class="b-sidebar">
-
-    <!-- Info -->
-    <div class="s-card">
-      <p class="s-card-label">Details</p>
-      <ul class="s-info-list">
-        <li class="s-info-row">
-          <span class="s-info-key">Access</span>
-          <span class="s-info-val">{access.icon} {access.label}</span>
-        </li>
-        {beach.facilities.includes('sunbeds') && (
-          <li class="s-info-row">
-            <span class="s-info-key">Type</span>
-            <span class="s-info-val">🏖️ Organised</span>
-          </li>
-        )}
-        <li class="s-info-row">
-          <span class="s-info-key">Sunbeds</span>
-          <span class="s-info-val">
-            {beach.facilities.includes('sunbeds') ? '✅ Available' : '❌ Not available'}
-          </span>
-        </li>
-        <li class="s-info-row">
-          <span class="s-info-key">Nearby food</span>
-          <span class="s-info-val">
-            {beach.nearbyFood ? '✅ Yes' : '❌ No'}
-          </span>
-        </li>
-        <li class="s-info-row">
-          <span class="s-info-key">Parking</span>
-          <span class="s-info-val">
-            {beach.facilities.includes('parking') ? '✅ Free parking' : '❌ Not available'}
-          </span>
-        </li>
-        {beach.sandType && (
-          <li class="s-info-row">
-            <span class="s-info-key">Surface</span>
-            <span class="s-info-val">{beach.sandType}</span>
-          </li>
-        )}
-        {beach.swimDepth && (
-          <li class="s-info-row">
-            <span class="s-info-key">Water depth</span>
-            <span class="s-info-val">{beach.swimDepth}</span>
-          </li>
-        )}
-        <li class="s-info-row">
-          <span class="s-info-key">Natural shade</span>
-          <span class="s-info-val">{beach.shade ? '✅ Yes' : '❌ No'}</span>
-        </li>
-        {beach.bestFor && beach.bestFor.length > 0 && (
-          <li class="s-info-row">
-            <span class="s-info-key">Best for</span>
-            <span class="s-info-val">{beach.bestFor.join(' · ')}</span>
-          </li>
-        )}
-      </ul>
-    </div>
-
-    <!-- Map embed -->
-    {beach.coordinates?.lat && beach.coordinates?.lng && (
-      <div class="s-map">
-        <iframe
-          src={`https://maps.google.com/maps?q=${beach.coordinates.lat},${beach.coordinates.lng}&z=15&output=embed`}
-          width="100%"
-          height="220"
-          style="border:0;"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title={`Map of ${getBeachName(beach)}`}
-        ></iframe>
-      </div>
-    )}
-
-    <!-- CTA -->
-    {mapsUrl && (
-      <a
-        href={mapsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="s-btn s-btn--maps"
-      >
-        <span>📍</span> Google Maps ↗
-      </a>
-    )}
-
-    <!-- Share -->
-    <button id="share-btn" class="s-btn s-btn--share" type="button">
-      <span id="share-icon">↗</span> <span id="share-label">Share</span>
-    </button>
-
-  </aside>
+  <Sidebar beach={beach} access={access} mapsUrl={mapsUrl} />
 
 </div>
 
-
-<!-- RELATED -->
-{related.length > 0 && (
-  <section class="sec sec-sand related-sec">
-    <div class="container">
-      <div class="sec-hdr-row">
-        <div>
-          <span class="label">Close by</span>
-          <h2 class="sec-title">Nearby beaches</h2>
-        </div>
-        <a href="/beaches" class="see-all">All beaches →</a>
-      </div>
-      <div class="related-grid">
-        {related.map(r => (
-          <a href={`/beaches/${r.slug}`} class="rel-card">
-            <div class="rel-img-wrap">
-              {r.image ? (
-                <SmartImage
-                  src={r.image}
-                  alt={getBeachName(r)}
-                  width={400}
-                  height={300}
-                  class="rel-img"
-                  sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 25vw"
-                />
-              ) : (
-                <div class="rel-ph"></div>
-              )}
-              <div class="rel-overlay">
-                <h3 class="rel-name">{getBeachName(r)}</h3>
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
+<Nearby related={related} />
 
 </Layout>
 
-<script>
-  import { getWind, exposure, compass, exposureLabel, BOAT_TOUR_LIMIT_KMH } from '../../lib/wind';
-
-  const bw = document.querySelector<HTMLElement>('[data-beach-wind]');
-  if (bw) {
-    const pill = bw.querySelector<HTMLElement>('[data-bw-pill]')!;
-    const text = bw.querySelector<HTMLElement>('[data-bw-text]')!;
-    const faces = Number(bw.dataset.faces);
-    const alts: { slug: string; name: string; faces: number }[] = JSON.parse(bw.dataset.alts ?? '[]');
-
-    getWind().then(wind => {
-      const exp = exposure(faces, wind);
-      const kmh = Math.round(wind.speed);
-      const dir = compass(wind.direction);
-      pill.hidden = false;
-      pill.textContent = exposureLabel[exp];
-      pill.className = `b-wind-pill b-wind-pill--${exp}`;
-      bw.classList.add(`is-${exp}`);
-
-      const lines: Record<typeof exp, string> = {
-        calm:      `Light wind (${kmh} km/h) — expect calm, clear water all over the island today.`,
-        sheltered: `${dir} wind at ${kmh} km/h, but this beach faces away from it — expect calm water.`,
-        partial:   `${dir} wind at ${kmh} km/h hits this beach from the side — some chop is likely.`,
-        exposed:   `${dir} wind at ${kmh} km/h blows straight onto this beach — expect waves and floating seaweed.`,
-      };
-      let html = lines[exp];
-
-      if (exp === 'exposed' || exp === 'partial') {
-        const better = alts.filter(a => exposure(a.faces, wind) === 'sheltered').slice(0, 2);
-        if (better.length) {
-          html += ` Sheltered nearby: ${better.map(a =>
-            `<a href="/beaches/${a.slug}" data-umami-event="beach-wind-alternative">${a.name}</a>`).join(' or ')}.`;
-        }
-      }
-      if (bw.dataset.access === 'boat' && wind.speed >= BOAT_TOUR_LIMIT_KMH) {
-        html += ' Boat trips may be cancelled in this wind — confirm with your operator.';
-      }
-      text.innerHTML = html;
-    }).catch(() => {
-      bw.hidden = true;
-    });
-  }
-
-  const btn = document.getElementById('share-btn') as HTMLButtonElement;
-  const label = document.getElementById('share-label') as HTMLSpanElement;
-  const icon = document.getElementById('share-icon') as HTMLSpanElement;
-
-  btn?.addEventListener('click', async () => {
-    const url = window.location.href;
-    const title = document.title;
-
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url });
-      } catch {}
-    } else {
-      await navigator.clipboard.writeText(url);
-      label.textContent = 'Copied!';
-      icon.textContent = '✓';
-      setTimeout(() => {
-        label.textContent = 'Share';
-        icon.textContent = '↗';
-      }, 2000);
-    }
-  });
-</script>
-
 <style>
-/* ── HERO ── */
-.b-hero {
-  position: relative;
-  height: 520px;
-  overflow: hidden;
-  background: var(--deep-blue);
-}
-:global(.b-hero-img) {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.b-hero-ph {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(140deg, #0d2b4e, #1a5c8a, #3a9bc9);
-}
-.b-hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.75) 0%, rgba(0,0,0,.1) 55%, transparent 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-.b-hero-inner { padding-bottom: 2.5rem; }
-
-.back-link {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  font-size: .75rem;
-  font-weight: 600;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(0,0,0,.35);
-  backdrop-filter: blur(6px);
-  padding: .35rem .85rem;
-  border-radius: 100px;
-  transition: background .15s;
-}
-.back-link:hover { background: rgba(0,0,0,.55); }
-
-.b-hero-chips {
-  display: flex;
-  gap: .45rem;
-  flex-wrap: wrap;
-  margin-bottom: .55rem;
-}
-.b-access-chip,
-.b-rating-chip {
-  font-size: .62rem;
-  font-weight: 600;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 100px;
-  background: rgba(0,0,0,.35);
-  border: 1px solid rgba(255,255,255,.22);
-  backdrop-filter: blur(6px);
-  color: #fff;
-}
-.b-hero-name {
-  font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 6vw, 4rem);
-  color: #fff;
-  line-height: 1.0;
-  margin: 0 0 .4rem;
-  text-shadow: 0 2px 16px rgba(0,0,0,.4);
-}
-.b-hero-area {
-  font-size: .78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  color: rgba(255,255,255,.72);
-  margin: 0;
-}
-
 /* ── LAYOUT ── */
 .b-layout {
   display: grid;
@@ -663,7 +178,6 @@ const beachJsonld = {
   padding-bottom: 4rem;
   align-items: start;
 }
-
 /* ── QUICK BAR ── */
 .quick-bar {
   display: flex;
@@ -685,34 +199,6 @@ const beachJsonld = {
 .qb-item:last-child { border-right: none; }
 .qb-icon { font-size: 1rem; flex-shrink: 0; }
 .qb-val { font-size: .9rem; font-weight: 600; color: var(--ink); }
-.qb-label { font-size: .72rem; color: var(--muted); }
-
-/* ── TODAY'S WIND ── */
-.b-wind {
-  display: flex;
-  align-items: flex-start;
-  gap: .85rem;
-  padding: 1rem 1.25rem;
-  margin-bottom: 2rem;
-  border-radius: var(--radius-md);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--sea);
-}
-.b-wind.is-calm, .b-wind.is-sheltered { border-left-color: #22c55e; }
-.b-wind.is-partial { border-left-color: #f59e0b; }
-.b-wind.is-exposed { border-left-color: #ef4444; }
-.b-wind-icon { font-size: 1.3rem; line-height: 1.4; }
-.b-wind-body { flex: 1; }
-.b-wind-title { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
-.b-wind-text { font-size: .92rem; color: var(--ink); line-height: 1.5; }
-.b-wind-text :global(a) { color: var(--aegean); font-weight: 600; border-bottom: 1px solid rgba(58,155,201,.4); }
-.b-wind-link { font-size: .8rem; font-weight: 600; color: var(--aegean); white-space: nowrap; align-self: center; }
-.b-wind-pill { font-size: .6rem; font-weight: 700; letter-spacing: .06em; padding: 2px 8px; border-radius: var(--radius-full); }
-.b-wind-pill--calm, .b-wind-pill--sheltered { background: #dcfce7; color: #166534; }
-.b-wind-pill--partial { background: #fef3c7; color: #92400e; }
-.b-wind-pill--exposed { background: #fee2e2; color: #991b1b; }
-
 /* ── MAIN ── */
 .b-desc {
   font-size: 1.05rem;
@@ -720,7 +206,6 @@ const beachJsonld = {
   color: var(--ink);
   margin-bottom: 2rem;
 }
-
 /* ── GALLERY ── */
 .gallery-grid {
   display: grid;
@@ -750,172 +235,9 @@ const beachJsonld = {
   .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, 1fr); height: 260px; }
   .gallery-main { grid-row: auto; }
 }
-
-.tips-block { margin-bottom: 1rem; }
-.block-title {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
-.tips-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-.tip {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.1rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--white);
-}
-.tip:last-child { border-bottom: none; }
-.tip:nth-child(even) { background: var(--sand); }
-.tip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
-.tip-title { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; }
-.tip-body { font-size: .9rem; color: var(--ink); margin: 0; line-height: 1.5; }
-
-/* ── NEARBY RESTAURANTS ── */
-.nearby-eat { margin-bottom: 1rem; }
-.nearby-eat-list {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-.nec {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: .65rem 1.25rem .65rem .65rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--white);
-  font-size: .9rem;
-  gap: .9rem;
-  transition: background .15s;
-}
-.nec:last-child { border-bottom: none; }
-.nec:nth-child(even) { background: var(--sand); }
-.nec:hover { background: var(--sand-dark); }
-.nec-img-wrap { flex-shrink: 0; width: 64px; height: 64px; border-radius: var(--radius-sm); overflow: hidden; background: var(--sand-dark); }
-:global(.nec-img) { width: 100%; height: 100%; object-fit: cover; display: block; }
-.nec-img-ph { width: 100%; height: 100%; background: linear-gradient(135deg, #1a5c8a, #3a9bc9); }
-.nec-name { font-weight: 600; color: var(--ink); flex: 1; }
-.nec-right { display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
-.nec-price { font-size: .8rem; color: var(--muted); }
-.nec-rating { font-size: .8rem; font-weight: 600; color: #d97706; }
-
-/* ── SIDEBAR ── */
-.b-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  position: sticky;
-  top: calc(var(--header-h) + 1.5rem);
-}
-.s-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 1.25rem;
-}
-.s-card-label {
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: .85rem;
-}
-.s-rating { display: flex; align-items: center; gap: .85rem; }
-.s-rating-num { font-family: var(--font-serif); font-size: 2.8rem; color: var(--ink); line-height: 1; }
-.s-rating-right { display: flex; flex-direction: column; gap: .15rem; }
-.s-rating-stars { font-size: .9rem; color: #d97706; letter-spacing: .1em; }
-.s-rating-sub { font-size: .72rem; color: var(--muted); }
-
-.s-info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
-.s-info-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: .875rem; gap: .5rem; }
-.s-info-key { font-weight: 600; color: var(--muted); flex-shrink: 0; }
-.s-info-val { color: var(--ink); text-align: right; font-size: .875rem; }
-
-.s-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  padding: .8rem 1rem;
-  border-radius: var(--radius-md);
-  font-family: var(--font-sans);
-  font-size: .875rem;
-  font-weight: 600;
-  transition: transform .15s, opacity .15s;
-}
-.s-btn:hover { transform: translateY(-1px); opacity: .9; }
-.s-map {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  line-height: 0;
-}
-.s-btn--maps  { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
-.s-btn--web   { background: var(--white); color: var(--ink); border: 1px solid var(--border); }
-.s-btn--share { background: var(--white); color: var(--ink); border: 1px solid var(--border); cursor: pointer; width: 100%; font-size: .875rem; }
-
-/* ── RELATED ── */
-.related-sec { margin-top: 0; }
-.related-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
-.rel-card {
-  display: block;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  aspect-ratio: 4/3;
-  position: relative;
-  background: var(--sand-dark);
-  transition: transform .2s, box-shadow .2s;
-}
-.rel-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-.rel-img-wrap { position: absolute; inset: 0; }
-:global(.rel-img) { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
-.rel-card:hover :global(.rel-img) { transform: scale(1.05); }
-.rel-ph { width: 100%; height: 100%; background: linear-gradient(140deg, #1a5c8a, #3a9bc9); }
-.rel-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 55%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1rem;
-  color: #fff;
-}
-.rel-rating { font-size: .7rem; font-weight: 600; color: #fbbf24; margin-bottom: .25rem; }
-.rel-name { font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.2; margin: 0; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .related-grid { grid-template-columns: 1fr 1fr; }
-}
 @media (max-width: 768px) {
-  .b-hero { height: 360px; }
   .b-layout { grid-template-columns: 1fr; gap: 2rem; }
-  .b-sidebar { position: static; }
   .quick-bar { flex-wrap: wrap; }
-  .b-wind { flex-wrap: wrap; }
   .qb-item { border-bottom: 1px solid var(--border); flex: 1 1 calc(50% - 1px); }
-  .related-grid { grid-template-columns: 1fr 1fr; }
-  .s-map iframe { height: 350px; }
-}
-@media (max-width: 480px) {
-  .b-hero { height: 280px; }
-  .b-hero-name { font-size: 2rem; }
-  .related-grid { grid-template-columns: 1fr; }
 }
 </style>

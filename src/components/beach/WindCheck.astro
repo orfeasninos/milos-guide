@@ -1,0 +1,94 @@
+---
+import { getBeachName, type Beach } from '../../lib/beaches';
+
+interface Props {
+  beach: Beach;
+  // Nearest road/hike beaches, offered as sheltered alternatives when this one faces the wind
+  alternatives: { slug: string; name: string; faces: number }[];
+}
+const { beach, alternatives } = Astro.props;
+---
+<!-- Today's wind -->
+<div class="b-wind" data-beach-wind data-faces={beach.faces} data-name={getBeachName(beach)} data-access={beach.accessType} data-alts={JSON.stringify(alternatives)}>
+  <span class="b-wind-icon" aria-hidden="true">🌬️</span>
+  <div class="b-wind-body">
+    <p class="b-wind-title">Today at {getBeachName(beach)} <span class="b-wind-pill" data-bw-pill hidden></span></p>
+    <p class="b-wind-text" data-bw-text>Checking today's wind…</p>
+  </div>
+  <a href="/weather" class="b-wind-link" data-umami-event="beach-wind-forecast">Forecast →</a>
+</div>
+
+<script>
+  import { getWind, exposure, compass, exposureLabel, BOAT_TOUR_LIMIT_KMH } from '../../lib/wind';
+
+  const bw = document.querySelector<HTMLElement>('[data-beach-wind]');
+  if (bw) {
+    const pill = bw.querySelector<HTMLElement>('[data-bw-pill]')!;
+    const text = bw.querySelector<HTMLElement>('[data-bw-text]')!;
+    const faces = Number(bw.dataset.faces);
+    const alts: { slug: string; name: string; faces: number }[] = JSON.parse(bw.dataset.alts ?? '[]');
+
+    getWind().then(wind => {
+      const exp = exposure(faces, wind);
+      const kmh = Math.round(wind.speed);
+      const dir = compass(wind.direction);
+      pill.hidden = false;
+      pill.textContent = exposureLabel[exp];
+      pill.className = `b-wind-pill b-wind-pill--${exp}`;
+      bw.classList.add(`is-${exp}`);
+
+      const lines: Record<typeof exp, string> = {
+        calm:      `Light wind (${kmh} km/h) — expect calm, clear water all over the island today.`,
+        sheltered: `${dir} wind at ${kmh} km/h, but this beach faces away from it — expect calm water.`,
+        partial:   `${dir} wind at ${kmh} km/h hits this beach from the side — some chop is likely.`,
+        exposed:   `${dir} wind at ${kmh} km/h blows straight onto this beach — expect waves and floating seaweed.`,
+      };
+      let html = lines[exp];
+
+      if (exp === 'exposed' || exp === 'partial') {
+        const better = alts.filter(a => exposure(a.faces, wind) === 'sheltered').slice(0, 2);
+        if (better.length) {
+          html += ` Sheltered nearby: ${better.map(a =>
+            `<a href="/beaches/${a.slug}" data-umami-event="beach-wind-alternative">${a.name}</a>`).join(' or ')}.`;
+        }
+      }
+      if (bw.dataset.access === 'boat' && wind.speed >= BOAT_TOUR_LIMIT_KMH) {
+        html += ' Boat trips may be cancelled in this wind — confirm with your operator.';
+      }
+      text.innerHTML = html;
+    }).catch(() => {
+      bw.hidden = true;
+    });
+  }
+</script>
+
+<style>
+/* ── TODAY'S WIND ── */
+.b-wind {
+  display: flex;
+  align-items: flex-start;
+  gap: .85rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  border-radius: var(--radius-md);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--sea);
+}
+.b-wind.is-calm, .b-wind.is-sheltered { border-left-color: #22c55e; }
+.b-wind.is-partial { border-left-color: #f59e0b; }
+.b-wind.is-exposed { border-left-color: #ef4444; }
+.b-wind-icon { font-size: 1.3rem; line-height: 1.4; }
+.b-wind-body { flex: 1; }
+.b-wind-title { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.b-wind-text { font-size: .92rem; color: var(--ink); line-height: 1.5; }
+.b-wind-text :global(a) { color: var(--aegean); font-weight: 600; border-bottom: 1px solid rgba(58,155,201,.4); }
+.b-wind-link { font-size: .8rem; font-weight: 600; color: var(--aegean); white-space: nowrap; align-self: center; }
+.b-wind-pill { font-size: .6rem; font-weight: 700; letter-spacing: .06em; padding: 2px 8px; border-radius: var(--radius-full); }
+.b-wind-pill--calm, .b-wind-pill--sheltered { background: #dcfce7; color: #166534; }
+.b-wind-pill--partial { background: #fef3c7; color: #92400e; }
+.b-wind-pill--exposed { background: #fee2e2; color: #991b1b; }
+@media (max-width: 768px) {
+  .b-wind { flex-wrap: wrap; }
+}
+</style>
