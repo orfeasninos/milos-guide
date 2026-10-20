@@ -13,6 +13,8 @@ export interface Wind {
 }
 
 export const CALM_KMH = 12;
+// Below this the reported direction is model noise, so we don't show it.
+export const VARIABLE_KMH = 4;
 export const BOAT_TOUR_LIMIT_KMH = 28;
 
 const LAT = 36.7257;
@@ -42,6 +44,12 @@ export function shelterScore(faces: number, wind: Pick<Wind, 'speed' | 'directio
 export function compass(deg: number): string {
   const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
   return dirs[Math.round((((deg % 360) + 360) % 360) / 45) % 8];
+}
+
+// Compass arrows point where the wind blows TO (meteo.gr convention): a south wind
+// draws an arrow pointing north. The arrow is drawn pointing up (N) at 0deg.
+export function arrowRotation(fromDeg: number): number {
+  return (((fromDeg + 180) % 360) + 360) % 360;
 }
 
 export function beaufort(kmh: number): number {
@@ -82,6 +90,14 @@ async function fetchCache(): Promise<Wind> {
 }
 
 let pending: Promise<Wind> | null = null;
+
+// Lets the /weather page hand its own reading to the widget so both show the same wind.
+export function rememberWind(wind: Wind): void {
+  pending = Promise.resolve(wind);
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ at: Date.now(), wind }));
+  } catch {}
+}
 
 // Live reading first, committed cache as fallback; memoised per page and per tab session.
 export function getWind(): Promise<Wind> {

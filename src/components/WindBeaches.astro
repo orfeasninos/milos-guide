@@ -32,8 +32,8 @@ const beaches = beachesRaw.map(b => ({
       <svg viewBox="0 0 48 48" width="56" height="56">
         <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2" />
         <text x="24" y="9" text-anchor="middle" font-size="7" fill="currentColor" fill-opacity=".55">N</text>
-        <g data-wb-needle style="transform-origin:24px 24px;transition:transform .6s var(--ease-out)">
-          <path d="M24 10 L28.5 26 L24 23 L19.5 26 Z" fill="var(--sea)" transform="rotate(180 24 24)" />
+        <g data-wb-needle style="opacity:0;transform-origin:24px 24px;transition:transform .6s var(--ease-out),opacity .3s">
+          <path d="M24 10 L28.5 26 L24 23 L19.5 26 Z" fill="var(--sea)" />
         </g>
       </svg>
     </div>
@@ -59,7 +59,7 @@ const beaches = beachesRaw.map(b => ({
 </section>
 
 <script>
-  import { getWind, type Wind, exposure, shelterScore, compass, beaufort, exposureLabel, BOAT_TOUR_LIMIT_KMH, CALM_KMH } from '../lib/wind';
+  import { getWind, type Wind, exposure, shelterScore, compass, beaufort, exposureLabel, arrowRotation, BOAT_TOUR_LIMIT_KMH, CALM_KMH, VARIABLE_KMH } from '../lib/wind';
   import { POPULAR_BEACHES } from '../lib/beaches';
 
   type B = { slug: string; name: string; faces: number; access: string; area: string };
@@ -88,9 +88,12 @@ const beaches = beachesRaw.map(b => ({
     const kmh = Math.round(wind.speed);
     const time = wind.time?.slice(11, 16);
     q('[data-wb-updated]').textContent = time ? `Wind at ${time} Milos time` : 'Current wind';
-    q('[data-wb-summary]').innerHTML =
-      `<strong>${kmh} km/h</strong> from the <strong>${dir}</strong> · ${beaufort(wind.speed)} Bft`;
-    q('[data-wb-needle]').style.transform = `rotate(${wind.direction}deg)`;
+    const variable = wind.speed < VARIABLE_KMH;
+    q('[data-wb-summary]').innerHTML = variable
+      ? `<strong>${kmh} km/h</strong> · calm, no steady direction · ${beaufort(wind.speed)} Bft`
+      : `<strong>${kmh} km/h</strong> from the <strong>${dir}</strong> · ${beaufort(wind.speed)} Bft`;
+    q('[data-wb-needle]').style.transform = `rotate(${arrowRotation(wind.direction)}deg)`;
+    q('[data-wb-needle]').style.opacity = variable ? '0.25' : '';
 
     const calm = wind.speed < CALM_KMH;
     const verdict = q('[data-wb-verdict]');

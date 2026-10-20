@@ -1,54 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SmartImage from '../components/SmartImage.astro';
 import beachesRaw from '../data/beaches.json';
+import { getArea, areaLabel, getBeachName } from '../lib/beaches';
 
 const LAT = 36.7257;
 const LNG = 24.4496;
 
-const shelterMeta: Record<string, { shelter: string; note: string }> = {
-  'sarakiniko':            { shelter: 'south',   note: 'Iconic white volcanic rocks' },
-  'fyropotamos':           { shelter: 'south', note: 'Colourful fishing boats' },
-  'tsigrado':              { shelter: 'north', note: 'Secluded & scenic' },
-  'fyriplaka':             { shelter: 'north', note: 'Long sandy beach' },
-  'paleochori':            { shelter: 'north', note: 'Geothermal sands' },
-  'provatas':              { shelter: 'north', note: 'Family-friendly' },
-  'papafragas':            { shelter: 'south', note: 'Sea caves & cliffs' },
-  'kleftiko':              { shelter: 'north',  note: 'Sea caves & arches' },
-  'agia-kyriaki':          { shelter: 'north', note: 'Crystal turquoise water' },
-  'gerontas':              { shelter: 'east',  note: 'Off the beaten path' },
-  'triades':               { shelter: 'south', note: 'Wild & uncrowded' },
-  'sikia-beach':           { shelter: 'east',  note: 'Hidden sea cave' },
-  'plathiena':             { shelter: 'south', note: 'North coast gem' },
-  'theiorycheia':          { shelter: 'west',  note: 'Remote east coast' },
-  'achivadolimni':         { shelter: 'north', note: 'Shallow crystal lagoon' },
-  'agios-sostis':          { shelter: 'north', note: 'Quiet & peaceful' },
-  'tria-pigadia':          { shelter: 'west',  note: 'Three springs beach' },
-  'kastanas':              { shelter: 'west',  note: 'Remote & unspoiled' },
-  'pollonia-beach':        { shelter: 'west',  note: 'Pollonia harbour beach' },
-  'aggathia':              { shelter: 'east',  note: 'West coast escape' },
-  'ammoudaraki-beach':     { shelter: 'east',  note: 'Sandy west coast beach' },
-  'kalamos':               { shelter: 'north', note: 'Clear turquoise water' },
-  'agios-ioannis-beach':   { shelter: 'east',  note: 'Rugged & wild' },
-  'kipos-beach':           { shelter: 'north', note: 'Volcanic rock formations' },
-  'deep-blue-beach':       { shelter: 'north', note: 'Deep blue waters' },
-  'psathi-beach':          { shelter: 'north', note: 'Near Psathi village' },
-  'kolympionas-beach':     { shelter: 'west',  note: 'Protected east bay' },
-  'pachaina-beach':        { shelter: 'south', note: 'Quiet north beach' },
-  'alogomantra-beach':     { shelter: 'south', note: 'Secluded north cove' },
-  'mytakas-beach':         { shelter: 'south', note: 'Calm north shore' },
-  'nerodafni-beach':       { shelter: 'south', note: 'Far north coast' },
-  'papikinou-beach':       { shelter: 'any',   note: 'Town beach near Adamas' },
+// Local photos in /public/images/beaches/<slug>.jpg are used when the JSON has no image.
+const localPhotos = import.meta.glob('/public/images/beaches/*.jpg');
+const photoFor = (b: { slug: string; image?: string | null }) => {
+  if (b.image) return b.image;
+  const local = `/images/beaches/${b.slug}.jpg`;
+  return `/public${local}` in localPhotos ? local : null;
 };
 
-const BEACHES_DATA = (beachesRaw as any[])
-  .filter(b => b.image && shelterMeta[b.slug])
-  .map(b => ({
-    slug:    b.slug as string,
-    name:    typeof b.name === 'object' ? (b.name as any).en : b.name as string,
-    img:     b.image as string,
-    shelter: shelterMeta[b.slug].shelter,
-    note:    shelterMeta[b.slug].note,
-  }));
+// Every beach is rendered; the client ranks them by shelter from the live wind
+// (same `faces` logic as the WindBeaches widget) and shows the top picks.
+const accessIcon: Record<string, string> = { road: '🚗', hike: '🥾', boat: '⛵' };
+
+const BEACHES_DATA = beachesRaw.map(b => ({
+  slug:   b.slug,
+  name:   getBeachName(b),
+  img:    photoFor(b),
+  faces:  b.faces,
+  access: b.accessType,
+  area:   areaLabel[getArea(b.coordinates?.lat ?? 0, b.coordinates?.lng ?? 0)],
+}));
 ---
 
 <Layout
@@ -132,7 +110,8 @@ const BEACHES_DATA = (beachesRaw as any[])
               <text x="39" y="25.5" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.3" font-family="DM Sans, sans-serif">E</text>
               <text x="24" y="41" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.3" font-family="DM Sans, sans-serif">S</text>
               <text x="9" y="25.5" text-anchor="middle" font-size="5" fill="currentColor" opacity="0.3" font-family="DM Sans, sans-serif">W</text>
-              <g id="compass-needle-g" style="transform-origin:24px 24px; transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1);">
+              <!-- Blue tip points where the wind blows to (meteo.gr convention) -->
+              <g id="compass-needle-g" style="opacity:0; transform-origin:24px 24px; transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;">
                 <polygon points="24,10 21.5,24 24,21 26.5,24" fill="var(--aegean)"/>
                 <polygon points="24,38 21.5,24 24,27 26.5,24" fill="currentColor" opacity="0.35"/>
                 <circle cx="24" cy="24" r="2.5" fill="var(--white)" stroke="var(--aegean)" stroke-width="1"/>
@@ -216,26 +195,36 @@ const BEACHES_DATA = (beachesRaw as any[])
             <a
               href={`/beaches/${beach.slug}`}
               class="w-beach-card"
-              data-shelter={beach.shelter}
+              data-slug={beach.slug}
+              data-faces={beach.faces}
+              data-access={beach.access}
+              data-umami-event="weather-beach"
+              data-umami-event-beach={beach.slug}
+              hidden
             >
               <div class="w-beach-img">
-                <img
-                  src={beach.img}
-                  alt={`${beach.name} beach, Milos`}
-                  width="280"
-                  height="160"
-                  loading="lazy"
-                  decoding="async"
-                />
+                {beach.img ? (
+                  <SmartImage
+                    src={beach.img}
+                    alt={`${beach.name} beach, Milos`}
+                    width={280}
+                    height={160}
+                    sizes="(max-width: 520px) 50vw, 280px"
+                  />
+                ) : (
+                  <div class="w-beach-ph" aria-hidden="true"><span>{beach.name.charAt(0)}</span></div>
+                )}
                 <div class="w-beach-img-overlay"></div>
+                <span class="w-beach-pill" data-pill></span>
               </div>
               <div class="w-beach-info">
                 <p class="w-beach-name">{beach.name}</p>
-                <p class="w-beach-meta">{beach.note}</p>
+                <p class="w-beach-meta">{accessIcon[beach.access] ?? '📍'} {beach.area}</p>
               </div>
             </a>
           ))}
         </div>
+        <p class="w-rec-avoid" id="w-rec-avoid" hidden></p>
       </div>
 
       <!-- 12-hour forecast -->
@@ -683,13 +672,35 @@ const BEACHES_DATA = (beachesRaw as any[])
   overflow: hidden;
   flex-shrink: 0;
 }
-.w-beach-img img {
+.w-beach-img :global(picture) { display: block; width: 100%; height: 100%; }
+.w-beach-img :global(img) {
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
   display: block;
 }
-.w-beach-card:hover .w-beach-img img { transform: scale(1.07); }
+.w-beach-card[hidden] { display: none; }
+.w-beach-card:hover .w-beach-img :global(img),
+.w-beach-card:hover .w-beach-ph { transform: scale(1.07); }
+.w-beach-ph {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(140deg, #1a5c8a, #3a9bc9);
+  transition: transform 0.5s ease;
+}
+.w-beach-ph span { font-family: var(--font-serif); font-size: 2.4rem; color: rgba(255,255,255,0.28); }
+.w-beach-pill {
+  position: absolute; top: 0.5rem; right: 0.5rem; z-index: 1;
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: var(--radius-full); white-space: nowrap;
+}
+.w-beach-pill:empty { display: none; }
+.w-beach-pill--calm,
+.w-beach-pill--sheltered { background: #dcfce7; color: #166534; }
+.w-beach-pill--partial   { background: #fef3c7; color: #92400e; }
+.w-beach-pill--exposed   { background: #fee2e2; color: #991b1b; }
+.w-rec-avoid { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+.w-rec-avoid :global(a) { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.35); }
 .w-beach-img-overlay {
   position: absolute;
   inset: 0;
@@ -892,16 +903,11 @@ const WMO_TEXT = {
 
 function el(id) { return document.getElementById(id); }
 
+// Below 4 km/h the direction is model noise (keep in sync with VARIABLE_KMH in lib/wind.ts).
+const VARIABLE_KMH = 4;
 function windDir(deg) {
   const dirs = ['N','NE','E','SE','S','SW','W','NW'];
   return dirs[Math.round(deg / 45) % 8];
-}
-function windCat(deg) {
-  const d = ((deg % 360) + 360) % 360;
-  if (d >= 315 || d < 45)  return 'north';
-  if (d >= 45  && d < 135) return 'east';
-  if (d >= 135 && d < 225) return 'south';
-  return 'west';
 }
 function beaufort(kmh) {
   if (kmh < 1)   return '0Bft - Calm';
@@ -961,35 +967,6 @@ function dayLabel(dtStr, idx) {
   return new Date(dtStr).toLocaleDateString('en-US', { weekday: 'short' });
 }
 
-function recommendation(windKmh, windDeg, waveH) {
-  const cat = windCat(windDeg);
-  if (windKmh < 15 && waveH < 0.5) return {
-    emoji:'🏖', title:'All beaches are great today',
-    desc:'Calm winds and flat seas — perfect conditions across the island. Great day for boat tours to Kleftiko.',
-    filter:'any',
-  };
-  if (windKmh > 40) return {
-    emoji:'⚠️', title:'Strong winds — choose sheltered beaches',
-    desc:`${windDir(windDeg)} winds at ${Math.round(windKmh)} km/h. Stick to protected beaches on the leeward coast. Avoid boat tours today.`,
-    filter: cat,
-  };
-  if (cat === 'north') return {
-    emoji:'🌊', title:'North winds — head to the south coast',
-    desc:'The wind is blowing from the north. Paleochori, Fyriplaka and Provatas are sheltered and calm.',
-    filter:'north',
-  };
-  if (cat === 'south') return {
-    emoji:'💨', title:'South winds — north coast is better',
-    desc:'Winds from the south today. Head to Triades, Firopotamos or Plathiena on the north coast.',
-    filter:'south',
-  };
-  return {
-    emoji:'🏖', title:'Good conditions today',
-    desc:'Moderate winds — most beaches are accessible. Check wind direction before heading to exposed beaches.',
-    filter:'any',
-  };
-}
-
 // ── Meteocons weather icons ────────────────────────────
 const CDN = '/icons/weather';
 const WMO_DAY = {
@@ -1038,7 +1015,7 @@ async function loadWeather() {
     `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m`,
     `&hourly=temperature_2m,weather_code,wind_speed_10m,precipitation_probability`,
     `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset`,
-    `&timezone=Europe%2FAthens&forecast_days=7&models=ecmwf_ifs025`,
+    `&timezone=Europe%2FAthens&forecast_days=7&models=best_match`,
   ].join('');
   const marineUrl = [
     `https://marine-api.open-meteo.com/v1/marine`,
@@ -1105,7 +1082,8 @@ async function loadWeather() {
     el('hero-temp').textContent      = `${Math.round(c.temperature_2m)}°`;
     el('hero-condition').textContent = WMO_TEXT[c.weather_code] ?? 'Unknown';
     el('hero-feels').textContent     = `Feels like ${Math.round(c.apparent_temperature)}°C`;
-    el('hs-wind').textContent        = `${Math.round(c.wind_speed_10m)} km/h ${windDir(c.wind_direction_10m)}`;
+    const variable = c.wind_speed_10m < VARIABLE_KMH;
+    el('hs-wind').textContent        = `${Math.round(c.wind_speed_10m)} km/h ${variable ? 'calm' : windDir(c.wind_direction_10m)}`;
     el('hs-sea').textContent         = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
     el('hs-waves').textContent       = `${waveH.toFixed(1)} m`;
     el('hs-uv').textContent          = `${Math.round(c.uv_index)} — ${uvLevel(c.uv_index)[0]}`;
@@ -1114,9 +1092,10 @@ async function loadWeather() {
     el('hero-updated').textContent   = `Updated at ${now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
 
     // ── Wind card
-    el('compass-needle-g').style.transform = `rotate(${c.wind_direction_10m}deg)`;
+    el('compass-needle-g').style.transform = `rotate(${(c.wind_direction_10m + 180) % 360}deg)`;
     el('w-wind-speed').textContent = `${Math.round(c.wind_speed_10m)} km/h`;
-    el('w-wind-dir').textContent   = `${windDir(c.wind_direction_10m)} wind`;
+    el('w-wind-dir').textContent   = variable ? 'Calm, variable' : `${windDir(c.wind_direction_10m)} wind`;
+    el('compass-needle-g').style.opacity = variable ? '0.25' : '';
     el('w-wind-tag').textContent   = beaufort(c.wind_speed_10m);
 
     // ── Sea & Waves card
@@ -1146,21 +1125,12 @@ async function loadWeather() {
     el('w-sunrise').textContent  = formatTime(w.daily.sunrise[0]);
     el('w-sunset').textContent   = formatTime(w.daily.sunset[0]);
 
-    // ── Beach recommendation
-    const rec = recommendation(c.wind_speed_10m, c.wind_direction_10m, waveH);
-    el('w-rec-emoji').textContent = rec.emoji;
-    el('w-rec-title').textContent = rec.title;
-    el('w-rec-desc').textContent  = rec.desc;
-    const allCards = Array.from(document.querySelectorAll('#w-beaches-grid .w-beach-card'));
-    // Hide every card first — w-content is still opacity:0 so no flash
-    allCards.forEach(card => { card.style.display = 'none'; });
-    const priority = allCards.filter(
-      card => rec.filter === 'any' || card.dataset.shelter === rec.filter || card.dataset.shelter === 'any'
-    );
-    const pool = priority.length >= 6
-      ? priority
-      : [...priority, ...allCards.filter(card => !priority.includes(card))];
-    pool.slice(0, 6).forEach(card => { card.style.display = 'flex'; });
+    // ── Beach recommendation (ranked by the module script below)
+    window.__mgWeather = {
+      speed: c.wind_speed_10m, direction: c.wind_direction_10m, time: c.time, waveH,
+      source: cachedAt ? 'cache' : 'live',
+    };
+    window.dispatchEvent(new CustomEvent('mg:weather', { detail: window.__mgWeather }));
 
     // ── 12-hour hourly
     const times = w.hourly.time;
@@ -1249,4 +1219,81 @@ async function loadWeather() {
 
 document.getElementById('w-retry-btn').addEventListener('click', loadWeather);
 loadWeather();
+</script>
+
+<script>
+  import { exposure, shelterScore, compass, exposureLabel, rememberWind, CALM_KMH, BOAT_TOUR_LIMIT_KMH, type Wind } from '../lib/wind';
+  import { POPULAR_BEACHES } from '../lib/beaches';
+
+  type Reading = Wind & { waveH: number };
+
+  const LIMIT = 6;
+  const popularity = (slug: string) => {
+    const i = POPULAR_BEACHES.indexOf(slug);
+    return i === -1 ? 99 : i;
+  };
+  const $ = (id: string) => document.getElementById(id)!;
+
+  function render(reading: Reading) {
+    const { speed, direction, waveH } = reading;
+    if (reading.source === 'live') rememberWind({ speed, direction, time: reading.time, source: 'live' });
+    const wind = { speed, direction };
+    const dir = compass(direction);
+    const kmh = Math.round(speed);
+    const calm = speed < CALM_KMH;
+    const boatOk = speed < BOAT_TOUR_LIMIT_KMH && waveH < 1.5;
+
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('#w-beaches-grid .w-beach-card'));
+    const ranked = cards
+      .map(el => {
+        const faces = Number(el.dataset.faces);
+        return { el, slug: el.dataset.slug!, access: el.dataset.access!, name: el.querySelector('.w-beach-name')!.textContent!,
+                 score: shelterScore(faces, wind), exp: exposure(faces, wind) };
+      })
+      .sort((a, b) => (b.score - a.score) || (popularity(a.slug) - popularity(b.slug)));
+
+    const picks = ranked
+      .filter(b => b.access !== 'boat')
+      .sort((a, b) => calm ? popularity(a.slug) - popularity(b.slug) : 0)
+      .slice(0, LIMIT);
+
+    // Reorder the grid so the picks appear in rank order.
+    const grid = $('w-beaches-grid');
+    cards.forEach(el => { el.hidden = true; });
+    picks.forEach(b => {
+      const pill = b.el.querySelector<HTMLElement>('[data-pill]')!;
+      pill.className = `w-beach-pill w-beach-pill--${b.exp}`;
+      pill.textContent = exposureLabel[b.exp];
+      b.el.hidden = false;
+      grid.appendChild(b.el);
+    });
+
+    const [emoji, title, desc] = calm
+      ? ['🏖', 'All beaches are great today',
+         `Light wind (${kmh} km/h) everywhere — every beach on the island is swimmable. Go for the exposed north coast (Sarakiniko, Papafragas) while it lasts.`]
+      : speed > 40
+      ? ['⚠️', `Strong ${dir} wind — stick to sheltered beaches`,
+         `${kmh} km/h from the ${dir}. Beaches facing ${dir} take the waves; these ones are tucked away from it.`]
+      : ['🌊', `${dir} wind — these beaches are sheltered`,
+         `${kmh} km/h from the ${dir}, so beaches facing ${dir} get the waves. These ones are tucked away from it.`];
+    $('w-rec-emoji').textContent = emoji;
+    $('w-rec-title').textContent = title;
+    $('w-rec-desc').textContent = desc + (boatOk
+      ? ' Good day for a boat trip to Kleftiko.'
+      : ' Boat tours to Kleftiko are often cancelled or rerouted in this wind — check with your operator.');
+
+    const avoid = calm ? [] : ranked
+      .filter(b => b.exp === 'exposed' && popularity(b.slug) < 99)
+      .sort((a, b) => popularity(a.slug) - popularity(b.slug))
+      .slice(0, 3);
+    const avoidEl = $('w-rec-avoid');
+    avoidEl.hidden = !avoid.length;
+    avoidEl.innerHTML = avoid.length
+      ? `<strong>Skip today:</strong> ${avoid.map(b => `<a href="/beaches/${b.slug}">${b.name}</a>`).join(', ')} — facing straight into the wind.`
+      : '';
+  }
+
+  window.addEventListener('mg:weather', e => render((e as CustomEvent<Reading>).detail));
+  const early = (window as any).__mgWeather as Reading | undefined;
+  if (early) render(early);
 </script>
