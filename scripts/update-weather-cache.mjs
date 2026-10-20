@@ -1,5 +1,5 @@
 // Refreshes public/weather-cache.json, the fallback the site reads when Open-Meteo
-// is unreachable. Run by .github/workflows/weather-cache.yml.
+// is unreachable. Run at deploy time by .github/workflows/deploy.yml (or npm run weather:cache).
 import { writeFile } from 'node:fs/promises';
 import { WEATHER_URL, WIND_URL, MARINE_URL, mergeWind } from '../src/lib/openmeteo.js';
 

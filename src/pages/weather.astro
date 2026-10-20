@@ -2,7 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import SmartImage from '../components/SmartImage.astro';
 import beachesRaw from '../data/beaches.json';
-import { getArea, areaLabel, getBeachName, beachPhoto } from '../lib/beaches';
+import { getArea, areaLabel, getBeachName } from '../lib/beaches';
+import { beachPhoto } from '../lib/public-files';
 import '../styles/weather.css';
 
 // Every beach is rendered; the client ranks them by shelter from the live wind

@@ -36,13 +36,13 @@ import SmartImage from '../SmartImage.astro';
       <span class="eyebrow-sep" aria-hidden="true"></span>
       <span class="eyebrow-tag">Volcanic island</span>
     </div>
-    <div class="hero-title">
+    <h1 class="hero-title">
       <span class="hero-title-main">Milos</span>
       <span class="hero-title-rule" aria-hidden="true"></span>
       <span class="hero-title-sub"
         >The most authentic guide to the island</span
       >
-    </div>
+    </h1>
     <p class="hero-desc">
       Volcanic landscape, 70+ beaches, hidden sea caves, tavernas with freshly
       caught seafood. Everything you need to experience Milos the right way.
@@ -187,6 +187,9 @@ import SmartImage from '../SmartImage.astro';
   }
   /* Title */
   .hero-title {
+    /* Reset <h1> defaults: the spans set their own sizes, and DM Serif Display has no bold. */
+    font-size: inherit;
+    font-weight: 400;
     margin-bottom: 1.6rem;
     animation: fadeUp 0.7s ease 0.1s both;
   }

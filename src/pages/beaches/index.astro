@@ -3,7 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
 import WindBeaches from '../../components/WindBeaches.astro';
 import beachesRaw from '../../data/beaches.json';
-import { getArea, beachPhoto, beachThumb } from '../../lib/beaches';
+import { getArea } from '../../lib/beaches';
+import { beachPhoto, beachThumb } from '../../lib/public-files';
 
 const beachesData = beachesRaw.map(b => ({ ...b, image: beachPhoto(b) }));
 

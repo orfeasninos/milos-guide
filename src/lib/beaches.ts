@@ -39,21 +39,6 @@ export const areaLabel: Record<Area, string> = {
   gulf: 'Milos Bay',
 };
 
-// Local photos live in /public/images/beaches/<slug>.jpg (with AVIF/WebP variants for SmartImage).
-const localPhotos = import.meta.glob('/public/images/beaches/*.jpg');
-
-export function beachPhoto(b: { slug: string; image?: string | null }): string | null {
-  if (b.image) return b.image;
-  const local = `/images/beaches/${b.slug}.jpg`;
-  return `/public${local}` in localPhotos ? local : null;
-}
-
-// Small WebP variant for plain <img> tags (map popups) where SmartImage isn't available.
-export function beachThumb(b: { slug: string; image?: string | null }): string | null {
-  const photo = beachPhoto(b);
-  return photo?.startsWith('/images/') ? photo.replace(/\.jpg$/, '-800w.webp') : photo;
-}
-
 export const getBeachName = (b: { name: string | { en: string } }): string =>
   typeof b.name === 'object' ? b.name.en : b.name;
 

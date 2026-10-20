@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# generated at deploy time (npm run weather:cache locally)
+public/weather-cache.json

@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import villagesData from '../../data/villages.json';
 import SmartImage from '../../components/SmartImage.astro';
 import beachesData from '../../data/beaches.json';
-import { beachPhoto } from '../../lib/beaches';
+import { beachPhoto } from '../../lib/public-files';
 
 const getName = (item: any): string => typeof item.name === 'object' ? item.name.en : item.name;
 
@@ -108,7 +108,7 @@ const villageJsonld = {
 <div class="container v-layout">
 
   <!-- MAIN -->
-  <main class="v-main">
+  <article class="v-main">
 
     <p class="v-desc">{(village as any).descriptionEn ?? village.description}</p>
 
@@ -177,7 +177,7 @@ const villageJsonld = {
       </div>
     )}
 
-  </main>
+  </article>
 
   <!-- SIDEBAR -->
   <aside class="v-sidebar">

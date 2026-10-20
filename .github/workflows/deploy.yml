@@ -3,11 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  # Pushes made with GITHUB_TOKEN don't trigger other workflows,
-  # so redeploy explicitly after the weather cache is refreshed.
-  workflow_run:
-    workflows: [ "Update Weather Cache" ]
-    types: [ completed ]
+  # Rebuild on a schedule so the weather fallback cache stays fresh.
+  # The cache is generated at build time and deployed, never committed.
+  schedule:
+    - cron: '0 4,10,16,22 * * *'  # 07:00, 13:00, 19:00, 01:00 Athens time (summer)
   workflow_dispatch:
 
 permissions:
@@ -21,13 +20,20 @@ concurrency:
 
 jobs:
   build:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          ref: main
+          node-version: 22
+
+      # Fallback only: the site fetches live weather first. If Open-Meteo is down,
+      # deploy anyway without a cache rather than failing the whole build.
+      - name: Fetch weather cache
+        run: node scripts/update-weather-cache.mjs
+        continue-on-error: true
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3

@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch:hotels": "node scripts/fetch-cj-hotels.mjs"
+    "fetch:hotels": "node scripts/fetch-cj-hotels.mjs",
+    "weather:cache": "node scripts/update-weather-cache.mjs"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.2.8",

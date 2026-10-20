@@ -7,7 +7,8 @@ import Tips from '../../components/beach/Tips.astro';
 import Sidebar from '../../components/beach/Sidebar.astro';
 import Nearby from '../../components/beach/Nearby.astro';
 import beachesRaw from '../../data/beaches.json';
-import { getBeachName, beachPhoto, type Beach, type BeachAccess } from '../../lib/beaches';
+import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
+import { beachPhoto } from '../../lib/public-files';
 
 const beachesData = (beachesRaw as Beach[]).map(b => ({ ...b, image: beachPhoto(b) }));
 
@@ -111,7 +112,7 @@ const beachJsonld = {
 <div class="container b-layout">
 
   <!-- MAIN -->
-  <main class="b-main">
+  <article class="b-main">
 
     <!-- Quick bar -->
     <div class="quick-bar">
@@ -158,7 +159,7 @@ const beachJsonld = {
 
     <Tips beach={beach} access={access} />
 
-  </main>
+  </article>
 
   <Sidebar beach={beach} access={access} mapsUrl={mapsUrl} />
 

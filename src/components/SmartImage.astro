@@ -1,4 +1,6 @@
 ---
+import { publicFileExists } from '../lib/public-files';
+
 interface Props {
   src: string;
   alt: string;
@@ -31,26 +33,21 @@ const toVariant = (path: string, ext: string, w: number) =>
 const toSingleFormat = (path: string, ext: string) =>
   path.replace(/\.(jpe?g|png|gif|webp|avif)(\?.*)?$/i, `.${ext}$2`);
 
-const knownAvif = import.meta.glob('/public/images/**/*-*w.avif', { eager: false });
-const knownWebp = import.meta.glob('/public/images/**/*-*w.webp', { eager: false });
-const knownSingleAvif = import.meta.glob('/public/images/**/*.avif', { eager: false });
-const knownSingleWebp = import.meta.glob('/public/images/**/*.webp', { eager: false });
-
-const buildSrcset = (known: Record<string, unknown>, ext: string): string | null => {
+const buildSrcset = (ext: string): string | null => {
   if (isExternal) return null;
   const entries = WIDTHS
     .map(w => ({ w, path: toVariant(src, ext, w) }))
-    .filter(({ path }) => `/public${path}` in known);
+    .filter(({ path }) => publicFileExists(path));
   return entries.length ? entries.map(({ w, path }) => `${path} ${w}w`).join(', ') : null;
 };
 
-const avifSrcset = buildSrcset(knownAvif, 'avif');
-const webpSrcset = buildSrcset(knownWebp, 'webp');
+const avifSrcset = buildSrcset('avif');
+const webpSrcset = buildSrcset('webp');
 
 const singleAvifPath = toSingleFormat(src, 'avif');
 const singleWebpPath = toSingleFormat(src, 'webp');
-const hasSingleAvif = !isExternal && !avifSrcset && `/public${singleAvifPath}` in knownSingleAvif;
-const hasSingleWebp = !isExternal && !webpSrcset && `/public${singleWebpPath}` in knownSingleWebp;
+const hasSingleAvif = !isExternal && !avifSrcset && publicFileExists(singleAvifPath);
+const hasSingleWebp = !isExternal && !webpSrcset && publicFileExists(singleWebpPath);
 ---
 
 <picture class={className}>
