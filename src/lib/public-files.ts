@@ -16,8 +16,15 @@ export function beachPhoto(b: { slug: string; image?: string | null }): string |
   return publicFileExists(local) ? local : null;
 }
 
-// Small WebP variant for plain <img> tags (map popups) where SmartImage isn't available.
-export function beachThumb(b: { slug: string; image?: string | null }): string | null {
-  const photo = beachPhoto(b);
-  return photo?.startsWith('/images/') ? photo.replace(/\.jpg$/, '-800w.webp') : photo;
+// Restaurant photos go in /public/images/taverns/<slug>.jpg (the localPhoto path). Until
+// the file is there the pages simply show no photo.
+export function restaurantPhoto(r: { localPhoto?: string | null }): string | null {
+  return r.localPhoto && publicFileExists(r.localPhoto) ? r.localPhoto : null;
 }
+
+// Small WebP variant for plain <img> tags (map popups) where SmartImage isn't available.
+const thumb = (photo: string | null): string | null =>
+  photo?.startsWith('/images/') ? photo.replace(/\.jpg$/, '-800w.webp') : photo;
+
+export const beachThumb = (b: { slug: string; image?: string | null }) => thumb(beachPhoto(b));
+export const restaurantThumb = (r: { localPhoto?: string | null }) => thumb(restaurantPhoto(r));

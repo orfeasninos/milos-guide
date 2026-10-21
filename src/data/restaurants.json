@@ -3,7 +3,7 @@
     "slug": "barko-tavern",
     "type": "restaurant",
     "name": {
-      "el": "Barko tavern restaurant",
+      "el": "Barko",
       "en": "Barko Tavern"
     },
     "description": {
@@ -96,7 +96,7 @@
     "slug": "o-hamos-tavern",
     "type": "restaurant",
     "name": {
-      "el": "Οινομαγειρείο Ω! Χαμός!",
+      "el": "Ω! Χαμός!",
       "en": "O! Hamos!"
     },
     "description": {
@@ -127,7 +127,7 @@
     "slug": "avli-milos",
     "type": "restaurant",
     "name": {
-      "el": "Avli-Milos",
+      "el": "Avli Milos",
       "en": "Avli Milos"
     },
     "description": {
@@ -158,7 +158,7 @@
     "slug": "mikros-apoplous",
     "type": "restaurant",
     "name": {
-      "el": "Mikros Apoplous - Seafood and more",
+      "el": "Μικρός Απόπλους",
       "en": "Mikros Apoplous – Seafood & More"
     },
     "description": {
@@ -189,7 +189,7 @@
     "slug": "glaronisia-milos",
     "type": "restaurant",
     "name": {
-      "el": "τα γλαρονήσια",
+      "el": "Τα Γλαρονήσια",
       "en": "Ta Glaronisia"
     },
     "description": {
@@ -220,7 +220,7 @@
     "slug": "barriello-milos",
     "type": "restaurant",
     "name": {
-      "el": "barriello",
+      "el": "Barriello",
       "en": "Barriello"
     },
     "description": {
@@ -228,7 +228,7 @@
       "en": "Creative Mediterranean cuisine in a relaxed garden setting in Triovassalos."
     },
     "location": {
-      "area": "Triovassalos",
+      "area": "Triovasalos",
       "address": "island, Τρυπητή 848 00, Ελλάδα"
     },
     "localPhoto": "/images/taverns/barriello-milos.jpg",
@@ -468,7 +468,7 @@
     "slug": "iliovasilema-milos",
     "type": "restaurant",
     "name": {
-      "el": "Εστιατόριο Ηλιοβασίλεμα",
+      "el": "Ηλιοβασίλεμα",
       "en": "Iliovasilema"
     },
     "description": {
@@ -476,7 +476,7 @@
       "en": "Watch the sunset over the Aegean while enjoying fresh seafood and grilled specialties."
     },
     "location": {
-      "area": "Milos",
+      "area": "Zefiria",
       "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 00, Ελλάδα"
     },
     "localPhoto": "/images/taverns/iliovasilema-milos.jpg",
@@ -530,7 +530,7 @@
     "slug": "astakas-milos",
     "type": "restaurant",
     "name": {
-      "el": "Άστακας Cafe Restaurant",
+      "el": "Άστακας",
       "en": "Astakas Milos"
     },
     "description": {
@@ -592,7 +592,7 @@
     "slug": "trapatselis-milos",
     "type": "restaurant",
     "name": {
-      "el": "ΤΡΑΠΑΤΣΕΛΗΣ",
+      "el": "Τραπατσέλης",
       "en": "Trapatselis"
     },
     "description": {
@@ -623,8 +623,8 @@
     "slug": "ergina-milos",
     "type": "restaurant",
     "name": {
-      "el": "Εστιατόριο Εργινα",
-      "en": "Estiatorio Ergina"
+      "el": "Εργίνα",
+      "en": "Ergina"
     },
     "description": {
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Εστιατόριο Εργινα στον προορισμό Tripiti της Μήλου.",
@@ -654,7 +654,7 @@
     "slug": "cavos-milos",
     "type": "restaurant",
     "name": {
-      "el": "Cavos Restaurant Milos",
+      "el": "Cavos",
       "en": "Cavos Restaurant"
     },
     "description": {
@@ -747,7 +747,7 @@
     "slug": "lyra-milos",
     "type": "restaurant",
     "name": {
-      "el": "Lyra Milos - The Sound of Taste",
+      "el": "Lyra Milos",
       "en": "Lyra Milos"
     },
     "description": {

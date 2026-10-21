@@ -2,11 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
 import beachesData from '../../data/beaches.json';
-import { beachPhoto } from '../../lib/public-files';
+import { beachPhoto, restaurantPhoto } from '../../lib/public-files';
 import { getBeachName } from '../../lib/beaches';
 import { metaDescription } from '../../lib/seo';
 import {
-  restaurants, restaurantArea, areaVillageSlug, placeType, placeService,
+  restaurants, areaVillageSlug, placeType, placeService,
   mapsUrl, telHref, distanceKm, type Restaurant,
 } from '../../lib/restaurants';
 
@@ -19,11 +19,12 @@ export function getStaticPaths() {
 
 const { restaurant: r } = Astro.props as { restaurant: Restaurant };
 
-const area = restaurantArea(r);
+const area = r.location.area;
 const villageSlug = areaVillageSlug(area);
 const kind = placeType(r);
 const serves = placeService(r);
 const maps = mapsUrl(r);
+const photo = restaurantPhoto(r);
 
 const nearbyBeaches = beachesData
   .filter(b => b.coordinates?.lat && b.coordinates?.lng)
@@ -34,7 +35,7 @@ const nearbyBeaches = beachesData
 // Same area first, then the closest ones elsewhere.
 const otherRestaurants = restaurants
   .filter(o => o.slug !== r.slug)
-  .map(o => ({ ...o, area: restaurantArea(o), kind: placeType(o), km: distanceKm(r.coordinates, o.coordinates) }))
+  .map(o => ({ ...o, area: o.location.area, kind: placeType(o), photo: restaurantPhoto(o), km: distanceKm(r.coordinates, o.coordinates) }))
   .sort((a, b) => Number(b.area === area) - Number(a.area === area) || a.km - b.km)
   .slice(0, 4);
 
@@ -58,6 +59,7 @@ const restaurantJsonld = {
     addressCountry: 'GR',
   },
   hasMap: maps,
+  ...(photo ? { image: `${_siteUrl}${photo}` } : {}),
   ...(r.website ? { sameAs: [r.website] } : {}),
   containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
 };
@@ -72,7 +74,11 @@ const restaurantJsonld = {
 
 <!-- HERO -->
 <div class="r-hero">
-  <div class="r-hero-bg"></div>
+  {photo ? (
+    <SmartImage src={photo} alt={r.name.en} width={1280} height={400} isLCP={true} class="r-hero-img" sizes="100vw" />
+  ) : (
+    <div class="r-hero-bg"></div>
+  )}
   <div class="r-hero-overlay">
     <div class="container r-hero-inner">
       <a href="/restaurants/" class="back-link">← All places to eat</a>
@@ -153,7 +159,13 @@ const restaurantJsonld = {
       <div class="nearby-list">
         {otherRestaurants.map(o => (
           <a href={`/restaurants/${o.slug}/`} class="nearby-item">
-            <div class="nearby-img-wrap"><div class="nearby-ph">{o.kind.icon}</div></div>
+            <div class="nearby-img-wrap">
+              {o.photo ? (
+                <SmartImage src={o.photo} alt={o.name.en} width={44} height={44} class="nearby-img" sizes="44px" />
+              ) : (
+                <div class="nearby-ph">{o.kind.icon}</div>
+              )}
+            </div>
             <div class="nearby-body">
               <p class="nearby-name">{o.name.en}</p>
               <p class="nearby-sub">{o.kind.label} · {o.area}</p>
@@ -231,6 +243,10 @@ const restaurantJsonld = {
   position: absolute;
   inset: 0;
   background: linear-gradient(150deg, #0a2040 0%, #0d2b4e 30%, #1a5c8a 70%, #2a7faa 100%);
+}
+:global(.r-hero-img) {
+  position: absolute;
+  inset: 0;
 }
 .r-hero-bg::after {
   content: '';

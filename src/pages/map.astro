@@ -3,10 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 import sightsRaw from '../data/sights.json';
-import { beachThumb } from '../lib/public-files';
+import { beachThumb, restaurantThumb } from '../lib/public-files';
 import { beachAreaLabel } from '../lib/beaches';
 import { CARTO_VOYAGER_URL } from '../lib/basemap';
-import { restaurants, restaurantArea, placeType } from '../lib/restaurants';
+import { restaurants, placeType } from '../lib/restaurants';
 
 const points = [
   ...beachesRaw
@@ -34,7 +34,7 @@ const points = [
     })),
   ...restaurants.map(r => ({
       slug: r.slug, type: 'restaurant',
-      name: r.name.en, area: restaurantArea(r), photo: null,
+      name: r.name.en, area: r.location.area, photo: restaurantThumb(r),
       url:  `/restaurants/${r.slug}/`, lat: r.coordinates.lat, lng: r.coordinates.lng, icon: placeType(r).icon,
     })),
 // Slugs repeat across types (e.g. Sarakiniko is a beach and a sight), so ids use type + slug.

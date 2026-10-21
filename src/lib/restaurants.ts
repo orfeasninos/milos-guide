@@ -3,15 +3,6 @@ import villagesData from '../data/villages.json';
 
 export type Restaurant = (typeof restaurantsRaw)[number];
 
-// The scraped areas aren't consistent ("Triovassalos" vs "Triovasalos", a bare "Milos").
-const AREA_FIX: Record<string, string> = {
-  Triovassalos: 'Triovasalos',
-  Milos: 'Zefiria',
-};
-
-export const restaurantArea = (r: Restaurant): string =>
-  AREA_FIX[r.location.area] ?? r.location.area;
-
 // Village page for an area, when the guide has one.
 export const areaVillageSlug = (area: string): string | null =>
   villagesData.find(v => v.slug === area.toLowerCase())?.slug ?? null;
@@ -43,7 +34,7 @@ export const placeService = (r: Restaurant) => services[r.service] ?? services['
 // the place's listing, where visitors see today's hours and reviews.
 export const mapsUrl = (r: Restaurant): string =>
   'https://www.google.com/maps/search/?api=1&query=' +
-  encodeURIComponent(`${r.name.en}, ${restaurantArea(r)}, Milos`);
+  encodeURIComponent(`${r.name.en}, ${r.location.area}, Milos`);
 
 export const telHref = (phone: string): string =>
   'tel:+30' + phone.replace(/\D/g, '');

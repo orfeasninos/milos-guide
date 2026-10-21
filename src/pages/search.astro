@@ -4,7 +4,7 @@ import sightsRaw from '../data/sights.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 import { beachAreaLabel } from '../lib/beaches';
-import { restaurants, restaurantArea, placeType } from '../lib/restaurants';
+import { restaurants, placeType } from '../lib/restaurants';
 
 const placeTypeEl: Record<string, string> = { restaurant: 'Εστιατόριο', cafe: 'Καφέ' };
 
@@ -52,7 +52,7 @@ const index = [
     typeEn:   placeType(r).label,
     nameEl:   r.name.el,
     nameEn:   r.name.en,
-    area:     restaurantArea(r),
+    area:     r.location.area,
     url:      `/restaurants/${r.slug}/`,
     icon:     placeType(r).icon,
   })),

@@ -1,12 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { restaurants, restaurantArea, placeTypes, placeType, placeService } from '../../lib/restaurants';
+import SmartImage from '../../components/SmartImage.astro';
+import { restaurantPhoto } from '../../lib/public-files';
+import { restaurants, placeTypes, placeType, placeService } from '../../lib/restaurants';
 
 const list = restaurants.map(r => ({
   ...r,
-  area: restaurantArea(r),
+  area: r.location.area,
   kind: placeType(r),
   serves: placeService(r),
+  photo: restaurantPhoto(r),
 }));
 
 // Only types that have places get a chip, and the type row only appears once there are
@@ -70,6 +73,9 @@ const restaurantsJsonld = {
       <div class="featured-grid">
         {featured.map(r => (
           <a href={`/restaurants/${r.slug}/`} class="feat">
+            {r.photo && (
+              <SmartImage src={r.photo} alt={r.name.en} width={640} height={360} class="feat-img" sizes="(max-width: 768px) 100vw, 33vw" />
+            )}
             <span class="feat-area">{r.kind.icon} {r.kind.label} · {r.area}</span>
             <h3 class="feat-name">{r.name.en}</h3>
             <p class="feat-desc">{r.description.en}</p>
@@ -111,6 +117,9 @@ const restaurantsJsonld = {
     <div class="rest-grid" id="rest-grid">
       {list.map(r => (
         <a href={`/restaurants/${r.slug}/`} class="rc" data-area={r.area} data-type={r.type}>
+          {r.photo && (
+            <SmartImage src={r.photo} alt={r.name.en} width={640} height={360} class="rc-img" sizes="(max-width: 768px) 100vw, 33vw" />
+          )}
           <span class="rc-area">{r.kind.label} · {r.area}</span>
           <h2 class="rc-name">{r.name.en}</h2>
           <p class="rc-desc">{r.description.en}</p>
@@ -261,6 +270,14 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
   transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
 }
 .feat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); color: #fff; }
+/* Photo bleeds to the card edges, above the text */
+:global(.feat-img) {
+  display: block;
+  margin: -1.5rem -1.4rem 0.5rem;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+}
 .feat-area {
   font-size: 0.62rem;
   font-weight: 600;
@@ -341,6 +358,13 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
   transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s;
 }
 .rc:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--sand-dark); color: inherit; }
+:global(.rc-img) {
+  display: block;
+  margin: -1.25rem -1.4rem 0.25rem;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+}
 .rc-area {
   font-size: 0.62rem;
   font-weight: 700;
