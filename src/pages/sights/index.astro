@@ -133,6 +133,45 @@ const sightsJsonld = {
   </div>
 </section>
 
+
+<script>
+const grid    = document.getElementById('sights-grid');
+const empty   = document.getElementById('empty-state');
+const counter = document.getElementById('results-count');
+const reset   = document.getElementById('reset-filters');
+
+let activeType = 'all';
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.sc') ?? [];
+  let visible = 0;
+  cards.forEach(card => {
+    const type = card.dataset.type ?? '';
+    const show = activeType === 'all' || type === activeType;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (counter) counter.textContent = `${visible} sight${visible !== 1 ? 's' : ''}`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
+}
+
+document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+    chip.classList.add('chip--active');
+    activeType = chip.dataset.type ?? 'all';
+    applyFilters();
+  });
+});
+
+reset?.addEventListener('click', () => {
+  activeType = 'all';
+  document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#type-chips .chip')?.classList.add('chip--active');
+  applyFilters();
+});
+</script>
 </Layout>
 
 
@@ -349,43 +388,3 @@ const sightsJsonld = {
   .info-grid { grid-template-columns: 1fr; }
 }
 </style>
-
-
-<script>
-const grid    = document.getElementById('sights-grid');
-const empty   = document.getElementById('empty-state');
-const counter = document.getElementById('results-count');
-const reset   = document.getElementById('reset-filters');
-
-let activeType = 'all';
-
-function applyFilters() {
-  const cards = grid?.querySelectorAll<HTMLElement>('.sc') ?? [];
-  let visible = 0;
-  cards.forEach(card => {
-    const type = card.dataset.type ?? '';
-    const show = activeType === 'all' || type === activeType;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
-  });
-  if (counter) counter.textContent = `${visible} sight${visible !== 1 ? 's' : ''}`;
-  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
-  if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
-}
-
-document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
-    chip.classList.add('chip--active');
-    activeType = chip.dataset.type ?? 'all';
-    applyFilters();
-  });
-});
-
-reset?.addEventListener('click', () => {
-  activeType = 'all';
-  document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
-  document.querySelector('#type-chips .chip')?.classList.add('chip--active');
-  applyFilters();
-});
-</script>

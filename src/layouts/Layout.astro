@@ -322,6 +322,34 @@ const schemas: object[] = [
       </div>
     </div>
   </footer>
+
+<script>
+const header = document.getElementById('site-header');
+let _scrolled = false;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (!_scrolled && y > 60)  { _scrolled = true;  header?.classList.add('is-scrolled'); }
+  if (_scrolled  && y < 20)  { _scrolled = false; header?.classList.remove('is-scrolled'); }
+}, { passive: true });
+
+const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
+const nav    = document.getElementById('main-nav');
+
+const closeNav = () => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; };
+const openNav  = () => { nav?.classList.add('is-open'); toggle?.setAttribute('aria-expanded', 'true'); if (window.innerWidth <= 720) document.body.style.overflow = 'hidden'; };
+
+toggle?.addEventListener('click', () => nav?.classList.contains('is-open') ? closeNav() : openNav());
+nav?.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeNav));
+document.addEventListener('click', (e) => { if (nav?.classList.contains('is-open') && !nav.contains(e.target as Node) && !toggle?.contains(e.target as Node)) closeNav(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav?.classList.contains('is-open')) { closeNav(); toggle?.focus(); } });
+window.addEventListener('resize', () => { if (window.innerWidth > 720 && nav?.classList.contains('is-open')) closeNav(); }, { passive: true });
+
+const path = window.location.pathname;
+document.querySelectorAll<HTMLAnchorElement>('[data-navlink]').forEach(link => {
+  const href = link.getAttribute('href') ?? '';
+  if (href.length > 1 && path.startsWith(href)) link.classList.add('is-active');
+});
+</script>
 </body>
 </html>
 
@@ -492,31 +520,3 @@ nav ul, nav ol { list-style: none; }
   .page-main { min-height: auto; }
 }
 </style>
-
-<script>
-const header = document.getElementById('site-header');
-let _scrolled = false;
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  if (!_scrolled && y > 60)  { _scrolled = true;  header?.classList.add('is-scrolled'); }
-  if (_scrolled  && y < 20)  { _scrolled = false; header?.classList.remove('is-scrolled'); }
-}, { passive: true });
-
-const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
-const nav    = document.getElementById('main-nav');
-
-const closeNav = () => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; };
-const openNav  = () => { nav?.classList.add('is-open'); toggle?.setAttribute('aria-expanded', 'true'); if (window.innerWidth <= 720) document.body.style.overflow = 'hidden'; };
-
-toggle?.addEventListener('click', () => nav?.classList.contains('is-open') ? closeNav() : openNav());
-nav?.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', closeNav));
-document.addEventListener('click', (e) => { if (nav?.classList.contains('is-open') && !nav.contains(e.target as Node) && !toggle?.contains(e.target as Node)) closeNav(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav?.classList.contains('is-open')) { closeNav(); toggle?.focus(); } });
-window.addEventListener('resize', () => { if (window.innerWidth > 720 && nav?.classList.contains('is-open')) closeNav(); }, { passive: true });
-
-const path = window.location.pathname;
-document.querySelectorAll<HTMLAnchorElement>('[data-navlink]').forEach(link => {
-  const href = link.getAttribute('href') ?? '';
-  if (href.length > 1 && path.startsWith(href)) link.classList.add('is-active');
-});
-</script>

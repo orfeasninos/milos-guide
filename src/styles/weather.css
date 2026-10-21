@@ -421,15 +421,15 @@
   overflow: hidden;
   flex-shrink: 0;
 }
-.w-beach-img :global(picture) { display: block; width: 100%; height: 100%; }
-.w-beach-img :global(img) {
+.w-beach-img picture { display: block; width: 100%; height: 100%; }
+.w-beach-img img {
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
   display: block;
 }
 .w-beach-card[hidden] { display: none; }
-.w-beach-card:hover .w-beach-img :global(img),
+.w-beach-card:hover .w-beach-img img,
 .w-beach-card:hover .w-beach-ph { transform: scale(1.07); }
 .w-beach-ph {
   width: 100%; height: 100%;
@@ -449,7 +449,7 @@
 .w-beach-pill--partial   { background: #fef3c7; color: #92400e; }
 .w-beach-pill--exposed   { background: #fee2e2; color: #991b1b; }
 .w-rec-avoid { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
-.w-rec-avoid :global(a) { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.35); }
+.w-rec-avoid a { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.35); }
 .w-beach-img-overlay {
   position: absolute;
   inset: 0;
@@ -510,8 +510,8 @@
 .w-fc-temp { font-size: 1rem; font-weight: 800; color: var(--deep-blue); }
 .w-fc-item.is-now .w-fc-temp { color: #fff; }
 .w-fc-wind { font-size: 0.6rem; color: var(--muted); display: inline-flex; align-items: center; gap: 3px; }
-.w-fc-wind :global(.w-fc-arrow) { flex-shrink: 0; color: var(--aegean); }
-.w-fc-item.is-now .w-fc-wind :global(.w-fc-arrow) { color: #fff; }
+.w-fc-wind .w-fc-arrow { flex-shrink: 0; color: var(--aegean); }
+.w-fc-item.is-now .w-fc-wind .w-fc-arrow { color: #fff; }
 .w-fc-item.is-now .w-fc-wind { color: rgba(255,255,255,0.42); }
 .w-fc-rain-track {
   width: 75%;

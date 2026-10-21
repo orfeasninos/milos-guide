@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -17,13 +17,13 @@
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource/dm-sans": "^5.2.8",
     "@fontsource/dm-serif-display": "^5.2.8",
-    "astro": "^6.4.6",
+    "astro": "^7.4.1",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
+    "@astrojs/check": "^0.9.11",
     "@types/node": "^25.9.1",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.5",
     "typescript": "^6.0.3"
   }
 }

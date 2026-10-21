@@ -128,6 +128,83 @@ import Layout from '../layouts/Layout.astro';
   </div>
 </section>
 
+
+<script>
+const form       = document.getElementById('contact-form') as HTMLFormElement;
+const submitBtn  = document.getElementById('submit-btn') as HTMLButtonElement;
+const successBox = document.getElementById('form-success') as HTMLElement;
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjy9_Ad2_K5cvB23U4-bltwhLy3yy4s8Axt_8cJ6ATjBxeP74k2ot9XeNns4xAozp6rg/exec';
+
+function validate(): boolean {
+  let valid = true;
+
+  const fields = [
+    { id: 'name',    errorId: 'name-error',    msg: 'Please enter your name.' },
+    { id: 'email',   errorId: 'email-error',   msg: 'Please enter a valid email.' },
+    { id: 'subject', errorId: 'subject-error', msg: 'Please choose a topic.' },
+    { id: 'message', errorId: 'message-error', msg: 'Please write a message.' },
+  ];
+
+  fields.forEach(({ id, errorId, msg }) => {
+    const el    = document.getElementById(id) as HTMLInputElement;
+    const error = document.getElementById(errorId) as HTMLElement;
+    const value = el.value.trim();
+    const isEmail = id === 'email';
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const ok = value && (!isEmail || emailOk);
+
+    if (!ok) {
+      el.classList.add('is-invalid');
+      error.textContent = msg;
+      valid = false;
+    } else {
+      el.classList.remove('is-invalid');
+      error.textContent = '';
+    }
+  });
+
+  return valid;
+}
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Honeypot check
+  const trap = (form.querySelector('[name="_trap"]') as HTMLInputElement)?.value;
+  if (trap) return;
+
+  if (!validate()) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  try {
+    // The Apps Script must answer with ContentService JSON ({ result: 'success' | 'error' })
+    // so the response is readable cross-origin and failures surface here.
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) });
+    const json = await res.json().catch(() => null);
+    if (!res.ok || json?.result !== 'success') throw new Error(json?.error ?? `HTTP ${res.status}`);
+
+    form.reset();
+    successBox.style.display = 'flex';
+    submitBtn.style.display  = 'none';
+  } catch {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send message';
+    alert('Something went wrong. Please try again.');
+  }
+});
+
+// Clear errors on input
+form?.querySelectorAll('.form-input, .form-select').forEach(el => {
+  el.addEventListener('input', () => {
+    el.classList.remove('is-invalid');
+    const errorEl = document.getElementById(`${el.id}-error`);
+    if (errorEl) errorEl.textContent = '';
+  });
+});
+</script>
 </Layout>
 
 <style>
@@ -294,80 +371,3 @@ import Layout from '../layouts/Layout.astro';
   .form-submit { width: 100%; justify-content: center; }
 }
 </style>
-
-<script>
-const form       = document.getElementById('contact-form') as HTMLFormElement;
-const submitBtn  = document.getElementById('submit-btn') as HTMLButtonElement;
-const successBox = document.getElementById('form-success') as HTMLElement;
-
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjy9_Ad2_K5cvB23U4-bltwhLy3yy4s8Axt_8cJ6ATjBxeP74k2ot9XeNns4xAozp6rg/exec';
-
-function validate(): boolean {
-  let valid = true;
-
-  const fields = [
-    { id: 'name',    errorId: 'name-error',    msg: 'Please enter your name.' },
-    { id: 'email',   errorId: 'email-error',   msg: 'Please enter a valid email.' },
-    { id: 'subject', errorId: 'subject-error', msg: 'Please choose a topic.' },
-    { id: 'message', errorId: 'message-error', msg: 'Please write a message.' },
-  ];
-
-  fields.forEach(({ id, errorId, msg }) => {
-    const el    = document.getElementById(id) as HTMLInputElement;
-    const error = document.getElementById(errorId) as HTMLElement;
-    const value = el.value.trim();
-    const isEmail = id === 'email';
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    const ok = value && (!isEmail || emailOk);
-
-    if (!ok) {
-      el.classList.add('is-invalid');
-      error.textContent = msg;
-      valid = false;
-    } else {
-      el.classList.remove('is-invalid');
-      error.textContent = '';
-    }
-  });
-
-  return valid;
-}
-
-form?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  // Honeypot check
-  const trap = (form.querySelector('[name="_trap"]') as HTMLInputElement)?.value;
-  if (trap) return;
-
-  if (!validate()) return;
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending…';
-
-  try {
-    // The Apps Script must answer with ContentService JSON ({ result: 'success' | 'error' })
-    // so the response is readable cross-origin and failures surface here.
-    const res = await fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) });
-    const json = await res.json().catch(() => null);
-    if (!res.ok || json?.result !== 'success') throw new Error(json?.error ?? `HTTP ${res.status}`);
-
-    form.reset();
-    successBox.style.display = 'flex';
-    submitBtn.style.display  = 'none';
-  } catch {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Send message';
-    alert('Something went wrong. Please try again.');
-  }
-});
-
-// Clear errors on input
-form?.querySelectorAll('.form-input, .form-select').forEach(el => {
-  el.addEventListener('input', () => {
-    el.classList.remove('is-invalid');
-    const errorEl = document.getElementById(`${el.id}-error`);
-    if (errorEl) errorEl.textContent = '';
-  });
-});
-</script>

@@ -96,8 +96,6 @@ const index = [
   </div>
 </section>
 
-</Layout>
-
 <!-- Pass index to client JS -->
 <script define:vars={{ index, isEl }}>
 const input   = document.getElementById('search-input');
@@ -187,6 +185,7 @@ function highlight(text, q) {
   return text.replace(regex, '<mark>$1</mark>');
 }
 </script>
+</Layout>
 
 <style>
 /* ── HERO ── */

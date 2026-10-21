@@ -65,8 +65,8 @@ const { beach, access, mapsUrl } = Astro.props;
   </div>
 
   <!-- Map embed -->
+  <!-- Click-to-load: the Google embed is ~1 MB of JS and sets cookies, so don't load it until asked -->
   {beach.coordinates?.lat && beach.coordinates?.lng && (
-    <!-- Click-to-load: the Google embed is ~1 MB of JS and sets cookies, so don't load it until asked -->
     <div
       class="s-map"
       data-map-src={`https://maps.google.com/maps?q=${beach.coordinates.lat},${beach.coordinates.lng}&z=15&output=embed`}

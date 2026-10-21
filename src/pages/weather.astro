@@ -238,11 +238,11 @@ const BEACHES_DATA = beachesRaw.map(b => ({
   </div>
 </section>
 
-</Layout>
 
 <script>
   import '../scripts/weather.js';
 </script>
+
 <script>
   import { exposure, shelterScore, compass, exposureLabel, rememberWind, CALM_KMH, BOAT_TOUR_LIMIT_KMH, type Wind } from '../lib/wind';
   import { POPULAR_BEACHES } from '../lib/beaches';
@@ -319,3 +319,4 @@ const BEACHES_DATA = beachesRaw.map(b => ({
   const early = (window as any).__mgWeather as Reading | undefined;
   if (early) render(early);
 </script>
+</Layout>
