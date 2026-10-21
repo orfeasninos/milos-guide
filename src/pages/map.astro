@@ -6,6 +6,7 @@ import sightsRaw from '../data/sights.json';
 import { beachThumb } from '../lib/public-files';
 import { beachAreaLabel } from '../lib/beaches';
 import { CARTO_VOYAGER_URL } from '../lib/basemap';
+import { restaurants, restaurantArea, placeType } from '../lib/restaurants';
 
 const points = [
   ...beachesRaw
@@ -31,6 +32,11 @@ const points = [
       name: s.nameEn, area: s.area, photo: null,
       url:  `/sights/${s.slug}/`, lat: (s as any).coordinates.lat, lng: (s as any).coordinates.lng, icon: s.icon,
     })),
+  ...restaurants.map(r => ({
+      slug: r.slug, type: 'restaurant',
+      name: r.name.en, area: restaurantArea(r), photo: null,
+      url:  `/restaurants/${r.slug}/`, lat: r.coordinates.lat, lng: r.coordinates.lng, icon: placeType(r).icon,
+    })),
 // Slugs repeat across types (e.g. Sarakiniko is a beach and a sight), so ids use type + slug.
 ].map(p => ({ ...p, key: `${p.type}-${p.slug}` }));
 ---
@@ -38,7 +44,7 @@ const points = [
 <Layout
   lang="en"
   title="Map of Milos"
-  description="Interactive map of Milos with every beach, village and sight. Filter by type and tap a pin to see details and open the full guide page."
+  description="Interactive map of Milos with every beach, village, sight and restaurant. Filter by type and tap a pin to see details and open the full guide page."
 >
 <Fragment slot="head">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
@@ -56,6 +62,7 @@ const points = [
       <button type="button" class="mf-chip mf-chip--active" data-filter="beach" aria-pressed="true">🏖 Beaches</button>
       <button type="button" class="mf-chip mf-chip--active" data-filter="village" aria-pressed="true">🏘 Villages</button>
       <button type="button" class="mf-chip mf-chip--active" data-filter="sight" aria-pressed="true">🏛 Sights</button>
+      <button type="button" class="mf-chip mf-chip--active" data-filter="restaurant" aria-pressed="true">🍽 Food</button>
     </div>
     <div class="sidebar-cards" id="sidebar-cards">
       {points.map(p => (
@@ -97,11 +104,11 @@ script.onload = () => {
 };
 document.head.appendChild(script);
 
-const markerColors = { beach: '#1a7fc1', village: '#2d6a4f', sight: '#7b4f1e' };
-const markerEmoji  = { beach: '🏖', village: '🏘', sight: '🏛' };
+const markerColors = { beach: '#1a7fc1', village: '#2d6a4f', sight: '#7b4f1e', restaurant: '#b5452b' };
+const markerEmoji  = { beach: '🏖', village: '🏘', sight: '🏛', restaurant: '🍽' };
 
 let map, markers = [], clusterGroup, activeKey = null;
-let activeFilters = new Set(['beach', 'village', 'sight']);
+let activeFilters = new Set(['beach', 'village', 'sight', 'restaurant']);
 
 function initMap() {
   const milosBounds = L.latLngBounds(L.latLng(36.55, 24.15), L.latLng(36.90, 24.75));
@@ -297,6 +304,7 @@ function applyFilter() {
 .mf-chip[data-filter="beach"].mf-chip--active   { background: #1a7fc1; border-color: #1a7fc1; }
 .mf-chip[data-filter="village"].mf-chip--active  { background: #2d6a4f; border-color: #2d6a4f; }
 .mf-chip[data-filter="sight"].mf-chip--active    { background: #7b4f1e; border-color: #7b4f1e; }
+.mf-chip[data-filter="restaurant"].mf-chip--active { background: #b5452b; border-color: #b5452b; }
 
 .sidebar-cards { flex: 1; overflow-y: auto; padding: 0.5rem 0; }
 .sidebar-cards::-webkit-scrollbar { width: 4px; }

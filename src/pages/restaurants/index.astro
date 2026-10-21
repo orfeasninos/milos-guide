@@ -1,0 +1,416 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { restaurants, restaurantArea, placeTypes, placeType, placeService } from '../../lib/restaurants';
+
+const list = restaurants.map(r => ({
+  ...r,
+  area: restaurantArea(r),
+  kind: placeType(r),
+  serves: placeService(r),
+}));
+
+// Only types that have places get a chip, and the type row only appears once there are
+// two (i.e. after the first café is added).
+const types = Object.keys(placeTypes).filter(t => list.some(r => r.type === t));
+const showTypes = types.length > 1;
+
+const featured = list.filter(r => r.isFeatured);
+
+// Busiest areas first.
+const areaCounts = list.reduce<Record<string, number>>((acc, r) => {
+  acc[r.area] = (acc[r.area] ?? 0) + 1;
+  return acc;
+}, {});
+const areas = Object.keys(areaCounts).sort((a, b) => areaCounts[b] - areaCounts[a] || a.localeCompare(b));
+
+const _siteUrl = 'https://milos.guide';
+const restaurantsJsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Restaurants & Cafés in Milos',
+  description: `Where to eat in Milos — ${list.length} tavernas, restaurants and cafés in Adamas, Pollonia, Plaka and beyond.`,
+  url: `${_siteUrl}/restaurants/`,
+  numberOfItems: list.length,
+  itemListElement: list.map((r, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: r.name.en,
+    url: `${_siteUrl}/restaurants/${r.slug}/`,
+  })),
+};
+---
+
+<Layout
+  lang="en"
+  title="Restaurants & Cafés in Milos"
+  description={`Where to eat in Milos — ${list.length} tavernas, restaurants and cafés in Adamas, Pollonia, Plaka and Tripiti, with phone numbers, websites and maps.`}
+  jsonld={restaurantsJsonld}
+>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <p class="page-label">Food</p>
+    <h1 class="page-title">Where to eat in Milos</h1>
+    <p class="page-desc">
+      Fresh fish by the harbour, slow-cooked meats in the hill villages and sunset tables above the Aegean.
+      {list.length} places to eat across the island.
+    </p>
+  </div>
+</section>
+
+<!-- FEATURED -->
+{featured.length > 0 && (
+  <section class="featured-sec">
+    <div class="container">
+      <div class="featured-hdr">
+        <span class="label">Local favourites</span>
+        <h2 class="featured-title">Our picks</h2>
+      </div>
+      <div class="featured-grid">
+        {featured.map(r => (
+          <a href={`/restaurants/${r.slug}/`} class="feat">
+            <span class="feat-area">{r.kind.icon} {r.kind.label} · {r.area}</span>
+            <h3 class="feat-name">{r.name.en}</h3>
+            <p class="feat-desc">{r.description.en}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="container">
+    {showTypes && (
+      <div class="filters-inner filters-inner--top">
+        <div class="filter-chips" id="type-chips">
+          <button class="chip chip--active" data-type="all">All</button>
+          {types.map(t => (
+            <button class="chip" data-type={t}>{placeTypes[t].icon} {placeTypes[t].plural}</button>
+          ))}
+        </div>
+      </div>
+    )}
+    <div class={`filters-inner${showTypes ? ' filters-inner--bottom' : ''}`}>
+      <div class="filter-chips" id="area-chips">
+        <button class="chip chip--active" data-area="all">All areas</button>
+        {areas.map(a => (
+          <button class="chip" data-area={a}>{a} <span class="chip-count">{areaCounts[a]}</span></button>
+        ))}
+      </div>
+      <span class="results-count" id="results-count">{list.length} places</span>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="rest-grid" id="rest-grid">
+      {list.map(r => (
+        <a href={`/restaurants/${r.slug}/`} class="rc" data-area={r.area} data-type={r.type}>
+          <span class="rc-area">{r.kind.label} · {r.area}</span>
+          <h2 class="rc-name">{r.name.en}</h2>
+          <p class="rc-desc">{r.description.en}</p>
+          <div class="rc-meta">
+            <span class="rc-tag">{r.priceRange}</span>
+            <span class={`rc-tag${r.service === 'dinner' ? ' rc-tag--dinner' : ''}`}>{r.serves.icon} {r.serves.label}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="empty-state" id="empty-state" style="display:none">
+      <p class="empty-text">No places found with these filters.</p>
+      <button class="btn-dark" id="reset-filters">Show all</button>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<section class="sec sec-white">
+  <div class="container">
+    <div class="info-grid">
+      <div class="info-card">
+        <h3 class="info-title">Eat like a local</h3>
+        <p class="info-text">Greeks have lunch around 14:00–16:00 and dinner after 21:00. Most tavernas stay open until midnight, so there's no rush after a sunset in Plaka.</p>
+      </div>
+      <div class="info-card">
+        <h3 class="info-title">Book in high season</h3>
+        <p class="info-text">In July and August the popular places in Pollonia, Plaka and Tripiti fill up fast. Call ahead for dinner, especially for a table with a view.</p>
+      </div>
+      <div class="info-card">
+        <h3 class="info-title">What to order</h3>
+        <p class="info-text">Try pitarakia (Milos cheese pies), local cheeses like manoura and xinomizithra, and fresh fish, which is usually priced by the kilo, so ask before you order.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+const grid    = document.getElementById('rest-grid');
+const empty   = document.getElementById('empty-state');
+const counter = document.getElementById('results-count');
+
+let activeArea = 'all';
+let activeType = 'all';
+
+function applyFilters() {
+  const cards = grid?.querySelectorAll<HTMLElement>('.rc') ?? [];
+  let visible = 0;
+  cards.forEach(card => {
+    const show = (activeArea === 'all' || card.dataset.area === activeArea)
+              && (activeType === 'all' || card.dataset.type === activeType);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  if (counter) counter.textContent = `${visible} place${visible !== 1 ? 's' : ''}`;
+  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
+  if (grid)    grid.style.display  = visible === 0 ? 'none'  : '';
+}
+
+function setArea(area: string) {
+  activeArea = area;
+  document.querySelectorAll<HTMLButtonElement>('#area-chips .chip').forEach(c =>
+    c.classList.toggle('chip--active', c.dataset.area === area));
+  applyFilters();
+}
+
+function setType(type: string) {
+  activeType = type;
+  document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(c =>
+    c.classList.toggle('chip--active', c.dataset.type === type));
+  applyFilters();
+}
+
+document.querySelectorAll<HTMLButtonElement>('#area-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => setArea(chip.dataset.area ?? 'all'));
+});
+document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
+  chip.addEventListener('click', () => setType(chip.dataset.type ?? 'all'));
+});
+
+document.getElementById('reset-filters')?.addEventListener('click', () => { setType('all'); setArea('all'); });
+
+// Restaurant pages link to /restaurants/?area=Pollonia
+const initial = new URLSearchParams(location.search).get('area');
+if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape(initial)}"]`)) setArea(initial);
+</script>
+</Layout>
+
+
+<style>
+/* ── PAGE HERO ── */
+.page-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* ── FEATURED ── */
+.featured-sec {
+  padding: 3rem 0 2.5rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.featured-hdr { margin-bottom: 1.25rem; }
+.featured-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--deep-blue);
+  margin: 0.2rem 0 0;
+}
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.feat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 1.4rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(140deg, #0d2b4e, #1a5c8a 70%, #2a7faa);
+  color: #fff;
+  min-height: 210px;
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+}
+.feat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); color: #fff; }
+.feat-area {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+}
+.feat-name {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  line-height: 1.15;
+  margin: 0;
+}
+.feat-desc {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,.72);
+  margin: 0;
+  flex: 1;
+}
+
+/* ── FILTERS ── */
+.filters-bar {
+  position: sticky;
+  top: calc(var(--header-h) - 5px);
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.filters-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+.filters-inner--top { padding-bottom: 0.4rem; }
+.filters-inner--bottom { padding-top: 0; }
+.filter-chips { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.chip {
+  padding: 0.28rem 0.75rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
+.chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
+.chip-count { opacity: 0.6; font-size: 0.7rem; margin-left: 0.15rem; }
+.results-count { font-size: 0.78rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+
+/* ── GRID ── */
+.rest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* ── CARD ── */
+.rc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: inherit;
+  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s;
+}
+.rc:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--sand-dark); color: inherit; }
+.rc-area {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sea);
+}
+.rc-name {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0;
+  transition: color 0.15s;
+}
+.rc:hover .rc-name { color: var(--deep-blue); }
+.rc-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  flex: 1;
+}
+.rc-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.25rem; }
+.rc-tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--ink);
+}
+.rc-tag--dinner { background: rgba(13,43,78,0.08); color: var(--deep-blue); }
+
+/* ── EMPTY ── */
+.empty-state { text-align: center; padding: 5rem 0; }
+.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+/* ── INFO STRIP ── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.info-card {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--sand);
+}
+.info-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--deep-blue);
+  margin-bottom: 0.5rem;
+}
+.info-text { font-size: 0.875rem; line-height: 1.7; color: var(--muted); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .featured-grid { grid-template-columns: 1fr; }
+  .feat { min-height: 0; }
+  .info-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .filters-inner { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .filter-chips { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+  .filter-chips::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 480px) {
+  .rest-grid { grid-template-columns: 1fr; }
+}
+</style>

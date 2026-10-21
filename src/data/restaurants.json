@@ -1,6 +1,7 @@
 [
   {
     "slug": "barko-tavern",
+    "type": "restaurant",
     "name": {
       "el": "Barko tavern restaurant",
       "en": "Barko Tavern"
@@ -13,7 +14,6 @@
       "area": "Adamas",
       "address": "Greece, Αδάμας 848 01, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=3229445517250825055&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/barko-tavern.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -26,22 +26,13 @@
       "lat": 36.728347899999996,
       "lng": 24.446401599999998
     },
-    "rating": 4.3,
     "priceRange": "€€",
-    "hours": "1:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
-    ],
-    "isFeatured": false
+    "service": "lunch-dinner",
+    "isFeatured": true
   },
   {
     "slug": "sirocco-restaurant",
+    "type": "restaurant",
     "name": {
       "el": "Sirocco Volcanic Restaurant",
       "en": "Sirocco Volcanic Restaurant"
@@ -54,7 +45,6 @@
       "area": "Paleochori",
       "address": "Παλιοχώρι, Milos 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=6854837061465397215&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/sirocco-restaurant.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -67,22 +57,13 @@
       "lat": 36.6752038,
       "lng": 24.516842999999998
     },
-    "rating": 4.4,
     "priceRange": "€€",
-    "hours": "1:00–10:00 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00–10:00 μ.μ.",
-      "Τρίτη: 1:00–10:00 μ.μ.",
-      "Τετάρτη: 1:00–10:00 μ.μ.",
-      "Πέμπτη: 1:00–10:00 μ.μ.",
-      "Παρασκευή: 1:00–10:00 μ.μ.",
-      "Σάββατο: 1:00–10:00 μ.μ.",
-      "Κυριακή: 1:00–10:00 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "enalion-restaurant",
+    "type": "restaurant",
     "name": {
       "el": "Ενάλιον",
       "en": "Enalion"
@@ -95,7 +76,6 @@
       "area": "Pollonia",
       "address": "Pollonia, Cyclades 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=2136965571963822506&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/enalion-restaurant.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -108,22 +88,13 @@
       "lat": 36.76356320000001,
       "lng": 24.5259541
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "1:00–11:00 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00–11:00 μ.μ.",
-      "Τρίτη: 1:00–11:00 μ.μ.",
-      "Τετάρτη: 1:00–11:00 μ.μ.",
-      "Πέμπτη: 1:00–11:00 μ.μ.",
-      "Παρασκευή: 1:00–11:00 μ.μ.",
-      "Σάββατο: 1:00–11:00 μ.μ.",
-      "Κυριακή: 1:00–11:00 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "o-hamos-tavern",
+    "type": "restaurant",
     "name": {
       "el": "Οινομαγειρείο Ω! Χαμός!",
       "en": "O! Hamos!"
@@ -136,7 +107,6 @@
       "area": "Papikinou",
       "address": "Αδάμας 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=18236209760418511654&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/o-hamos-tavern.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -149,22 +119,13 @@
       "lat": 36.7222163,
       "lng": 24.4584931
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "1:00–11:30 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00–11:30 μ.μ.",
-      "Τρίτη: 1:00–11:30 μ.μ.",
-      "Τετάρτη: 1:00–11:30 μ.μ.",
-      "Πέμπτη: 1:00–11:30 μ.μ.",
-      "Παρασκευή: 1:00–11:30 μ.μ.",
-      "Σάββατο: 1:00–11:30 μ.μ.",
-      "Κυριακή: 1:00–11:30 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "avli-milos",
+    "type": "restaurant",
     "name": {
       "el": "Avli-Milos",
       "en": "Avli Milos"
@@ -177,7 +138,6 @@
       "area": "Plaka",
       "address": "Πλακα, Πλάκα 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=7961636302392792537&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/avli-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -190,22 +150,13 @@
       "lat": 36.743976599999996,
       "lng": 24.4221084
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "5:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 5:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 5:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 5:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 5:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 5:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 5:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 5:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "dinner",
     "isFeatured": false
   },
   {
     "slug": "mikros-apoplous",
+    "type": "restaurant",
     "name": {
       "el": "Mikros Apoplous - Seafood and more",
       "en": "Mikros Apoplous – Seafood & More"
@@ -218,7 +169,6 @@
       "area": "Adamas",
       "address": "Νεοχώρι, Αδάμας 848 01, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=13810562751115067026&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/mikros-apoplous.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -231,22 +181,13 @@
       "lat": 36.7259953,
       "lng": 24.450675099999998
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "12:30 μ.μ. – 12:30 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:30 μ.μ. – 12:30 π.μ.",
-      "Τρίτη: 12:30 μ.μ. – 12:30 π.μ.",
-      "Τετάρτη: 12:30 μ.μ. – 12:30 π.μ.",
-      "Πέμπτη: 12:30 μ.μ. – 12:30 π.μ.",
-      "Παρασκευή: 12:30 μ.μ. – 12:30 π.μ.",
-      "Σάββατο: 12:30 μ.μ. – 12:30 π.μ.",
-      "Κυριακή: 12:30 μ.μ. – 12:30 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "glaronisia-milos",
+    "type": "restaurant",
     "name": {
       "el": "τα γλαρονήσια",
       "en": "Ta Glaronisia"
@@ -259,7 +200,6 @@
       "area": "Tripiti",
       "address": "Τρυπητή 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=4656315088722365418&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/glaronisia-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -272,22 +212,13 @@
       "lat": 36.7389714,
       "lng": 24.4257121
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "1:00–11:30 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00–11:30 μ.μ.",
-      "Τρίτη: 1:00–11:30 μ.μ.",
-      "Τετάρτη: 1:00–11:30 μ.μ.",
-      "Πέμπτη: 1:00–11:30 μ.μ.",
-      "Παρασκευή: 1:00–11:30 μ.μ.",
-      "Σάββατο: 1:00–11:30 μ.μ.",
-      "Κυριακή: 1:00–11:30 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "barriello-milos",
+    "type": "restaurant",
     "name": {
       "el": "barriello",
       "en": "Barriello"
@@ -300,7 +231,6 @@
       "area": "Triovassalos",
       "address": "island, Τρυπητή 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10428939674316931938&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/barriello-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -313,22 +243,13 @@
       "lat": 36.738032,
       "lng": 24.426882
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "6:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 6:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 6:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 6:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 6:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 6:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 6:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 6:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "dinner",
     "isFeatured": false
   },
   {
     "slug": "gialos-milos",
+    "type": "restaurant",
     "name": {
       "el": "Γιαλός",
       "en": "Gialos"
@@ -341,7 +262,6 @@
       "area": "Pollonia",
       "address": "Πολλώνια 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10610761391792570493&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/gialos-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -354,22 +274,13 @@
       "lat": 36.763657699999996,
       "lng": 24.5270975
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "12:30 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:30 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 12:30 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 12:30 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 12:30 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 12:30 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 12:30 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 12:30 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "medusa-milos",
+    "type": "restaurant",
     "name": {
       "el": "Μέδουσα Μήλος",
       "en": "Medusa Milos"
@@ -382,7 +293,6 @@
       "area": "Mandrakia",
       "address": "Μανδράκια 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=16542655321464481123&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/medusa-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -395,22 +305,13 @@
       "lat": 36.7511313,
       "lng": 24.4465407
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "12:00–11:00 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00–11:00 μ.μ.",
-      "Τρίτη: 12:00–11:00 μ.μ.",
-      "Τετάρτη: 12:00–11:00 μ.μ.",
-      "Πέμπτη: 12:00–11:00 μ.μ.",
-      "Παρασκευή: 12:00–11:00 μ.μ.",
-      "Σάββατο: 12:00–11:00 μ.μ.",
-      "Κυριακή: 12:00–11:00 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "methismeni-politeia",
+    "type": "restaurant",
     "name": {
       "el": "Μεθυσμένη Πολιτεία",
       "en": "Methismeni Politeia"
@@ -423,7 +324,6 @@
       "area": "Tripiti",
       "address": "Τρυπητή 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=5122659497845800447&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/methismeni-politeia.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -436,22 +336,13 @@
       "lat": 36.7400881,
       "lng": 24.424404
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "1:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": true
   },
   {
     "slug": "archontoula-milos",
+    "type": "restaurant",
     "name": {
       "el": "Αρχοντούλα",
       "en": "Archontoula"
@@ -464,7 +355,6 @@
       "area": "Plaka",
       "address": "Unnamed Rd, Plaka 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=993120032229978418&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/archontoula-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -477,22 +367,13 @@
       "lat": 36.7439658,
       "lng": 24.4218869
     },
-    "rating": 4.1,
     "priceRange": "€€",
-    "hours": "12:00 μ.μ. – 1:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00 μ.μ. – 1:00 π.μ.",
-      "Τρίτη: 12:00 μ.μ. – 1:00 π.μ.",
-      "Τετάρτη: 12:00 μ.μ. – 1:00 π.μ.",
-      "Πέμπτη: 12:00 μ.μ. – 1:00 π.μ.",
-      "Παρασκευή: 12:00 μ.μ. – 1:00 π.μ.",
-      "Σάββατο: 12:00 μ.μ. – 1:00 π.μ.",
-      "Κυριακή: 12:00 μ.μ. – 1:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "foras-milos",
+    "type": "restaurant",
     "name": {
       "el": "Foras",
       "en": "Foras"
@@ -505,7 +386,6 @@
       "area": "Plaka",
       "address": "Πλάκα 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10782416766055311197&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/foras-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -518,22 +398,13 @@
       "lat": 36.7441928,
       "lng": 24.422299799999998
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "12:00–11:00 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00–11:00 μ.μ.",
-      "Τρίτη: 12:00–11:00 μ.μ.",
-      "Τετάρτη: 12:00–11:00 μ.μ.",
-      "Πέμπτη: 12:00–11:00 μ.μ.",
-      "Παρασκευή: 12:00–11:00 μ.μ.",
-      "Σάββατο: 12:00–11:00 μ.μ.",
-      "Κυριακή: 12:00–11:00 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "nostos-seafood",
+    "type": "restaurant",
     "name": {
       "el": "Nostos Seafood Experience",
       "en": "Nostos Seafood Experience"
@@ -546,7 +417,6 @@
       "area": "Adamas",
       "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=6773972574899997025&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/nostos-seafood.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -559,22 +429,13 @@
       "lat": 36.7258068,
       "lng": 24.450329
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "12:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 12:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 12:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 12:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 12:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 12:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 12:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "galanis-mpakalikon",
+    "type": "restaurant",
     "name": {
       "el": "Μπακάλικον Γαλάνης",
       "en": "Galanis Mpakalikon"
@@ -587,7 +448,6 @@
       "area": "Triovasalos",
       "address": "τριοβασαλος, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=8003748629023849940&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/galanis-mpakalikon.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -600,22 +460,13 @@
       "lat": 36.7439521,
       "lng": 24.4337986
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "1:00 μ.μ. – 1:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00 μ.μ. – 1:00 π.μ.",
-      "Τρίτη: 1:00 μ.μ. – 1:00 π.μ.",
-      "Τετάρτη: 1:00 μ.μ. – 1:00 π.μ.",
-      "Πέμπτη: 1:00 μ.μ. – 1:00 π.μ.",
-      "Παρασκευή: 1:00 μ.μ. – 1:00 π.μ.",
-      "Σάββατο: 1:00 μ.μ. – 1:00 π.μ.",
-      "Κυριακή: 1:00 μ.μ. – 1:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "iliovasilema-milos",
+    "type": "restaurant",
     "name": {
       "el": "Εστιατόριο Ηλιοβασίλεμα",
       "en": "Iliovasilema"
@@ -628,7 +479,6 @@
       "area": "Milos",
       "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12445172176976446735&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/iliovasilema-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -641,22 +491,13 @@
       "lat": 36.6963539,
       "lng": 24.463193
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "4:00–11:30 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 4:00–11:30 μ.μ.",
-      "Τρίτη: 4:00–11:30 μ.μ.",
-      "Τετάρτη: 4:00–11:30 μ.μ.",
-      "Πέμπτη: 4:00–11:30 μ.μ.",
-      "Παρασκευή: 4:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 4:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 2:00 μ.μ. – 12:00 π.μ."
-    ],
-    "isFeatured": true
+    "service": "dinner",
+    "isFeatured": false
   },
   {
     "slug": "psitolatreia-milos",
+    "type": "restaurant",
     "name": {
       "el": "Ψητολατρεία",
       "en": "Psitolatreia"
@@ -669,7 +510,6 @@
       "area": "Triovasalos",
       "address": "Πέρα Τριοβασαλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=5187653632682253295&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/psitolatreia-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -682,22 +522,13 @@
       "lat": 36.7405093,
       "lng": 24.432849899999997
     },
-    "rating": 4.8,
     "priceRange": "€€",
-    "hours": "1:00 μ.μ. – 12:30 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00 μ.μ. – 12:30 π.μ.",
-      "Τρίτη: 1:00 μ.μ. – 12:30 π.μ.",
-      "Τετάρτη: 1:00 μ.μ. – 12:30 π.μ.",
-      "Πέμπτη: 1:00 μ.μ. – 12:30 π.μ.",
-      "Παρασκευή: 1:00 μ.μ. – 12:30 π.μ.",
-      "Σάββατο: 1:00 μ.μ. – 12:30 π.μ.",
-      "Κυριακή: 1:00 μ.μ. – 12:30 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": true
   },
   {
     "slug": "astakas-milos",
+    "type": "restaurant",
     "name": {
       "el": "Άστακας Cafe Restaurant",
       "en": "Astakas Milos"
@@ -710,7 +541,6 @@
       "area": "Klima",
       "address": "Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=12780773149770370847&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/astakas-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -723,22 +553,13 @@
       "lat": 36.7356038,
       "lng": 24.419531000000003
     },
-    "rating": 4.4,
     "priceRange": "€€",
-    "hours": "12:00–11:00 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00–11:00 μ.μ.",
-      "Τρίτη: 12:00–11:00 μ.μ.",
-      "Τετάρτη: 12:00–11:00 μ.μ.",
-      "Πέμπτη: 12:00–11:00 μ.μ.",
-      "Παρασκευή: 12:00–11:00 μ.μ.",
-      "Σάββατο: 12:00–11:00 μ.μ.",
-      "Κυριακή: 12:00–11:00 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "zigos-milos",
+    "type": "restaurant",
     "name": {
       "el": "Ο Ζυγός",
       "en": "O Zigos"
@@ -751,7 +572,6 @@
       "area": "Adamas",
       "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=16700229156652883838&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/zigos-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -764,22 +584,13 @@
       "lat": 36.727755099999996,
       "lng": 24.451839
     },
-    "rating": 4.5,
     "priceRange": "€",
-    "hours": "7:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 7:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 7:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 7:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 7:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 7:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 7:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 7:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "dinner",
     "isFeatured": false
   },
   {
     "slug": "trapatselis-milos",
+    "type": "restaurant",
     "name": {
       "el": "ΤΡΑΠΑΤΣΕΛΗΣ",
       "en": "Trapatselis"
@@ -792,7 +603,6 @@
       "area": "Adamas",
       "address": "Αδάμας 848 01, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=10770808267126265469&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/trapatselis-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -805,22 +615,13 @@
       "lat": 36.7257975,
       "lng": 24.4496917
     },
-    "rating": 4.2,
     "priceRange": "€€",
-    "hours": "12:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 12:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 12:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 12:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 12:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 12:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 12:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "ergina-milos",
+    "type": "restaurant",
     "name": {
       "el": "Εστιατόριο Εργινα",
       "en": "Estiatorio Ergina"
@@ -833,7 +634,6 @@
       "area": "Tripiti",
       "address": "Τρυπητή 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=6072568407429680861&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/ergina-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -846,16 +646,13 @@
       "lat": 36.7386477,
       "lng": 24.4260041
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "13:00 - 00:00",
-    "openingHours": [
-      "Δεν ανακοινώθηκε ωράριο"
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "cavos-milos",
+    "type": "restaurant",
     "name": {
       "el": "Cavos Restaurant Milos",
       "en": "Cavos Restaurant"
@@ -868,7 +665,6 @@
       "area": "Adamas",
       "address": "Παραλια Λαγκαδα, Πλάκα 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=13994601664254519547&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/cavos-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -881,22 +677,13 @@
       "lat": 36.7247123,
       "lng": 24.4409411
     },
-    "rating": 5,
     "priceRange": "€€",
-    "hours": "1:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "alkis-milos",
+    "type": "restaurant",
     "name": {
       "el": "Alkis",
       "en": "Alkis"
@@ -909,7 +696,6 @@
       "area": "Pollonia",
       "address": "Πολλώνια 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=7272580187392976828&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/alkis-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -922,22 +708,13 @@
       "lat": 36.7638786,
       "lng": 24.5272179
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "12:00–11:30 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:00–11:30 μ.μ.",
-      "Τρίτη: 12:00–11:30 μ.μ.",
-      "Τετάρτη: 12:00–11:30 μ.μ.",
-      "Πέμπτη: 12:00–11:30 μ.μ.",
-      "Παρασκευή: 12:00–11:30 μ.μ.",
-      "Σάββατο: 12:00–11:30 μ.μ.",
-      "Κυριακή: 12:00–11:30 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "nama-milos",
+    "type": "restaurant",
     "name": {
       "el": "Nama Milos",
       "en": "Nama Milos"
@@ -950,7 +727,6 @@
       "area": "Pollonia",
       "address": "Unnamed Road, Pollonia 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=5226471837524253346&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/nama-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -963,22 +739,13 @@
       "lat": 36.763564599999995,
       "lng": 24.5266332
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "12:30–11:30 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 12:30–11:30 μ.μ.",
-      "Τρίτη: 12:30–11:30 μ.μ.",
-      "Τετάρτη: 12:30–11:30 μ.μ.",
-      "Πέμπτη: 12:30–11:30 μ.μ.",
-      "Παρασκευή: 12:30–11:30 μ.μ.",
-      "Σάββατο: 12:30–11:30 μ.μ.",
-      "Κυριακή: 12:30–11:30 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "lyra-milos",
+    "type": "restaurant",
     "name": {
       "el": "Lyra Milos - The Sound of Taste",
       "en": "Lyra Milos"
@@ -991,7 +758,6 @@
       "area": "Pollonia",
       "address": "Pollonia, Kikladhes 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=15255121613404934440&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/lyra-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -1004,22 +770,13 @@
       "lat": 36.7635219,
       "lng": 24.526331799999998
     },
-    "rating": 4.7,
     "priceRange": "€€",
-    "hours": "1:00 μ.μ. – 12:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τρίτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Τετάρτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Πέμπτη: 1:00 μ.μ. – 12:00 π.μ.",
-      "Παρασκευή: 1:00 μ.μ. – 12:00 π.μ.",
-      "Σάββατο: 1:00 μ.μ. – 12:00 π.μ.",
-      "Κυριακή: 1:00 μ.μ. – 12:00 π.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
     "slug": "rifaki-milos",
+    "type": "restaurant",
     "name": {
       "el": "Rifaki",
       "en": "Rifaki"
@@ -1032,7 +789,6 @@
       "area": "Pollonia",
       "address": "Πολλώνια ΜΗΛΟΣ, Μήλος 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=13280408755287035738&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
     "localPhoto": "/images/taverns/rifaki-milos.jpg",
     "cuisine": {
       "el": "Παραδοσιακή Ελληνική",
@@ -1045,59 +801,39 @@
       "lat": 36.7636349,
       "lng": 24.526815199999998
     },
-    "rating": 4.5,
     "priceRange": "€€",
-    "hours": "11:30 π.μ. – 11:30 μ.μ.",
-    "openingHours": [
-      "Δευτέρα: 11:30 π.μ. – 11:30 μ.μ.",
-      "Τρίτη: 11:30 π.μ. – 11:30 μ.μ.",
-      "Τετάρτη: 11:30 π.μ. – 11:30 μ.μ.",
-      "Πέμπτη: 11:30 π.μ. – 11:30 μ.μ.",
-      "Παρασκευή: 11:30 π.μ. – 11:30 μ.μ.",
-      "Σάββατο: 11:30 π.μ. – 11:30 μ.μ.",
-      "Κυριακή: 11:30 π.μ. – 11:30 μ.μ."
-    ],
+    "service": "lunch-dinner",
     "isFeatured": false
   },
   {
-    "slug": "akri-milos",
+    "slug": "egoist-milos",
+    "type": "cafe",
     "name": {
-      "el": "ΑΚΡΗ",
-      "en": "Akri"
+      "el": "Egoist",
+      "en": "Egoist"
     },
     "description": {
-      "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο ΑΚΡΗ στον προορισμό Adamas της Μήλου.",
-      "en": "A hidden gem in Adamas with a relaxed atmosphere and delicious local cuisine."
+      "el": "Καφέ-μπαρ στο λιμάνι του Αδάμαντα με κυκλαδίτικη διακόσμηση και θέα στη θάλασσα. Καφές, πρωινό, βάφλες, γλυκά και παγωτό από νωρίς το πρωί.",
+      "en": "A café-bar on the Adamas waterfront with Cycladic décor and harbour views. Coffee, breakfast, waffles, desserts and ice cream from early morning."
     },
     "location": {
       "area": "Adamas",
-      "address": "Αδάμας 848 00, Ελλάδα"
+      "address": "Ακτή Παύλου Δαμουλάκη, Αδάμας 848 00, Ελλάδα"
     },
-    "googleMapsUri": "https://maps.google.com/?cid=11888611627601147945&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/taverns/akri-milos.jpg",
+    "localPhoto": "/images/taverns/egoist-milos.jpg",
     "cuisine": {
-      "el": "Παραδοσιακή Ελληνική",
-      "en": "Traditional Greek"
+      "el": "Καφές & πρωινό",
+      "en": "Coffee & breakfast"
     },
-    "servesCuisine": "Greek",
-    "phone": "694 542 3605",
+    "servesCuisine": "Breakfast",
+    "phone": "698 503 6505",
     "website": null,
     "coordinates": {
-      "lat": 36.724359,
-      "lng": 24.444376899999998
+      "lat": 36.7247082,
+      "lng": 24.445716
     },
-    "rating": 4.6,
     "priceRange": "€€",
-    "hours": "7:00 μ.μ. – 4:00 π.μ.",
-    "openingHours": [
-      "Δευτέρα: 7:00 μ.μ. – 4:00 π.μ.",
-      "Τρίτη: 7:00 μ.μ. – 4:00 π.μ.",
-      "Τετάρτη: 7:00 μ.μ. – 4:00 π.μ.",
-      "Πέμπτη: 7:00 μ.μ. – 4:00 π.μ.",
-      "Παρασκευή: 7:00 μ.μ. – 4:00 π.μ.",
-      "Σάββατο: 7:00 μ.μ. – 4:00 π.μ.",
-      "Κυριακή: 7:00 μ.μ. – 4:00 π.μ."
-    ],
+    "service": "all-day",
     "isFeatured": false
   }
 ]

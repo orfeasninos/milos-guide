@@ -1,0 +1,432 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SmartImage from '../../components/SmartImage.astro';
+import beachesData from '../../data/beaches.json';
+import { beachPhoto } from '../../lib/public-files';
+import { getBeachName } from '../../lib/beaches';
+import { metaDescription } from '../../lib/seo';
+import {
+  restaurants, restaurantArea, areaVillageSlug, placeType, placeService,
+  mapsUrl, telHref, distanceKm, type Restaurant,
+} from '../../lib/restaurants';
+
+export function getStaticPaths() {
+  return restaurants.map(restaurant => ({
+    params: { slug: restaurant.slug },
+    props:  { restaurant },
+  }));
+}
+
+const { restaurant: r } = Astro.props as { restaurant: Restaurant };
+
+const area = restaurantArea(r);
+const villageSlug = areaVillageSlug(area);
+const kind = placeType(r);
+const serves = placeService(r);
+const maps = mapsUrl(r);
+
+const nearbyBeaches = beachesData
+  .filter(b => b.coordinates?.lat && b.coordinates?.lng)
+  .map(b => ({ ...b, photo: beachPhoto(b), km: distanceKm(r.coordinates, b.coordinates) }))
+  .sort((a, b) => a.km - b.km)
+  .slice(0, 4);
+
+// Same area first, then the closest ones elsewhere.
+const otherRestaurants = restaurants
+  .filter(o => o.slug !== r.slug)
+  .map(o => ({ ...o, area: restaurantArea(o), kind: placeType(o), km: distanceKm(r.coordinates, o.coordinates) }))
+  .sort((a, b) => Number(b.area === area) - Number(a.area === area) || a.km - b.km)
+  .slice(0, 4);
+
+const formatKm = (km: number) => km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
+
+const _siteUrl = 'https://milos.guide';
+const restaurantJsonld = {
+  '@context': 'https://schema.org',
+  '@type': kind.schema,
+  name: r.name.en,
+  description: r.description.en,
+  url: `${_siteUrl}/restaurants/${r.slug}/`,
+  telephone: telHref(r.phone).replace('tel:', ''),
+  servesCuisine: r.servesCuisine,
+  priceRange: r.priceRange,
+  geo: { '@type': 'GeoCoordinates', latitude: r.coordinates.lat, longitude: r.coordinates.lng },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: area,
+    addressRegion: 'South Aegean',
+    addressCountry: 'GR',
+  },
+  hasMap: maps,
+  ...(r.website ? { sameAs: [r.website] } : {}),
+  containedInPlace: { '@type': 'TouristDestination', '@id': `${_siteUrl}/#milos`, name: 'Milos' },
+};
+---
+
+<Layout
+  lang="en"
+  title={`${r.name.en} — ${kind.label} in ${area}, Milos`}
+  description={metaDescription(`${r.name.en} in ${area}, Milos: ${r.description.en} Phone, website and directions.`)}
+  jsonld={restaurantJsonld}
+>
+
+<!-- HERO -->
+<div class="r-hero">
+  <div class="r-hero-bg"></div>
+  <div class="r-hero-overlay">
+    <div class="container r-hero-inner">
+      <a href="/restaurants/" class="back-link">← All places to eat</a>
+      <div class="r-hero-meta">
+        <span class="r-type-badge">{kind.icon} {kind.label}{r.isFeatured && ' · Local favourite'}</span>
+        <h1 class="r-hero-name">{r.name.en}</h1>
+        <p class="r-hero-tagline">{r.cuisine.en} in {area}</p>
+        <div class="r-hero-chips">
+          <span class="r-chip">📍 {area}</span>
+          <span class="r-chip">{r.priceRange}</span>
+          <span class="r-chip">{serves.icon} {serves.label}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CONTENT -->
+<div class="container r-layout">
+
+  <!-- MAIN -->
+  <article class="r-main">
+
+    <p class="r-desc">{r.description.en}</p>
+
+    <!-- Opening hours -->
+    <div class="r-block">
+      <h2 class="block-title">Opening hours</h2>
+      <div class="hours-card">
+        <p class="hours-service">{serves.icon} {serves.label}</p>
+        <p class="hours-text">
+          {serves.text}
+          {' '}Like most places on Milos it runs mainly from spring to autumn, and hours shift through the season.
+          Check today's hours on Google Maps or call before you go.
+        </p>
+        <div class="hours-actions">
+          <a href={maps} target="_blank" rel="noopener noreferrer" class="see-all">Today's hours on Google Maps ↗</a>
+          <a href={telHref(r.phone)} class="see-all">Call {r.phone}</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nearby Beaches -->
+    {nearbyBeaches.length > 0 && (
+      <div class="r-block">
+        <div class="block-hdr">
+          <h2 class="block-title">Beaches nearby</h2>
+          <a href="/beaches/" class="see-all">All beaches →</a>
+        </div>
+        <div class="nearby-list">
+          {nearbyBeaches.map(b => (
+            <a href={`/beaches/${b.slug}/`} class="nearby-item">
+              <div class="nearby-img-wrap">
+                {b.photo ? (
+                  <SmartImage src={b.photo} alt={getBeachName(b)} width={44} height={44} class="nearby-img" sizes="44px" />
+                ) : (
+                  <div class="nearby-ph">🏖</div>
+                )}
+              </div>
+              <div class="nearby-body">
+                <p class="nearby-name">{getBeachName(b)}</p>
+                <p class="nearby-sub">{formatKm(b.km)} away</p>
+              </div>
+              <span class="nearby-arrow">→</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- More restaurants -->
+    <div class="r-block">
+      <div class="block-hdr">
+        <h2 class="block-title">More places to eat</h2>
+        <a href={`/restaurants/?area=${encodeURIComponent(area)}`} class="see-all">More in {area} →</a>
+      </div>
+      <div class="nearby-list">
+        {otherRestaurants.map(o => (
+          <a href={`/restaurants/${o.slug}/`} class="nearby-item">
+            <div class="nearby-img-wrap"><div class="nearby-ph">{o.kind.icon}</div></div>
+            <div class="nearby-body">
+              <p class="nearby-name">{o.name.en}</p>
+              <p class="nearby-sub">{o.kind.label} · {o.area}</p>
+            </div>
+            <span class="nearby-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </article>
+
+  <!-- SIDEBAR -->
+  <aside class="r-sidebar">
+
+    <div class="s-card">
+      <p class="s-card-label">Information</p>
+      <ul class="s-info-list">
+        <li class="s-info-row">
+          <span class="s-info-key">Area</span>
+          <span class="s-info-val">
+            {villageSlug ? <a href={`/villages/${villageSlug}/`} class="s-link">{area}</a> : area}
+          </span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Type</span>
+          <span class="s-info-val">{kind.icon} {kind.label}</span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Cuisine</span>
+          <span class="s-info-val">{r.cuisine.en}</span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Price</span>
+          <span class="s-info-val">{r.priceRange}</span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Serves</span>
+          <span class="s-info-val">{serves.label}</span>
+        </li>
+        <li class="s-info-row">
+          <span class="s-info-key">Phone</span>
+          <span class="s-info-val"><a href={telHref(r.phone)} class="s-link">{r.phone}</a></span>
+        </li>
+      </ul>
+    </div>
+
+    <a href={maps} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--maps">
+      <span>📍</span> Google Maps ↗
+    </a>
+    <a href={telHref(r.phone)} class="s-btn s-btn--call">
+      <span>📞</span> Call to book
+    </a>
+    {r.website && (
+      <a href={r.website} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--web">
+        Visit website ↗
+      </a>
+    )}
+
+  </aside>
+
+</div>
+
+</Layout>
+
+
+<style>
+/* ── HERO ── */
+.r-hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+.r-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, #0a2040 0%, #0d2b4e 30%, #1a5c8a 70%, #2a7faa 100%);
+}
+.r-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 70% 30%, rgba(58,155,201,.2) 0%, transparent 55%),
+                    radial-gradient(circle at 15% 70%, rgba(13,43,78,.4) 0%, transparent 45%);
+}
+.r-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.r-hero-inner { padding-bottom: 2.5rem; }
+
+.back-link {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+  padding: .35rem .85rem;
+  border-radius: 100px;
+  transition: background .15s;
+}
+.back-link:hover { background: rgba(0,0,0,.55); }
+
+.r-type-badge {
+  display: inline-block;
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: .5rem;
+  backdrop-filter: blur(6px);
+}
+.r-hero-name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 6vw, 4.2rem);
+  color: #fff;
+  line-height: 1;
+  margin: 0 0 .35rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.r-hero-tagline {
+  font-size: 1rem;
+  color: rgba(255,255,255,.65);
+  font-style: italic;
+  margin: 0 0 .85rem;
+}
+.r-hero-chips { display: flex; gap: .45rem; flex-wrap: wrap; }
+.r-chip {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: rgba(0,0,0,.3);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+
+/* ── LAYOUT ── */
+.r-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+  align-items: start;
+}
+
+/* ── MAIN ── */
+.r-desc {
+  font-size: 1.05rem;
+  line-height: 1.82;
+  color: var(--ink);
+  margin-bottom: 2.5rem;
+}
+.r-block { margin-bottom: 2.5rem; }
+.block-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.block-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.block-hdr .block-title { margin-bottom: 0; }
+
+/* Hours */
+.hours-card {
+  padding: 1.1rem 1.25rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+.hours-service { font-weight: 600; color: var(--ink); margin-bottom: .4rem; }
+.hours-text { font-size: .9rem; line-height: 1.7; color: var(--muted); }
+.hours-actions { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: .85rem; }
+
+/* Nearby list */
+.nearby-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
+.nearby-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  transition: background .15s, padding-left .15s;
+}
+.nearby-item:last-child { border-bottom: none; }
+.nearby-item:hover { background: var(--sand); padding-left: 1.25rem; }
+.nearby-img-wrap { width: 44px; height: 44px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--sand); }
+:global(.nearby-img) { display: block; width: 100%; height: 100%; }
+.nearby-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; background: var(--sand-dark); }
+.nearby-body { flex: 1; min-width: 0; }
+.nearby-name { font-size: .9rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nearby-sub { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+.nearby-arrow { color: var(--muted); font-size: 1rem; flex-shrink: 0; }
+
+/* ── SIDEBAR ── */
+.r-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+.s-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.s-card-label {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: .85rem;
+}
+.s-info-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+.s-info-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: .875rem; gap: .5rem; }
+.s-info-key { font-weight: 600; color: var(--muted); flex-shrink: 0; }
+.s-info-val { color: var(--ink); text-align: right; }
+.s-link { color: var(--aegean); border-bottom: 1px solid var(--sea); }
+.s-link:hover { color: var(--sea); }
+
+.s-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .8rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  font-weight: 600;
+  transition: transform .15s, opacity .15s;
+}
+.s-btn:hover { transform: translateY(-1px); opacity: .9; }
+.s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+.s-btn--call { background: var(--sea); color: #fff; box-shadow: var(--shadow-sm); }
+.s-btn--web  { background: var(--white); color: var(--deep-blue); border: 1px solid var(--border); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .r-hero { height: 340px; }
+  .r-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .r-sidebar { position: static; order: -1; }
+}
+@media (max-width: 480px) {
+  .r-hero { height: 300px; }
+}
+</style>
