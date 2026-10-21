@@ -184,7 +184,7 @@ const BEACHES_DATA = beachesRaw.map(b => ({
         <div class="w-beaches-grid" id="w-beaches-grid">
           {BEACHES_DATA.map(beach => (
             <a
-              href={`/beaches/${beach.slug}`}
+              href={`/beaches/${beach.slug}/`}
               class="w-beach-card"
               data-slug={beach.slug}
               data-faces={beach.faces}
@@ -311,7 +311,7 @@ const BEACHES_DATA = beachesRaw.map(b => ({
     const avoidEl = $('w-rec-avoid');
     avoidEl.hidden = !avoid.length;
     avoidEl.innerHTML = avoid.length
-      ? `<strong>Skip today:</strong> ${avoid.map(b => `<a href="/beaches/${b.slug}">${b.name}</a>`).join(', ')} — facing straight into the wind.`
+      ? `<strong>Skip today:</strong> ${avoid.map(b => `<a href="/beaches/${b.slug}/">${b.name}</a>`).join(', ')} — facing straight into the wind.`
       : '';
   }
 

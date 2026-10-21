@@ -15,7 +15,7 @@ const { beach, alternatives } = Astro.props;
     <p class="b-wind-title">Today at {getBeachName(beach)} <span class="b-wind-pill" data-bw-pill hidden></span></p>
     <p class="b-wind-text" data-bw-text>Checking today's wind…</p>
   </div>
-  <a href="/weather" class="b-wind-link" data-umami-event="beach-wind-forecast">Forecast →</a>
+  <a href="/weather/" class="b-wind-link" data-umami-event="beach-wind-forecast">Forecast →</a>
 </div>
 
 <script>
@@ -49,7 +49,7 @@ const { beach, alternatives } = Astro.props;
         const better = alts.filter(a => exposure(a.faces, wind) === 'sheltered').slice(0, 2);
         if (better.length) {
           html += ` Sheltered nearby: ${better.map(a =>
-            `<a href="/beaches/${a.slug}" data-umami-event="beach-wind-alternative">${a.name}</a>`).join(' or ')}.`;
+            `<a href="/beaches/${a.slug}/" data-umami-event="beach-wind-alternative">${a.name}</a>`).join(' or ')}.`;
         }
       }
       if (bw.dataset.access === 'boat' && wind.speed >= BOAT_TOUR_LIMIT_KMH) {

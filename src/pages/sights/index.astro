@@ -80,7 +80,7 @@ const sightsJsonld = {
       {sightsData.map((sight, i) => {
         const t = typeLabels[sight.type] ?? { label: sight.type };
         return (
-          <a href={`/sights/${sight.slug}`} class="sc" data-type={sight.type}>
+          <a href={`/sights/${sight.slug}/`} class="sc" data-type={sight.type}>
             <div class="sc-num" aria-hidden="true">
               {String(i + 1).padStart(2, '0')}
             </div>

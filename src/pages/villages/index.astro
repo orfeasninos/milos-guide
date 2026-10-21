@@ -76,7 +76,7 @@ const villagesJsonld = {
         const t = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
         return (
           <a
-            href={`/villages/${village.slug}`}
+            href={`/villages/${village.slug}/`}
             class="vc"
             data-type={village.type}
           >
@@ -162,7 +162,7 @@ function applyFilters() {
     card.style.display = show ? '' : 'none';
     if (show) visible++;
   });
-  if (counter) counter.textContent = `${visible} villages`;
+  if (counter) counter.textContent = `${visible} village${visible !== 1 ? 's' : ''}`;
   if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
   if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
 }

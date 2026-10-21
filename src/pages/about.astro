@@ -256,11 +256,11 @@ type Village = typeof villagesData[number];
         <span class="sec-anchor-label">Villages</span>
         <h2 class="content-title">The villages of Milos</h2>
       </div>
-      <a href="/villages" class="see-all">All villages →</a>
+      <a href="/villages/" class="see-all">All villages →</a>
     </div>
     <div class="villages-mini-grid">
       {villagesData.map((v: Village) => (
-        <a href={`/villages/${v.slug}`} class="vmini">
+        <a href={`/villages/${v.slug}/`} class="vmini">
           <h3 class="vmini-name">{v.nameEn}</h3>
           <p class="vmini-tag">{v.taglineEn}</p>
         </a>
@@ -301,9 +301,9 @@ type Village = typeof villagesData[number];
     <h2 class="cta-title">Ready to explore?</h2>
     <p class="cta-sub">Beaches, sights, villages — all in the guide.</p>
     <div class="cta-btns">
-      <a href="/beaches" class="btn-dark">🏖 Beaches</a>
-      <a href="/sights" class="btn-outline">🏛 Sights</a>
-      <a href="/villages" class="btn-outline">🏘 Villages</a>
+      <a href="/beaches/" class="btn-dark">🏖 Beaches</a>
+      <a href="/sights/" class="btn-outline">🏛 Sights</a>
+      <a href="/villages/" class="btn-outline">🏘 Villages</a>
     </div>
   </div>
 </section>

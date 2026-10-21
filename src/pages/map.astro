@@ -14,7 +14,7 @@ const points = [
       slug:  b.slug, type: 'beach',
       name:  typeof b.name === 'object' ? (b.name as any).en : b.name,
       area:  beachAreaLabel(b), photo: beachThumb(b),
-      url:   `/beaches/${b.slug}`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
+      url:   `/beaches/${b.slug}/`, lat: b.coordinates.lat, lng: b.coordinates.lng, icon: '🏖',
     })),
   ...villagesRaw
     .filter(v => v.coordinates?.lat && v.coordinates?.lng)
@@ -22,14 +22,14 @@ const points = [
       slug:  v.slug, type: 'village',
       name:  (v as any).nameEn ?? v.name,
       area:  v.area, photo: null,
-      url:   `/villages/${v.slug}`, lat: v.coordinates.lat, lng: v.coordinates.lng, icon: '🏘',
+      url:   `/villages/${v.slug}/`, lat: v.coordinates.lat, lng: v.coordinates.lng, icon: '🏘',
     })),
   ...sightsRaw
     .filter(s => (s as any).coordinates?.lat && (s as any).coordinates?.lng)
     .map(s => ({
       slug: s.slug, type: 'sight',
       name: s.nameEn, area: s.area, photo: null,
-      url:  `/sights/${s.slug}`, lat: (s as any).coordinates.lat, lng: (s as any).coordinates.lng, icon: s.icon,
+      url:  `/sights/${s.slug}/`, lat: (s as any).coordinates.lat, lng: (s as any).coordinates.lng, icon: s.icon,
     })),
 // Slugs repeat across types (e.g. Sarakiniko is a beach and a sight), so ids use type + slug.
 ].map(p => ({ ...p, key: `${p.type}-${p.slug}` }));
@@ -257,7 +257,7 @@ function applyFilter() {
     card.style.display = activeFilters.has(card.dataset.type) ? '' : 'none';
   });
   const counter = document.getElementById('sidebar-count');
-  if (counter) counter.textContent = `${visible} places`;
+  if (counter) counter.textContent = `${visible} place${visible !== 1 ? 's' : ''}`;
   const empty = document.getElementById('sidebar-empty');
   const cards = document.getElementById('sidebar-cards');
   if (empty && cards) {

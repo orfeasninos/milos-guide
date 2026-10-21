@@ -61,7 +61,7 @@ const schemas: object[] = [
     inLanguage: isEl ? 'el-GR' : 'en',
     potentialAction: {
       '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: siteUrl + '/search?q={search_term_string}' },
+      target: { '@type': 'EntryPoint', urlTemplate: siteUrl + '/search/?q={search_term_string}' },
       'query-input': 'required name=search_term_string',
     },
   },
@@ -171,6 +171,7 @@ const schemas: object[] = [
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest"         href="/site.webmanifest" />
   <meta name="theme-color" content="#0d2b4e" />
+  <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id="009b43d8-5a1a-4c08-9c44-ffc380e4e872"></script>
   {preloadImageSrcset && (
     <link rel="preload" as="image" imagesrcset={preloadImageSrcset} imagesizes={preloadImageSizes} fetchpriority="high" />
   )}
@@ -214,28 +215,28 @@ const schemas: object[] = [
       </a>
 
       <nav class="main-nav" id="main-nav" aria-label={isEl ? 'Κύρια πλοήγηση' : 'Main navigation'}>
-        <a href={isEl ? '/el/beaches' : '/beaches'} class="nav-link" data-navlink>
+        <a href={isEl ? '/el/beaches/' : '/beaches/'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏖</span>
           <span>{isEl ? 'Παραλίες' : 'Beaches'}</span>
         </a>
-        <a href={isEl ? '/el/villages' : '/villages'} class="nav-link" data-navlink>
+        <a href={isEl ? '/el/villages/' : '/villages/'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏘</span>
           <span>{isEl ? 'Χωριά' : 'Villages'}</span>
         </a>
-        <a href={isEl ? '/el/sights' : '/sights'} class="nav-link" data-navlink>
+        <a href={isEl ? '/el/sights/' : '/sights/'} class="nav-link" data-navlink>
           <span class="nav-icon" aria-hidden="true">🏛</span>
           <span>{isEl ? 'Αξιοθέατα' : 'Sights'}</span>
         </a>
 
         <div class="nav-divider" aria-hidden="true"></div>
 
-        <a href={isEl ? '/el/search' : '/search'} class="icon-btn" aria-label={isEl ? 'Αναζήτηση' : 'Search'} data-tooltip={isEl ? 'Αναζήτηση' : 'Search'} data-navlink>
+        <a href={isEl ? '/el/search/' : '/search/'} class="icon-btn" aria-label={isEl ? 'Αναζήτηση' : 'Search'} data-tooltip={isEl ? 'Αναζήτηση' : 'Search'} data-navlink>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </a>
-        <a href={isEl ? '/el/map' : '/map'} class="icon-btn" aria-label={isEl ? 'Χάρτης' : 'Map'} data-tooltip={isEl ? 'Χάρτης' : 'Map'} data-navlink>
+        <a href={isEl ? '/el/map/' : '/map/'} class="icon-btn" aria-label={isEl ? 'Χάρτης' : 'Map'} data-tooltip={isEl ? 'Χάρτης' : 'Map'} data-navlink>
           <MilosIcon />
         </a>
-        <a href={isEl ? '/el/weather' : '/weather'} class="icon-btn" aria-label={isEl ? 'Καιρός' : 'Weather'} data-tooltip={isEl ? 'Καιρός' : 'Weather'} data-navlink>
+        <a href={isEl ? '/el/weather/' : '/weather/'} class="icon-btn" aria-label={isEl ? 'Καιρός' : 'Weather'} data-tooltip={isEl ? 'Καιρός' : 'Weather'} data-navlink>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="5"/>
             <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -279,24 +280,24 @@ const schemas: object[] = [
         <nav class="footer-cols" aria-label={isEl ? 'Footer πλοήγηση' : 'Footer navigation'}>
           <div class="footer-col">
             <p class="footer-col-title">{isEl ? 'Εξερεύνηση' : 'Explore'}</p>
-            <a href={isEl ? '/el/beaches' : '/beaches'}>
+            <a href={isEl ? '/el/beaches/' : '/beaches/'}>
               <span class="flink-icon" aria-hidden="true">🏖</span>{isEl ? 'Παραλίες' : 'Beaches'}
             </a>
-            <a href={isEl ? '/el/villages' : '/villages'}>
+            <a href={isEl ? '/el/villages/' : '/villages/'}>
               <span class="flink-icon" aria-hidden="true">🏘</span>{isEl ? 'Χωριά' : 'Villages'}
             </a>
-            <a href={isEl ? '/el/sights' : '/sights'}>
+            <a href={isEl ? '/el/sights/' : '/sights/'}>
               <span class="flink-icon" aria-hidden="true">🏛</span>{isEl ? 'Αξιοθέατα' : 'Sights'}
             </a>
           </div>
 
           <div class="footer-col">
             <p class="footer-col-title">{isEl ? 'Πληροφορίες' : 'Information'}</p>
-            <a href={isEl ? '/el/about'        : '/about'}>{isEl ? 'Η Μήλος' : 'About Milos'}</a>
-            <a href={isEl ? '/el/weather'      : '/weather'}>{isEl ? 'Καιρός' : 'Weather'}</a>
-            <a href={isEl ? '/el/map'          : '/map'}>{isEl ? 'Χάρτης νησιού' : 'Island map'}</a>
-            <a href={isEl ? '/el/how-to-reach' : '/how-to-reach'}>{isEl ? 'Πώς να φτάσετε' : 'How to reach'}</a>
-            <a href={isEl ? '/el/contact'      : '/contact'}>{isEl ? 'Επικοινωνία' : 'Contact'}</a>
+            <a href={isEl ? '/el/about/'        : '/about/'}>{isEl ? 'Η Μήλος' : 'About Milos'}</a>
+            <a href={isEl ? '/el/weather/'      : '/weather/'}>{isEl ? 'Καιρός' : 'Weather'}</a>
+            <a href={isEl ? '/el/map/'          : '/map/'}>{isEl ? 'Χάρτης νησιού' : 'Island map'}</a>
+            <a href={isEl ? '/el/how-to-reach/' : '/how-to-reach/'}>{isEl ? 'Πώς να φτάσετε' : 'How to reach'}</a>
+            <a href={isEl ? '/el/contact/'      : '/contact/'}>{isEl ? 'Επικοινωνία' : 'Contact'}</a>
           </div>
         </nav>
       </div>
@@ -310,7 +311,7 @@ const schemas: object[] = [
 
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <p class="footer-copy">&copy; 2026 Milos.guide · <a href={isEl ? '/el/privacy' : '/privacy'} class="footer-policy-link">{isEl ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}</a></p>
+        <p class="footer-copy">&copy; 2026 Milos.guide · <a href={isEl ? '/el/privacy/' : '/privacy/'} class="footer-policy-link">{isEl ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}</a></p>
         {/* <div class="footer-lang">
           <a href={langSwitchHref} class="footer-lang-btn">
             {isEl ? '🇬🇧 English' : '🇬🇷 Ελληνικά'}

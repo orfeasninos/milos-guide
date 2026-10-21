@@ -1,5 +1,6 @@
 // Client logic for /weather: live Open-Meteo fetch with retry, cache fallback, and rendering.
 import { WEATHER_URL, WIND_URL, MARINE_URL, mergeWind } from '../lib/openmeteo.js';
+import { compass as windDir, VARIABLE_KMH } from '../lib/wind';
 
 const WMO_TEXT = {
   0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
@@ -13,12 +14,6 @@ const WMO_TEXT = {
 
 function el(id) { return document.getElementById(id); }
 
-// Below 4 km/h the direction is model noise (keep in sync with VARIABLE_KMH in lib/wind.ts).
-const VARIABLE_KMH = 4;
-function windDir(deg) {
-  const dirs = ['N','NE','E','SE','S','SW','W','NW'];
-  return dirs[Math.round(deg / 45) % 8];
-}
 function beaufort(kmh) {
   if (kmh < 1)   return '0Bft - Calm';
   if (kmh < 6)   return '1Bft - Light air';
@@ -202,7 +197,7 @@ async function loadWeather() {
     el('hero-feels').textContent     = `Feels like ${Math.round(c.apparent_temperature)}°C`;
     const variable = c.wind_speed_10m < VARIABLE_KMH;
     el('hs-wind').textContent        = `${Math.round(c.wind_speed_10m)} km/h ${variable ? 'calm' : windDir(c.wind_direction_10m)}`;
-    el('hs-sea').textContent         = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
+    el('hs-sea').textContent         = seaTemp != null ? `${Math.round(seaTemp)}°C` : '–';
     el('hs-waves').textContent       = `${waveH.toFixed(1)} m`;
     el('hs-uv').textContent          = `${Math.round(c.uv_index)} — ${uvLevel(c.uv_index)[0]}`;
     el('hs-humidity').textContent    = `${Math.round(c.relative_humidity_2m)}%`;
@@ -218,7 +213,7 @@ async function loadWeather() {
     el('w-wind-tag').textContent   = beaufort(c.wind_speed_10m);
 
     // ── Sea & Waves card
-    el('w-sea-temp').textContent  = seaTemp ? `${Math.round(seaTemp)}°C` : '–';
+    el('w-sea-temp').textContent  = seaTemp != null ? `${Math.round(seaTemp)}°C` : '–';
     const wavePct = Math.min(waveH / 3, 1) * 100;
     el('w-wave-fill').style.width = `${wavePct}%`;
     el('w-wave-val').textContent  = `${waveH.toFixed(1)} m`;

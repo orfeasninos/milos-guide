@@ -41,7 +41,7 @@ const beachCategories = [
         <span class="label">Beaches</span>
         <h2 class="sec-title">Find your beach</h2>
       </div>
-      <a href="/beaches" class="see-all">All beaches →</a>
+      <a href="/beaches/" class="see-all">All beaches →</a>
     </div>
     <div class="beach-cat-grid">
       {
@@ -50,7 +50,7 @@ const beachCategories = [
             <div class="beach-cat-title">{cat.title}</div>
             <div class="beach-cat-list">
               {cat.beaches.map((b) => (
-                <a href={`/beaches/${b.slug}`} class="beach-link">
+                <a href={`/beaches/${b.slug}/`} class="beach-link">
                   <span class="beach-link-icon">
                     {accessIcon[b.accessType] ?? "📍"}
                   </span>

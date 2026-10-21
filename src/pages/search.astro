@@ -17,7 +17,7 @@ const index = [
     nameEl:   s.name,
     nameEn:   s.nameEn,
     area:     s.area,
-    url:      `/sights/${s.slug}`,
+    url:      `/sights/${s.slug}/`,
     icon:     s.icon,
   })),
   ...beachesRaw.map(b => ({
@@ -28,7 +28,7 @@ const index = [
     nameEl:   typeof b.name === 'object' ? (b.name as any).el : b.name,
     nameEn:   typeof b.name === 'object' ? (b.name as any).en : b.name,
     area:     beachAreaLabel(b),
-    url:      `/beaches/${b.slug}`,
+    url:      `/beaches/${b.slug}/`,
     icon:     '🏖',
   })),
   ...villagesRaw.map(v => ({
@@ -37,9 +37,9 @@ const index = [
     typeEl:   'Χωριό',
     typeEn:   'Village',
     nameEl:   v.name,
-    nameEn:   v.name,
+    nameEn:   v.nameEn ?? v.name,
     area:     v.area,
-    url:      `/villages/${v.slug}`,
+    url:      `/villages/${v.slug}/`,
     icon:     '🏘',
   })),
 ];
@@ -85,9 +85,9 @@ const index = [
       <p class="empty-text">{isEl ? 'Δεν βρέθηκαν αποτελέσματα.' : 'No results found.'}</p>
       <p class="empty-sub">{isEl ? 'Δοκίμασε διαφορετική αναζήτηση ή περιήγησε στις κατηγορίες.' : 'Try a different search term or browse the categories below.'}</p>
       <div class="empty-links">
-        <a href={isEl ? '/el/beaches' : '/beaches'} class="btn-dark">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</a>
-        <a href={isEl ? '/el/sights' : '/sights'} class="btn-outline-dark">🏛 {isEl ? 'Αξιοθέατα' : 'Sights'}</a>
-        <a href={isEl ? '/el/villages' : '/villages'} class="btn-outline-dark">🏘 {isEl ? 'Χωριά' : 'Villages'}</a>
+        <a href={isEl ? '/el/beaches/' : '/beaches/'} class="btn-dark">🏖 {isEl ? 'Παραλίες' : 'Beaches'}</a>
+        <a href={isEl ? '/el/sights/' : '/sights/'} class="btn-outline-dark">🏛 {isEl ? 'Αξιοθέατα' : 'Sights'}</a>
+        <a href={isEl ? '/el/villages/' : '/villages/'} class="btn-outline-dark">🏘 {isEl ? 'Χωριά' : 'Villages'}</a>
       </div>
     </div>
     <div class="results-initial" id="results-initial">
@@ -108,16 +108,21 @@ const chips   = document.querySelectorAll('.sf-chip');
 let activeFilter = 'all';
 let query = '';
 
+// Case-, accent- and final-sigma-insensitive, so "plaka" or "πλακα" finds "Πλάκα".
+// Folds one character at a time so positions still line up with the original text.
+const foldChar = ch => ch.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/ς/g, 'σ');
+const fold = text => [...text].map(foldChar).join('');
+
 // Check URL param on load
 const params = new URLSearchParams(window.location.search);
-if (params.get('q')) {
-  input.value = params.get('q');
-  query = params.get('q').toLowerCase();
+if (params.get('q')?.trim()) {
+  input.value = params.get('q').trim();
+  query = fold(input.value);
   render();
 }
 
 input.addEventListener('input', () => {
-  query = input.value.trim().toLowerCase();
+  query = fold(input.value.trim());
   // Update URL without reload
   const url = new URL(window.location);
   if (query) url.searchParams.set('q', input.value.trim());
@@ -149,10 +154,10 @@ function render() {
   const results = index.filter(item => {
     const matchesFilter = activeFilter === 'all' || item.type === activeFilter;
     const matchesQuery =
-      item.nameEl.toLowerCase().includes(query) ||
-      item.nameEn.toLowerCase().includes(query) ||
-      item.area.toLowerCase().includes(query) ||
-      item.typeEn.toLowerCase().includes(query);
+      fold(item.nameEl).includes(query) ||
+      fold(item.nameEn).includes(query) ||
+      fold(item.area).includes(query) ||
+      fold(item.typeEn).includes(query);
     return matchesFilter && matchesQuery;
   });
 
@@ -164,7 +169,7 @@ function render() {
   }
 
   empty.style.display = 'none';
-  meta.textContent = isEl ? `${results.length} αποτέλεσμα${results.length !== 1 ? 'τα' : ''} για "${input.value.trim()}"` : `${results.length} result${results.length !== 1 ? 's' : ''} for "${input.value.trim()}"`;
+  meta.textContent = isEl ? `${results.length} ${results.length !== 1 ? 'αποτελέσματα' : 'αποτέλεσμα'} για "${input.value.trim()}"` : `${results.length} result${results.length !== 1 ? 's' : ''} for "${input.value.trim()}"`;
 
   grid.innerHTML = results.map(item => `
     <a href="${item.url}" class="result-card">
@@ -181,8 +186,14 @@ function render() {
 
 function highlight(text, q) {
   if (!q) return text;
-  const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  const chars = [...text];
+  const folded = chars.map(foldChar);
+  // Only a 1:1 fold keeps indexes aligned; otherwise skip the highlight rather than mark the wrong letters.
+  if (folded.some(f => f.length !== 1)) return text;
+  const start = folded.join('').indexOf(q);
+  if (start < 0) return text;
+  const end = start + [...q].length;
+  return chars.slice(0, start).join('') + '<mark>' + chars.slice(start, end).join('') + '</mark>' + chars.slice(end).join('');
 }
 </script>
 </Layout>

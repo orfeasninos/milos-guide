@@ -16,7 +16,6 @@ export function getStaticPaths() {
 }
 
 const { village } = Astro.props;
-const base = import.meta.env.BASE_URL;
 
 const pageLang: string = 'en';
 function formatPopulation(raw: any): string {
@@ -87,7 +86,7 @@ const villageJsonld = {
   <div class="v-hero-bg"></div>
   <div class="v-hero-overlay">
     <div class="container v-hero-inner">
-      <a href="/villages" class="back-link">← All villages</a>
+      <a href="/villages/" class="back-link">← All villages</a>
       <div class="v-hero-meta">
         <span class="v-type-badge">{typeInfo.icon} {typeInfo.label}</span>
         <h1 class="v-hero-name">{village.nameEn ?? village.name}</h1>
@@ -149,11 +148,11 @@ const villageJsonld = {
       <div class="v-block">
         <div class="block-hdr">
           <h2 class="block-title">Nearby beaches</h2>
-          <a href="/beaches" class="see-all">All beaches →</a>
+          <a href="/beaches/" class="see-all">All beaches →</a>
         </div>
         <div class="nearby-list">
           {linkedBeaches.map(b => (
-            <a href={`/beaches/${b.slug}`} class="nearby-item">
+            <a href={`/beaches/${b.slug}/`} class="nearby-item">
               <div class="nearby-img-wrap">
                 {b.photo ? (
                   <SmartImage
@@ -235,12 +234,12 @@ const villageJsonld = {
       <p class="s-card-label">Other villages</p>
       <div class="s-villages-list">
         {otherVillages.map(v => (
-          <a href={`/villages/${v.slug}`} class="s-village-link">
+          <a href={`/villages/${v.slug}/`} class="s-village-link">
             <span class="s-village-name">{(v as any).nameEn ?? v.name}</span>
             <span class="s-village-type">{typeLabels[v.type]?.icon}</span>
           </a>
         ))}
-        <a href="/villages" class="s-village-all">All villages →</a>
+        <a href="/villages/" class="s-village-all">All villages →</a>
       </div>
     </div>
 

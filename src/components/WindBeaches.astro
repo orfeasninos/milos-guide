@@ -51,11 +51,11 @@ const beaches = beachesRaw.map(b => ({
   </div>
 
   <div class="wb-foot">
-    <a href="/weather" class="wb-link" data-umami-event="wind-widget-forecast">Full forecast &amp; sea conditions →</a>
-    <a href="/beaches" class="wb-link wb-link--muted">All beaches</a>
+    <a href="/weather/" class="wb-link" data-umami-event="wind-widget-forecast">Full forecast &amp; sea conditions →</a>
+    <a href="/beaches/" class="wb-link wb-link--muted">All beaches</a>
   </div>
 
-  <noscript><p class="wb-wind">Turn on JavaScript to see which beaches are sheltered from today's wind, or check the <a href="/weather">Milos weather page</a>.</p></noscript>
+  <noscript><p class="wb-wind">Turn on JavaScript to see which beaches are sheltered from today's wind, or check the <a href="/weather/">Milos weather page</a>.</p></noscript>
 </section>
 
 <script>
@@ -113,7 +113,7 @@ const beaches = beachesRaw.map(b => ({
 
     q('[data-wb-list]').innerHTML = picks.map(b => `
       <li>
-        <a class="wb-item" href="/beaches/${b.slug}" data-umami-event="wind-widget-beach" data-umami-event-beach="${b.slug}">
+        <a class="wb-item" href="/beaches/${b.slug}/" data-umami-event="wind-widget-beach" data-umami-event-beach="${b.slug}">
           <span class="wb-name">${b.name}</span>
           <span class="wb-meta">${accessIcon[b.access] ?? '📍'} ${b.area}</span>
           <span class="wb-pill wb-pill--${b.exp}">${exposureLabel[b.exp]}</span>
@@ -124,7 +124,7 @@ const beaches = beachesRaw.map(b => ({
     const boatOk = wind.speed < BOAT_TOUR_LIMIT_KMH;
     q('[data-wb-boat]').innerHTML = boatOk
       ? `<span class="wb-boat-icon">⛵</span><span><strong>Good day for a boat trip.</strong> Seas around Kleftiko should be manageable.</span>
-         <a href="/beaches/kleftiko" class="wb-boat-cta" data-umami-event="wind-widget-boat">Kleftiko guide →</a>`
+         <a href="/beaches/kleftiko/" class="wb-boat-cta" data-umami-event="wind-widget-boat">Kleftiko guide →</a>`
       : `<span class="wb-boat-icon">⚠️</span><span><strong>Rough sea for boat trips.</strong> Tours to Kleftiko are often cancelled or rerouted in ${kmh} km/h wind — check with your operator.</span>`;
     q('[data-wb-boat]').classList.toggle('is-warn', !boatOk);
 
@@ -133,7 +133,7 @@ const beaches = beachesRaw.map(b => ({
       .sort((a, b) => popularity(a.slug) - popularity(b.slug))
       .slice(0, 3);
     q('[data-wb-avoid]').innerHTML = avoid.length
-      ? `<strong>Skip today:</strong> ${avoid.map(b => `<a href="/beaches/${b.slug}">${b.name}</a>`).join(', ')} — facing straight into the wind.`
+      ? `<strong>Skip today:</strong> ${avoid.map(b => `<a href="/beaches/${b.slug}/">${b.name}</a>`).join(', ')} — facing straight into the wind.`
       : '';
     q('[data-wb-extra]').hidden = false;
   });

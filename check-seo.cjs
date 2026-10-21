@@ -16,7 +16,7 @@ console.log('Total pages:', all.length);
 
 const titles = {};
 const descs = {};
-let miss = 0, short = 0, dupT = 0, dupD = 0;
+let miss = 0, dupT = 0, dupD = 0;
 const dupTL = [], dupDL = [], shortL = [];
 
 all.forEach(function(f) {

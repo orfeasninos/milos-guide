@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const lastUpdated = 'June 2026';
+const lastUpdated = 'October 2026';
 ---
 
 <Layout
@@ -37,12 +37,13 @@ const lastUpdated = 'June 2026';
       <section id="overview" class="policy-section">
         <h2>1. Overview</h2>
         <p>Milos.guide is an independent, ad-free travel guide. We are committed to protecting your privacy and being transparent about how we handle data. This policy explains what information we collect, why, and how you can control it.</p>
-        <p>We do not sell your data. We do not run ads. We collect only the minimum necessary to operate the site.</p>
+        <p>We do not sell your data. We do not run ads. Some links to travel services are affiliate links (see Section 4). We collect only the minimum necessary to operate the site.</p>
       </section>
 
       <section id="data" class="policy-section">
         <h2>2. Data we collect</h2>
         <p>Milos.guide is a static website hosted on GitHub Pages. We do not operate a database or store personal data on our own servers. The only personal data we may receive is what you voluntarily provide via the contact form.</p>
+        <p>We use Umami, a privacy-friendly analytics service, to count page views and clicks on a few buttons (for example the wind widget). Umami does not use cookies, does not store IP addresses and only gives us anonymous, aggregated statistics.</p>
         <p>We do not collect:</p>
         <ul>
           <li>Names, emails or any personal information from visitors who browse the site</li>
@@ -53,8 +54,9 @@ const lastUpdated = 'June 2026';
 
       <section id="cookies" class="policy-section">
         <h2>3. Cookies</h2>
-        <p>Milos.guide does not use first-party cookies or tracking cookies. We do not use Google Analytics, Facebook Pixel, or any other analytics or advertising platform.</p>
-        <p>Third-party services embedded in the site (such as Google Maps iframes) may set their own cookies when you interact with them. These are governed by Google's privacy policy.</p>
+        <p>Milos.guide does not set first-party cookies. We do not use Google Analytics, Facebook Pixel or any advertising platform. Our analytics (Umami) is cookieless.</p>
+        <p>The site loads a script from Travelpayouts, an affiliate network. It can turn links to travel services into affiliate links and may set cookies so that a booking can be credited to us. If you book through such a link we may earn a commission, at no extra cost to you.</p>
+        <p>Third-party services embedded in the site (such as Google Maps iframes) may set their own cookies when you interact with them. These are governed by each provider's privacy policy.</p>
       </section>
 
       <section id="third-party" class="policy-section">
@@ -77,9 +79,14 @@ const lastUpdated = 'June 2026';
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">google.com</a>
           </div>
           <div class="tp-row">
-            <span>Google Fonts</span>
-            <span>Typography</span>
-            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">google.com</a>
+            <span>Umami</span>
+            <span>Cookieless, anonymous analytics</span>
+            <a href="https://umami.is/privacy" target="_blank" rel="noopener">umami.is</a>
+          </div>
+          <div class="tp-row">
+            <span>Travelpayouts</span>
+            <span>Affiliate links to travel services</span>
+            <a href="https://www.travelpayouts.com/en/privacy-policy/" target="_blank" rel="noopener">travelpayouts.com</a>
           </div>
           <div class="tp-row">
             <span>Google Apps Script</span>
@@ -90,6 +97,16 @@ const lastUpdated = 'June 2026';
             <span>OpenStreetMap</span>
             <span>Interactive map</span>
             <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">osmfoundation.org</a>
+          </div>
+          <div class="tp-row">
+            <span>CARTO</span>
+            <span>Map tiles</span>
+            <a href="https://carto.com/privacy" target="_blank" rel="noopener">carto.com</a>
+          </div>
+          <div class="tp-row">
+            <span>Esri</span>
+            <span>Satellite map tiles</span>
+            <a href="https://www.esri.com/en-us/privacy/overview" target="_blank" rel="noopener">esri.com</a>
           </div>
           <div class="tp-row">
             <span>Cloudflare CDN</span>
@@ -132,7 +149,7 @@ const lastUpdated = 'June 2026';
 
       <section id="contact-us" class="policy-section">
         <h2>8. Contact</h2>
-        <p>If you have any questions about this privacy policy or wish to exercise your rights, please get in touch via the <a href="/contact">contact page</a>.</p>
+        <p>If you have any questions about this privacy policy or wish to exercise your rights, please get in touch via the <a href="/contact/">contact page</a>.</p>
       </section>
 
     </div>

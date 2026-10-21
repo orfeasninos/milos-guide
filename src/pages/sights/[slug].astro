@@ -22,15 +22,10 @@ const typeLabels: Record<string, { label: string; color: string }> = {
 };
 const typeInfo = typeLabels[sight.type] ?? { label: sight.type, color: '#1a5c8a' };
 
-const admissionLabel: Record<string, string> = {
-  free: 'Free entry',
-  paid: 'Admission fee applies',
-};
-
 // Related: other sights of same type first, then by position
 const related = sightsData
   .filter(s => s.slug !== sight.slug)
-  .sort((a, b) => (a.type === sight.type ? -1 : b.type === sight.type ? 1 : 0))
+  .sort((a, b) => Number(b.type === sight.type) - Number(a.type === sight.type))
   .slice(0, 3);
 
 const _siteUrl = 'https://milos.guide';
@@ -63,7 +58,7 @@ const sightJsonld = {
   <div class="s-hero-bg"></div>
   <div class="s-hero-overlay">
     <div class="container s-hero-inner">
-      <a href="/sights" class="back-link">← All sights</a>
+      <a href="/sights/" class="back-link">← All sights</a>
       <div class="s-hero-content">
         <div class="s-hero-meta">
           <span class="s-type-badge">{typeInfo.label}</span>
@@ -213,11 +208,11 @@ const sightJsonld = {
       <p class="sd-card-label">More sights</p>
       <div class="sd-related-list">
         {related.map(s => (
-          <a href={`/sights/${s.slug}`} class="sd-related-link">
+          <a href={`/sights/${s.slug}/`} class="sd-related-link">
             <span class="sd-related-name">{s.nameEn}</span>
           </a>
         ))}
-        <a href="/sights" class="sd-related-all">All sights →</a>
+        <a href="/sights/" class="sd-related-all">All sights →</a>
       </div>
     </div>
 
@@ -235,13 +230,13 @@ const sightJsonld = {
           <span class="label">Explore more</span>
           <h2 class="sec-title">More sights on Milos</h2>
         </div>
-        <a href="/sights" class="see-all">All sights →</a>
+        <a href="/sights/" class="see-all">All sights →</a>
       </div>
       <div class="related-grid">
         {related.map(s => {
           const rt = typeLabels[s.type] ?? { label: s.type, color: '#1a5c8a' };
           return (
-            <a href={`/sights/${s.slug}`} class="rel-card">
+            <a href={`/sights/${s.slug}/`} class="rel-card">
               <div class="rel-body">
                 <span class="rel-type">{rt.label}</span>
                 <h3 class="rel-name">{s.nameEn}</h3>

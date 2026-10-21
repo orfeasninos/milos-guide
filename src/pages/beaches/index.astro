@@ -86,7 +86,7 @@ const beachesJsonld = {
     </div>
     <div class="featured-grid">
       {featuredBeaches.map(b => (
-        <a href={`/beaches/${b.slug}`} class="feat">
+        <a href={`/beaches/${b.slug}/`} class="feat">
           <div class="feat-img-wrap">
             {(b as any).image ? (
               <SmartImage src={(b as any).image} alt={getBeachName(b)} width={600} height={400} class="feat-img" sizes="(max-width: 768px) 50vw, 25vw" />
@@ -146,7 +146,7 @@ const beachesJsonld = {
     <div class="beaches-grid" id="beaches-grid">
       {sortedBeaches.map(beach => (
         <a
-          href={`/beaches/${beach.slug}`}
+          href={`/beaches/${beach.slug}/`}
           class="bc"
           data-area={beach.area}
           data-boat={String(beach.isBoat)}
@@ -193,6 +193,7 @@ const beachesJsonld = {
 <!-- MAP -->
 <section id="map-section" style="display:none; padding:0;">
   <div id="map" style="height:580px; width:100%;"></div>
+  <p id="map-error" hidden style="padding:4rem 2rem; text-align:center; color:var(--muted);">The map couldn't load. Check your connection and refresh the page.</p>
 </section>
 
 <script define:vars={{ beachMapData }}>
@@ -302,6 +303,7 @@ document.getElementById('reset-filters')?.addEventListener('click', () => {
   activeAreas.clear(); activeFacilities.clear(); boatOnly = false;
   document.querySelectorAll('#area-chips .chip').forEach(c => c.classList.remove('chip--active'));
   document.querySelectorAll('#facility-chips .chip').forEach(c => c.classList.remove('chip--active'));
+  document.querySelector('#facility-chips .chip[data-facility="all"]')?.classList.add('chip--active');
   boatBtn?.classList.remove('chip--active');
   applyFilters();
 });
@@ -331,10 +333,16 @@ function updateMapMarkers() {
   });
 }
 
+function showMapError() {
+  document.getElementById('map')!.hidden = true;
+  document.getElementById('map-error')!.hidden = false;
+}
+
 function loadScript(src: string, cb: () => void) {
   const s = document.createElement('script');
   s.src = src;
   s.onload = cb;
+  s.onerror = showMapError;
   document.head.appendChild(s);
 }
 
@@ -427,8 +435,7 @@ function setupMap() {
           ${photoHtml}
           <div style="padding:.75rem .9rem;">
             <p style="font-family:Georgia,serif;font-size:.95rem;color:#0d2b4e;margin:0 0 .25rem;line-height:1.2;">${beach.name}</p>
-            ${beach.rating > 0 ? `<p style="font-size:.72rem;color:#d97706;margin:0 0 .5rem;">★ ${beach.rating}</p>` : ''}
-            <a href="/beaches/${beach.slug}" style="font-size:.75rem;font-weight:600;color:#1a7fc1;">View beach →</a>
+            <a href="/beaches/${beach.slug}/" style="font-size:.75rem;font-weight:600;color:#1a7fc1;">View beach →</a>
           </div>
         </div>
       `),

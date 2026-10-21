@@ -14,11 +14,11 @@ const { related } = Astro.props;
           <span class="label">Close by</span>
           <h2 class="sec-title">Nearby beaches</h2>
         </div>
-        <a href="/beaches" class="see-all">All beaches →</a>
+        <a href="/beaches/" class="see-all">All beaches →</a>
       </div>
       <div class="related-grid">
         {related.map(r => (
-          <a href={`/beaches/${r.slug}`} class="rel-card">
+          <a href={`/beaches/${r.slug}/`} class="rel-card">
             <div class="rel-img-wrap">
               {r.image ? (
                 <SmartImage
