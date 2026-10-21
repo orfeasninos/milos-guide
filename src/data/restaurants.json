@@ -796,7 +796,7 @@
     },
     "servesCuisine": "Greek",
     "phone": "2287 041212",
-    "website": "http://rifaki.gr/",
+    "website": "https://rifaki.gr/",
     "coordinates": {
       "lat": 36.7636349,
       "lng": 24.526815199999998
@@ -826,13 +826,13 @@
       "en": "Coffee & breakfast"
     },
     "servesCuisine": "Breakfast",
-    "phone": "698 503 6505",
-    "website": null,
+    "phone": "2287023151",
+    "website": "https://egoist-cafe.gr",
     "coordinates": {
       "lat": 36.7247082,
       "lng": 24.445716
     },
-    "priceRange": "€€",
+    "priceRange": "€",
     "service": "all-day",
     "isFeatured": false
   }
