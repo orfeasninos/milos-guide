@@ -12,8 +12,6 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
   village:  { label: 'Village',      icon: '🏘' },
 };
 
-const types = [...new Set(villagesData.map(v => v.type))];
-
 const _siteUrl = 'https://milos.guide';
 const villagesJsonld = {
   '@context': 'https://schema.org',
@@ -50,36 +48,14 @@ const villagesJsonld = {
   </div>
 </section>
 
-<!-- FILTERS -->
-<div class="filters-bar">
-  <div class="container filters-inner">
-    <div class="filter-chips" id="type-chips">
-      <button class="chip chip--active" data-type="all">All</button>
-      {types.map(type => {
-        const t = typeLabels[type] ?? { label: type, icon: '📍' };
-        return (
-          <button class="chip" data-type={type}>
-            {t.icon} {t.label}
-          </button>
-        );
-      })}
-    </div>
-    <span class="results-count" id="results-count">{villagesData.length} χωριά</span>
-  </div>
-</div>
-
 <!-- GRID -->
 <section class="sec sec-sand">
   <div class="container">
-    <div class="villages-grid" id="villages-grid">
+    <div class="villages-grid">
       {villagesData.map((village, i) => {
         const t = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
         return (
-          <a
-            href={`/villages/${village.slug}/`}
-            class="vc"
-            data-type={village.type}
-          >
+          <a href={`/villages/${village.slug}/`} class="vc">
             <div class="vc-num" aria-hidden="true">
               {String(i + 1).padStart(2, '0')}
             </div>
@@ -101,12 +77,6 @@ const villagesJsonld = {
           </a>
         );
       })}
-    </div>
-
-    <div class="empty-state" id="empty-state" style="display:none">
-      <p class="empty-icon">🏘</p>
-      <p class="empty-text">No villages found with this filter.</p>
-      <button class="btn-dark" id="reset-filters">Show all</button>
     </div>
   </div>
 </section>
@@ -144,45 +114,6 @@ const villagesJsonld = {
   </div>
 </section>
 
-
-<script>
-const grid   = document.getElementById('villages-grid');
-const empty  = document.getElementById('empty-state');
-const counter = document.getElementById('results-count');
-const reset  = document.getElementById('reset-filters');
-
-let activeType = 'all';
-
-function applyFilters() {
-  const cards = grid?.querySelectorAll<HTMLElement>('.vc') ?? [];
-  let visible = 0;
-  cards.forEach(card => {
-    const type = card.dataset.type ?? '';
-    const show = activeType === 'all' || type === activeType;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
-  });
-  if (counter) counter.textContent = `${visible} village${visible !== 1 ? 's' : ''}`;
-  if (empty)   empty.style.display = visible === 0 ? 'block' : 'none';
-  if (grid)    grid.style.display  = visible === 0 ? 'none' : '';
-}
-
-document.querySelectorAll<HTMLButtonElement>('#type-chips .chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
-    chip.classList.add('chip--active');
-    activeType = chip.dataset.type ?? 'all';
-    applyFilters();
-  });
-});
-
-reset?.addEventListener('click', () => {
-  activeType = 'all';
-  document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('chip--active'));
-  document.querySelector('#type-chips .chip')?.classList.add('chip--active');
-  applyFilters();
-});
-</script>
 </Layout>
 
 
@@ -214,43 +145,6 @@ reset?.addEventListener('click', () => {
   max-width: 540px;
   line-height: 1.7;
 }
-
-/* ── FILTERS ── */
-.filters-bar {
-  position: sticky;
-  top: calc(var(--header-h) - 5px);
-  z-index: 100;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.filters-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-top: 0.7rem;
-  padding-bottom: 0.7rem;
-  flex-wrap: wrap;
-}
-.filter-chips { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-.chip {
-  padding: 0.32rem 0.85rem;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  background: transparent;
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--muted);
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
-  white-space: nowrap;
-}
-.chip:hover { background: var(--sand); color: var(--ink); border-color: var(--sand-dark); }
-.chip--active { background: var(--deep-blue); color: #fff; border-color: var(--deep-blue); }
-.results-count { font-size: 0.78rem; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
 
 /* ── VILLAGE CARDS (editorial rows) ── */
 .villages-grid { display: flex; flex-direction: column; }
@@ -359,11 +253,6 @@ reset?.addEventListener('click', () => {
   flex-shrink: 0;
 }
 .vc:hover .vc-arrow { color: var(--deep-blue); transform: translateX(6px); }
-
-/* ── EMPTY ── */
-.empty-state { text-align: center; padding: 5rem 0; }
-.empty-icon { font-size: 3rem; margin-bottom: 1rem; }
-.empty-text { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
 
 /* ── MAP TEASER ── */
 .map-inner {

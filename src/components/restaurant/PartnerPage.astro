@@ -1,0 +1,604 @@
+---
+// Page body for paid partners (Featured and Premium). Free listings keep the plain layout
+// in pages/restaurants/[slug].astro. Built to look good before the owner sends photos:
+// without one the hero falls back to a drawn Aegean evening instead of an empty box.
+import SmartImage from '../SmartImage.astro';
+import MapEmbed from '../MapEmbed.astro';
+import beachesData from '../../data/beaches.json';
+import { beachPhoto, restaurantPhoto, existingPhotos } from '../../lib/public-files';
+import { getBeachName } from '../../lib/beaches';
+import {
+  areaVillageSlug, placeType, placeService, mapsUrl, telHref, distanceKm,
+  PARTNER_LABEL, DAYS, type Restaurant, type Partner,
+} from '../../lib/restaurants';
+
+interface Props { r: Restaurant; partner: Partner }
+const { r, partner } = Astro.props;
+
+const area = r.location.area;
+const villageSlug = areaVillageSlug(area);
+const kind = placeType(r);
+const serves = placeService(r);
+const maps = mapsUrl(r);
+const tel = telHref(r.phone);
+const { hours, dishes = [] } = partner;
+const closed = partner.open === false;
+
+const photos = existingPhotos(partner.photos);
+const hero = restaurantPhoto(r) ?? photos[0] ?? null;
+const gallery = photos.filter(p => p !== hero);
+
+// The first sentence of the long description becomes the serif lead, the rest the body.
+const about = partner.about ?? r.description.en;
+const split = about.search(/(?<=[.!?])\s/);
+const lead = split > 0 ? about.slice(0, split) : about;
+const body = split > 0 ? about.slice(split + 1) : '';
+
+
+const nearbyBeaches = beachesData
+  .filter(b => b.coordinates?.lat && b.coordinates?.lng)
+  .map(b => ({ ...b, photo: beachPhoto(b), km: distanceKm(r.coordinates, b.coordinates) }))
+  .sort((a, b) => a.km - b.km)
+  .slice(0, 3);
+const formatKm = (km: number) => km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
+
+// Paid links: rel="sponsored", and the referrer is kept so the owner sees milos.guide
+// in their own stats.
+const rel = 'noopener sponsored';
+const track = (event: string, placement: string) => ({
+  'data-umami-event': event,
+  'data-umami-event-restaurant': r.slug,
+  'data-umami-event-placement': placement,
+});
+---
+<div class="pp">
+
+  <!-- HERO -->
+  <header class={`pp-hero${hero ? ' pp-hero--photo' : ''}`}>
+    {hero ? (
+      <SmartImage src={hero} alt={r.name.en} width={1920} height={1080} isLCP={true} class="pp-hero-img" sizes="100vw" />
+    ) : (
+      <div class="pp-hero-art" aria-hidden="true">
+        <span class="pp-sun"></span>
+        <svg class="pp-waves" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path d="M0 200 C 240 160, 480 240, 720 200 S 1200 160, 1440 200 V320 H0Z" />
+          <path d="M0 240 C 260 205, 520 275, 760 240 S 1220 205, 1440 245 V320 H0Z" />
+          <path d="M0 280 C 280 250, 560 305, 820 278 S 1240 250, 1440 285 V320 H0Z" />
+        </svg>
+      </div>
+    )}
+    <div class="pp-hero-shade"></div>
+
+    <div class="container pp-hero-inner">
+      <a href="/restaurants/" class="pp-back">← All places to eat</a>
+
+      <div class="pp-hero-text">
+        <p class="pp-eyebrow">
+          <span class="pp-badge">{PARTNER_LABEL}</span>
+          <span>{kind.label} · {area}, Milos</span>
+        </p>
+        <h1 class="pp-name">{r.name.en}</h1>
+        <p class="pp-tagline">{r.cuisine.en}</p>
+
+        {closed ? (
+          <p class="pp-status"><span class="pp-dot"></span>Closed for the season</p>
+        ) : hours && (
+          <p class="pp-status" data-pp-status data-hours={JSON.stringify(hours)} hidden>
+            <span class="pp-dot"></span><span data-pp-status-text></span>
+          </p>
+        )}
+
+        <div class="pp-ctas">
+          {partner.reservationUrl && (
+            <a href={partner.reservationUrl} target="_blank" rel={rel} class="pp-btn pp-btn--main" {...track('restaurant-reserve', 'hero')}>
+              Reserve a table ↗
+            </a>
+          )}
+          <a href={tel} class={`pp-btn ${partner.reservationUrl ? 'pp-btn--glass' : 'pp-btn--main'}`} {...track('restaurant-call', 'hero')}>
+            📞 Call {r.phone}
+          </a>
+          {partner.menuUrl && (
+            <a href={partner.menuUrl} target="_blank" rel={rel} class="pp-btn pp-btn--glass" {...track('restaurant-menu', 'hero')}>
+              📖 Menu ↗
+            </a>
+          )}
+          <a href={maps} target="_blank" rel="noopener noreferrer" class="pp-btn pp-btn--glass" {...track('restaurant-maps', 'hero')}>
+            📍 Directions
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- AT A GLANCE -->
+  <div class="container">
+    <dl class="pp-facts">
+      <div><dt>Cuisine</dt><dd>{r.cuisine.en}</dd></div>
+      <div><dt>Price</dt><dd>{r.priceRange}</dd></div>
+      <div><dt>Serves</dt><dd>{serves.icon} {serves.label}</dd></div>
+      <div>
+        <dt>Where</dt>
+        <dd>{villageSlug ? <a href={`/villages/${villageSlug}/`}>{area}</a> : area}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- STORY -->
+  <section class="pp-sec">
+    <div class="container pp-story">
+      <p class="pp-kicker">About</p>
+      <p class="pp-lead">{lead}</p>
+      {body && <p class="pp-body">{body}</p>}
+    </div>
+  </section>
+
+  <!-- DISHES -->
+  {dishes.length > 0 && (
+    <section class="pp-sec pp-sec--dark">
+      <div class="container">
+        <p class="pp-kicker pp-kicker--lt">From the kitchen</p>
+        <h2 class="pp-title pp-title--lt">What to order</h2>
+        <ol class="pp-dishes">
+          {dishes.map((d, i) => (
+            <li class="pp-dish">
+              <span class="pp-dish-no">{String(i + 1).padStart(2, '0')}</span>
+              <span class="pp-dish-name">{d.name}</span>
+              {d.note && <span class="pp-dish-note">{d.note}</span>}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <!-- GALLERY -->
+  {gallery.length > 0 && (
+    <section class="pp-sec">
+      <div class="container">
+        <p class="pp-kicker">Photos</p>
+        <div class={`pp-gallery pp-gallery--${Math.min(gallery.length, 4)}`}>
+          {gallery.slice(0, 5).map(src => (
+            <SmartImage src={src} alt={r.name.en} width={800} height={600} class="pp-gallery-img" sizes="(max-width: 768px) 100vw, 40vw" />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- VISIT -->
+  <section class="pp-sec pp-sec--sand">
+    <div class="container">
+      <p class="pp-kicker">Plan your visit</p>
+      <h2 class="pp-title">Hours &amp; location</h2>
+
+      <div class="pp-visit">
+        <div class="pp-card">
+          <div class="pp-card-hdr">
+            <h3 class="pp-card-title">Opening hours</h3>
+            {partner.open !== undefined && (
+              <span class={`pp-season${closed ? ' is-closed' : ''}`}>
+                {closed ? 'Closed for the season' : 'Open for the season'}
+              </span>
+            )}
+          </div>
+          {hours ? (
+            <table class="hours-table">
+              <tbody>
+                {DAYS.map(d => (
+                  <tr data-day={d.key}>
+                    <th scope="row">{d.label}<span class="hours-today">Today</span></th>
+                    <td>{hours[d.key] ?? 'Closed'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p class="pp-muted">
+              {serves.text} Hours shift through the season, so call ahead or check Google Maps.
+            </p>
+          )}
+          {hours && <p class="pp-muted pp-small">Hours provided by {r.name.en}.</p>}
+          <a href={tel} class="pp-link" {...track('restaurant-call', 'hours')}>Call {r.phone} →</a>
+        </div>
+
+        <div class="pp-card pp-card--map">
+          <MapEmbed
+            query={`${r.name.en}, ${area}, Milos`}
+            title={`Map of ${r.name.en}`}
+            zoom={16}
+            track={track('restaurant-map-load', 'visit')}
+          />
+          <div class="pp-links">
+            <a href={maps} target="_blank" rel="noopener noreferrer" class="pp-chip" {...track('restaurant-maps', 'visit')}>📍 Google Maps ↗</a>
+            {r.website && <a href={r.website} target="_blank" rel={rel} class="pp-chip" {...track('restaurant-website', 'visit')}>Website ↗</a>}
+            {partner.instagram && <a href={partner.instagram} target="_blank" rel={rel} class="pp-chip" {...track('restaurant-instagram', 'visit')}>Instagram ↗</a>}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEARBY BEACHES -->
+  {nearbyBeaches.length > 0 && (
+    <section class="pp-sec">
+      <div class="container">
+        <p class="pp-kicker">Make a day of it</p>
+        <h2 class="pp-title">Swim before you eat</h2>
+        <div class="pp-beaches">
+          {nearbyBeaches.map(b => (
+            <a href={`/beaches/${b.slug}/`} class="pp-beach">
+              {b.photo ? (
+                <SmartImage src={b.photo} alt={getBeachName(b)} width={600} height={450} class="pp-beach-img" sizes="(max-width: 768px) 100vw, 33vw" />
+              ) : (
+                <div class="pp-beach-ph"></div>
+              )}
+              <div class="pp-beach-text">
+                <span class="pp-beach-name">{getBeachName(b)}</span>
+                <span class="pp-beach-km">{formatKm(b.km)} away</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <p class="container pp-disclosure">
+    {PARTNER_LABEL}: {r.name.en} pays for extra visibility on Milos.guide.
+  </p>
+
+  <!-- Mobile action bar -->
+  <nav class="pp-bar" aria-label={`Contact ${r.name.en}`}>
+    {partner.reservationUrl && (
+      <a href={partner.reservationUrl} target="_blank" rel={rel} class="pp-bar-main" {...track('restaurant-reserve', 'mobile-bar')}>Reserve</a>
+    )}
+    <a href={tel} class={partner.reservationUrl ? '' : 'pp-bar-main'} {...track('restaurant-call', 'mobile-bar')}>Call</a>
+    {partner.menuUrl && (
+      <a href={partner.menuUrl} target="_blank" rel={rel} {...track('restaurant-menu', 'mobile-bar')}>Menu</a>
+    )}
+    <a href={maps} target="_blank" rel="noopener noreferrer" {...track('restaurant-maps', 'mobile-bar')}>Directions</a>
+  </nav>
+</div>
+
+<script>
+  // Static page, so "today" and "open now" are worked out in the browser, in Milos time:
+  // someone planning from New York at 1 am should see the island's day, not theirs.
+  const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Athens', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+    }).formatToParts(new Date()).map(p => [p.type, p.value]),
+  );
+  const today = parts.weekday.toLowerCase();
+  const now = Number(parts.hour) * 60 + Number(parts.minute);
+
+  document.querySelector(`.hours-table tr[data-day="${today}"]`)?.classList.add('is-today');
+
+  const status = document.querySelector<HTMLElement>('[data-pp-status]');
+  if (status) {
+    const hours: Record<string, string> = JSON.parse(status.dataset.hours ?? '{}');
+
+    const toMin = (t: string) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+    const fmt = (min: number) => `${String(Math.floor(min / 60) % 24).padStart(2, '0')}:${String(min % 60).padStart(2, '0')}`;
+    // "13:00–00:00, 19:00–02:00" → [[780, 1440], [1140, 1560]]; a close at or before the
+    // open time means after midnight.
+    const ranges = (s = '') => s.split(',')
+      .map(p => p.trim().split(/\s*[–-]\s*/))
+      .filter(p => p.length === 2 && p.every(t => /^\d{1,2}:\d{2}$/.test(t)))
+      .map(([a, b]) => { const s = toMin(a), e = toMin(b); return [s, e <= s ? e + 1440 : e]; });
+
+    const idx = DAY_KEYS.indexOf(today);
+    const yesterday = ranges(hours[DAY_KEYS[(idx + 6) % 7]]);
+    const todays = ranges(hours[today]);
+
+    let text: string;
+    let open = false;
+    const lateNight = yesterday.find(([, e]) => e > 1440 && now < e - 1440);
+    const current = todays.find(([s, e]) => now >= s && now < e);
+    const next = todays.find(([s]) => s > now);
+
+    if (lateNight) { open = true; text = `Open now · until ${fmt(lateNight[1])}`; }
+    else if (current) { open = true; text = `Open now · until ${fmt(current[1])}`; }
+    else if (next) text = `Opens today at ${fmt(next[0])}`;
+    else text = 'Closed today';
+
+    status.querySelector('[data-pp-status-text]')!.textContent = text;
+    status.classList.toggle('is-open', open);
+    status.hidden = false;
+  }
+</script>
+
+<style>
+/* ── HERO ── */
+.pp-hero {
+  position: relative;
+  min-height: min(82vh, 760px);
+  display: flex;
+  overflow: hidden;
+  background: #0b2440;
+  color: #fff;
+}
+:global(.pp-hero-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pp-hero-art {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 78% 38%, rgba(255,190,120,.35) 0%, transparent 70%),
+    linear-gradient(180deg, #0b2440 0%, #17406b 45%, #b7795a 82%, #e2a46f 100%);
+}
+.pp-sun {
+  position: absolute;
+  right: 16%;
+  top: 34%;
+  width: clamp(110px, 16vw, 210px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, #ffe2b0 0%, #ffbf7a 55%, rgba(255,160,90,0) 72%);
+  filter: blur(1px);
+  opacity: .9;
+}
+.pp-waves { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 42%; }
+.pp-waves path:nth-child(1) { fill: rgba(13,43,78,.55); }
+.pp-waves path:nth-child(2) { fill: rgba(13,43,78,.75); }
+.pp-waves path:nth-child(3) { fill: #0b2440; }
+.pp-hero-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5,18,34,.85) 0%, rgba(5,18,34,.35) 45%, rgba(5,18,34,.1) 100%);
+}
+.pp-hero:not(.pp-hero--photo) .pp-hero-shade {
+  background: linear-gradient(to top, rgba(5,18,34,.7) 0%, transparent 55%);
+}
+.pp-hero-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 4.5rem;
+  width: 100%;
+}
+.pp-back {
+  align-self: flex-start;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(8px);
+  padding: .4rem .9rem;
+  border-radius: var(--radius-full);
+  transition: background .15s;
+}
+.pp-back:hover { background: rgba(255,255,255,.22); color: #fff; }
+.pp-hero-text { max-width: 760px; padding-top: 4rem; }
+.pp-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .75rem;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.8);
+  margin-bottom: 1rem;
+}
+.pp-badge {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,.95);
+  color: var(--deep-blue);
+}
+.pp-name {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  line-height: .95;
+  letter-spacing: -.01em;
+  margin: 0 0 .6rem;
+  text-shadow: 0 4px 30px rgba(0,0,0,.3);
+}
+.pp-tagline { font-size: clamp(1rem, 2vw, 1.25rem); font-style: italic; color: rgba(255,255,255,.78); margin: 0 0 1.25rem; }
+.pp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-size: .85rem;
+  font-weight: 600;
+  padding: .45rem .95rem;
+  border-radius: var(--radius-full);
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(8px);
+  margin: 0 0 1.5rem;
+}
+.pp-status[hidden] { display: none; }
+.pp-dot { width: 8px; height: 8px; border-radius: 50%; background: #f87171; box-shadow: 0 0 0 3px rgba(248,113,113,.25); }
+.pp-status.is-open .pp-dot { background: #4ade80; box-shadow: 0 0 0 3px rgba(74,222,128,.3); }
+.pp-ctas { display: flex; flex-wrap: wrap; gap: .65rem; }
+.pp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .9rem 1.4rem;
+  border-radius: var(--radius-md);
+  font-size: .92rem;
+  font-weight: 600;
+  transition: transform .15s var(--ease-spring), background .15s, box-shadow .15s;
+}
+.pp-btn:hover { transform: translateY(-2px); }
+.pp-btn--main { background: #fff; color: var(--deep-blue); box-shadow: 0 8px 28px rgba(0,0,0,.25); }
+.pp-btn--main:hover { color: var(--deep-blue); box-shadow: 0 12px 34px rgba(0,0,0,.3); }
+.pp-btn--glass { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(8px); }
+.pp-btn--glass:hover { background: rgba(255,255,255,.2); color: #fff; }
+
+/* ── FACTS ── */
+.pp-facts {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: -2.5rem 0 0;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.pp-facts > div { padding: 1.25rem 1.5rem; border-right: 1px solid var(--border); }
+.pp-facts > div:last-child { border-right: none; }
+.pp-facts dt { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.pp-facts dd { margin: 0; font-weight: 600; color: var(--ink); }
+.pp-facts dd a { color: var(--aegean); border-bottom: 1px solid var(--sea); }
+
+/* ── SECTIONS ── */
+.pp-sec { padding: 5rem 0; background: var(--white); }
+.pp-sec--dark { background: var(--deep-blue); color: #fff; }
+.pp-sec--sand { background: var(--sand); }
+.pp-kicker { font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--sea); margin: 0 0 .6rem; }
+.pp-kicker--lt { color: var(--sky); }
+.pp-title { font-family: var(--font-serif); font-size: clamp(1.9rem, 4vw, 2.75rem); line-height: 1.1; color: var(--deep-blue); margin: 0 0 2.25rem; }
+.pp-title--lt { color: #fff; }
+
+/* Story */
+.pp-story { max-width: 820px; }
+.pp-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  line-height: 1.25;
+  color: var(--deep-blue);
+  margin: 0 0 1.5rem;
+}
+.pp-body { font-size: 1.1rem; line-height: 1.85; color: #374151; margin: 0; max-width: 680px; }
+
+/* Dishes */
+.pp-dishes { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: rgba(255,255,255,.12); border-radius: var(--radius-lg); overflow: hidden; }
+.pp-dish { background: var(--deep-blue); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: .35rem; transition: background .2s; }
+.pp-dish:hover { background: #12365f; }
+.pp-dish-no { font-size: .72rem; font-weight: 700; letter-spacing: .12em; color: var(--sky); }
+.pp-dish-name { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.15; }
+.pp-dish-note { font-size: .88rem; color: rgba(255,255,255,.65); }
+
+/* Gallery */
+.pp-gallery { display: grid; gap: .75rem; grid-template-columns: repeat(2, 1fr); }
+.pp-gallery--3, .pp-gallery--4 { grid-template-columns: 2fr 1fr 1fr; grid-auto-rows: 220px; }
+.pp-gallery--3 > :global(:first-child), .pp-gallery--4 > :global(:first-child) { grid-row: span 2; }
+:global(.pp-gallery-img) { display: block; width: 100%; height: 100%; min-height: 220px; border-radius: var(--radius-md); overflow: hidden; object-fit: cover; }
+
+/* Visit */
+.pp-visit { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: start; }
+/* Side by side, the map card stretches to the hours card and the map fills the space
+   left above the links (MapEmbed's own 220px is only the minimum). */
+@media (min-width: 901px) {
+  .pp-visit { align-items: stretch; }
+  .pp-card--map { display: flex; flex-direction: column; }
+  .pp-card--map :global(.s-map) { flex: 1; display: flex; flex-direction: column; min-height: 220px; }
+  .pp-card--map :global(.s-map-load),
+  .pp-card--map :global(.s-map iframe) { flex: 1; height: auto; }
+}
+.pp-card { background: var(--white); border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-sm); }
+.pp-card--map { padding: 1rem; }
+.pp-card-hdr { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.pp-card-title { font-family: var(--font-serif); font-size: 1.4rem; color: var(--deep-blue); margin: 0; }
+.pp-season { font-size: .72rem; font-weight: 600; color: #15803d; background: rgba(74,222,128,.15); padding: 3px 10px; border-radius: var(--radius-full); }
+.pp-season.is-closed { color: #b91c1c; background: rgba(248,113,113,.14); }
+.pp-muted { color: var(--muted); font-size: .92rem; line-height: 1.7; margin: 0 0 1rem; }
+.pp-small { font-size: .78rem; }
+.pp-link { font-weight: 600; color: var(--aegean); }
+.pp-links { display: flex; flex-wrap: wrap; gap: .5rem; padding: 1rem .25rem .25rem; }
+.pp-chip { font-size: .82rem; font-weight: 600; padding: .5rem .9rem; border-radius: var(--radius-full); border: 1px solid var(--border); color: var(--deep-blue); background: var(--white); transition: background .15s; }
+.pp-chip:hover { background: var(--sand); }
+
+.hours-table { width: 100%; border-collapse: collapse; font-size: .95rem; margin-bottom: .75rem; }
+.hours-table th, .hours-table td { padding: .6rem .5rem; border-bottom: 1px solid var(--border); }
+.hours-table tr:last-child th, .hours-table tr:last-child td { border-bottom: none; }
+.hours-table th { text-align: left; font-weight: 500; color: var(--muted); }
+.hours-table td { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+.hours-table tr.is-today { background: var(--sand); }
+.hours-table tr.is-today th, .hours-table tr.is-today td { font-weight: 700; color: var(--deep-blue); }
+.hours-table tr.is-today th { border-radius: 8px 0 0 8px; }
+.hours-table tr.is-today td { border-radius: 0 8px 8px 0; }
+.hours-today { display: none; margin-left: .5rem; font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sea); }
+.is-today .hours-today { display: inline; }
+
+/* Beaches */
+.pp-beaches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.pp-beach { position: relative; display: block; aspect-ratio: 4 / 3; border-radius: var(--radius-lg); overflow: hidden; background: var(--sand-dark); }
+:global(.pp-beach-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.pp-beach:hover :global(.pp-beach-img) { transform: scale(1.05); }
+.pp-beach-ph { position: absolute; inset: 0; background: linear-gradient(140deg, #1a5c8a, #3a9bc9); }
+.pp-beach-text {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.5rem 1.25rem 1.1rem;
+  background: linear-gradient(to top, rgba(0,0,0,.7), transparent);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: .5rem;
+}
+.pp-beach-name { font-family: var(--font-serif); font-size: 1.35rem; line-height: 1.1; }
+.pp-beach-km { font-size: .75rem; font-weight: 600; opacity: .85; white-space: nowrap; }
+
+.pp-disclosure { font-size: .75rem; color: var(--muted); text-align: center; padding-top: 0; padding-bottom: 3rem; }
+
+/* Mobile action bar */
+.pp-bar { display: none; }
+
+@media (max-width: 900px) {
+  .pp-facts { grid-template-columns: repeat(2, 1fr); }
+  .pp-facts > div:nth-child(2) { border-right: none; }
+  .pp-facts > div:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+  .pp-visit { grid-template-columns: 1fr; }
+  .pp-beaches { grid-template-columns: 1fr 1fr; }
+  .pp-beaches > :nth-child(3) { display: none; }
+}
+@media (max-width: 768px) {
+  .pp-hero { min-height: 78vh; }
+  .pp-hero-inner { padding-bottom: 3.5rem; }
+  .pp-sun { top: 16%; right: 10%; }
+  /* The fixed action bar below carries the same three buttons */
+  .pp-ctas { display: none; }
+  .pp-sec { padding: 3.5rem 0; }
+  .pp-gallery, .pp-gallery--3, .pp-gallery--4 { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .pp-gallery--3 > :global(:first-child), .pp-gallery--4 > :global(:first-child) { grid-row: auto; }
+  .pp-beaches { grid-template-columns: 1fr; }
+  .pp-beaches > :nth-child(3) { display: block; }
+
+  .pp { padding-bottom: 4.5rem; }
+  .pp-bar {
+    display: flex;
+    position: fixed;
+    left: .75rem;
+    right: .75rem;
+    bottom: calc(.75rem + env(safe-area-inset-bottom));
+    z-index: 150;
+    gap: .4rem;
+    padding: .4rem;
+    background: rgba(255,255,255,.94);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .pp-bar a {
+    flex: 1;
+    text-align: center;
+    padding: .8rem .5rem;
+    border-radius: var(--radius-md);
+    font-size: .88rem;
+    font-weight: 600;
+    color: var(--deep-blue);
+  }
+  .pp-bar a.pp-bar-main { background: var(--deep-blue); color: #fff; }
+}
+@media (max-width: 480px) {
+  .pp-facts { grid-template-columns: 1fr 1fr; }
+  .pp-facts > div { padding: 1rem 1.1rem; }
+}
+</style>

@@ -21,7 +21,7 @@ Node >= 22 (`.nvmrc`: 22).
 
 ## Layout
 
-- `src/data/*.json`: all content (beaches, restaurants, sights, stays, villages). Detail pages are generated from these with `getStaticPaths` in `src/pages/<section>/[slug].astro`. Each section also has an `index.astro` with client-side filters.
+- `src/data/*.json`: all content (beaches, restaurants, sights, stays, villages). Detail pages are generated from these with `getStaticPaths` in `src/pages/<section>/[slug].astro`. Each section also has an `index.astro`; all except villages have client-side filters.
 - `src/lib/`: shared helpers, one module per domain:
   - `beaches.ts`: the `Beach` type, coast area computed from coordinates (`location.area` is always "Milos"), and `POPULAR_BEACHES` ordering
   - `restaurants.ts`, `stays.ts`: sorted lists, type and service labels, Maps and Booking links
@@ -31,6 +31,7 @@ Node >= 22 (`.nvmrc`: 22).
   - `seo.ts` (`metaDescription` trims to 160 chars), `booking.ts` (CJ → Booking.com links, with `sid` tagging the source page), `kiwi.ts` (Travelpayouts flights), `basemap.ts` (CARTO tiles, with the key added only in PROD because it is domain-locked)
 - `src/layouts/Layout.astro`: the single layout. It renders the head/meta, canonical URL, the BreadcrumbList and WebSite JSON-LD graph (pages pass extra schema through the `jsonld` prop), nav, footer, global styles and the Umami script.
 - `src/components/`: `home/*` and `beach/*` hold sections of the home page and the beach detail page. `SmartImage.astro` renders `<picture>` with AVIF/WebP srcsets when the variant files exist in `/public`.
+- Search: `src/lib/search-index.ts` builds the index (server-only), `src/lib/search-match.ts` does the client-side matching. `/search/` inlines the index. The header search box in `Layout` fetches `/search-index.json` (`src/pages/search-index.json.ts`) on first focus and shows results in a dropdown.
 - `src/pages/sitemap.xml.ts`: a hand-maintained sitemap. When you add a static page, add it to `statics` there.
 - `src/pages/weather.astro` + `src/scripts/weather.js` + `src/styles/weather.css`: the live forecast. It fetches Open-Meteo in the browser and falls back to `/weather-cache.json`.
 - Maps (`/map`, the beaches map view) load Leaflet and markercluster from cdnjs at runtime. They are not npm dependencies.
@@ -39,7 +40,7 @@ Node >= 22 (`.nvmrc`: 22).
 
 - The site is English-only in practice. Data has `{ en, el }` name/description pairs (sights and villages use `name`/`nameEn` fields instead), and `Layout` supports `lang="el"` with an `/el` prefix, but no `/el` pages exist. `src/i18n/index.ts` is not imported anywhere.
 - Photos: beaches are `/public/images/beaches/<slug>.jpg`. Restaurants and stays use the `localPhoto` path from JSON (`/images/taverns/…`, `/images/accommodations/…`). Those folders are mostly empty, and the pages show no photo until the user adds their own. Never fetch, cache or restore Google Places photos (Places API ToS).
-- Opening hours are deliberately not stored. Restaurants have a `service` category and link to Google Maps for today's hours.
+- Opening hours are deliberately not stored for free listings. Restaurants have a `service` category and link to Google Maps for today's hours. Paid partners (`partner` in `restaurants.json`: tiers, expiry, reservation link, owner-supplied hours and photos) are the exception; see `src/lib/restaurants.ts`.
 - Outbound affiliate and CTA links carry `data-umami-event` (and `data-umami-event-*`) attributes for analytics. Keep them when editing links, and use `rel="noopener sponsored"` on affiliate links.
 - Comments explain *why* (API quirks, ToS, SEO reasons). Match that style.
 - The user commits changes themselves. Do not `git commit`.

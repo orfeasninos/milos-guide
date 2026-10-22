@@ -1,0 +1,95 @@
+---
+// "Where to eat nearby" on beach and village pages. Only premium partners appear here,
+// so the block is always labelled as paid.
+import SmartImage from './SmartImage.astro';
+import { restaurantPhoto, existingPhotos } from '../lib/public-files';
+import { placeType, activePartner, PARTNER_LABEL, type Restaurant } from '../lib/restaurants';
+
+interface Props {
+  places: { restaurant: Restaurant; km: number }[];
+  placement: string; // e.g. "beach-tsigrado", for the per-owner click report
+}
+const { places, placement } = Astro.props;
+
+const items = places.map(({ restaurant: r, km }) => ({
+  r,
+  kind: placeType(r),
+  photo: restaurantPhoto(r) ?? existingPhotos(activePartner(r)?.photos)[0] ?? null,
+  distance: km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`,
+}));
+---
+{items.length > 0 && (
+  <div class="pn">
+    <div class="pn-hdr">
+      <h2 class="pn-title">Where to eat nearby</h2>
+      <span class="pn-label">{PARTNER_LABEL}</span>
+    </div>
+    <div class="pn-list">
+      {items.map(({ r, kind, photo, distance }) => (
+        <a
+          href={`/restaurants/${r.slug}/`}
+          class="pn-item"
+          data-umami-event="restaurant-nearby"
+          data-umami-event-restaurant={r.slug}
+          data-umami-event-placement={placement}
+        >
+          <div class="pn-img-wrap">
+            {photo ? (
+              <SmartImage src={photo} alt={r.name.en} width={64} height={64} class="pn-img" sizes="64px" />
+            ) : (
+              <div class="pn-ph">{kind.icon}</div>
+            )}
+          </div>
+          <div class="pn-body">
+            <p class="pn-name">{r.name.en}</p>
+            <p class="pn-sub">{r.cuisine.en} · {r.location.area} · {distance}</p>
+          </div>
+          <span class="pn-arrow">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+.pn { margin-bottom: 2.5rem; }
+.pn-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.pn-title {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+.pn-label {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--muted);
+}
+.pn-list { display: flex; flex-direction: column; border: 1px solid var(--sea); border-radius: var(--radius-md); overflow: hidden; }
+.pn-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  color: inherit;
+  transition: background .15s, padding-left .15s;
+}
+.pn-item:last-child { border-bottom: none; }
+.pn-item:hover { background: var(--sand); padding-left: 1.25rem; }
+.pn-img-wrap { width: 64px; height: 64px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--sand); }
+:global(.pn-img) { display: block; width: 100%; height: 100%; }
+.pn-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--sand-dark); }
+.pn-body { flex: 1; min-width: 0; }
+.pn-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); margin: 0; }
+.pn-sub { font-size: .75rem; color: var(--muted); margin: .15rem 0 0; }
+.pn-arrow { color: var(--muted); font-size: 1rem; flex-shrink: 0; }
+</style>

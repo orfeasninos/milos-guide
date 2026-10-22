@@ -1,13 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
+import MapEmbed from '../../components/MapEmbed.astro';
+import PartnerPage from '../../components/restaurant/PartnerPage.astro';
 import beachesData from '../../data/beaches.json';
 import { beachPhoto, restaurantPhoto, existingPhotos } from '../../lib/public-files';
 import { getBeachName } from '../../lib/beaches';
 import { metaDescription } from '../../lib/seo';
 import {
   restaurants, areaVillageSlug, placeType, placeService,
-  mapsUrl, telHref, distanceKm, activePartner, PARTNER_LABEL, type Restaurant,
+  mapsUrl, telHref, distanceKm, activePartner, type Restaurant,
 } from '../../lib/restaurants';
 
 export function getStaticPaths() {
@@ -25,13 +27,9 @@ const kind = placeType(r);
 const serves = placeService(r);
 const maps = mapsUrl(r);
 const partner = activePartner(r);
-const partnerPhotos = existingPhotos(partner?.photos);
-const photo = restaurantPhoto(r) ?? partnerPhotos[0] ?? null;
-const gallery = partnerPhotos.filter(p => p !== photo);
-
-// Partner links are paid, so rel="sponsored". They also keep the referrer (no
-// noreferrer) so the owner sees milos.guide in their own stats.
-const outRel = partner ? 'noopener sponsored' : 'noopener noreferrer';
+// Partners get their own page body (components/restaurant/PartnerPage.astro); what
+// follows is the free listing.
+const photo = restaurantPhoto(r) ?? existingPhotos(partner?.photos)[0] ?? null;
 
 // Per-place click counts in Umami: the numbers we show owners when selling a listing.
 const track = (event: string, placement: string) => ({
@@ -86,7 +84,10 @@ const restaurantJsonld = {
   jsonld={restaurantJsonld}
 >
 
-<!-- HERO -->
+{partner ? (
+  <PartnerPage r={r} partner={partner} />
+) : (
+<>
 <div class="r-hero">
   {photo ? (
     <SmartImage src={photo} alt={r.name.en} width={1280} height={400} isLCP={true} class="r-hero-img" sizes="100vw" />
@@ -98,7 +99,6 @@ const restaurantJsonld = {
       <a href="/restaurants/" class="back-link">← All places to eat</a>
       <div class="r-hero-meta">
         <span class="r-type-badge">{kind.icon} {kind.label}</span>
-        {partner && <span class="r-type-badge r-type-badge--partner">{PARTNER_LABEL}</span>}
         <h1 class="r-hero-name">{r.name.en}</h1>
         <p class="r-hero-tagline">{r.cuisine.en} in {area}</p>
         <div class="r-hero-chips">
@@ -120,17 +120,6 @@ const restaurantJsonld = {
 
     <p class="r-desc">{r.description.en}</p>
 
-    {gallery.length > 0 && (
-      <div class="r-block">
-        <h2 class="block-title">Photos</h2>
-        <div class="r-gallery">
-          {gallery.map(src => (
-            <SmartImage src={src} alt={r.name.en} width={640} height={480} class="r-gallery-img" sizes="(max-width: 768px) 50vw, 300px" />
-          ))}
-        </div>
-      </div>
-    )}
-
     <!-- Opening hours -->
     <div class="r-block">
       <h2 class="block-title">Opening hours</h2>
@@ -143,7 +132,6 @@ const restaurantJsonld = {
         </p>
         <div class="hours-actions">
           <a href={maps} target="_blank" rel="noopener noreferrer" class="see-all" {...track('restaurant-maps', 'hours')}>Today's hours on Google Maps ↗</a>
-          <a href={telHref(r.phone)} class="see-all" {...track('restaurant-call', 'hours')}>Call {r.phone}</a>
         </div>
       </div>
     </div>
@@ -176,7 +164,7 @@ const restaurantJsonld = {
       </div>
     )}
 
-    <!-- More restaurants -->
+    <!-- More restaurants (partner pages leave this out: no sending their visitors to competitors) -->
     <div class="r-block">
       <div class="block-hdr">
         <h2 class="block-title">More places to eat</h2>
@@ -234,47 +222,32 @@ const restaurantJsonld = {
         </li>
         <li class="s-info-row">
           <span class="s-info-key">Phone</span>
-          <span class="s-info-val"><a href={telHref(r.phone)} class="s-link" {...track('restaurant-call', 'info')}>{r.phone}</a></span>
+          <span class="s-info-val">
+            {/* Click-to-call is a partner feature; free listings show the number as text. */}
+            {r.phone}
+          </span>
         </li>
       </ul>
     </div>
 
-    {partner?.reservationUrl && (
-      <a href={partner.reservationUrl} target="_blank" rel={outRel} class="s-btn s-btn--call" {...track('restaurant-reserve', 'sidebar')}>
-        <span>📅</span> Reserve a table ↗
-      </a>
-    )}
-    <a href={maps} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--maps" {...track('restaurant-maps', 'sidebar')}>
-      <span>📍</span> Google Maps ↗
-    </a>
-    <a href={telHref(r.phone)} class={`s-btn ${partner?.reservationUrl ? 's-btn--web' : 's-btn--call'}`} {...track('restaurant-call', 'sidebar')}>
-      <span>📞</span> Call to book
-    </a>
-    {partner?.menuUrl && (
-      <a href={partner.menuUrl} target="_blank" rel={outRel} class="s-btn s-btn--web" {...track('restaurant-menu', 'sidebar')}>
-        See the menu ↗
-      </a>
-    )}
+    <MapEmbed
+      query={`${r.name.en}, ${area}, Milos`}
+      title={`Map of ${r.name.en}`}
+      zoom={16}
+      track={track('restaurant-map-load', 'sidebar')}
+    />
     {r.website && (
-      <a href={r.website} target="_blank" rel={outRel} class="s-btn s-btn--web" {...track('restaurant-website', 'sidebar')}>
+      <a href={r.website} target="_blank" rel="noopener noreferrer" class="s-btn s-btn--web" {...track('restaurant-website', 'sidebar')}>
         Visit website ↗
       </a>
-    )}
-    {partner?.instagram && (
-      <a href={partner.instagram} target="_blank" rel={outRel} class="s-btn s-btn--web" {...track('restaurant-instagram', 'sidebar')}>
-        Instagram ↗
-      </a>
-    )}
-    {partner && (
-      <p class="s-partner-note">
-        {PARTNER_LABEL}: {r.name.en} pays for extra visibility on Milos.guide.
-      </p>
     )}
 
   </aside>
 
 </div>
 
+</>
+)}
 </Layout>
 
 
@@ -342,7 +315,6 @@ const restaurantJsonld = {
   margin-bottom: .5rem;
   backdrop-filter: blur(6px);
 }
-.r-type-badge--partner { margin-left: .35rem; background: rgba(0,0,0,.35); }
 .r-hero-name {
   font-family: var(--font-serif);
   font-size: clamp(2.3rem, 6vw, 4.2rem);
@@ -416,10 +388,6 @@ const restaurantJsonld = {
 .hours-text { font-size: .9rem; line-height: 1.7; color: var(--muted); }
 .hours-actions { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: .85rem; }
 
-/* Partner gallery */
-.r-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
-:global(.r-gallery-img) { display: block; aspect-ratio: 4 / 3; border-radius: var(--radius-md); overflow: hidden; }
-
 /* Nearby list */
 .nearby-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
 .nearby-item {
@@ -486,7 +454,6 @@ const restaurantJsonld = {
 .s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
 .s-btn--call { background: var(--sea); color: #fff; box-shadow: var(--shadow-sm); }
 .s-btn--web  { background: var(--white); color: var(--deep-blue); border: 1px solid var(--border); }
-.s-partner-note { font-size: .72rem; line-height: 1.5; color: var(--muted); margin: 0; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {

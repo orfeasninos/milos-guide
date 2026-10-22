@@ -26,11 +26,11 @@ const href = (path: string) => (isEl ? `/el${path}` : path);
 const isCurrent = (path: string) => currentPath.startsWith(href(path));
 
 const navItems = [
-  { path: '/beaches/', label: t('Beaches', 'Παραλίες') },
-  { path: '/villages/', label: t('Villages', 'Χωριά') },
-  { path: '/sights/', label: t('Sights', 'Αξιοθέατα') },
-  { path: '/restaurants/', label: t('Food', 'Φαγητό') },
   { path: '/stays/', label: t('Stay', 'Διαμονή') },
+  { path: '/restaurants/', label: t('Food', 'Φαγητό') },
+  { path: '/beaches/', label: t('Beaches', 'Παραλίες') },
+  { path: '/sights/', label: t('Sights', 'Αξιοθέατα') },
+  { path: '/villages/', label: t('Villages', 'Χωριά') },
 ];
 
 const englishURL = new URL(currentPath.replace(/^\/el(?=\/|$)/, '') || '/', siteUrl);
@@ -221,10 +221,25 @@ const schemas: object[] = [
           ))}
         </ul>
         <div class="nav-icons">
-          <a href={href('/search/')} class="icon-btn" data-tooltip={t('Search', 'Αναζήτηση')} aria-current={isCurrent('/search/') ? 'page' : undefined}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span class="icon-btn-label">{t('Search', 'Αναζήτηση')}</span>
-          </a>
+          <!-- Without JS (or on Enter with no highlighted result) the form falls back to the /search/ page. -->
+          <form class="header-search" id="header-search" action={href('/search/')} method="get" role="search">
+            <svg class="hs-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input
+              id="hs-input"
+              class="hs-input"
+              type="search"
+              name="q"
+              placeholder={t('Search Milos…', 'Αναζήτηση…')}
+              aria-label={t('Search beaches, sights, villages, food and stays', 'Αναζήτηση παραλιών, αξιοθέατων, χωριών, φαγητού και διαμονής')}
+              autocomplete="off"
+              spellcheck="false"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="hs-results"
+              aria-autocomplete="list"
+            />
+            <ul class="hs-results" id="hs-results" role="listbox" hidden></ul>
+          </form>
           <a href={href('/map/')} class="icon-btn" data-tooltip={t('Map', 'Χάρτης')} aria-current={isCurrent('/map/') ? 'page' : undefined}>
             <MilosIcon />
             <span class="icon-btn-label">{t('Map', 'Χάρτης')}</span>
@@ -270,11 +285,11 @@ const schemas: object[] = [
         <nav class="footer-cols" aria-label={t('Footer', 'Υποσέλιδο')}>
           <div class="footer-col">
             <p class="footer-col-title">{t('Explore', 'Εξερεύνηση')}</p>
-            <a href={href('/beaches/')}><span class="flink-icon" aria-hidden="true">🏖</span>{t('Beaches', 'Παραλίες')}</a>
-            <a href={href('/villages/')}><span class="flink-icon" aria-hidden="true">🏘</span>{t('Villages', 'Χωριά')}</a>
-            <a href={href('/sights/')}><span class="flink-icon" aria-hidden="true">🏛</span>{t('Sights', 'Αξιοθέατα')}</a>
-            <a href={href('/restaurants/')}><span class="flink-icon" aria-hidden="true">🍽</span>{t('Restaurants', 'Εστιατόρια')}</a>
             <a href={href('/stays/')}><span class="flink-icon" aria-hidden="true">🛏</span>{t('Where to stay', 'Διαμονή')}</a>
+            <a href={href('/restaurants/')}><span class="flink-icon" aria-hidden="true">🍽</span>{t('Restaurants', 'Εστιατόρια')}</a>
+            <a href={href('/beaches/')}><span class="flink-icon" aria-hidden="true">🏖</span>{t('Beaches', 'Παραλίες')}</a>
+            <a href={href('/sights/')}><span class="flink-icon" aria-hidden="true">🏛</span>{t('Sights', 'Αξιοθέατα')}</a>
+            <a href={href('/villages/')}><span class="flink-icon" aria-hidden="true">🏘</span>{t('Villages', 'Χωριά')}</a>
           </div>
 
           <div class="footer-col">
@@ -304,6 +319,8 @@ const schemas: object[] = [
   </footer>
 
 <script>
+import { fold, matches, highlight, type SearchItem } from '../lib/search-match';
+
 const header = document.getElementById('site-header');
 const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
 const nav = document.getElementById('main-nav');
@@ -328,6 +345,100 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && isOpen()) { setOpen(false); toggle?.focus(); }
 });
 window.matchMedia('(min-width: 721px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
+
+// ── Header search ──
+const searchForm = document.getElementById('header-search') as HTMLFormElement | null;
+const searchInput = document.getElementById('hs-input') as HTMLInputElement | null;
+const searchList = document.getElementById('hs-results');
+const searchIsEl = document.documentElement.lang === 'el';
+const MAX_RESULTS = 8;
+
+let searchIndex: Promise<SearchItem[]> | null = null;
+let activeIndex = -1;
+
+// Fetched on first focus instead of inlined, so pages that never use search don't pay for it.
+const loadIndex = () => searchIndex ??= fetch('/search-index.json')
+  .then(r => r.json() as Promise<SearchItem[]>)
+  .catch(() => { searchIndex = null; return []; });
+
+const resultLinks = () => [...(searchList?.querySelectorAll<HTMLAnchorElement>('.hs-result') ?? [])];
+
+const showResults = (show: boolean) => {
+  if (!searchList || !searchInput) return;
+  searchList.hidden = !show;
+  searchInput.setAttribute('aria-expanded', String(show));
+  if (!show) setActive(-1);
+};
+
+const setActive = (i: number) => {
+  const links = resultLinks();
+  activeIndex = i;
+  links.forEach((a, n) => a.setAttribute('aria-selected', String(n === i)));
+  if (links[i]) {
+    searchInput?.setAttribute('aria-activedescendant', links[i].id);
+    links[i].scrollIntoView({ block: 'nearest' });
+  } else {
+    searchInput?.removeAttribute('aria-activedescendant');
+  }
+};
+
+async function renderSearch() {
+  if (!searchInput || !searchList || !searchForm) return;
+  const raw = searchInput.value.trim();
+  const q = fold(raw);
+  // One letter matches nearly everything, so wait for a second one.
+  if ([...q].length < 2) { showResults(false); searchList.innerHTML = ''; return; }
+
+  const index = await loadIndex();
+  // The user may have kept typing while the index loaded.
+  if (fold(searchInput.value.trim()) !== q) return;
+
+  const results = index.filter(item => matches(item, q));
+  const allUrl = `${searchForm.action}?q=${encodeURIComponent(raw)}`;
+
+  searchList.innerHTML = results.length
+    ? results.slice(0, MAX_RESULTS).map((item, i) => `
+      <li role="presentation">
+        <a href="${item.url}" class="hs-result" id="hs-opt-${i}" role="option" aria-selected="false">
+          <span class="hs-result-icon" aria-hidden="true">${item.icon}</span>
+          <span class="hs-result-body">
+            <span class="hs-result-name">${highlight(searchIsEl ? item.nameEl : item.nameEn, q)}</span>
+            <span class="hs-result-meta">${searchIsEl ? item.typeEl : item.typeEn} · ${item.area}</span>
+          </span>
+        </a>
+      </li>`).join('') + (results.length > MAX_RESULTS ? `
+      <li role="presentation"><a href="${allUrl}" class="hs-all">${searchIsEl ? `Όλα τα ${results.length} αποτελέσματα` : `All ${results.length} results`} →</a></li>` : '')
+    : `<li class="hs-empty" role="presentation">${searchIsEl ? 'Δεν βρέθηκαν αποτελέσματα.' : 'No results found.'}</li>`;
+
+  setActive(-1);
+  showResults(true);
+}
+
+searchInput?.addEventListener('focus', () => { loadIndex(); renderSearch(); });
+searchInput?.addEventListener('input', renderSearch);
+searchInput?.addEventListener('keydown', e => {
+  const links = resultLinks();
+  if (e.key === 'ArrowDown' && links.length) {
+    e.preventDefault();
+    if (searchList?.hidden) showResults(true);
+    setActive((activeIndex + 1) % links.length);
+  } else if (e.key === 'ArrowUp' && links.length) {
+    e.preventDefault();
+    setActive(activeIndex <= 0 ? links.length - 1 : activeIndex - 1);
+  } else if (e.key === 'Escape' && !searchList?.hidden) {
+    // Stop the mobile menu's Escape handler from also closing the menu.
+    e.stopPropagation();
+    showResults(false);
+  }
+});
+searchForm?.addEventListener('submit', e => {
+  const link = resultLinks()[activeIndex];
+  if (link) { e.preventDefault(); window.location.href = link.href; }
+  else if (!searchInput?.value.trim()) e.preventDefault();
+});
+document.addEventListener('click', e => {
+  if (searchForm && !searchForm.contains(e.target as Node)) showResults(false);
+});
 </script>
 </body>
 </html>
@@ -404,6 +515,25 @@ nav ul, nav ol { list-style: none; }
 .icon-btn[data-tooltip]::after { content: attr(data-tooltip); position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); padding: 4px 8px; border-radius: var(--radius-sm); background: var(--deep-blue); color: #fff; font-size: 0.72rem; font-weight: 500; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.15s; }
 .icon-btn[data-tooltip]:hover::after { opacity: 1; }
 
+.header-search { position: relative; display: flex; align-items: center; margin-right: 0.35rem; }
+.hs-icon { position: absolute; left: 0.65rem; color: var(--muted); pointer-events: none; }
+.hs-input { width: 170px; height: 34px; padding: 0 0.75rem 0 2rem; border: 1px solid var(--border); border-radius: var(--radius-full); background: var(--sand); font-family: var(--font-sans); font-size: 0.85rem; color: var(--ink); outline: none; appearance: none; transition: width 0.2s var(--ease), border-color 0.15s, background 0.15s, box-shadow 0.15s; }
+.hs-input::placeholder { color: var(--muted); }
+.hs-input:focus { width: 230px; background: var(--white); border-color: var(--aegean); box-shadow: 0 0 0 3px rgba(26,92,138,.12); }
+.hs-input::-webkit-search-cancel-button { cursor: pointer; }
+.hs-results { position: absolute; top: calc(100% + 10px); right: 0; z-index: 10; width: 340px; max-height: min(70vh, 480px); overflow-y: auto; list-style: none; padding: 0.35rem; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); }
+.hs-results[hidden] { display: none; }
+.hs-result { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0.7rem; border-radius: var(--radius-sm); color: inherit; }
+.hs-result:hover, .hs-result[aria-selected="true"] { background: var(--sand); }
+.hs-result-icon { font-size: 1.15rem; flex-shrink: 0; }
+.hs-result-body { display: flex; flex-direction: column; min-width: 0; }
+.hs-result-name { font-size: 0.9rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hs-result-name mark { background: rgba(58,155,201,.2); color: var(--aegean); border-radius: 2px; padding: 0 1px; }
+.hs-result-meta { font-size: 0.72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hs-all { display: block; margin-top: 0.25rem; padding: 0.55rem 0.7rem; border-top: 1px solid var(--border); font-size: 0.82rem; font-weight: 600; color: var(--aegean); }
+.hs-all:hover { background: var(--sand); }
+.hs-empty { padding: 0.75rem; font-size: 0.85rem; color: var(--muted); text-align: center; }
+
 .nav-toggle { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; margin-right: -8px; border: none; background: none; }
 .nav-toggle-bar { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--deep-blue); transition: transform 0.2s var(--ease), opacity 0.15s; }
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -462,6 +592,11 @@ nav ul, nav ol { list-style: none; }
   html { scroll-behavior: auto; }
 }
 
+@media (max-width: 960px) {
+  .hs-input { width: 130px; }
+  .hs-input:focus { width: 190px; }
+}
+
 @media (max-width: 720px) {
   .nav-toggle { display: flex; }
   .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; height: auto; flex-direction: column; align-items: stretch; gap: 0; padding: 0.5rem 0 1rem; background: var(--white); border-bottom: 1px solid var(--border); box-shadow: 0 12px 24px rgba(13,43,78,0.08); }
@@ -470,7 +605,12 @@ nav ul, nav ol { list-style: none; }
   .nav-list { gap: 0; }
   .nav-link { padding: 0.85rem 1.5rem; border-radius: 0; font-size: 1.05rem; border-bottom: 1px solid var(--border); }
   .nav-link[aria-current="page"]::after { top: 0; bottom: 0; left: 0; width: 3px; height: auto; border-radius: 0; transform: none; }
-  .nav-icons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0.75rem 1.5rem 0; padding: 0; border-left: none; }
+  .nav-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin: 0.75rem 1.5rem 0; padding: 0; border-left: none; }
+  .header-search { grid-column: 1 / -1; flex-direction: column; align-items: stretch; margin-right: 0; }
+  .hs-icon { top: 15px; }
+  /* 16px stops iOS from zooming in on focus. */
+  .hs-input, .hs-input:focus { width: 100%; height: 44px; font-size: 16px; border-radius: var(--radius-md); }
+  .hs-results { position: static; width: auto; max-height: none; margin-top: 0.5rem; box-shadow: none; }
   .icon-btn { gap: 0.5rem; width: auto; height: 44px; border-radius: var(--radius-md); background: var(--sand); color: var(--ink); font-size: 0.9rem; }
   .icon-btn-label { position: static; width: auto; height: auto; clip-path: none; }
   .icon-btn[data-tooltip]::after { display: none; }

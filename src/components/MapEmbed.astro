@@ -1,0 +1,70 @@
+---
+// Click-to-load Google Maps embed: the iframe is ~1 MB of JS and sets cookies, so it
+// isn't loaded until asked. Keyless `output=embed` URL, so no API key to restrict.
+interface Props {
+  query: string;                       // "lat,lng" or a place name Maps can find
+  title: string;
+  zoom?: number;
+  track?: Record<string, string>;      // data-umami-event* attributes for the load button
+}
+const { query, title, zoom = 15, track = {} } = Astro.props;
+const src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
+---
+<div class="s-map" data-map-src={src} data-map-title={title}>
+  <button type="button" class="s-map-load" data-map-load {...track}>
+    <span class="s-map-pin" aria-hidden="true">📍</span>
+    <span class="s-map-cta">Show map</span>
+    <span class="s-map-note">Loads Google Maps</span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.s-map[data-map-src]').forEach(box => {
+    box.querySelector('[data-map-load]')?.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = box.dataset.mapSrc!;
+      frame.title = box.dataset.mapTitle ?? 'Map';
+      frame.width = '100%';
+      frame.height = '220';
+      frame.style.border = '0';
+      frame.referrerPolicy = 'no-referrer-when-downgrade';
+      box.replaceChildren(frame);
+    });
+  });
+</script>
+
+<style>
+.s-map {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  line-height: 0;
+}
+.s-map-load {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  line-height: 1.2;
+  color: var(--deep-blue);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(58,155,201,.18) 0, transparent 60%),
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(13,43,78,.05) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, rgba(13,43,78,.05) 23px 24px),
+    var(--sand);
+  transition: background-color .15s;
+}
+.s-map-load:hover .s-map-cta { text-decoration: underline; }
+.s-map-pin  { font-size: 1.6rem; }
+.s-map-cta  { font-weight: 600; font-size: .9rem; }
+.s-map-note { font-size: .72rem; color: var(--muted); }
+@media (max-width: 768px) {
+  .s-map :global(iframe), .s-map-load { height: 350px; }
+}
+</style>

@@ -1,4 +1,5 @@
 ---
+import MapEmbed from '../MapEmbed.astro';
 import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
 
 interface Props { beach: Beach; access: BeachAccess; mapsUrl: string | null }
@@ -65,19 +66,12 @@ const { beach, access, mapsUrl } = Astro.props;
   </div>
 
   <!-- Map embed -->
-  <!-- Click-to-load: the Google embed is ~1 MB of JS and sets cookies, so don't load it until asked -->
   {beach.coordinates?.lat && beach.coordinates?.lng && (
-    <div
-      class="s-map"
-      data-map-src={`https://maps.google.com/maps?q=${beach.coordinates.lat},${beach.coordinates.lng}&z=15&output=embed`}
-      data-map-title={`Map of ${getBeachName(beach)}`}
-    >
-      <button type="button" class="s-map-load" data-map-load data-umami-event="beach-map-load">
-        <span class="s-map-pin" aria-hidden="true">📍</span>
-        <span class="s-map-cta">Show map</span>
-        <span class="s-map-note">Loads Google Maps</span>
-      </button>
-    </div>
+    <MapEmbed
+      query={`${beach.coordinates.lat},${beach.coordinates.lng}`}
+      title={`Map of ${getBeachName(beach)}`}
+      track={{ 'data-umami-event': 'beach-map-load' }}
+    />
   )}
 
   <!-- CTA -->
@@ -100,19 +94,6 @@ const { beach, access, mapsUrl } = Astro.props;
 </aside>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.s-map[data-map-src]').forEach(box => {
-    box.querySelector('[data-map-load]')?.addEventListener('click', () => {
-      const frame = document.createElement('iframe');
-      frame.src = box.dataset.mapSrc!;
-      frame.title = box.dataset.mapTitle ?? 'Map';
-      frame.width = '100%';
-      frame.height = '220';
-      frame.style.border = '0';
-      frame.referrerPolicy = 'no-referrer-when-downgrade';
-      box.replaceChildren(frame);
-    });
-  });
-
   const btn = document.getElementById('share-btn') as HTMLButtonElement;
   const label = document.getElementById('share-label') as HTMLSpanElement;
   const icon = document.getElementById('share-icon') as HTMLSpanElement;
@@ -196,43 +177,11 @@ const { beach, access, mapsUrl } = Astro.props;
 
 .s-btn:hover { transform: translateY(-1px); opacity: .9; }
 
-.s-map {
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  line-height: 0;
-}
-.s-map-load {
-  width: 100%;
-  height: 220px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: .35rem;
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  line-height: 1.2;
-  color: var(--deep-blue);
-  background:
-    radial-gradient(circle at 50% 45%, rgba(58,155,201,.18) 0, transparent 60%),
-    repeating-linear-gradient(0deg, transparent 0 23px, rgba(13,43,78,.05) 23px 24px),
-    repeating-linear-gradient(90deg, transparent 0 23px, rgba(13,43,78,.05) 23px 24px),
-    var(--sand);
-  transition: background-color .15s;
-}
-.s-map-load:hover .s-map-cta { text-decoration: underline; }
-.s-map-pin  { font-size: 1.6rem; }
-.s-map-cta  { font-weight: 600; font-size: .9rem; }
-.s-map-note { font-size: .72rem; color: var(--muted); }
-
 .s-btn--maps  { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
 
 .s-btn--share { background: var(--white); color: var(--ink); border: 1px solid var(--border); cursor: pointer; width: 100%; font-size: .875rem; }
 
 @media (max-width: 768px) {
   .b-sidebar { position: static; }
-  .s-map :global(iframe), .s-map-load { height: 350px; }
 }
 </style>

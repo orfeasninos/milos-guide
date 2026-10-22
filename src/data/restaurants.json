@@ -27,7 +27,30 @@
       "lng": 24.446401599999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner"
+    "service": "lunch-dinner",
+    "partner": {
+      "tier": "premium",
+      "until": "2027-10-31",
+      "about": "A family table since 1993. Barko set out to cook exactly as the family does at home, from recipes learned from their parents, and more than thirty years later that hasn't changed. It sits in a quiet spot near the port of Adamas, with tables outside under trees that give shade at midday and keep the evenings cool. The cooking is traditional Milos home food, made with fresh ingredients from the island.",
+      "reservationUrl": "https://barkotavernmilos.com/reservations/",
+      "menuUrl": "https://barkotavernmilos.com/menu/",
+      "open": false,
+      "dishes": [
+        { "name": "Pitarakia", "note": "Small Milos cheese pies" },
+        { "name": "Skordolazana", "note": "The island's garlic pasta" },
+        { "name": "Rooster with pasta" },
+        { "name": "Lemon lamb" }
+      ],
+      "hours": {
+        "mon": "13:00–00:00",
+        "tue": "13:00–00:00",
+        "wed": "13:00–00:00",
+        "thu": "13:00–00:00",
+        "fri": "13:00–00:00",
+        "sat": "13:00–00:00",
+        "sun": "13:00–00:00"
+      }
+    }
   },
   {
     "slug": "sirocco-restaurant",
@@ -327,7 +350,23 @@
       "lng": 24.424404
     },
     "priceRange": "€€",
-    "service": "lunch-dinner"
+    "service": "lunch-dinner",
+    "partner": {
+      "tier": "featured",
+      "until": "2027-10-31",
+      "reservationUrl": "https://menu.methismenipolitia.gr/kratiseis/",
+      "menuUrl": "https://menu.methismenipolitia.gr/",
+      "open": false,
+      "hours": {
+        "mon": "13:00–00:00",
+        "tue": "13:00–00:00",
+        "wed": "13:00–00:00",
+        "thu": "13:00–00:00",
+        "fri": "13:00–00:00",
+        "sat": "13:00–00:00",
+        "sun": "13:00–00:00"
+      }
+    }
   },
   {
     "slug": "archontoula-milos",

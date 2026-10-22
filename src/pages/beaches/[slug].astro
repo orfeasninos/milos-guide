@@ -6,6 +6,8 @@ import WindCheck from '../../components/beach/WindCheck.astro';
 import Tips from '../../components/beach/Tips.astro';
 import Sidebar from '../../components/beach/Sidebar.astro';
 import Nearby from '../../components/beach/Nearby.astro';
+import PartnerNearby from '../../components/PartnerNearby.astro';
+import { premiumNearby } from '../../lib/restaurants';
 import beachesRaw from '../../data/beaches.json';
 import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
 import { beachPhoto } from '../../lib/public-files';
@@ -163,6 +165,10 @@ const beachJsonld = {
     )}
 
     <Tips beach={beach} access={access} />
+
+    {beach.coordinates?.lat && (
+      <PartnerNearby places={premiumNearby(beach.coordinates)} placement={`beach-${beach.slug}`} />
+    )}
 
   </article>
 
