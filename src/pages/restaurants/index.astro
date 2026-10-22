@@ -1,23 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SmartImage from '../../components/SmartImage.astro';
-import { restaurantPhoto } from '../../lib/public-files';
-import { restaurants, placeTypes, placeType, placeService } from '../../lib/restaurants';
+import { restaurantPhoto, existingPhotos } from '../../lib/public-files';
+import { restaurants, placeTypes, placeType, placeService, activePartner, PARTNER_LABEL } from '../../lib/restaurants';
 
-const list = restaurants.map(r => ({
-  ...r,
-  area: r.location.area,
-  kind: placeType(r),
-  serves: placeService(r),
-  photo: restaurantPhoto(r),
-}));
+const list = restaurants.map(r => {
+  const partner = activePartner(r);
+  return {
+    ...r,
+    area: r.location.area,
+    kind: placeType(r),
+    serves: placeService(r),
+    partner,
+    photo: restaurantPhoto(r) ?? existingPhotos(partner?.photos)[0] ?? null,
+  };
+});
 
 // Only types that have places get a chip, and the type row only appears once there are
 // two (i.e. after the first café is added).
 const types = Object.keys(placeTypes).filter(t => list.some(r => r.type === t));
 const showTypes = types.length > 1;
-
-const featured = list.filter(r => r.isFeatured);
 
 // Busiest areas first.
 const areaCounts = list.reduce<Record<string, number>>((acc, r) => {
@@ -62,30 +64,6 @@ const restaurantsJsonld = {
   </div>
 </section>
 
-<!-- FEATURED -->
-{featured.length > 0 && (
-  <section class="featured-sec">
-    <div class="container">
-      <div class="featured-hdr">
-        <span class="label">Local favourites</span>
-        <h2 class="featured-title">Our picks</h2>
-      </div>
-      <div class="featured-grid">
-        {featured.map(r => (
-          <a href={`/restaurants/${r.slug}/`} class="feat">
-            {r.photo && (
-              <SmartImage src={r.photo} alt={r.name.en} width={640} height={360} class="feat-img" sizes="(max-width: 768px) 100vw, 33vw" />
-            )}
-            <span class="feat-area">{r.kind.icon} {r.kind.label} · {r.area}</span>
-            <h3 class="feat-name">{r.name.en}</h3>
-            <p class="feat-desc">{r.description.en}</p>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
-
 <!-- FILTERS -->
 <div class="filters-bar">
   <div class="container">
@@ -116,10 +94,11 @@ const restaurantsJsonld = {
   <div class="container">
     <div class="rest-grid" id="rest-grid">
       {list.map(r => (
-        <a href={`/restaurants/${r.slug}/`} class="rc" data-area={r.area} data-type={r.type}>
+        <a href={`/restaurants/${r.slug}/`} class={`rc${r.partner ? ' rc--partner' : ''}`} data-area={r.area} data-type={r.type}>
           {r.photo && (
             <SmartImage src={r.photo} alt={r.name.en} width={640} height={360} class="rc-img" sizes="(max-width: 768px) 100vw, 33vw" />
           )}
+          {r.partner && <span class="rc-partner">{PARTNER_LABEL}</span>}
           <span class="rc-area">{r.kind.label} · {r.area}</span>
           <h2 class="rc-name">{r.name.en}</h2>
           <p class="rc-desc">{r.description.en}</p>
@@ -240,65 +219,6 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
   line-height: 1.7;
 }
 
-/* ── FEATURED ── */
-.featured-sec {
-  padding: 3rem 0 2.5rem;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-}
-.featured-hdr { margin-bottom: 1.25rem; }
-.featured-title {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  color: var(--deep-blue);
-  margin: 0.2rem 0 0;
-}
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-.feat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem 1.4rem;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(140deg, #0d2b4e, #1a5c8a 70%, #2a7faa);
-  color: #fff;
-  min-height: 210px;
-  transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
-}
-.feat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); color: #fff; }
-/* Photo bleeds to the card edges, above the text */
-:global(.feat-img) {
-  display: block;
-  margin: -1.5rem -1.4rem 0.5rem;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  overflow: hidden;
-}
-.feat-area {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.7);
-}
-.feat-name {
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-  line-height: 1.15;
-  margin: 0;
-}
-.feat-desc {
-  font-size: 0.85rem;
-  line-height: 1.55;
-  color: rgba(255,255,255,.72);
-  margin: 0;
-  flex: 1;
-}
-
 /* ── FILTERS ── */
 .filters-bar {
   position: sticky;
@@ -365,6 +285,18 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
 }
+.rc--partner { border-color: var(--sea); }
+.rc-partner {
+  align-self: flex-start;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--sand);
+  color: var(--muted);
+}
 .rc-area {
   font-size: 0.62rem;
   font-weight: 700;
@@ -425,8 +357,6 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .featured-grid { grid-template-columns: 1fr; }
-  .feat { min-height: 0; }
   .info-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {

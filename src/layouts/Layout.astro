@@ -201,28 +201,6 @@ const schemas: object[] = [
   {preloadImage && !preloadImageSrcset && (
     <link rel="preload" as="image" href={preloadImage} type={preloadImage.endsWith('.avif') ? 'image/avif' : preloadImage.endsWith('.webp') ? 'image/webp' : undefined} fetchpriority="high" />
   )}
-  <script is:inline data-cfasync="false">
-    (function () {
-      function loadTP() {
-        var s = document.createElement("script");
-        s.async = 1;
-        s.src = 'https://emrldtp.cc/NTQxMjY0.js?t=541264';
-        document.head.appendChild(s);
-      }
-      function scheduleTP() {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadTP, { timeout: 4000 });
-        } else {
-          setTimeout(loadTP, 3000);
-        }
-      }
-      if (document.readyState === 'complete') {
-        scheduleTP();
-      } else {
-        window.addEventListener('load', scheduleTP);
-      }
-    })();
-  </script>
   <slot name="head" />
 </head>
 <body>

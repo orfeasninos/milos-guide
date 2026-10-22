@@ -1,15 +1,43 @@
 import restaurantsRaw from '../data/restaurants.json';
 import villagesData from '../data/villages.json';
 
-export type Restaurant = (typeof restaurantsRaw)[number];
+// Paid listings ("partner" in restaurants.json). Always labelled as such: EU consumer law
+// requires paid placement to be disclosed, and the guide is only useful if readers can
+// tell an ad from a recommendation.
+export type PartnerTier = 'featured' | 'premium';
+export type Partner = {
+  tier: PartnerTier;
+  until: string;           // last paid day, YYYY-MM-DD
+  about?: string;          // longer description, shown instead of description.en on the page
+  photos?: string[];       // the owner's own photos, e.g. /images/taverns/<slug>-2.jpg
+  reservationUrl?: string;
+  menuUrl?: string;
+  instagram?: string;      // full profile URL
+};
+
+export type Restaurant = (typeof restaurantsRaw)[number] & { partner?: Partner };
+
+export const PARTNER_LABEL = 'Featured partner';
+
+// Checked at build time. The deploy cron rebuilds four times a day, so an expired listing
+// falls back to the free one within hours without touching the JSON.
+const today = new Date().toISOString().slice(0, 10);
+export const activePartner = (r: Restaurant): Partner | null =>
+  r.partner && r.partner.until >= today ? r.partner : null;
+
+const TIER_RANK: Record<PartnerTier, number> = { premium: 2, featured: 1 };
+const tierRank = (r: Restaurant) => {
+  const p = activePartner(r);
+  return p ? TIER_RANK[p.tier] : 0;
+};
 
 // Village page for an area, when the guide has one ("Pera Triovasalos" → pera-triovasalos).
 export const areaVillageSlug = (area: string): string | null =>
   villagesData.find(v => v.slug === area.trim().toLowerCase().replace(/\s+/g, '-'))?.slug ?? null;
 
-// Featured first, then alphabetical.
-export const restaurants = [...restaurantsRaw].sort(
-  (a, b) => Number(b.isFeatured) - Number(a.isFeatured) || a.name.en.localeCompare(b.name.en),
+// Paid partners first (labelled on the card), then alphabetical.
+export const restaurants = [...(restaurantsRaw as Restaurant[])].sort(
+  (a, b) => tierRank(b) - tierRank(a) || a.name.en.localeCompare(b.name.en),
 );
 
 export const placeTypes: Record<string, { label: string; plural: string; icon: string; schema: string }> = {

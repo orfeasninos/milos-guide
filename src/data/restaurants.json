@@ -27,8 +27,7 @@
       "lng": 24.446401599999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": true
+    "service": "lunch-dinner"
   },
   {
     "slug": "sirocco-restaurant",
@@ -58,8 +57,7 @@
       "lng": 24.516842999999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "enalion-restaurant",
@@ -89,8 +87,7 @@
       "lng": 24.5259541
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "o-hamos-tavern",
@@ -120,8 +117,7 @@
       "lng": 24.4584931
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "avli-milos",
@@ -151,8 +147,7 @@
       "lng": 24.4221084
     },
     "priceRange": "€€",
-    "service": "dinner",
-    "isFeatured": false
+    "service": "dinner"
   },
   {
     "slug": "mikros-apoplous",
@@ -182,8 +177,7 @@
       "lng": 24.450675099999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "glaronisia-milos",
@@ -213,8 +207,7 @@
       "lng": 24.4257121
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "barriello-milos",
@@ -244,8 +237,7 @@
       "lng": 24.426882
     },
     "priceRange": "€€",
-    "service": "dinner",
-    "isFeatured": false
+    "service": "dinner"
   },
   {
     "slug": "gialos-milos",
@@ -275,8 +267,7 @@
       "lng": 24.5270975
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "medusa-milos",
@@ -306,8 +297,7 @@
       "lng": 24.4465407
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "methismeni-politeia",
@@ -337,8 +327,7 @@
       "lng": 24.424404
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": true
+    "service": "lunch-dinner"
   },
   {
     "slug": "archontoula-milos",
@@ -368,8 +357,7 @@
       "lng": 24.4218869
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "foras-milos",
@@ -399,8 +387,7 @@
       "lng": 24.422299799999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "nostos-seafood",
@@ -430,8 +417,7 @@
       "lng": 24.450329
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "galanis-mpakalikon",
@@ -461,8 +447,7 @@
       "lng": 24.4337986
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "iliovasilema-milos",
@@ -492,8 +477,7 @@
       "lng": 24.463193
     },
     "priceRange": "€€",
-    "service": "dinner",
-    "isFeatured": false
+    "service": "dinner"
   },
   {
     "slug": "psitolatreia-milos",
@@ -523,8 +507,7 @@
       "lng": 24.432849899999997
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": true
+    "service": "lunch-dinner"
   },
   {
     "slug": "astakas-milos",
@@ -554,8 +537,7 @@
       "lng": 24.419531000000003
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "zigos-milos",
@@ -585,8 +567,7 @@
       "lng": 24.451839
     },
     "priceRange": "€",
-    "service": "dinner",
-    "isFeatured": false
+    "service": "dinner"
   },
   {
     "slug": "trapatselis-milos",
@@ -616,8 +597,7 @@
       "lng": 24.4496917
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "ergina-milos",
@@ -647,8 +627,7 @@
       "lng": 24.4260041
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "cavos-milos",
@@ -678,8 +657,7 @@
       "lng": 24.4409411
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "alkis-milos",
@@ -709,8 +687,7 @@
       "lng": 24.5272179
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "nama-milos",
@@ -740,8 +717,7 @@
       "lng": 24.5266332
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "lyra-milos",
@@ -771,8 +747,7 @@
       "lng": 24.526331799999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "rifaki-milos",
@@ -802,8 +777,7 @@
       "lng": 24.526815199999998
     },
     "priceRange": "€€",
-    "service": "lunch-dinner",
-    "isFeatured": false
+    "service": "lunch-dinner"
   },
   {
     "slug": "egoist-milos",
@@ -833,7 +807,6 @@
       "lng": 24.445716
     },
     "priceRange": "€",
-    "service": "all-day",
-    "isFeatured": false
+    "service": "all-day"
   }
 ]
