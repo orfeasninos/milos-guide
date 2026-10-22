@@ -5,8 +5,10 @@ import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 import { beachAreaLabel } from '../lib/beaches';
 import { restaurants, placeType } from '../lib/restaurants';
+import { stays, stayType } from '../lib/stays';
 
 const placeTypeEl: Record<string, string> = { restaurant: 'Εστιατόριο', cafe: 'Καφέ' };
+const stayTypeEl: Record<string, string> = { hotel: 'Ξενοδοχείο', studio: 'Στούντιο', villa: 'Βίλα' };
 
 const isEl = Astro.url.pathname.startsWith('/el');
 
@@ -56,13 +58,24 @@ const index = [
     url:      `/restaurants/${r.slug}/`,
     icon:     placeType(r).icon,
   })),
+  ...stays.map(s => ({
+    slug:     s.slug,
+    type:     'stay',
+    typeEl:   stayTypeEl[s.type] ?? 'Κατάλυμα',
+    typeEn:   stayType(s).label,
+    nameEl:   s.name.el,
+    nameEn:   s.name.en,
+    area:     s.location.area,
+    url:      `/stays/${s.slug}/`,
+    icon:     stayType(s).icon,
+  })),
 ];
 ---
 
 <Layout
   lang={isEl ? 'el' : 'en'}
   title={isEl ? 'Αναζήτηση' : 'Search'}
-  description={isEl ? 'Αναζητήστε παραλίες, αξιοθέατα, χωριά και εστιατόρια στη Μήλο.' : 'Search every beach, village, sight and restaurant in Milos by name or area, and jump straight to its page in the guide.'}
+  description={isEl ? 'Αναζητήστε παραλίες, αξιοθέατα, χωριά, εστιατόρια και καταλύματα στη Μήλο.' : 'Search every beach, village, sight, restaurant and place to stay in Milos by name or area, and jump straight to its page in the guide.'}
 >
 
 <section class="search-hero">
@@ -87,6 +100,7 @@ const index = [
       <button class="sf-chip" data-filter="sight">🏛 {isEl ? 'Αξιοθέατα' : 'Sights'}</button>
       <button class="sf-chip" data-filter="village">🏘 {isEl ? 'Χωριά' : 'Villages'}</button>
       <button class="sf-chip" data-filter="restaurant">🍽 {isEl ? 'Εστιατόρια' : 'Restaurants'}</button>
+      <button class="sf-chip" data-filter="stay">🛏 {isEl ? 'Διαμονή' : 'Stays'}</button>
     </div>
   </div>
 </section>
@@ -104,10 +118,11 @@ const index = [
         <a href={isEl ? '/el/sights/' : '/sights/'} class="btn-outline-dark">🏛 {isEl ? 'Αξιοθέατα' : 'Sights'}</a>
         <a href={isEl ? '/el/villages/' : '/villages/'} class="btn-outline-dark">🏘 {isEl ? 'Χωριά' : 'Villages'}</a>
         <a href={isEl ? '/el/restaurants/' : '/restaurants/'} class="btn-outline-dark">🍽 {isEl ? 'Εστιατόρια' : 'Restaurants'}</a>
+        <a href={isEl ? '/el/stays/' : '/stays/'} class="btn-outline-dark">🛏 {isEl ? 'Διαμονή' : 'Stays'}</a>
       </div>
     </div>
     <div class="results-initial" id="results-initial">
-      <p class="initial-hint">{isEl ? 'Πληκτρολόγησε για να αναζητήσεις παραλίες, αξιοθέατα, χωριά και εστιατόρια.' : 'Start typing to search beaches, sights, villages and restaurants.'}</p>
+      <p class="initial-hint">{isEl ? 'Πληκτρολόγησε για να αναζητήσεις παραλίες, αξιοθέατα, χωριά, εστιατόρια και καταλύματα.' : 'Start typing to search beaches, sights, villages, restaurants and places to stay.'}</p>
     </div>
   </div>
 </section>

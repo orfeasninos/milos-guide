@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { KIWI_FLIGHTS_URL, KIWI_WIDGET_SRC, airlines } from '../lib/kiwi';
 ---
 
 <Layout
@@ -101,34 +102,47 @@ import Layout from '../layouts/Layout.astro';
 
         <p>
           Milos Airport (code <strong>MLO</strong>) is 4 kilometres from Adamas.
-          Small, relaxed, no queues — but with <strong>fewer connections</strong>
+          Small, relaxed, no queues — but with <strong>fewer connections</strong>{' '}
           than you might expect.
         </p>
 
         <h3>From Athens</h3>
         <ul>
           <li>Flight duration: <strong>~40 minutes</strong></li>
-          <li>Airline: <strong>Sky Express</strong> (mainly) — daily flights in summer</li>
+          <li>Airlines: <strong>Sky Express</strong> and <strong>Olympic Air</strong> (part of Aegean) — daily flights in summer</li>
           <li>Prices: from ~€60 if booked early, but they rise quickly</li>
         </ul>
 
         <h3>Charter flights</h3>
         <p>
           In summer there are direct charter flights from European cities
-          (London, Zurich, Amsterdam). Check on Skyscanner or with your tour operator.
+          (London, Zurich, Amsterdam). Check flight search sites or ask your tour operator.
         </p>
 
-        <!-- SKYSCANNER PLACEHOLDER -->
-        <div class="widget-placeholder">
-          <div class="wp-icon">✈️</div>
-          <div>
-            <p class="wp-title">Compare flight prices</p>
-            <p class="wp-sub">Find the best fares for flights to Milos (MLO)</p>
+        <!-- Kiwi.com search form (Travelpayouts). The script loads when the box nears the
+             viewport; until it renders, and if it never does, the plain link stays. -->
+        <div class="flight-widget" id="kiwi-widget" data-src={KIWI_WIDGET_SRC}>
+          <div class="widget-placeholder kw-fallback">
+            <div class="wp-icon">✈️</div>
+            <div>
+              <p class="wp-title">Compare flight prices</p>
+              <p class="wp-sub">On Kiwi.com, search Athens (ATH) → Milos (MLO)</p>
+            </div>
+            <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="wp-btn" data-umami-event="kiwi-flights" data-umami-event-placement="flight-section">
+              Search flights ↗
+            </a>
           </div>
-          <!-- SKYSCANNER WIDGET / AFFILIATE LINK HERE -->
-          <a href="https://www.skyscanner.com/flights-to/mlo/cheap-flights-to-milos-island-national-airport.html?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="wp-btn">
-            Search flights ↗
-          </a>
+        </div>
+        <p class="aff-note">
+          Affiliate link: we may earn a commission if you book, at no extra cost to you.
+          Prefer to book direct? {airlines.map((a, i) => (
+            <>{i > 0 && ' or '}<a href={a.url} target="_blank" rel="noopener noreferrer">{a.name}</a></>
+          ))}.
+        </p>
+
+        <div class="insider-tip">
+          <span class="tip-icon">🔁</span>
+          <p><strong>Connecting in Athens?</strong> If your flight to Athens and your flight to Milos are on separate tickets, leave at least <strong>3 hours</strong> between them. A delay on the first flight won't be covered by the second airline.</p>
         </div>
 
         <div class="insider-tip">
@@ -233,7 +247,7 @@ import Layout from '../layouts/Layout.astro';
           </p>
           <div class="cta-btns">
             <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="btn-dark">🚢 Ferry tickets</a>
-            <a href="https://www.skyscanner.com/flights-to/mlo/cheap-flights-to-milos-island-national-airport.html?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="btn-outline">✈️ Flight tickets</a>
+            <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="btn-outline" data-umami-event="kiwi-flights" data-umami-event-placement="cta">✈️ Flight tickets</a>
           </div>
         </div>
       </section>
@@ -252,7 +266,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="toc-card">
         <p class="toc-label">Useful links</p>
         <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="toc-link-btn">⚓ Ferry tickets</a>
-        <a href="https://www.skyscanner.com/flights-to/mlo/cheap-flights-to-milos-island-national-airport.html?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="toc-link-btn">✈️ Flights to MLO</a>
+        <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="kiwi-flights" data-umami-event-placement="sidebar">✈️ Flights to MLO</a>
       </div>
       <div class="toc-card">
         <p class="toc-label">Explore</p>
@@ -265,6 +279,42 @@ import Layout from '../layouts/Layout.astro';
 
   </div>
 </article>
+
+<script>
+const kiwiBox = document.getElementById('kiwi-widget');
+
+function loadKiwiWidget(box: HTMLElement) {
+  // The widget renders next to its own <script>; once it has, drop the fallback link.
+  const mo = new MutationObserver(() => {
+    if (box.querySelector(':scope > :not(.kw-fallback):not(script)')) {
+      box.querySelector('.kw-fallback')?.remove();
+      mo.disconnect();
+    }
+  });
+  mo.observe(box, { childList: true });
+
+  // The widget guesses the origin from the IP, which often lands on the wrong city for
+  // Greek ISPs (Athens shows up as Volos). Anyone on Greek time flies from Athens anyway.
+  let src = box.dataset.src!;
+  if (Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/Athens') src += '&default_origin=ATH';
+
+  const s = document.createElement('script');
+  s.async = true;
+  s.charset = 'utf-8';
+  s.src = src;
+  box.appendChild(s);
+}
+
+if (kiwiBox?.dataset.src) {
+  const io = new IntersectionObserver(entries => {
+    if (entries.some(e => e.isIntersecting)) {
+      io.disconnect();
+      loadKiwiWidget(kiwiBox);
+    }
+  }, { rootMargin: '400px' });
+  io.observe(kiwiBox);
+}
+</script>
 
 </Layout>
 
@@ -393,6 +443,12 @@ import Layout from '../layouts/Layout.astro';
   flex-shrink: 0;
 }
 .wp-btn:hover { background: var(--aegean); }
+
+.aff-note { font-size: 0.75rem !important; color: var(--muted) !important; line-height: 1.6 !important; margin: -0.75rem 0 1rem !important; }
+.aff-note a { color: var(--aegean); border-bottom: 1px solid var(--sea); }
+
+/* Kiwi widget */
+.flight-widget { margin: 1.5rem 0; min-height: 96px; }
 
 /* Insider tip */
 .insider-tip {

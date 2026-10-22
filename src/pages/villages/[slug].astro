@@ -5,6 +5,7 @@ import SmartImage from '../../components/SmartImage.astro';
 import beachesData from '../../data/beaches.json';
 import { beachPhoto } from '../../lib/public-files';
 import { metaDescription } from '../../lib/seo';
+import { bookingSearch } from '../../lib/booking';
 
 const getName = (item: any): string => typeof item.name === 'object' ? item.name.en : item.name;
 
@@ -38,6 +39,8 @@ const typeLabels: Record<string, { label: string; icon: string }> = {
   village:  { label: 'Village',      icon: '🏘' },
 };
 const typeInfo = typeLabels[village.type] ?? { label: village.type, icon: '📍' };
+const villageName = ((village as any).nameEn ?? village.name).trim();
+const staysUrl = bookingSearch(villageName, `village-${village.slug}`);
 
 const linkedBeaches = beachesData
   .filter(b => village.nearbyBeaches.includes(b.slug))
@@ -215,6 +218,23 @@ const villageJsonld = {
           </li>
         )}
       </ul>
+    </div>
+
+    <!-- Stays CTA (affiliate) -->
+    <div class="s-card s-stay">
+      <p class="s-card-label">Where to stay</p>
+      <p class="s-stay-text">See hotels and rooms in {villageName} with live prices and availability.</p>
+      <a
+        href={staysUrl}
+        target="_blank"
+        rel="sponsored noopener"
+        class="s-btn s-btn--stay"
+        data-umami-event="booking-village"
+        data-umami-event-village={village.slug}
+      >
+        Stays in {villageName} ↗
+      </a>
+      <p class="s-stay-note">Affiliate link to Booking.com: we may earn a commission at no extra cost to you.</p>
     </div>
 
     <!-- Maps CTA -->
@@ -478,6 +498,10 @@ const villageJsonld = {
 }
 .s-btn:hover { transform: translateY(-1px); opacity: .9; }
 .s-btn--maps { background: var(--deep-blue); color: #fff; box-shadow: var(--shadow-sm); }
+.s-btn--stay { background: var(--aegean); color: #fff; box-shadow: var(--shadow-sm); }
+
+.s-stay-text { font-size: .875rem; line-height: 1.55; color: var(--ink); margin-bottom: .85rem; }
+.s-stay-note { font-size: .7rem; line-height: 1.45; color: var(--muted); margin-top: .65rem; }
 
 .s-villages-list { display: flex; flex-direction: column; gap: 0; }
 .s-village-link {

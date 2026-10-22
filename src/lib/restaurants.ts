@@ -3,9 +3,9 @@ import villagesData from '../data/villages.json';
 
 export type Restaurant = (typeof restaurantsRaw)[number];
 
-// Village page for an area, when the guide has one.
+// Village page for an area, when the guide has one ("Pera Triovasalos" → pera-triovasalos).
 export const areaVillageSlug = (area: string): string | null =>
-  villagesData.find(v => v.slug === area.toLowerCase())?.slug ?? null;
+  villagesData.find(v => v.slug === area.trim().toLowerCase().replace(/\s+/g, '-'))?.slug ?? null;
 
 // Featured first, then alphabetical.
 export const restaurants = [...restaurantsRaw].sort(

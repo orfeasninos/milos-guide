@@ -22,6 +22,9 @@ export function restaurantPhoto(r: { localPhoto?: string | null }): string | nul
   return r.localPhoto && publicFileExists(r.localPhoto) ? r.localPhoto : null;
 }
 
+// Accommodation photos go in /public/images/accommodations/<slug>.jpg, same rule as above.
+export const stayPhoto = restaurantPhoto;
+
 // Small WebP variant for plain <img> tags (map popups) where SmartImage isn't available.
 const thumb = (photo: string | null): string | null =>
   photo?.startsWith('/images/') ? photo.replace(/\.jpg$/, '-800w.webp') : photo;

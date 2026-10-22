@@ -18,6 +18,7 @@
     "localPhoto": "/images/accommodations/milos-breeze.jpg",
     "phone": "2287 041085",
     "website": "http://www.milosbreeze.gr/en",
+    "bookingUrl": null,
     "coordinates": {
       "lat": 36.7622302,
       "lng": 24.5222341
@@ -45,6 +46,7 @@
     "localPhoto": "/images/accommodations/portiani-hotel.jpg",
     "phone": "2287 022940",
     "website": "http://www.hotelportiani.gr/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/portiani-suites.html",
     "coordinates": {
       "lat": 36.7254648,
       "lng": 24.4472837
@@ -72,6 +74,7 @@
     "localPhoto": "/images/accommodations/santa-maria-village.jpg",
     "phone": "2287 021949",
     "website": "https://www.santamaria-milos.gr/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/santa-maria-village.html",
     "coordinates": {
       "lat": 36.7279895,
       "lng": 24.4554911
@@ -99,38 +102,12 @@
     "localPhoto": "/images/accommodations/hotel-adamas.jpg",
     "phone": "693 410 0807",
     "website": "http://www.hoteladamas-milos.gr/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/adamas-melos.html",
     "coordinates": {
       "lat": 36.7246508,
       "lng": 24.4447354
     },
     "rating": 4.1,
-    "priceLevel": null,
-    "amenities": []
-  },
-  {
-    "slug": "francesca-studio",
-    "type": "studio",
-    "name": {
-      "el": "Studio Francesca",
-      "en": "Francesca Studio"
-    },
-    "description": {
-      "el": "Ανακαλύψτε το Studio Francesca στη Pera Triovasalos της Μήλου.",
-      "en": "Self-catering studios in Pera Triovasalos, perfect for independent travellers exploring Milos."
-    },
-    "location": {
-      "area": "Pera Triovasalos",
-      "address": "ΠΕΡΑ ΤΡΙΟΒΑΣΑΛΟΣ ΜΗΛΟΥ, Μήλος 848 00, Ελλάδα"
-    },
-    "googleMapsUri": "https://maps.google.com/?cid=12755001533824260902&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
-    "localPhoto": "/images/accommodations/francesca-studio.jpg",
-    "phone": "694 622 0488",
-    "website": null,
-    "coordinates": {
-      "lat": 36.7420787,
-      "lng": 24.436017500000002
-    },
-    "rating": 5,
     "priceLevel": null,
     "amenities": []
   },
@@ -153,6 +130,7 @@
     "localPhoto": "/images/accommodations/milos-vaos-windmill.jpg",
     "phone": "261 032 1742",
     "website": "https://detailhotel.eu/milos-vaos-39-windmill-greece",
+    "bookingUrl": "https://www.booking.com/hotel/gr/milos-vaos-39-windmill.html",
     "coordinates": {
       "lat": 36.738126199999996,
       "lng": 24.4277308
@@ -180,6 +158,7 @@
     "localPhoto": "/images/accommodations/nefeli-sunset-studios.jpg",
     "phone": "2287 041466",
     "website": "http://www.milos-nefelistudios.gr/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/nefeli-sunset-studios.html",
     "coordinates": {
       "lat": 36.76802,
       "lng": 24.5234626
@@ -207,6 +186,7 @@
     "localPhoto": "/images/accommodations/kapetan-tasos.jpg",
     "phone": "2287 041287",
     "website": "https://www.kapetantasos.gr/suites/?page_id=14",
+    "bookingUrl": "https://www.booking.com/hotel/gr/kapetan-tasos-suites.html",
     "coordinates": {
       "lat": 36.760732499999996,
       "lng": 24.527930599999998
@@ -234,6 +214,7 @@
     "localPhoto": "/images/accommodations/kalea-suites.jpg",
     "phone": "694 484 5408",
     "website": "https://kaleasuites.gr/en/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/kalea-suites-pollonia.html",
     "coordinates": {
       "lat": 36.7667814,
       "lng": 24.5232183
@@ -261,6 +242,7 @@
     "localPhoto": "/images/accommodations/heavenly-milos.jpg",
     "phone": "",
     "website": "https://heavenlymilos.gr/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/aigeis-milos-suites.html",
     "coordinates": {
       "lat": 36.6722922,
       "lng": 24.5061666
@@ -288,6 +270,7 @@
     "localPhoto": "/images/accommodations/hotel-rigas.jpg",
     "phone": "2287 023450",
     "website": "http://www.hotelrigas.com/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/rigas-milos.html",
     "coordinates": {
       "lat": 36.7259759,
       "lng": 24.453955999999998
@@ -315,6 +298,7 @@
     "localPhoto": "/images/accommodations/niriides-milos.jpg",
     "phone": "2287 041352",
     "website": "https://www.hotelscheck-in.com/nirevel-apartments-milos/en/",
+    "bookingUrl": "https://www.booking.com/hotel/gr/niriides-milos.html",
     "coordinates": {
       "lat": 36.7537984,
       "lng": 24.498824499999998
