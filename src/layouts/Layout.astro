@@ -603,13 +603,16 @@ nav ul, nav ol { list-style: none; }
 @media (max-width: 720px) {
   .nav-toggle { display: flex; }
   .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; height: auto; flex-direction: column; align-items: stretch; gap: 0; padding: 0.5rem 0 1rem; background: var(--white); border-bottom: 1px solid var(--border); box-shadow: 0 12px 24px rgba(13,43,78,0.08); }
-  .main-nav.is-open { display: flex; }
+  /* The menu hangs off the sticky header, so anything taller than the viewport (long search
+     results) is unreachable unless the menu scrolls itself. dvh tracks the mobile URL bar;
+     overscroll containment stops the swipe from chaining to the page behind. */
+  .main-nav.is-open { display: flex; max-height: calc(100vh - var(--header-h)); max-height: calc(100dvh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .nav-list { flex-direction: column; height: auto; }
   .nav-list { gap: 0; }
-  .nav-link { padding: 0.85rem 1.5rem; border-radius: 0; font-size: 1.05rem; border-bottom: 1px solid var(--border); }
+  .nav-link { justify-content: center; padding: 0.85rem 1.5rem; border-radius: 0; font-size: 1.05rem; border-bottom: 1px solid var(--border); }
   .nav-link[aria-current="page"]::after { top: 0; bottom: 0; left: 0; width: 3px; height: auto; border-radius: 0; transform: none; }
   .nav-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin: 0.75rem 1.5rem 0; padding: 0; border-left: none; }
-  .header-search { grid-column: 1 / -1; flex-direction: column; align-items: stretch; margin-right: 0; }
+  .header-search { order: 1; grid-column: 1 / -1; flex-direction: column; align-items: stretch; margin-right: 0; }
   .hs-icon { top: 15px; }
   /* 16px stops iOS from zooming in on focus. */
   .hs-input, .hs-input:focus { width: 100%; height: 44px; font-size: 16px; border-radius: var(--radius-md); }
