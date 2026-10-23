@@ -36,16 +36,17 @@ import SmartImage from '../SmartImage.astro';
       <span class="eyebrow-sep" aria-hidden="true"></span>
       <span class="eyebrow-tag">Volcanic island</span>
     </div>
+    <!-- The spans are display:block, so without the explicit space the H1's text
+         reads "MilosThe…" to crawlers. "Milos guide" in the H1 is the brand query. -->
     <h1 class="hero-title">
-      <span class="hero-title-main">Milos</span>
+      <span class="hero-title-main">Milos</span>{" "}
       <span class="hero-title-rule" aria-hidden="true"></span>
-      <span class="hero-title-sub"
-        >The most authentic guide to the island</span
-      >
+      <span class="hero-title-sub">The most authentic Milos guide</span>
     </h1>
     <p class="hero-desc">
-      Volcanic landscape, 70+ beaches, hidden sea caves, tavernas with freshly
-      caught seafood. Everything you need to experience Milos the right way.
+      Milos Guide is an independent travel guide to Milos, Greece: volcanic
+      landscape, 70+ beaches, hidden sea caves and tavernas with freshly caught
+      seafood. Everything you need to experience the island the right way.
     </p>
     <div class="hero-ctas">
       <a href="/beaches/" class="btn-primary">🏖 Beaches</a>
