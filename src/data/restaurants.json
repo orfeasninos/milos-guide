@@ -31,6 +31,7 @@
     "partner": {
       "tier": "premium",
       "until": "2027-10-31",
+      "logo": "/images/taverns/barko-tavern-logo.webp",
       "about": "A family table since 1993. Barko set out to cook exactly as the family does at home, from recipes learned from their parents, and more than thirty years later that hasn't changed. It sits in a quiet spot near the port of Adamas, with tables outside under trees that give shade at midday and keep the evenings cool. The cooking is traditional Milos home food, made with fresh ingredients from the island.",
       "reservationUrl": "https://barkotavernmilos.com/reservations/",
       "menuUrl": "https://barkotavernmilos.com/menu/",

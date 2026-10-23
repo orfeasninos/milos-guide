@@ -167,7 +167,7 @@ const beachJsonld = {
     <Tips beach={beach} access={access} />
 
     {beach.coordinates?.lat && (
-      <PartnerNearby places={premiumNearby(beach.coordinates)} placement={`beach-${beach.slug}`} />
+      <PartnerNearby places={premiumNearby(beach.coordinates)} placement={`beach-${beach.slug}`} logos />
     )}
 
   </article>

@@ -2,19 +2,21 @@
 // "Where to eat nearby" on beach and village pages. Only premium partners appear here,
 // so the block is always labelled as paid.
 import SmartImage from './SmartImage.astro';
-import { restaurantPhoto, existingPhotos } from '../lib/public-files';
+import { restaurantPhoto, existingPhotos, partnerLogo } from '../lib/public-files';
 import { placeType, activePartner, PARTNER_LABEL, type Restaurant } from '../lib/restaurants';
 
 interface Props {
   places: { restaurant: Restaurant; km: number }[];
   placement: string; // e.g. "beach-tsigrado", for the per-owner click report
+  logos?: boolean;   // true shows the partner's logo instead of its photo (beach pages)
 }
-const { places, placement } = Astro.props;
+const { places, placement, logos = false } = Astro.props;
 
 const items = places.map(({ restaurant: r, km }) => ({
   r,
   kind: placeType(r),
   photo: restaurantPhoto(r) ?? existingPhotos(activePartner(r)?.photos)[0] ?? null,
+  logo: logos ? partnerLogo(activePartner(r)) : null,
   distance: km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`,
 }));
 ---
@@ -25,7 +27,7 @@ const items = places.map(({ restaurant: r, km }) => ({
       <span class="pn-label">{PARTNER_LABEL}</span>
     </div>
     <div class="pn-list">
-      {items.map(({ r, kind, photo, distance }) => (
+      {items.map(({ r, kind, photo, logo, distance }) => (
         <a
           href={`/restaurants/${r.slug}/`}
           class="pn-item"
@@ -34,7 +36,9 @@ const items = places.map(({ restaurant: r, km }) => ({
           data-umami-event-placement={placement}
         >
           <div class="pn-img-wrap">
-            {photo ? (
+            {logo ? (
+              <img src={logo} alt={`${r.name.en} logo`} class="pn-logo" loading="lazy" />
+            ) : photo ? (
               <SmartImage src={photo} alt={r.name.en} width={64} height={64} class="pn-img" sizes="64px" />
             ) : (
               <div class="pn-ph">{kind.icon}</div>
@@ -87,6 +91,7 @@ const items = places.map(({ restaurant: r, km }) => ({
 .pn-item:hover { background: var(--sand); padding-left: 1.25rem; }
 .pn-img-wrap { width: 64px; height: 64px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--sand); }
 :global(.pn-img) { display: block; width: 100%; height: 100%; }
+.pn-logo { display: block; width: 100%; height: 100%; object-fit: contain; padding: 4px; }
 .pn-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--sand-dark); }
 .pn-body { flex: 1; min-width: 0; }
 .pn-name { font-family: var(--font-serif); font-size: 1.1rem; color: var(--ink); margin: 0; }

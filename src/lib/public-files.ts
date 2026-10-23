@@ -25,6 +25,10 @@ export function restaurantPhoto(r: { localPhoto?: string | null }): string | nul
 // Extra photos that a paid partner sends us; same folder, any name.
 export const existingPhotos = (paths: string[] = []): string[] => paths.filter(publicFileExists);
 
+// A partner's logo, only once the file is actually in /public.
+export const partnerLogo = (p?: { logo?: string } | null): string | null =>
+  p?.logo && publicFileExists(p.logo) ? p.logo : null;
+
 // Accommodation photos go in /public/images/accommodations/<slug>.jpg, same rule as above.
 export const stayPhoto = restaurantPhoto;
 

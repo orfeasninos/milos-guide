@@ -34,6 +34,9 @@ export type Partner = {
   reservationUrl?: string;
   menuUrl?: string;
   instagram?: string;      // full profile URL
+  // The owner's logo, transparent PNG/WebP in /images/taverns/. Shown instead of the photo
+  // in "Where to eat nearby" on beach pages; everywhere else keeps the photo.
+  logo?: string;
 };
 
 export type Restaurant = (typeof restaurantsRaw)[number] & { partner?: Partner };
