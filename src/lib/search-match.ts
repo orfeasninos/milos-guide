@@ -9,6 +9,7 @@ export interface SearchItem {
   area: string;
   url: string;
   icon: string;
+  logo?: string; // paid partner's logo, shown instead of the icon
 }
 
 // Case-, accent- and final-sigma-insensitive, so "plaka" or "πλακα" finds "Πλάκα".

@@ -400,7 +400,7 @@ async function renderSearch() {
     ? results.slice(0, MAX_RESULTS).map((item, i) => `
       <li role="presentation">
         <a href="${item.url}" class="hs-result" id="hs-opt-${i}" role="option" aria-selected="false">
-          <span class="hs-result-icon" aria-hidden="true">${item.icon}</span>
+          ${item.logo ? `<img src="${item.logo}" alt="" class="hs-result-logo" />` : `<span class="hs-result-icon" aria-hidden="true">${item.icon}</span>`}
           <span class="hs-result-body">
             <span class="hs-result-name">${highlight(searchIsEl ? item.nameEl : item.nameEn, q)}</span>
             <span class="hs-result-meta">${searchIsEl ? item.typeEl : item.typeEn} · ${item.area}</span>
@@ -526,6 +526,7 @@ nav ul, nav ol { list-style: none; }
 .hs-result { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0.7rem; border-radius: var(--radius-sm); color: inherit; }
 .hs-result:hover, .hs-result[aria-selected="true"] { background: var(--sand); }
 .hs-result-icon { font-size: 1.15rem; flex-shrink: 0; }
+.hs-result-logo { width: 1.8rem; height: 1.8rem; object-fit: contain; flex-shrink: 0; }
 .hs-result-body { display: flex; flex-direction: column; min-width: 0; }
 .hs-result-name { font-size: 0.9rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hs-result-name mark { background: rgba(58,155,201,.2); color: var(--aegean); border-radius: 2px; padding: 0 1px; }

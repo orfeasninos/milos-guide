@@ -2,7 +2,8 @@ import sightsRaw from '../data/sights.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
 import { beachAreaLabel } from './beaches';
-import { restaurants, placeType } from './restaurants';
+import { restaurants, placeType, activePartner } from './restaurants';
+import { partnerLogo } from './public-files';
 import { stays, stayType } from './stays';
 import type { SearchItem } from './search-match';
 
@@ -51,6 +52,8 @@ export function buildSearchIndex(): SearchItem[] {
       area:   r.location.area,
       url:    `/restaurants/${r.slug}/`,
       icon:   placeType(r).icon,
+      // undefined drops out of the JSON, so the index fetched by the header box stays small.
+      logo:   partnerLogo(activePartner(r)) ?? undefined,
     })),
     ...stays.map(s => ({
       type:   'stay',

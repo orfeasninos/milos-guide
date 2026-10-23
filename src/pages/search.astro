@@ -135,7 +135,7 @@ function render() {
 
   grid.innerHTML = results.map(item => `
     <a href="${item.url}" class="result-card">
-      <span class="result-icon">${item.icon}</span>
+      ${item.logo ? `<img src="${item.logo}" alt="" class="result-logo" />` : `<span class="result-icon">${item.icon}</span>`}
       <div class="result-body">
         <span class="result-type">${isEl ? item.typeEl : item.typeEn}</span>
         <h2 class="result-name">${highlight(isEl ? item.nameEl : item.nameEn, query)}</h2>
@@ -257,6 +257,7 @@ function render() {
 :global(.result-card:last-child) { border-bottom: none; }
 :global(.result-card:hover) { background: var(--sand); padding-left: 1.5rem; }
 :global(.result-icon) { font-size: 1.4rem; flex-shrink: 0; }
+:global(.result-logo) { width: 2.4rem; height: 2.4rem; object-fit: contain; flex-shrink: 0; }
 :global(.result-body) { flex: 1; min-width: 0; }
 :global(.result-type) {
   font-size: 0.62rem;

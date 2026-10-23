@@ -113,18 +113,19 @@ export function distanceKm(a: { lat: number; lng: number }, b: { lat: number; ln
   return 6371 * 2 * Math.asin(Math.sqrt(h));
 }
 
-// Premium partners for the "Where to eat nearby" block on beach and village pages: those
+// Paid partners for the "Where to eat nearby" block on beach and village pages: those
 // listed in the village itself, or within `maxKm` in a straight line (Milos roads wind,
-// so 3 km is often twice that by car). Closest first.
-export function premiumNearby(
+// so 3 km is often twice that by car). Premium takes the two slots before Featured,
+// since that priority is what the higher tier pays for; closest first within a tier.
+export function nearbyPartners(
   point: { lat: number; lng: number },
   { maxKm = 3, villageSlug }: { maxKm?: number; villageSlug?: string } = {},
 ): { restaurant: Restaurant; km: number }[] {
   return restaurants
-    .filter(r => activePartner(r)?.tier === 'premium')
+    .filter(r => activePartner(r))
     .map(r => ({ restaurant: r, km: distanceKm(point, r.coordinates) }))
     .filter(({ restaurant, km }) =>
       km <= maxKm || (villageSlug !== undefined && areaVillageSlug(restaurant.location.area) === villageSlug))
-    .sort((a, b) => a.km - b.km)
+    .sort((a, b) => tierRank(b.restaurant) - tierRank(a.restaurant) || a.km - b.km)
     .slice(0, 2);
 }

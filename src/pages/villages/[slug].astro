@@ -6,7 +6,7 @@ import beachesData from '../../data/beaches.json';
 import { beachPhoto } from '../../lib/public-files';
 import { metaDescription } from '../../lib/seo';
 import { bookingSearch } from '../../lib/booking';
-import { premiumNearby } from '../../lib/restaurants';
+import { nearbyPartners } from '../../lib/restaurants';
 import PartnerNearby from '../../components/PartnerNearby.astro';
 
 const getName = (item: any): string => typeof item.name === 'object' ? item.name.en : item.name;
@@ -51,7 +51,7 @@ const linkedBeaches = beachesData
 // Villages are compact, so a tighter radius than beaches; places listed under the
 // village's own name always count.
 const partnersNearby = village.coordinates?.lat
-  ? premiumNearby(village.coordinates, { maxKm: 1.5, villageSlug: village.slug })
+  ? nearbyPartners(village.coordinates, { maxKm: 1.5, villageSlug: village.slug })
   : [];
 
 // Other villages for related
