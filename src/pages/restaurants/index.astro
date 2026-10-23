@@ -94,11 +94,12 @@ const restaurantsJsonld = {
   <div class="container">
     <div class="rest-grid" id="rest-grid">
       {list.map(r => (
-        <a href={`/restaurants/${r.slug}/`} class={`rc${r.partner ? ' rc--partner' : ''}`} data-area={r.area} data-type={r.type}>
+        <a href={`/restaurants/${r.slug}/`} class="rc" data-area={r.area} data-type={r.type}>
           {r.photo && (
             <SmartImage src={r.photo} alt={r.name.en} width={640} height={360} class="rc-img" sizes="(max-width: 768px) 100vw, 33vw" />
           )}
-          {r.partner && <span class="rc-partner">{PARTNER_LABEL}</span>}
+          {/* Paid placement must stay disclosed (see lib/restaurants.ts), hence the title. */}
+          {r.partner && <span class="rc-badge" title={`${PARTNER_LABEL}: paid listing`}>★ Featured</span>}
           <span class="rc-area">{r.kind.label} · {r.area}</span>
           <h2 class="rc-name">{r.name.en}</h2>
           <p class="rc-desc">{r.description.en}</p>
@@ -268,6 +269,7 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
 /* ── CARD ── */
 .rc {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 0.5rem;
   padding: 1.25rem 1.4rem;
@@ -285,17 +287,20 @@ if (initial && document.querySelector(`#area-chips .chip[data-area="${CSS.escape
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
 }
-.rc--partner { border-color: var(--sea); }
-.rc-partner {
-  align-self: flex-start;
+.rc-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 100px;
-  background: var(--sand);
-  color: var(--muted);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background: var(--deep-blue);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
 }
 .rc-area {
   font-size: 0.62rem;
