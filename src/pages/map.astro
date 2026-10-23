@@ -37,9 +37,10 @@ const points = [
       name: r.name.en, area: r.location.area, photo: restaurantThumb(r),
       url:  `/restaurants/${r.slug}/`, lat: r.coordinates.lat, lng: r.coordinates.lng, icon: placeType(r).icon,
       logo: partnerLogo(activePartner(r)),
+      partner: !!activePartner(r),
     })),
 // Slugs repeat across types (e.g. Sarakiniko is a beach and a sight), so ids use type + slug.
-].map(p => ({ ...p, key: `${p.type}-${p.slug}` }));
+].map(p => ({ ...p, key: `${p.type}-${p.slug}`, logo: ('logo' in p ? p.logo : null) as string | null }));
 ---
 
 <Layout
@@ -69,7 +70,9 @@ const points = [
       {points.map(p => (
         <a href={p.url} class="mc" id={`mc-${p.key}`} data-key={p.key} data-type={p.type} data-lat={p.lat} data-lng={p.lng}>
           <div class="mc-img-wrap">
-            {p.photo ? <img src={p.photo} alt={p.name} class="mc-img" loading="lazy" /> : <div class="mc-ph">{p.icon}</div>}
+            {p.logo
+              ? <img src={p.logo} alt={`${p.name} logo`} class="mc-img mc-img--logo" loading="lazy" />
+              : p.photo ? <img src={p.photo} alt={p.name} class="mc-img" loading="lazy" /> : <div class="mc-ph">{p.icon}</div>}
           </div>
           <div class="mc-body">
             <span class="mc-type">{p.type}</span>
@@ -108,7 +111,7 @@ document.head.appendChild(script);
 const markerColors = { beach: '#1a7fc1', village: '#2d6a4f', sight: '#7b4f1e', restaurant: '#b5452b' };
 const markerEmoji  = { beach: '🏖', village: '🏘', sight: '🏛', restaurant: '🍽' };
 
-let map, markers = [], clusterGroup, activeKey = null;
+let map, markers = [], clusterGroup, partnerGroup, activeKey = null;
 let activeFilters = new Set(['beach', 'village', 'sight', 'restaurant']);
 
 function initMap() {
@@ -136,6 +139,8 @@ function initMap() {
   streetLayer.addTo(map);
   L.control.layers({ "Map": streetLayer, "Satellite": satelliteLayer }, null, { position: 'topright', collapsed: true }).addTo(map);
 
+  // Paid partners stay out of the clusters so their pin is always visible on its own.
+  partnerGroup = L.layerGroup();
   clusterGroup = L.markerClusterGroup({
     maxClusterRadius: 50,
     disableClusteringAtZoom: 14,
@@ -173,7 +178,7 @@ function initMap() {
     el.innerHTML = svg;
 
     const icon = L.divIcon({ html: el, className: '', iconSize: [40, 52], iconAnchor: [20, 52] });
-    const marker = L.marker([p.lat, p.lng], { icon });
+    const marker = L.marker([p.lat, p.lng], { icon, zIndexOffset: p.partner ? 1000 : 0 });
 
     const photoHtml = p.photo
       ? `<img src="${p.photo}" alt="${p.name}" class="map-popup-img" />`
@@ -192,11 +197,13 @@ function initMap() {
     `));
 
     marker.on('click', () => activateCard(p.key, true));
-    markers.push({ key: p.key, type: p.type, marker, el });
-    clusterGroup.addLayer(marker);
+    const group = p.partner ? partnerGroup : clusterGroup;
+    markers.push({ key: p.key, type: p.type, marker, el, group });
+    group.addLayer(marker);
   });
 
   map.addLayer(clusterGroup);
+  map.addLayer(partnerGroup);
   // Fit every point: a fixed zoom 12 cut the island off on phones.
   map.fitBounds(clusterGroup.getBounds(), { padding: [24, 24] });
   setTimeout(() => map.invalidateSize(), 300);
@@ -231,7 +238,12 @@ function initMap() {
       activateCard(key, true);
       const m = markers.find(m => m.key === key);
       if (!m) return;
-      clusterGroup.zoomToShowLayer(m.marker, () => m.marker.openPopup());
+      if (m.group === partnerGroup) {
+        map.setView(m.marker.getLatLng(), Math.max(map.getZoom(), 14));
+        m.marker.openPopup();
+      } else {
+        clusterGroup.zoomToShowLayer(m.marker, () => m.marker.openPopup());
+      }
     });
   });
 }
@@ -260,9 +272,10 @@ function activateCard(key, scroll) {
 function applyFilter() {
   let visible = 0;
   clusterGroup.clearLayers();
+  partnerGroup.clearLayers();
   markers.forEach(m => {
     const show = activeFilters.has(m.type);
-    if (show) { clusterGroup.addLayer(m.marker); visible++; }
+    if (show) { m.group.addLayer(m.marker); visible++; }
   });
   document.querySelectorAll('.mc').forEach(card => {
     card.style.display = activeFilters.has(card.dataset.type) ? '' : 'none';
@@ -320,6 +333,7 @@ function applyFilter() {
 .mc.is-active { background: var(--white); border-left: 3px solid var(--aegean); }
 .mc-img-wrap { width: 52px; height: 52px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: var(--sand-dark); }
 .mc-img { width: 100%; height: 100%; object-fit: cover; }
+.mc-img--logo { object-fit: contain; padding: 4px; background: var(--sand); }
 .mc-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--sand-dark); }
 .mc-body { flex: 1; min-width: 0; }
 .mc-type { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sea); display: block; }
