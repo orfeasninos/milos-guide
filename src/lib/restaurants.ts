@@ -29,7 +29,8 @@ export type Partner = {
   // Season dates move every year, so this is flipped by hand rather than computed. While
   // false the page says "Closed for the season" instead of reading `hours`.
   open?: boolean;
-  dishes?: { name: string; note?: string }[];   // "From the kitchen" on the partner page
+  // "From the kitchen" on the partner page. `photo` is the owner's own, same folder as `photos`.
+  dishes?: { name: string; note?: string; photo?: string }[];
   reservationUrl?: string;
   menuUrl?: string;
   instagram?: string;      // full profile URL

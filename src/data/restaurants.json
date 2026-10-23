@@ -36,10 +36,12 @@
       "menuUrl": "https://barkotavernmilos.com/menu/",
       "open": false,
       "dishes": [
-        { "name": "Pitarakia", "note": "Small Milos cheese pies" },
-        { "name": "Skordolazana", "note": "The island's garlic pasta" },
-        { "name": "Rooster with pasta" },
-        { "name": "Lemon lamb" }
+        { "name": "Pitarakia", "note": "Small Milos cheese pies", "photo": "/images/taverns/barko-tavern-pitarakia.jpg" },
+        { "name": "Skordolazana", "note": "The island's garlic pasta", "photo": "/images/taverns/barko-tavern-skordolazana.jpg" },
+        { "name": "Rooster with pasta", "note": "In red sauce, over homemade pasta", "photo": "/images/taverns/barko-tavern-rooster.jpg" },
+        { "name": "Lemon lamb", "note": "Oven-baked with potatoes", "photo": "/images/taverns/barko-tavern-lamb.jpg" },
+        { "name": "Goat stifado", "note": "Stewed with small onions in tomato", "photo": "/images/taverns/barko-tavern-goat.jpg" },
+        { "name": "Rabbit in wine", "note": "Slow-cooked in a wine sauce", "photo": "/images/taverns/barko-tavern-rabbit.jpg" }
       ],
       "hours": {
         "mon": "13:00–00:00",

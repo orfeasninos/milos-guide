@@ -21,7 +21,10 @@ const kind = placeType(r);
 const serves = placeService(r);
 const maps = mapsUrl(r);
 const tel = telHref(r.phone);
-const { hours, dishes = [] } = partner;
+const { hours } = partner;
+const dishes = (partner.dishes ?? []).map(d => ({ ...d, photo: existingPhotos(d.photo ? [d.photo] : [])[0] ?? null }));
+// One photo-less card in a row of photo cards looks broken, so it's photos for all or none.
+const dishPhotos = dishes.length > 0 && dishes.every(d => d.photo);
 const closed = partner.open === false;
 
 const photos = existingPhotos(partner.photos);
@@ -138,12 +141,18 @@ const track = (event: string, placement: string) => ({
       <div class="container">
         <p class="pp-kicker pp-kicker--lt">From the kitchen</p>
         <h2 class="pp-title pp-title--lt">What to order</h2>
-        <ol class="pp-dishes">
-          {dishes.map((d, i) => (
+        <ol class={`pp-dishes${dishPhotos ? ' pp-dishes--photos' : ''}`}>
+          {dishes.map(d => (
             <li class="pp-dish">
-              <span class="pp-dish-no">{String(i + 1).padStart(2, '0')}</span>
-              <span class="pp-dish-name">{d.name}</span>
-              {d.note && <span class="pp-dish-note">{d.note}</span>}
+              {dishPhotos && d.photo && (
+                <div class="pp-dish-photo">
+                  <SmartImage src={d.photo} alt={`${d.name} at ${r.name.en}`} width={600} height={450} class="pp-dish-img" sizes="(max-width: 768px) 80vw, 33vw" />
+                </div>
+              )}
+              <div class="pp-dish-text">
+                <span class="pp-dish-name">{d.name}</span>
+                {d.note && <span class="pp-dish-note">{d.note}</span>}
+              </div>
             </li>
           ))}
         </ol>
@@ -480,9 +489,27 @@ const track = (event: string, placement: string) => ({
 .pp-dishes { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: rgba(255,255,255,.12); border-radius: var(--radius-lg); overflow: hidden; }
 .pp-dish { background: var(--deep-blue); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; gap: .35rem; transition: background .2s; }
 .pp-dish:hover { background: #12365f; }
-.pp-dish-no { font-size: .72rem; font-weight: 700; letter-spacing: .12em; color: var(--sky); }
 .pp-dish-name { font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.15; }
+.pp-dish-text { display: flex; flex-direction: column; gap: .35rem; }
 .pp-dish-note { font-size: .88rem; color: rgba(255,255,255,.65); }
+
+/* With photos: separate cards, picture on top */
+.pp-dishes--photos { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; background: none; border-radius: 0; overflow: visible; }
+.pp-dishes--photos .pp-dish {
+  padding: 0;
+  gap: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #12365f;
+  box-shadow: 0 14px 40px rgba(0,0,0,.25);
+  transition: transform .3s var(--ease), box-shadow .3s;
+}
+.pp-dishes--photos .pp-dish:hover { background: #12365f; transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.pp-dish-photo { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0b2440; }
+:global(.pp-dish-img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.pp-dish:hover :global(.pp-dish-img) { transform: scale(1.06); }
+.pp-dishes--photos .pp-dish-text { padding: 1.25rem 1.4rem 1.5rem; }
+.pp-dishes--photos .pp-dish-name { font-size: 1.45rem; }
 
 /* Gallery */
 .pp-gallery { display: grid; gap: .75rem; grid-template-columns: repeat(2, 1fr); }
@@ -556,6 +583,7 @@ const track = (event: string, placement: string) => ({
   .pp-facts > div:nth-child(2) { border-right: none; }
   .pp-facts > div:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
   .pp-visit { grid-template-columns: 1fr; }
+  .pp-dishes--photos { grid-template-columns: repeat(2, 1fr); }
   .pp-beaches { grid-template-columns: 1fr 1fr; }
   .pp-beaches > :nth-child(3) { display: none; }
 }
@@ -566,6 +594,21 @@ const track = (event: string, placement: string) => ({
   /* The fixed action bar below carries the same three buttons */
   .pp-ctas { display: none; }
   .pp-sec { padding: 3.5rem 0; }
+  /* Six stacked photo cards is a long scroll on a phone: swipe through them instead,
+     with the next card peeking in so it's clear there are more. */
+  .pp-dishes--photos {
+    display: flex;
+    gap: .9rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin: 0 calc(-1 * 1.5rem);
+    padding: .25rem 1.5rem 1.5rem;
+    scroll-padding-inline: 1.5rem;
+  }
+  .pp-dishes--photos::-webkit-scrollbar { display: none; }
+  .pp-dishes--photos .pp-dish { flex: 0 0 78%; scroll-snap-align: start; }
+  .pp-dishes--photos .pp-dish:hover { transform: none; }
   .pp-gallery, .pp-gallery--3, .pp-gallery--4 { grid-template-columns: 1fr; grid-auto-rows: auto; }
   .pp-gallery--3 > :global(:first-child), .pp-gallery--4 > :global(:first-child) { grid-row: auto; }
   .pp-beaches { grid-template-columns: 1fr; }
