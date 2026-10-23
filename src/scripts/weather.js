@@ -1,5 +1,5 @@
 // Client logic for /weather: live Open-Meteo fetch with retry, cache fallback, and rendering.
-import { WEATHER_URL, WIND_URL, MARINE_URL, mergeWind } from '../lib/openmeteo.js';
+import { WEATHER_URL, WIND_URL, MARINE_URL, AIR_URL, mergeWind } from '../lib/openmeteo.js';
 import { compass as windDir, VARIABLE_KMH } from '../lib/wind';
 
 const WMO_TEXT = {
@@ -47,6 +47,36 @@ function humidityDesc(h) {
   if (h < 60)  return 'Comfortable';
   if (h < 75)  return 'Humid';
   return 'Very humid';
+}
+// European AQI bands (EEA). The index is the worst of the pollutant sub-indices.
+function aqiLevel(aqi) {
+  if (aqi <= 20)  return ['Good', 'Great for outdoor activity'];
+  if (aqi <= 40)  return ['Fair', 'Fine for everyone'];
+  if (aqi <= 60)  return ['Moderate', 'Sensitive groups take it easy'];
+  if (aqi <= 80)  return ['Poor', 'Limit strenuous activity'];
+  if (aqi <= 100) return ['Very poor', 'Avoid strenuous activity'];
+  return ['Extremely poor', 'Stay indoors if you can'];
+}
+function dustLevel(ug) {
+  if (ug < 20)  return 'None';
+  if (ug < 50)  return 'Light haze';
+  if (ug < 150) return 'Saharan dust';
+  return 'Heavy dust';
+}
+// Rough bands for tree/grass pollen in grains/m³; null means out of season for CAMS.
+function pollenLevel(g) {
+  if (g == null) return 'Off season';
+  if (g < 1)   return 'None';
+  if (g < 10)  return 'Low';
+  if (g < 50)  return 'Moderate';
+  if (g < 200) return 'High';
+  return 'Very high';
+}
+function visibilityDesc(m) {
+  if (m >= 20000) return 'Excellent';
+  if (m >= 10000) return 'Good';
+  if (m >= 4000)  return 'Moderate';
+  return 'Poor';
 }
 function heroClass(code) {
   if (code === 0 || code === 1) return 'is-sunny';
@@ -129,17 +159,18 @@ async function loadWeather() {
   el('w-content').classList.remove('is-ready');
   el('w-stale-banner').style.display = 'none';
 
-  let w, m, cachedAt = null;
+  let w, m, a, cachedAt = null;
 
-  // One live attempt: weather must succeed, marine failure is tolerated.
+  // One live attempt: weather must succeed, marine and air failures are tolerated.
   const attemptLive = async () => {
     const ctrl = new AbortController();
     const tid = setTimeout(() => ctrl.abort(), 12000);
     try {
-      const [wSettled, windSettled, mSettled] = await Promise.allSettled([
+      const [wSettled, windSettled, mSettled, aSettled] = await Promise.allSettled([
         fetch(WEATHER_URL, { signal: ctrl.signal }),
         fetch(WIND_URL,    { signal: ctrl.signal }),
         fetch(MARINE_URL,  { signal: ctrl.signal }),
+        fetch(AIR_URL,     { signal: ctrl.signal }),
       ]);
       if (wSettled.status === 'rejected') throw wSettled.reason;
       const wData = await wSettled.value.json();
@@ -150,7 +181,10 @@ async function loadWeather() {
       const mData = (mSettled.status === 'fulfilled' && mSettled.value.ok)
         ? await mSettled.value.json()
         : { current: null };
-      return { w: wData, m: mData };
+      const aData = (aSettled.status === 'fulfilled' && aSettled.value.ok)
+        ? await aSettled.value.json().catch(() => ({ current: null }))
+        : { current: null };
+      return { w: wData, m: mData, a: aData };
     } finally {
       clearTimeout(tid);
     }
@@ -158,11 +192,11 @@ async function loadWeather() {
 
   try {
     try {
-      ({ w, m } = await attemptLive());
+      ({ w, m, a } = await attemptLive());
     } catch (firstErr) {
       console.warn('Live fetch attempt 1 failed:', firstErr.message, '— retrying in 2 s…');
       await new Promise(r => setTimeout(r, 2000));
-      ({ w, m } = await attemptLive());
+      ({ w, m, a } = await attemptLive());
     }
   } catch (liveErr) {
     console.warn('Both live attempts failed, falling to cache:', liveErr.message);
@@ -172,6 +206,7 @@ async function loadWeather() {
       const cached = await cacheRes.json();
       w = cached.weather;
       m = cached.marine ?? { current: null };
+      a = cached.air ?? { current: null };
       cachedAt = cached.cachedAt;
     } catch {
       el('w-loading').style.display = 'none';
@@ -201,6 +236,9 @@ async function loadWeather() {
     el('hs-waves').textContent       = `${waveH.toFixed(1)} m`;
     el('hs-uv').textContent          = `${Math.round(c.uv_index)} — ${uvLevel(c.uv_index)[0]}`;
     el('hs-humidity').textContent    = `${Math.round(c.relative_humidity_2m)}%`;
+    const air = a?.current;
+    const aqi = air?.european_aqi;
+    el('hs-aqi').textContent         = aqi != null ? `${Math.round(aqi)} — ${aqiLevel(aqi)[0]}` : '–';
     el('hero-updated').textContent   = cachedAt
       ? `Last updated ${athensClock(new Date(cachedAt))} (Milos time)`
       : `Updated at ${formatTime(c.time)} (Milos time)`;
@@ -232,6 +270,38 @@ async function loadWeather() {
     // ── Humidity card
     el('w-humidity').textContent    = `${Math.round(c.relative_humidity_2m)}%`;
     el('w-humidity-sub').textContent = humidityDesc(c.relative_humidity_2m);
+
+    // ── Air quality card
+    const fmtUg = v => v != null ? `${Math.round(v)} µg/m³` : '–';
+    if (aqi != null) {
+      const [aqiLvl, aqiTip] = aqiLevel(aqi);
+      el('w-aqi').textContent       = Math.round(aqi);
+      el('w-aqi-sub').textContent   = aqiTip;
+      el('w-aqi-tag').textContent   = aqiLvl;
+      el('aqi-marker').style.left   = `${Math.min(aqi / 100, 1) * 100}%`;
+    } else {
+      el('w-aqi').textContent       = '–';
+      el('w-aqi-sub').textContent   = 'Air quality data unavailable';
+      el('w-aqi-tag').textContent   = '–';
+    }
+    el('w-pm25').textContent  = fmtUg(air?.pm2_5);
+    el('w-pm10').textContent  = fmtUg(air?.pm10);
+    el('w-ozone').textContent = fmtUg(air?.ozone);
+    el('w-dust').textContent  = air?.dust != null ? `${dustLevel(air.dust)} (${Math.round(air.dust)})` : '–';
+
+    // ── Pollen card
+    const pollen = [['olive', air?.olive_pollen], ['grass', air?.grass_pollen], ['ragweed', air?.ragweed_pollen]];
+    for (const [k, v] of pollen) el(`w-pollen-${k}`).textContent = air ? pollenLevel(v) : '–';
+    const worst = Math.max(...pollen.map(([, v]) => v ?? 0));
+    el('w-pollen-tag').textContent = air ? pollenLevel(worst) : '–';
+
+    // ── More conditions card
+    el('w-gusts').textContent      = c.wind_gusts_10m != null ? `${Math.round(c.wind_gusts_10m)} km/h` : '–';
+    el('w-visibility').textContent = c.visibility != null
+      ? `${visibilityDesc(c.visibility)} (${Math.round(c.visibility / 1000)} km)` : '–';
+    el('w-pressure').textContent   = c.pressure_msl != null ? `${Math.round(c.pressure_msl)} hPa` : '–';
+    el('w-clouds').textContent     = c.cloud_cover != null ? `${Math.round(c.cloud_cover)}%` : '–';
+    el('w-dewpoint').textContent   = c.dew_point_2m != null ? `${Math.round(c.dew_point_2m)}°C` : '–';
 
     // ── Range + Sun card (today's row; a cached forecast may start on an earlier day)
     const nowIso   = athensNowIso();

@@ -23,7 +23,7 @@ const BEACHES_DATA = beachesRaw.map(b => ({
 <Layout
   lang="en"
   title="Weather in Milos"
-  description="Current weather in Milos and beach recommendations based on today's wind and sea conditions."
+  description="Current weather in Milos: wind, sea temperature, waves, UV, air quality and pollen, plus beach recommendations based on today's wind."
 >
 
 <section class="weather-hero" id="weather-hero">
@@ -58,6 +58,10 @@ const BEACHES_DATA = beachesRaw.map(b => ({
         <div class="hs-item">
           <span class="hs-lbl">Humidity</span>
           <span class="hs-val" id="hs-humidity">–</span>
+        </div>
+        <div class="hs-item">
+          <span class="hs-lbl">Air quality</span>
+          <span class="hs-val" id="hs-aqi">–</span>
         </div>
       </div>
     </div>
@@ -167,6 +171,45 @@ const BEACHES_DATA = beachesRaw.map(b => ({
             <span class="w-sun-item">🌅 <span id="w-sunrise">–</span></span>
             <span class="w-sun-item">🌇 <span id="w-sunset">–</span></span>
           </div>
+        </div>
+
+        <div class="w-stat w-stat--air">
+          <p class="w-stat-label">Air quality</p>
+          <div class="w-stat-val" id="w-aqi">–</div>
+          <div class="uv-track" title="European Air Quality Index 0–100+">
+            <div class="aqi-gradient"></div>
+            <div class="uv-marker" id="aqi-marker"></div>
+          </div>
+          <p class="w-stat-sub" id="w-aqi-sub">–</p>
+          <dl class="w-rows">
+            <div><dt>PM2.5</dt><dd id="w-pm25">–</dd></div>
+            <div><dt>PM10</dt><dd id="w-pm10">–</dd></div>
+            <div><dt>Ozone</dt><dd id="w-ozone">–</dd></div>
+            <div><dt>Dust</dt><dd id="w-dust">–</dd></div>
+          </dl>
+          <span class="w-badge" id="w-aqi-tag">–</span>
+        </div>
+
+        <div class="w-stat w-stat--pollen">
+          <p class="w-stat-label">Pollen</p>
+          <dl class="w-rows">
+            <div><dt>🫒 Olive</dt><dd id="w-pollen-olive">–</dd></div>
+            <div><dt>🌾 Grass</dt><dd id="w-pollen-grass">–</dd></div>
+            <div><dt>🌿 Ragweed</dt><dd id="w-pollen-ragweed">–</dd></div>
+          </dl>
+          <p class="w-stat-sub">Olive pollen peaks April – June across the Cyclades.</p>
+          <span class="w-badge" id="w-pollen-tag">–</span>
+        </div>
+
+        <div class="w-stat w-stat--more">
+          <p class="w-stat-label">More conditions</p>
+          <dl class="w-rows">
+            <div><dt>Wind gusts</dt><dd id="w-gusts">–</dd></div>
+            <div><dt>Visibility</dt><dd id="w-visibility">–</dd></div>
+            <div><dt>Cloud cover</dt><dd id="w-clouds">–</dd></div>
+            <div><dt>Pressure</dt><dd id="w-pressure">–</dd></div>
+            <div><dt>Dew point</dt><dd id="w-dewpoint">–</dd></div>
+          </dl>
         </div>
 
       </div>

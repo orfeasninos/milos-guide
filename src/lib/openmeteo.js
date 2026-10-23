@@ -8,7 +8,7 @@ const BASE = `latitude=${LAT}&longitude=${LNG}&timezone=Europe%2FAthens`;
 
 export const WEATHER_URL =
   `https://api.open-meteo.com/v1/forecast?${BASE}` +
-  `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,uv_index,relative_humidity_2m` +
+  `&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m,uv_index,relative_humidity_2m,dew_point_2m,pressure_msl,cloud_cover,visibility` +
   `&hourly=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m,precipitation_probability` +
   `&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset` +
   `&forecast_days=7&models=best_match`;
@@ -18,7 +18,7 @@ export const WEATHER_URL =
 // ECMWF has no UV index, so everything else stays on best_match.
 export const WIND_URL =
   `https://api.open-meteo.com/v1/forecast?${BASE}` +
-  `&current=wind_speed_10m,wind_direction_10m` +
+  `&current=wind_speed_10m,wind_direction_10m,wind_gusts_10m` +
   `&hourly=wind_speed_10m,wind_direction_10m` +
   `&forecast_days=7&models=ecmwf_ifs`;
 
@@ -30,6 +30,13 @@ export const MARINE_URL =
   `https://marine-api.open-meteo.com/v1/marine?${BASE}` +
   `&current=wave_height,sea_surface_temperature&forecast_days=1`;
 
+// CAMS Europe (~11 km). Pollen is seasonal and comes back null or 0 out of season.
+// Dust matters here: Saharan dust episodes push PM10 well past the EU limit a few times a year.
+export const AIR_URL =
+  `https://air-quality-api.open-meteo.com/v1/air-quality?${BASE}` +
+  `&current=european_aqi,pm2_5,pm10,ozone,dust,olive_pollen,grass_pollen,ragweed_pollen` +
+  `&forecast_days=1`;
+
 /**
  * Overwrite best_match wind with the ECMWF reading, matching hourly rows by time.
  * @param {any} w   best_match forecast (mutated)
@@ -39,6 +46,8 @@ export function mergeWind(w, wind) {
   if (typeof wind?.current?.wind_speed_10m !== 'number') return;
   w.current.wind_speed_10m = wind.current.wind_speed_10m;
   w.current.wind_direction_10m = wind.current.wind_direction_10m;
+  // Gusts from the same model as the mean wind, so gusts never read below the speed.
+  if (typeof wind.current.wind_gusts_10m === 'number') w.current.wind_gusts_10m = wind.current.wind_gusts_10m;
   const byTime = new Map(wind.hourly?.time?.map((/** @type {string} */ t, /** @type {number} */ i) => [t, i]) ?? []);
   w.hourly.wind_direction_10m ??= [];
   w.hourly.time.forEach((/** @type {string} */ t, /** @type {number} */ i) => {
