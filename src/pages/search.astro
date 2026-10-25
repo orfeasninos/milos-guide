@@ -36,6 +36,7 @@ const index = buildSearchIndex();
       <button class="sf-chip" data-filter="village">🏘 {isEl ? 'Χωριά' : 'Villages'}</button>
       <button class="sf-chip" data-filter="restaurant">🍽 {isEl ? 'Εστιατόρια' : 'Restaurants'}</button>
       <button class="sf-chip" data-filter="stay">🛏 {isEl ? 'Διαμονή' : 'Stays'}</button>
+      <button class="sf-chip" data-filter="guide">🧭 {isEl ? 'Οδηγός' : 'Guide'}</button>
     </div>
   </div>
 </section>
@@ -139,7 +140,7 @@ function render() {
       <div class="result-body">
         <span class="result-type">${isEl ? item.typeEl : item.typeEn}</span>
         <h2 class="result-name">${highlight(isEl ? item.nameEl : item.nameEn, query)}</h2>
-        <p class="result-area">📍 ${item.area}</p>
+        ${item.area ? `<p class="result-area">📍 ${item.area}</p>` : ''}
       </div>
       <span class="result-arrow">→</span>
     </a>

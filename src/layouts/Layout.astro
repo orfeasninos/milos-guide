@@ -405,7 +405,7 @@ async function renderSearch() {
           ${item.logo ? `<img src="${item.logo}" alt="" class="hs-result-logo" />` : `<span class="hs-result-icon" aria-hidden="true">${item.icon}</span>`}
           <span class="hs-result-body">
             <span class="hs-result-name">${highlight(searchIsEl ? item.nameEl : item.nameEn, q)}</span>
-            <span class="hs-result-meta">${searchIsEl ? item.typeEl : item.typeEn} · ${item.area}</span>
+            <span class="hs-result-meta">${searchIsEl ? item.typeEl : item.typeEn}${item.area ? ` · ${item.area}` : ''}</span>
           </span>
         </a>
       </li>`).join('') + (results.length > MAX_RESULTS ? `

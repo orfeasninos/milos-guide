@@ -6,10 +6,11 @@ export interface SearchItem {
   typeEn: string;
   nameEl: string;
   nameEn: string;
-  area: string;
+  area?: string; // guide pages cover the whole island, so they have none
   url: string;
   icon: string;
-  logo?: string; // paid partner's logo, shown instead of the icon
+  logo?: string; // image shown instead of the icon: a paid partner's logo, or the island outline for /map/
+  keywords?: string; // extra terms for guide pages, so "ferry" finds /how-to-reach/
 }
 
 // Case-, accent- and final-sigma-insensitive, so "plaka" or "πλακα" finds "Πλάκα".
@@ -21,8 +22,9 @@ export const fold = (text: string) => [...text].map(foldChar).join('');
 export const matches = (item: SearchItem, q: string) =>
   fold(item.nameEl).includes(q) ||
   fold(item.nameEn).includes(q) ||
-  fold(item.area).includes(q) ||
-  fold(item.typeEn).includes(q);
+  fold(item.area ?? '').includes(q) ||
+  fold(item.typeEn).includes(q) ||
+  fold(item.keywords ?? '').includes(q);
 
 export function highlight(text: string, q: string) {
   if (!q) return text;
