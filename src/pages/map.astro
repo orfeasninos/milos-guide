@@ -37,7 +37,8 @@ const points = [
       name: r.name.en, area: r.location.area, photo: restaurantThumb(r),
       url:  `/restaurants/${r.slug}/`, lat: r.coordinates.lat, lng: r.coordinates.lng, icon: placeType(r).icon,
       logo: partnerLogo(activePartner(r)),
-      partner: !!activePartner(r),
+      // Only the premium tier buys an always-visible pin; featured partners cluster like everyone else.
+      partner: activePartner(r)?.tier === 'premium',
     })),
 // Slugs repeat across types (e.g. Sarakiniko is a beach and a sight), so ids use type + slug.
 ].map(p => ({ ...p, key: `${p.type}-${p.slug}`, logo: ('logo' in p ? p.logo : null) as string | null }));
@@ -139,7 +140,7 @@ function initMap() {
   streetLayer.addTo(map);
   L.control.layers({ "Map": streetLayer, "Satellite": satelliteLayer }, null, { position: 'topright', collapsed: true }).addTo(map);
 
-  // Paid partners stay out of the clusters so their pin is always visible on its own.
+  // Premium partners stay out of the clusters so their pin is always visible on its own.
   partnerGroup = L.layerGroup();
   clusterGroup = L.markerClusterGroup({
     maxClusterRadius: 50,
