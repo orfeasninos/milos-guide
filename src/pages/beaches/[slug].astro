@@ -11,7 +11,7 @@ import { nearbyPartners } from '../../lib/restaurants';
 import beachesRaw from '../../data/beaches.json';
 import { getBeachName, type Beach, type BeachAccess } from '../../lib/beaches';
 import { beachPhoto } from '../../lib/public-files';
-import { metaDescription } from '../../lib/seo';
+import { metaDescription, paragraphs } from '../../lib/seo';
 
 const beachesData = (beachesRaw as Beach[]).map(b => ({ ...b, image: beachPhoto(b) }));
 
@@ -149,6 +149,7 @@ const beachJsonld = {
 
     <!-- Description -->
     <p class="b-desc">{getBeachDesc(beach)}</p>
+    {paragraphs(beach.about).map(p => <p class="b-desc">{p}</p>)}
 
     <!-- Gallery -->
     {galleryImages.length > 0 && (
@@ -218,6 +219,7 @@ const beachJsonld = {
   color: var(--ink);
   margin-bottom: 2rem;
 }
+.b-desc + .b-desc { margin-top: -1rem; }
 /* ── GALLERY ── */
 .gallery-grid {
   display: grid;

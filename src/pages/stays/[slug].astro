@@ -4,7 +4,7 @@ import SmartImage from '../../components/SmartImage.astro';
 import beachesData from '../../data/beaches.json';
 import { beachPhoto, stayPhoto } from '../../lib/public-files';
 import { getBeachName } from '../../lib/beaches';
-import { metaDescription } from '../../lib/seo';
+import { metaDescription, paragraphs } from '../../lib/seo';
 import { areaVillageSlug, telHref, distanceKm } from '../../lib/restaurants';
 import { stays, stayType, stayBookingUrl, type Stay } from '../../lib/stays';
 
@@ -98,6 +98,7 @@ const stayJsonld = {
   <article class="st-main">
 
     <p class="st-desc">{s.description.en}</p>
+    {paragraphs(s.about).map(p => <p class="st-desc">{p}</p>)}
 
     <!-- Prices -->
     <div class="st-block">
@@ -337,6 +338,7 @@ const stayJsonld = {
   color: var(--ink);
   margin-bottom: 2.5rem;
 }
+.st-desc + .st-desc { margin-top: -1.5rem; }
 .st-block { margin-bottom: 2.5rem; }
 .block-title {
   font-size: .65rem;

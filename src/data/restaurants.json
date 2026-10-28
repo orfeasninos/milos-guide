@@ -37,12 +37,36 @@
       "menuUrl": "https://barkotavernmilos.com/menu/",
       "open": false,
       "dishes": [
-        { "name": "Pitarakia", "note": "Small Milos cheese pies", "photo": "/images/taverns/barko-tavern-pitarakia.jpg" },
-        { "name": "Skordolazana", "note": "The island's garlic pasta", "photo": "/images/taverns/barko-tavern-skordolazana.jpg" },
-        { "name": "Rooster with pasta", "note": "In red sauce, over homemade pasta", "photo": "/images/taverns/barko-tavern-rooster.jpg" },
-        { "name": "Lemon lamb", "note": "Oven-baked with potatoes", "photo": "/images/taverns/barko-tavern-lamb.jpg" },
-        { "name": "Goat stifado", "note": "Stewed with small onions in tomato", "photo": "/images/taverns/barko-tavern-goat.jpg" },
-        { "name": "Rabbit in wine", "note": "Slow-cooked in a wine sauce", "photo": "/images/taverns/barko-tavern-rabbit.jpg" }
+        {
+          "name": "Pitarakia",
+          "note": "Small Milos cheese pies",
+          "photo": "/images/taverns/barko-tavern-pitarakia.jpg"
+        },
+        {
+          "name": "Skordolazana",
+          "note": "The island's garlic pasta",
+          "photo": "/images/taverns/barko-tavern-skordolazana.jpg"
+        },
+        {
+          "name": "Rooster with pasta",
+          "note": "In red sauce, over homemade pasta",
+          "photo": "/images/taverns/barko-tavern-rooster.jpg"
+        },
+        {
+          "name": "Lemon lamb",
+          "note": "Oven-baked with potatoes",
+          "photo": "/images/taverns/barko-tavern-lamb.jpg"
+        },
+        {
+          "name": "Goat stifado",
+          "note": "Stewed with small onions in tomato",
+          "photo": "/images/taverns/barko-tavern-goat.jpg"
+        },
+        {
+          "name": "Rabbit in wine",
+          "note": "Slow-cooked in a wine sauce",
+          "photo": "/images/taverns/barko-tavern-rabbit.jpg"
+        }
       ],
       "hours": {
         "mon": "13:00–00:00",
@@ -66,6 +90,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Sirocco Volcanic Restaurant στον προορισμό Paleochori της Μήλου.",
       "en": "Dine on a geothermally heated beach at Sirocco in Paleochori — a truly unique experience."
     },
+    "about": "Sirocco sits right on the sand at Paleochori, one of the volcanic beaches of the south coast, and it makes use of what lies under that sand. The ground here is warm from geothermal activity. Pots of food are buried in it and left to cook slowly in the natural heat, a method you will not find at many restaurants in Greece. Fish cooked on the sand is the other speciality, alongside Cycladic dishes.\n\nIt is an easy lunch stop after a swim at Paleochori, and it also hosts private events and music nights. Tables can be booked online, which is worth doing in July and August.",
     "location": {
       "area": "Paleochori",
       "address": "Παλιοχώρι, Milos 848 00, Ελλάδα"
@@ -96,6 +121,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Ενάλιον στον προορισμό Pollonia της Μήλου.",
       "en": "Fresh seafood and traditional Greek dishes served by the sea in Pollonia."
     },
+    "about": "Enalion is a family-run seafood taverna in Pollonia. The name means \"in the sea\", and the tables are set right by the water. The family's younger generations now run the place, carrying on a tradition of hosting that goes back to their grandmother.\n\nFish and seafood are the focus. The menu changes with the day's catch, landed by local fishermen at the small harbour nearby. The family also farms land of its own on Milos, called Terra Milos, which supplies many of the herbs and vegetables in the kitchen. Food, drinks and dessert menus are on its website.",
     "location": {
       "area": "Pollonia",
       "address": "Pollonia, Cyclades 848 00, Ελλάδα"
@@ -126,6 +152,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Οινομαγειρείο Ω! Χαμός! στον προορισμό Papikinou της Μήλου.",
       "en": "A beloved local taverna with hearty traditional recipes in Papikinou, Milos."
     },
+    "about": "O! Hamos! is one of the best-known tavernas on Milos, set in a leafy garden across the road from Papikinou beach, about a kilometre from the port of Adamas. It is family-run, and the cooking follows recipes passed down in the owners' family. The handwritten menu tells part of the taverna's story.\n\nThe focus is traditional island food, with meat and cheese from the family's own farm and from other small producers on Milos. It is popular and does not suit people in a hurry: in high season there is often a queue for a table, so arrive early or be ready to wait. The beach across the road makes it an easy stop after a swim.",
     "location": {
       "area": "Papikinou",
       "address": "Αδάμας 848 00, Ελλάδα"
@@ -156,6 +183,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Avli-Milos στον προορισμό Plaka της Μήλου.",
       "en": "A charming courtyard restaurant in the hilltop village of Plaka, with views over the bay."
     },
+    "about": "Avli takes its name from its courtyard, which opens off one of the busiest lanes in Plaka, the hilltop capital of Milos. Tables spread out under the evening sky, and the courtyard is a good place to watch the village go by.\n\nThe menu is Greek, with an emphasis on meat dishes, especially lamb, beef and goat, alongside pasta, fish, classic starters and some vegetarian options. Avli opens in the evening only and does not usually take reservations, so in high season expect to queue, or come early before the sunset crowd leaves the Kastro. The rest of Plaka's lanes are a short walk away for a drink afterwards.",
     "location": {
       "area": "Plaka",
       "address": "Πλακα, Πλάκα 848 00, Ελλάδα"
@@ -186,6 +214,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Mikros Apoplous - Seafood and more στον προορισμό Adamas της Μήλου.",
       "en": "Seafood specialties and fresh catches steps from the harbour in Adamas."
     },
+    "about": "Mikros Apoplous is a seafood restaurant by the water in the Neochori area of Adamas, a short walk from the port. Tables sit on a terrace by the sea, and the menu is built around fresh fish and shellfish, prepared in many different ways.\n\nDishes that come up often include sea urchin, marinated anchovies, small fried shrimp eaten whole, pasta with seafood, and risotto with prawns. A homemade lemon meringue is the dessert to save room for. It is a good choice for a relaxed seafood meal in Adamas, away from the busiest stretch of the harbour, and a pleasant spot for an evening drink.",
     "location": {
       "area": "Adamas",
       "address": "Νεοχώρι, Αδάμας 848 01, Ελλάδα"
@@ -216,6 +245,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο τα γλαρονήσια στον προορισμό Tripiti της Μήλου.",
       "en": "Traditional taverna with panoramic sea views perched above Tripiti."
     },
+    "about": "Ta Glaronisia is a grill taverna in the village of Tripiti, on the ridge between Plaka and the sea. It has a wide view across Milos and its bay, and a courtyard and roof terrace for eating outdoors. It has been serving traditional Greek food for more than two decades.\n\nThe menu leans towards slow-cooked and grilled meat. House specialities include marinated liver, rooster cooked in wine, and goat cooked in a clay pot, alongside meze such as fried feta and octopus. In summer there is often live Greek music in the evenings. The Catacombs and the ancient theatre are just below the village, so it is easy to combine dinner with a visit.",
     "location": {
       "area": "Tripiti",
       "address": "Τρυπητή 848 00, Ελλάδα"
@@ -246,8 +276,9 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο barriello στον προορισμό Triovassalos της Μήλου.",
       "en": "Creative Mediterranean cuisine in a relaxed garden setting in Triovassalos."
     },
+    "about": "Barriello serves contemporary Greek cooking based on local and seasonal ingredients. Some of its produce comes from its own farm, Barriello Farm. Wine is a large part of the experience, with a list of carefully chosen Greek labels and wine pairings guided by a sommelier.\n\nThe menu changes with the season and mixes Greek dishes with Mediterranean influences, from pastas and risottos to raw fish and meat. Barriello opens for dinner only, from spring to late October, and tables are booked online. It is one of the more refined places to eat on the island, a good choice for a special evening after sunset in Plaka or Tripiti.",
     "location": {
-      "area": "Triovasalos",
+      "area": "Tripiti",
       "address": "island, Τρυπητή 848 00, Ελλάδα"
     },
     "localPhoto": "/images/taverns/barriello-milos.jpg",
@@ -276,6 +307,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Γιαλός στον προορισμό Pollonia της Μήλου.",
       "en": "Waterfront dining with freshly caught fish and mezedes in Pollonia."
     },
+    "about": "Gialos (also written Yialos) is a seafront restaurant in Pollonia that has been running for more than twenty years. It is owned by two friends: chef Achilleas Kamateris, who has worked in restaurants across Greece and Europe, and Christos Michael, who runs the dining room and the wine list. Many of the staff have been with the restaurant for over a decade.\n\nThe cooking is Mediterranean, from raw dishes and more creative plates to traditional recipes, with fresh fish and seafood at the centre. The wine list draws on producers from Greece and around the world. Gialos serves lunch and dinner. Large groups are asked to arrange a set menu in advance.",
     "location": {
       "area": "Pollonia",
       "address": "Πολλώνια 848 00, Ελλάδα"
@@ -306,6 +338,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Μέδουσα Μήλος στον προορισμό Mandrakia της Μήλου.",
       "en": "A cosy taverna overlooking the colourful syrmata of Mandrakia."
     },
+    "about": "Medusa (also spelled Medousa) is the taverna of Mandrakia, the small fishing hamlet on the north coast where colourful syrmata boathouses crowd around a narrow inlet. Tables look straight over the water and the boathouses, which makes it one of the most memorable settings for a meal on Milos.\n\nSeafood is the focus, served as meze with ouzo or local wine: octopus in several ways, grilled fish, sun-dried mackerel and fried squid, alongside Milos cheese pies and other local dishes. It is popular, and in high season there is often a short wait for a table. Combine it with a swim off the rocks at Mandrakia or a visit to nearby Sarakiniko.",
     "location": {
       "area": "Mandrakia",
       "address": "Μανδράκια 848 00, Ελλάδα"
@@ -317,7 +350,7 @@
     },
     "servesCuisine": "Greek",
     "phone": "2287 023670",
-    "website": "https://medusamilos.gr/en/restaurant-2/",
+    "website": "https://medusamilos.gr/",
     "coordinates": {
       "lat": 36.7511313,
       "lng": 24.4465407
@@ -382,6 +415,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Αρχοντούλα στον προορισμό Plaka της Μήλου.",
       "en": "Traditional Greek home cooking in a welcoming family taverna in Plaka."
     },
+    "about": "Archontoula (also spelled Archodoula) is a Greek taverna in Plaka, the hilltop capital of Milos. It is a convenient place for lunch or dinner while exploring the village's lanes, the Kastro and the Archaeological Museum.\n\nThe menu is traditional Greek with some more creative touches. Dishes visitors often mention include stuffed vine leaves (dolmadakia), stuffed mushrooms, grilled calamari and seafood pasta. In the evening Plaka gets very busy, especially around sunset, so it can be worth coming early or calling ahead. Afterwards, the cafés and bars along Plaka's main lane are a short walk away.",
     "location": {
       "area": "Plaka",
       "address": "Unnamed Rd, Plaka 848 00, Ελλάδα"
@@ -442,6 +476,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Nostos Seafood Experience στον προορισμό Adamas της Μήλου.",
       "en": "Premium seafood and creative starters in a contemporary setting in Adamas."
     },
+    "about": "Nostos Seafood Experience is a seafood restaurant on the waterfront in Adamas, with tables by the sea and views across the bay of Milos at sunset. It is one of the more upmarket places to eat in the port, and the wine list is a big part of its appeal.\n\nThe menu mixes Greek seafood with more contemporary dishes, such as ceviche, scallop risotto, lobster linguine, stuffed calamari, oysters and steamed mussels, along with fresh fish of the day. Expect prices above the island average. In high season it fills up quickly after sunset, so booking ahead is a good idea, or arrive early for a table by the water.",
     "location": {
       "area": "Adamas",
       "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 00, Ελλάδα"
@@ -472,6 +507,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Μπακάλικον Γαλάνης στον προορισμό Triovasalos της Μήλου.",
       "en": "A traditional bakalikon-style eatery in Triovasalos — honest food, local character."
     },
+    "about": "Bakalikon Galanis is a family-run taverna in Triovasalos, set in what used to be the village grocery shop (bakaliko). The old shop character has been kept, with shelves like a mini-market, family portraits on the walls and whitewashed stone walls.\n\nThe kitchen is known for small meze plates, seafood and grilled fish, with plenty of meat dishes too. Clams, crab, small fried calamari, snails with rosemary, veal liver and fish roe salad are some of the dishes people come for. They are washed down with local wine, draught beer or tsipouro. It is popular with locals as well as visitors, so arrive early or book ahead in summer.",
     "location": {
       "area": "Triovasalos",
       "address": "τριοβασαλος, Μήλος 848 00, Ελλάδα"
@@ -533,7 +569,7 @@
       "en": "Wood-fired grills and slow-roasted meats in a rustic setting in Triovasalos."
     },
     "location": {
-      "area": "Triovasalos",
+      "area": "Pera Triovasalos",
       "address": "Πέρα Τριοβασαλος 848 00, Ελλάδα"
     },
     "localPhoto": "/images/taverns/psitolatreia-milos.jpg",
@@ -562,6 +598,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Άστακας Cafe Restaurant στον προορισμό Klima της Μήλου.",
       "en": "A seafood-focused restaurant in the picturesque fishing village of Klima."
     },
+    "about": "Astakas is the taverna of Klima, the best-known fishing village on Milos, with its row of colourful syrmata boathouses along the water. The tables are outdoors and right by the sea, and the view of the boathouses at sunset is one of the classic sights of the island.\n\nSeafood is the speciality: grilled octopus, shrimp saganaki, clams with orzo and cuttlefish in its ink, along with taramasalata and pitarakia, the small cheese pies of Milos. It also opens earlier in the day for brunch. Booking is recommended in high season. Klima is a single lane along the water, so park at the top of the village and walk down.",
     "location": {
       "area": "Klima",
       "address": "Μήλος 848 00, Ελλάδα"
@@ -592,6 +629,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Ο Ζυγός στον προορισμό Adamas της Μήλου.",
       "en": "A local favourite in Adamas serving generous portions of traditional Greek food."
     },
+    "about": "O Zigos is a family-run grill taverna in Adamas, a short way from the busiest part of the harbour. Its veranda is built in the local style, with views of palm trees and the bay of Milos, and it has a homely atmosphere that many visitors like after the bustle of the port.\n\nThe kitchen is known for meat cooked over charcoal. Pork belly from the spit, chicken skewers and grilled feta with tomatoes are among the dishes people order most. O Zigos opens in the evening, and some dishes take time on the grill, so it suits an unhurried dinner. It is one of the more affordable places to eat in Adamas.",
     "location": {
       "area": "Adamas",
       "address": "Αδάμαντα-Ζεφυρία, Αδάμας 848 01, Ελλάδα"
@@ -622,6 +660,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο ΤΡΑΠΑΤΣΕΛΗΣ στον προορισμό Adamas της Μήλου.",
       "en": "A no-frills traditional taverna in Adamas popular with locals for its honest cooking."
     },
+    "about": "Trapatselis is a taverna in Adamas, on the road along the bay towards Zefiria, with a seaside setting a little away from the busiest part of the port. The menu mixes seafood with grilled meat and traditional Greek dishes.\n\nSeafood risotto, calamari, grilled octopus and prawns with ouzo are among the dishes visitors mention, along with homemade meatballs and a good choice of wine. Dishes suitable for vegans are available during the Orthodox fasting periods, when many Greeks avoid meat and dairy. It serves lunch and dinner, which makes it a practical choice on a day spent around Adamas.",
     "location": {
       "area": "Adamas",
       "address": "Αδάμας 848 01, Ελλάδα"
@@ -652,6 +691,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Εστιατόριο Εργινα στον προορισμό Tripiti της Μήλου.",
       "en": "A relaxed restaurant in Tripiti with good mezedes and a pleasant terrace."
     },
+    "about": "Ergina is a family-run taverna in the hilltop village of Tripiti. A terrace and rooftop look out over the bay of Milos and are a lovely place to watch the sunset. The cooking is traditional Milos home food, served as meze to share.\n\nLocal specialities include pitarakia (small Milos cheese pies), onion pie, and peppers stuffed with manoura, the local cheese. The menu also has a good choice of vegetarian and vegan dishes, such as a garlic lasagne (skordolazana) and mushroom risotto, and the staff are used to pointing them out. The Catacombs and the ancient theatre are just below the village, a short walk away.",
     "location": {
       "area": "Tripiti",
       "address": "Τρυπητή 848 00, Ελλάδα"
@@ -712,6 +752,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Alkis στον προορισμό Pollonia της Μήλου.",
       "en": "A well-regarded fish taverna in Pollonia, ideal after a day at the beach."
     },
+    "about": "Alkis is a waterfront taverna in Pollonia, with tables looking out over the bay and the small fishing harbour. Like most places along this stretch, it serves Greek taverna food with an emphasis on fresh fish and seafood, alongside classic meat dishes.\n\nLamb with potatoes and the catch of the day are the dishes visitors mention most. Prices are often described as more moderate than at some of its neighbours on the seafront, which makes it a relaxed option for a family meal after a day at the beach. Pollonia Beach is a few steps away, and the boat to Kimolos leaves from the harbour nearby.",
     "location": {
       "area": "Pollonia",
       "address": "Πολλώνια 848 00, Ελλάδα"
@@ -742,6 +783,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Nama Milos στον προορισμό Pollonia της Μήλου.",
       "en": "A modern café-restaurant in Pollonia with creative dishes and a relaxed vibe."
     },
+    "about": "Nama is a beachfront restaurant in Pollonia, with tables set steps from the sea, some on the sand and some on a raised terrace looking across the bay. It serves Cycladic and traditional Greek dishes, with plenty of fresh seafood and local specialities.\n\nThe menu includes pitarakia, the Milos cheese pies made with the local manoura cheese, moussaka, fried squid, grilled lamb chops, a fisherman's linguine and a large tomahawk pork chop, finished with galaktoboureko rolls for dessert. It is open for lunch and dinner, so it works well for a long meal after a swim at Pollonia Beach.",
     "location": {
       "area": "Pollonia",
       "address": "Unnamed Road, Pollonia 848 00, Ελλάδα"
@@ -802,6 +844,7 @@
       "el": "Απολαύστε αυθεντικές γεύσεις στο εστιατόριο Rifaki στον προορισμό Pollonia της Μήλου.",
       "en": "A casual spot in Pollonia with fresh mezedes and a friendly atmosphere."
     },
+    "about": "Rifaki is a seafood restaurant at the edge of the harbour in Pollonia, with tables close to the sea and views of the sunset. The space is colourful and relaxed, and it suits families and groups as well as couples.\n\nThe menu is Greek and Aegean, with plenty of seafood: fresh fish of the day, a seafood platter for two, lobster linguine and a Greek-style paella. Local touches include striftari, a traditional pasta, and \"the bride's love letter\", fried feta in filo with Milos sesame. There is also a vegan menu. Rifaki opens from April to October.",
     "location": {
       "area": "Pollonia",
       "address": "Πολλώνια ΜΗΛΟΣ, Μήλος 848 00, Ελλάδα"
@@ -832,6 +875,7 @@
       "el": "Καφέ-μπαρ στο λιμάνι του Αδάμαντα με κυκλαδίτικη διακόσμηση και θέα στη θάλασσα. Καφές, πρωινό, βάφλες, γλυκά και παγωτό από νωρίς το πρωί.",
       "en": "A café-bar on the Adamas waterfront with Cycladic décor and harbour views. Coffee, breakfast, waffles, desserts and ice cream from early morning."
     },
+    "about": "Egoist is a café-bar on the waterfront at the port of Adamas, decorated in a relaxed Cycladic style with views over the harbour. It is open from morning until late. That makes it a handy stop for a coffee while waiting for a ferry, a long breakfast or brunch, or a cocktail at sunset.\n\nThe menu covers coffee, breakfast and brunch, waffles, ice cream and desserts, as well as lighter meals such as sandwiches, salads, pasta, pizza and burgers. Lagada beach and the shops and tavernas of Adamas are a short walk away. Egoist belongs to the same group as several other cafés and bars around the port.",
     "location": {
       "area": "Adamas",
       "address": "Ακτή Παύλου Δαμουλάκη, Αδάμας 848 00, Ελλάδα"

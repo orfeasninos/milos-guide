@@ -12,9 +12,10 @@ interface Props {
   preloadImage?: string;
   preloadImageSrcset?: string;
   preloadImageSizes?: string;
+  noindex?: boolean;
 }
 
-const { title, description, lang = 'en', jsonld: pageJsonld = null, preloadImage, preloadImageSrcset, preloadImageSizes = '100vw' } = Astro.props;
+const { title, description, lang = 'en', jsonld: pageJsonld = null, preloadImage, preloadImageSrcset, preloadImageSizes = '100vw', noindex = false } = Astro.props;
 
 const siteUrl = (Astro.site?.toString() ?? 'https://milos.guide').replace(/\/$/, '');
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
@@ -80,8 +81,8 @@ const schemas: object[] = [
     alternateName: isEl ? ['Milos Guide', 'Οδηγός Μήλου'] : ['Milos Guide', 'Milos Island Guide'],
     url: siteUrl,
     description: isEl
-      ? 'Ο πλήρης οδηγός για τη Μήλο — παραλίες, χωριά, αξιοθέατα και ιστορία. Χωρίς διαφημίσεις.'
-      : 'The complete travel guide to Milos island — beaches, villages, sights and history. No ads.',
+      ? 'Ο πλήρης οδηγός για τη Μήλο — παραλίες, χωριά, αξιοθέατα και ιστορία.'
+      : 'The complete travel guide to Milos island — beaches, villages, sights and history.',
     inLanguage: isEl ? 'el-GR' : 'en',
     potentialAction: {
       '@type': 'SearchAction',
@@ -103,8 +104,8 @@ const schemas: object[] = [
       height: 630,
     },
     description: isEl
-      ? 'Ανεξάρτητος, αδιαφήμιστος οδηγός για τη Μήλο.'
-      : 'Independent, ad-free travel guide for Milos island.',
+      ? 'Ανεξάρτητος οδηγός για τη Μήλο.'
+      : 'Independent travel guide for Milos island.',
   },
   {
     '@context': 'https://schema.org',
@@ -170,8 +171,10 @@ const schemas: object[] = [
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} | Milos.guide</title>
   <meta name="description" content={description} />
-  <link rel="canonical" href={canonicalURL} />
-  <meta name="robots" content="index, follow" />
+  {/* A noindexed page has no canonical: pointing one at itself contradicts the noindex, and on
+      404.html it would name /404/, a URL that does not exist. */}
+  {!noindex && <link rel="canonical" href={canonicalURL} />}
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
   <meta name="author" content="Milos.guide" />
   <link rel="alternate" hreflang="en"        href={englishURL} />
   <link rel="alternate" hreflang="x-default" href={englishURL} />
@@ -280,7 +283,7 @@ const schemas: object[] = [
             <span class="logo-name">Milos</span><span class="logo-dot">.</span><span class="logo-tld">guide</span>
           </a>
           <p class="footer-tagline">
-            {t('The most complete guide\nto Milos — no ads.', 'Ο πιο πλήρης οδηγός\nγια τη Μήλο — χωρίς διαφημίσεις.')}
+            {t('The most complete guide\nto Milos.', 'Ο πιο πλήρης οδηγός\nγια τη Μήλο.')}
           </p>
         </div>
 
@@ -292,6 +295,7 @@ const schemas: object[] = [
             <a href={href('/beaches/')}><span class="flink-icon" aria-hidden="true">🏖</span>{t('Beaches', 'Παραλίες')}</a>
             <a href={href('/sights/')}><span class="flink-icon" aria-hidden="true">🏛</span>{t('Sights', 'Αξιοθέατα')}</a>
             <a href={href('/villages/')}><span class="flink-icon" aria-hidden="true">🏘</span>{t('Villages', 'Χωριά')}</a>
+            <a href={href('/search/')}><span class="flink-icon" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>{t('Search', 'Αναζήτηση')}</a>
           </div>
 
           <div class="footer-col">
@@ -315,7 +319,7 @@ const schemas: object[] = [
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
         <p class="footer-copy">&copy; {year} Milos.guide · <a href={href('/privacy/')} class="footer-policy-link">{t('Privacy Policy', 'Πολιτική Απορρήτου')}</a></p>
-        <p class="footer-note">{t('Made with love for Milos · No ads', 'Φτιαγμένο με αγάπη για τη Μήλο · Χωρίς διαφημίσεις')}</p>
+        <p class="footer-note">{t('Made with love for Milos', 'Φτιαγμένο με αγάπη για τη Μήλο')}</p>
       </div>
     </div>
   </footer>

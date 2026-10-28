@@ -4,6 +4,7 @@ import villagesData from '../data/villages.json';
 import sightsData from '../data/sights.json';
 import restaurantsData from '../data/restaurants.json';
 import staysData from '../data/stays.json';
+import climateData from '../data/climate.json';
 
 export const prerender = true;
 
@@ -18,7 +19,7 @@ const statics = [
   { en: '/stays/',        priority: '0.8' },
   { en: '/map/',          priority: '0.7' },
   { en: '/how-to-reach/', priority: '0.7' },
-  { en: '/weather/',      priority: '0.6' },
+  { en: '/weather/',      priority: '0.8' },
   { en: '/about/',        priority: '0.6' },
   { en: '/search/',       priority: '0.5' },
   { en: '/contact/',      priority: '0.4' },
@@ -41,6 +42,7 @@ ${villagesData.map(v => urlPair(`/villages/${v.slug}/`, '0.8')).join('\n')}
 ${sightsData.map(s   => urlPair(`/sights/${s.slug}/`,   '0.7')).join('\n')}
 ${restaurantsData.map(r => urlPair(`/restaurants/${r.slug}/`, '0.6')).join('\n')}
 ${staysData.map(s => urlPair(`/stays/${s.slug}/`, '0.6')).join('\n')}
+${climateData.map(m => urlPair(`/weather/${m.slug}/`, '0.6')).join('\n')}
 </urlset>`;
 
   return new Response(xml, {

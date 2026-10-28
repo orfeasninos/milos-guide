@@ -6,6 +6,7 @@ const isEl = Astro.url.pathname.startsWith('/el');
 
 <Layout
   lang={isEl ? 'el' : 'en'}
+  noindex
   title={isEl ? 'Σελίδα δεν βρέθηκε' : 'Page not found'}
   description={isEl ? 'Η σελίδα που ζητάτε δεν υπάρχει.' : 'The page you are looking for does not exist.'}
 >

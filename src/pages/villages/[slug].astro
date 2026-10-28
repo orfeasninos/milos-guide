@@ -4,7 +4,7 @@ import villagesData from '../../data/villages.json';
 import SmartImage from '../../components/SmartImage.astro';
 import beachesData from '../../data/beaches.json';
 import { beachPhoto } from '../../lib/public-files';
-import { metaDescription } from '../../lib/seo';
+import { metaDescription, paragraphs } from '../../lib/seo';
 import { bookingSearch } from '../../lib/booking';
 import { nearbyPartners } from '../../lib/restaurants';
 import PartnerNearby from '../../components/PartnerNearby.astro';
@@ -122,6 +122,7 @@ const villageJsonld = {
   <article class="v-main">
 
     <p class="v-desc">{(village as any).descriptionEn ?? village.description}</p>
+    {paragraphs((village as any).aboutEn).map(p => <p class="v-desc">{p}</p>)}
 
     <!-- Must See -->
     {village.mustSee.length > 0 && (
@@ -390,6 +391,7 @@ const villageJsonld = {
   color: var(--ink);
   margin-bottom: 2.5rem;
 }
+.v-desc + .v-desc { margin-top: -1.5rem; }
 
 .v-block { margin-bottom: 2.5rem; }
 

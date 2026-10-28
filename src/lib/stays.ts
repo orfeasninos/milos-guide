@@ -1,7 +1,8 @@
 import staysRaw from '../data/stays.json';
 import { bookingLink } from './booking';
 
-export type Stay = (typeof staysRaw)[number];
+// `about`: a longer description written by hand, shown under the short one.
+export type Stay = (typeof staysRaw)[number] & { about?: string };
 
 export const stays = [...staysRaw].sort((a, b) => a.name.en.localeCompare(b.name.en));
 

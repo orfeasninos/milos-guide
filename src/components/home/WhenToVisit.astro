@@ -9,7 +9,7 @@
     </div>
     <div class="months-grid">
       <div class="month-item">
-        <div class="month-name">May</div>
+        <a class="month-name" href="/weather/may/">May</a>
         <span class="month-tag">Peaceful</span>
         <p class="month-desc">
           Few crowds, wildflowers in bloom, ideal for exploring. Sea still
@@ -17,21 +17,21 @@
         </p>
       </div>
       <div class="month-item">
-        <div class="month-name">June</div>
+        <a class="month-name" href="/weather/june/">June</a>
         <span class="month-tag">Ideal</span>
         <p class="month-desc">
           The best balance. Warm sea, few crowds, everything open.
         </p>
       </div>
       <div class="month-item">
-        <div class="month-name">July</div>
+        <a class="month-name" href="/weather/july/">July</a>
         <span class="month-tag">Peak season</span>
         <p class="month-desc">
           Lively atmosphere, but book everything well in advance.
         </p>
       </div>
       <div class="month-item month-item--warn">
-        <div class="month-name">August</div>
+        <a class="month-name" href="/weather/august/">August</a>
         <span class="month-tag">Busy</span>
         <p class="month-desc">
           Meltemi winds affect which beaches are suitable each day. Very
@@ -39,7 +39,7 @@
         </p>
       </div>
       <div class="month-item">
-        <div class="month-name">September</div>
+        <a class="month-name" href="/weather/september/">September</a>
         <span class="month-tag">Best month</span>
         <p class="month-desc">
           Perhaps the perfect month. Warm sea, fewer crowds, lower prices.
@@ -50,6 +50,7 @@
       ⚠️ <strong>Meltemi winds:</strong> The northern winds directly affect which
       beaches are good each day — southern beaches (Paleochori, Fyriplaka) are sheltered,
       while northern ones can have waves.
+      <a href="/weather/#climate" class="month-more">Milos weather month by month →</a>
     </p>
   </div>
 </section>
@@ -76,6 +77,7 @@
     color: #92400e;
   }
   .month-name {
+    display: block;
     font-family: var(--font-serif);
     font-size: 1.1rem;
     color: var(--ink);
@@ -98,6 +100,8 @@
     color: var(--muted);
     line-height: 1.55;
   }
+  a.month-name:hover { color: var(--aegean); }
+  .month-more { display: inline-block; margin-left: 0.35rem; font-weight: 600; color: var(--deep-blue); }
   .meltemia-note {
     margin-top: 1.25rem;
     font-size: 0.82rem;

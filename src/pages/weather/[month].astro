@@ -1,0 +1,217 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ClimateTable from '../../components/weather/ClimateTable.astro';
+import { months, swimVerdict, isWindy, shelteredFromNorth, type ClimateMonth } from '../../lib/climate';
+import { bookingSearch } from '../../lib/booking';
+import { metaDescription } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return months.map((m, i) => ({
+    params: { month: m.slug },
+    props: { m, prev: months[(i + 11) % 12], next: months[(i + 1) % 12] },
+  }));
+}
+
+interface Props { m: ClimateMonth; prev: ClimateMonth; next: ClimateMonth }
+const { m, prev, next } = Astro.props;
+
+const windy = isWindy(m);
+const swimSeason = m.sea >= 21;
+const sheltered = shelteredFromNorth();
+// Exposed to the north: the beaches people come for, which are best on calm days.
+const northCoast = [
+  { slug: 'sarakiniko', name: 'Sarakiniko' },
+  { slug: 'papafragas', name: 'Papafragas' },
+  { slug: 'firopotamos', name: 'Firopotamos' },
+];
+
+const description = metaDescription(
+  `Milos weather in ${m.name}: highs of ${m.hi}°C, lows of ${m.lo}°C, sea at ${m.sea}°C, ` +
+  `${m.rainDays} rain day${m.rainDays === 1 ? '' : 's'} and ${m.northWindDays} windy days on average. What to expect, where to swim and what to pack.`,
+);
+
+const stats = [
+  { label: 'Average high', value: `${m.hi}°C` },
+  { label: 'Average low', value: `${m.lo}°C` },
+  { label: 'Sea temperature', value: `${m.sea}°C` },
+  { label: 'Rain days', value: String(m.rainDays) },
+  { label: 'Strong north-wind days', value: String(m.northWindDays) },
+];
+---
+
+<Layout lang="en" title={`Milos Weather in ${m.name}: Sea Temp, Wind & Rain`} description={description}>
+
+<section class="mw-hero">
+  <div class="container">
+    <a href="/weather/" class="mw-back">← Milos weather today</a>
+    <h1 class="mw-title">Milos weather in {m.name}</h1>
+    <span class="mw-tag">{m.tag}</span>
+    <dl class="mw-stats">
+      {stats.map(s => (
+        <div class="mw-stat">
+          <dt>{s.label}</dt>
+          <dd>{s.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<section class="sec mw-body">
+  <div class="container mw-grid">
+    <article class="mw-main">
+      <h2>What {m.name} is like</h2>
+      <p>{m.intro}</p>
+
+      <h2>Swimming and beaches</h2>
+      <p>
+        The sea averages <strong>{m.sea}°C</strong> in {m.name}. {swimVerdict(m.sea)}.
+        {windy
+          ? ` With the north wind blowing on about ${m.northWindDays} days, check the forecast each morning: on windy days head for the south coast, and save the north for calm ones.`
+          : swimSeason
+          ? ` Wind is usually moderate, so the dramatic north coast is often at its best.`
+          : ` Swimming is for those used to cool water; the coast is better for walks and photos this time of year.`}
+      </p>
+      {swimSeason && (
+        <div class="mw-beach-cols">
+          <div>
+            <p class="mw-list-title">Sheltered when the wind is from the north</p>
+            <ul class="mw-list">
+              {sheltered.map(b => <li><a href={`/beaches/${b.slug}/`}>{b.name}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <p class="mw-list-title">Best on calm days</p>
+            <ul class="mw-list">
+              {northCoast.map(b => <li><a href={`/beaches/${b.slug}/`}>{b.name}</a></li>)}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      <h2>What to pack</h2>
+      <p>{m.pack}</p>
+
+      <div class="mw-nav">
+        <a href={`/weather/${prev.slug}/`} rel="prev">← {prev.name}</a>
+        <a href={`/weather/${next.slug}/`} rel="next">{next.name} →</a>
+      </div>
+    </article>
+
+    <aside class="mw-side">
+      <div class="mw-card">
+        <p class="mw-card-label">Going this {m.name}?</p>
+        <p class="mw-card-text">The forecast for the next 7 days, live wind and which beaches are sheltered today.</p>
+        <a href="/weather/" class="btn-dark" data-umami-event="weather-month-live" data-umami-event-month={m.slug}>Live Milos forecast</a>
+      </div>
+      <div class="mw-card">
+        <p class="mw-card-label">Where to stay</p>
+        <p class="mw-card-text">Compare hotels and rooms on Milos with live prices for your dates.</p>
+        <a
+          href={bookingSearch(undefined, `weather-${m.slug}`)}
+          target="_blank"
+          rel="noopener sponsored"
+          class="btn-dark"
+          data-umami-event="booking-weather-month"
+          data-umami-event-month={m.slug}
+        >
+          Stays in Milos ↗
+        </a>
+        <p class="mw-card-note">Affiliate link to Booking.com: we may earn a commission at no extra cost to you.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec sec-sand">
+  <div class="container">
+    <span class="label">Climate</span>
+    <h2 class="sec-title mw-sec-title">Milos weather month by month</h2>
+    <ClimateTable current={m.slug} />
+  </div>
+</section>
+
+</Layout>
+
+<style>
+  .mw-hero {
+    background-image: linear-gradient(135deg, var(--deep-blue) 0%, var(--aegean) 100%);
+    padding: 3rem 0 2.75rem;
+    color: #fff;
+  }
+  .mw-back { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+  .mw-back:hover { color: #fff; }
+  .mw-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0.9rem 0 0.6rem;
+  }
+  .mw-tag {
+    display: inline-block;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 4px;
+    background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.85);
+  }
+  .mw-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+  }
+  .mw-stat dt {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .mw-stat dd { margin: 0.25rem 0 0; font-size: 1.35rem; font-weight: 600; }
+
+  .mw-grid { display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+  .mw-main h2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin: 2.25rem 0 0.75rem;
+  }
+  .mw-main h2:first-child { margin-top: 0; }
+  .mw-main p { color: var(--muted); line-height: 1.75; font-size: 0.98rem; }
+  .mw-main strong { color: var(--ink); }
+  .mw-beach-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.25rem; }
+  .mw-list-title {
+    font-size: 0.62rem !important; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .mw-list { list-style: none; padding: 0; margin: 0; }
+  .mw-list li { padding: 0.4rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
+  .mw-list a { color: var(--aegean); font-weight: 600; }
+  .mw-nav {
+    display: flex; justify-content: space-between;
+    margin-top: 2.5rem; padding-top: 1.25rem;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-weight: 600;
+  }
+  .mw-nav a { color: var(--deep-blue); }
+
+  .mw-side { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 6rem; }
+  .mw-card { background: var(--sand); border-radius: var(--radius-lg); padding: 1.5rem; }
+  .mw-card-label {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.5rem;
+  }
+  .mw-card-text { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+  .mw-card-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.75rem; }
+  .mw-sec-title { margin-bottom: 1.5rem; }
+
+  @media (max-width: 860px) {
+    .mw-grid { grid-template-columns: 1fr; }
+    .mw-side { position: static; }
+    .mw-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .mw-stats { grid-template-columns: repeat(2, 1fr); padding: 1rem; }
+    .mw-beach-cols { grid-template-columns: 1fr; }
+  }
+</style>

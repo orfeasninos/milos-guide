@@ -6,7 +6,7 @@ import PartnerPage from '../../components/restaurant/PartnerPage.astro';
 import beachesData from '../../data/beaches.json';
 import { beachPhoto, restaurantPhoto, existingPhotos } from '../../lib/public-files';
 import { getBeachName } from '../../lib/beaches';
-import { metaDescription } from '../../lib/seo';
+import { metaDescription, paragraphs } from '../../lib/seo';
 import {
   restaurants, areaVillageSlug, placeType, placeService,
   mapsUrl, telHref, distanceKm, activePartner, type Restaurant,
@@ -119,6 +119,7 @@ const restaurantJsonld = {
   <article class="r-main">
 
     <p class="r-desc">{r.description.en}</p>
+    {paragraphs(r.about).map(p => <p class="r-desc">{p}</p>)}
 
     <!-- Opening hours -->
     <div class="r-block">
@@ -360,6 +361,7 @@ const restaurantJsonld = {
   color: var(--ink);
   margin-bottom: 2.5rem;
 }
+.r-desc + .r-desc { margin-top: -1.5rem; }
 .r-block { margin-bottom: 2.5rem; }
 .block-title {
   font-size: .65rem;

@@ -3,8 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import beachesData from '../data/beaches.json';
 import villagesData from '../data/villages.json';
 import sightsData from '../data/sights.json';
+import { months as climate } from '../lib/climate';
 
 type Village = typeof villagesData[number];
+
+// Temperatures come from the same climate data as /weather/<month>/, so the two never disagree.
+const climateBy = Object.fromEntries(climate.map(c => [c.name, c]));
 ---
 
 <Layout
@@ -227,19 +231,19 @@ type Village = typeof villagesData[number];
     </p>
     <div class="months-table">
       {[
-        { month: 'April', crowd: '⬜⬜⬜⬜⬜', temp: '16°C', sea: '17°C', tag: 'Peaceful', note: 'Wildflowers in bloom, few tourists. Sea still fresh.' },
-        { month: 'May',    crowd: '🟦⬜⬜⬜⬜', temp: '20°C', sea: '19°C', tag: 'Ideal', note: 'Perfect balance. Warm, few crowds, everything open.' },
-        { month: 'June',  crowd: '🟦🟦⬜⬜⬜', temp: '25°C', sea: '23°C', tag: 'Very good', note: 'Warm sea, tourism beginning to pick up.' },
-        { month: 'July',  crowd: '🟦🟦🟦🟦⬜', temp: '29°C', sea: '25°C', tag: 'Peak season', note: 'Busy, meltemi begins. Book everything early.' },
-        { month: 'August',crowd: '🟦🟦🟦🟦🟦', temp: '30°C', sea: '26°C', tag: 'Full', note: 'Peak tourism and meltemi. Avoid northern beaches.' },
-        { month: 'September', crowd: '🟦🟦🟦⬜⬜', temp: '26°C', sea: '25°C', tag: '★ Best month', note: 'Warm sea, fewer crowds, lower prices.' },
-        { month: 'October', crowd: '🟦⬜⬜⬜⬜', temp: '21°C', sea: '23°C', tag: 'Autumn', note: 'Very quiet, some places closed. For independent travellers.' },
+        { month: 'April', crowd: '⬜⬜⬜⬜⬜', tag: 'Peaceful', note: 'Wildflowers in bloom, few tourists. Sea still fresh.' },
+        { month: 'May',    crowd: '🟦⬜⬜⬜⬜', tag: 'Ideal', note: 'Perfect balance. Warm, few crowds, everything open.' },
+        { month: 'June',  crowd: '🟦🟦⬜⬜⬜', tag: 'Very good', note: 'Warm sea, tourism beginning to pick up.' },
+        { month: 'July',  crowd: '🟦🟦🟦🟦⬜', tag: 'Peak season', note: 'Busy, meltemi begins. Book everything early.' },
+        { month: 'August',crowd: '🟦🟦🟦🟦🟦', tag: 'Full', note: 'Peak tourism and meltemi. Avoid northern beaches.' },
+        { month: 'September', crowd: '🟦🟦🟦⬜⬜', tag: '★ Best month', note: 'Warm sea, fewer crowds, lower prices.' },
+        { month: 'October', crowd: '🟦⬜⬜⬜⬜', tag: 'Autumn', note: 'Very quiet, some places closed. For independent travellers.' },
       ].map(m => (
         <div class={`month-row${m.tag.includes('★') ? ' month-row--best' : ''}`}>
-          <span class="mr-month">{m.month}</span>
+          <a class="mr-month" href={`/weather/${climateBy[m.month].slug}/`}>{m.month}</a>
           <span class={`mr-tag${m.tag.includes('★') ? ' mr-tag--best' : ''}`}>{m.tag}</span>
           <span class="mr-crowd" title="Occupancy">{m.crowd}</span>
-          <span class="mr-temps">{m.temp} / {m.sea} 🌊</span>
+          <span class="mr-temps">{climateBy[m.month].hi}°C / {climateBy[m.month].sea}°C 🌊</span>
           <span class="mr-note">{m.note}</span>
         </div>
       ))}
@@ -520,7 +524,7 @@ type Village = typeof villagesData[number];
 .month-row:last-child { border-bottom: none; }
 .month-row:nth-child(even) { background: var(--sand); }
 .month-row--best { background: var(--deep-blue) !important; }
-.mr-month { font-weight: 600; color: var(--ink); }
+.mr-month { font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,0.15); }
 .month-row--best .mr-month { color: #fff; }
 .mr-tag {
   font-size: 0.65rem;

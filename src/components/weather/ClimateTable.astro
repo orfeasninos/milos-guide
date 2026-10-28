@@ -1,0 +1,68 @@
+---
+import { months, swimVerdict, CLIMATE_SOURCE } from '../../lib/climate';
+
+interface Props {
+  // Slug of the month to highlight (on /weather/<month>/)
+  current?: string;
+}
+const { current } = Astro.props;
+---
+<div class="ct-wrap">
+  <table class="ct">
+    <thead>
+      <tr>
+        <th scope="col">Month</th>
+        <th scope="col">High / low</th>
+        <th scope="col">Sea</th>
+        <th scope="col">Rain days</th>
+        <th scope="col"><abbr title="Days with a strong north wind (4+ Beaufort), the meltemi in summer">Windy days</abbr></th>
+        <th scope="col" class="ct-swim">Swimming</th>
+      </tr>
+    </thead>
+    <tbody>
+      {months.map(m => (
+        <tr class={m.slug === current ? 'is-current' : undefined}>
+          <th scope="row">
+            {m.slug === current
+              ? <span>{m.name}</span>
+              : <a href={`/weather/${m.slug}/`}>{m.name}</a>}
+          </th>
+          <td>{m.hi}° / {m.lo}°C</td>
+          <td>{m.sea}°C</td>
+          <td>{m.rainDays}</td>
+          <td>{m.northWindDays}</td>
+          <td class="ct-swim">{swimVerdict(m.sea)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="ct-source">{CLIMATE_SOURCE}</p>
+
+<style>
+  .ct-wrap {
+    overflow-x: auto;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+  }
+  .ct { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .ct th, .ct td { padding: 0.7rem 1rem; text-align: left; white-space: nowrap; }
+  .ct thead th {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .ct abbr { text-decoration: none; cursor: help; }
+  .ct tbody tr:nth-child(even) { background: var(--sand); }
+  .ct tbody th { font-weight: 600; color: var(--ink); }
+  .ct tbody th a { color: var(--aegean); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,0.15); }
+  .ct tbody th a:hover { text-decoration-color: currentColor; }
+  .ct td { color: var(--muted); }
+  .ct tr.is-current { background: var(--deep-blue) !important; }
+  .ct tr.is-current th, .ct tr.is-current td { color: #fff; }
+  .ct-source { margin-top: 0.6rem; font-size: 0.7rem; color: var(--muted); }
+  @media (max-width: 600px) {
+    .ct th, .ct td { padding: 0.6rem 0.7rem; }
+    .ct-swim { display: none; }
+  }
+</style>

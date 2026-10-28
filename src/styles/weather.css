@@ -87,8 +87,16 @@
   font-weight: 600;
   color: rgba(255,255,255,0.88);
 }
-.hero-updated {
+.hero-summary {
   margin-top: 1.75rem;
+  max-width: 62ch;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.75);
+}
+.hero-summary:empty { display: none; }
+.hero-updated {
+  margin-top: 1rem;
   font-size: 0.68rem;
   color: rgba(255,255,255,0.28);
 }
@@ -641,8 +649,48 @@
 .w-day.is-today .w-day-rain { color: var(--sky); }
 .w-day-rain-ph { height: 0.88rem; display: block; }
 
+/* ── Static guide (climate, meltemi, FAQ) ──────────── */
+.w-guide { padding-top: 4rem; }
+.w-guide-block + .w-guide-block { margin-top: 4.5rem; }
+.w-guide .sec-title { margin-bottom: 1rem; }
+.w-guide-lead { max-width: 640px; color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 1.75rem; }
+.w-guide-cols { display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; align-items: start; }
+.w-guide-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+.w-guide-text p + p { margin-top: 1rem; }
+.w-guide-text strong { color: var(--ink); }
+.w-guide-card {
+  background: var(--sand);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+.w-guide-card-title {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.75rem;
+}
+.w-guide-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+.w-guide-list li { padding: 0.45rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
+.w-guide-list a, .w-faq-item a { color: var(--aegean); font-weight: 600; }
+.w-guide-more { font-size: 0.82rem; font-weight: 600; color: var(--deep-blue); }
+.w-faq { max-width: 760px; }
+.w-faq-item { border-bottom: 1px solid rgba(0,0,0,0.08); }
+.w-faq-item summary {
+  cursor: pointer;
+  padding: 1rem 0;
+  font-weight: 600;
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.w-faq-item summary::-webkit-details-marker { display: none; }
+.w-faq-item summary::after { content: '+'; color: var(--sea); font-weight: 400; font-size: 1.2rem; line-height: 1; }
+.w-faq-item[open] summary::after { content: '−'; }
+.w-faq-item p { padding: 0 0 1.1rem; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+
 /* ── Responsive ───────────────────────────────────── */
 @media (max-width: 860px) {
+  .w-guide-cols { grid-template-columns: 1fr; }
   .w-stats-grid { grid-template-columns: repeat(2, 1fr); }
   .w-stat--range, .w-stat--more { grid-column: span 2; }
 }

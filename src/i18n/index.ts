@@ -19,7 +19,7 @@ export const ui = {
     'nav.soon':       'Coming soon',
 
     // Footer
-    'footer.tagline':    'The most complete guide\nto Milos — no ads.',
+    'footer.tagline':    'The most complete guide\nto Milos.',
     'footer.explore':    'Explore',
     'footer.beaches':    'Beaches',
     'footer.restaurants':'Restaurants',
@@ -33,7 +33,7 @@ export const ui = {
     'footer.map':        'Island map',
     'footer.contact':    'Contact',
     'footer.copy':       '© 2026 Milos.guide',
-    'footer.note':       'Made with love for Milos · No ads · No sponsors',
+    'footer.note':       'Made with love for Milos',
 
     // Common
     'common.seeall':     'See all →',
@@ -92,7 +92,7 @@ export const ui = {
     'nav.soon':       'Σύντομα',
 
     // Footer
-    'footer.tagline':    'Ο πιο πλήρης οδηγός\nγια τη Μήλο — χωρίς διαφημίσεις.',
+    'footer.tagline':    'Ο πιο πλήρης οδηγός\nγια τη Μήλο.',
     'footer.explore':    'Εξερεύνηση',
     'footer.beaches':    'Παραλίες',
     'footer.restaurants':'Εστιατόρια',
@@ -106,7 +106,7 @@ export const ui = {
     'footer.map':        'Χάρτης νησιού',
     'footer.contact':    'Επικοινωνία',
     'footer.copy':       '© 2026 Milos.guide',
-    'footer.note':       'Φτιαγμένο με αγάπη για τη Μήλο · Χωρίς διαφημίσεις · Χωρίς χορηγούς',
+    'footer.note':       'Φτιαγμένο με αγάπη για τη Μήλο',
 
     // Common
     'common.seeall':     'Όλα →',

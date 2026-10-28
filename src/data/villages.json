@@ -7,6 +7,7 @@
     "taglineEn": "The hilltop capital",
     "description": "Η Πλάκα είναι η πρωτεύουσα της Μήλου και στέκεται περήφανα στην κορυφή ενός βράχου με πανοραμική θέα σε όλο τον κόλπο. Στενά καλντερίμια, άσπρες εκκλησίες και παραδοσιακά κυκλαδίτικα σπίτια δημιουργούν ένα τοπίο που θυμίζει παλιά ζωγραφιά. Το βράδυ, το ηλιοβασίλεμα από τον πύργο της Πλάκας είναι από τα πιο εντυπωσιακά στο Αιγαίο.",
     "descriptionEn": "Plaka is the capital of Milos, perched proudly atop a rocky hill with panoramic views over the bay. Narrow cobblestone paths, whitewashed churches and traditional Cycladic houses create a scene that feels like a painting. At dusk, the sunset from Plaka's kastro is among the most spectacular in the Aegean.",
+    "aboutEn": "Plaka is best explored on foot. Cars stop at the edge of the village, and from there a maze of stone-paved lanes leads past small shops, cafés and churches. The path up to the Kastro, the old Venetian castle at the top of the hill, takes about fifteen minutes. From the top you can see the whole of Milos Bay and, on clear days, the neighbouring islands. Arrive well before sunset, as it gets busy.\n\nThe Archaeological Museum, with a copy of the Venus de Milo, is in Plaka. Tripiti, with the Catacombs and the ancient theatre, is within walking distance downhill. In the evening the village is the liveliest place on the island, with restaurants and bars along the main lane. Plathiena beach is a short drive away.",
     "highlights": [
       "Πύργος με πανοραμική θέα",
       "Αρχαιολογικό Μουσείο Μήλου",
@@ -56,6 +57,7 @@
     "taglineEn": "The main port of the island",
     "description": "Ο Αδάμαντας είναι το κύριο λιμάνι της Μήλου και η πρώτη εικόνα που παίρνει κάθε επισκέπτης που φτάνει με πλοίο. Ζωντανός και φιλόξενος, με εστιατόρια, καφέ και μαγαζιά κατά μήκος της παραλίας, ο Αδάμαντας λειτουργεί ως το εμπορικό κέντρο του νησιού. Εδώ βρίσκονται τα γραφεία των πλοιάριων για boat tours.",
     "descriptionEn": "Adamas is the main port of Milos and the first impression every visitor gets when arriving by ferry. Lively and welcoming, with restaurants, cafés and shops along the waterfront, Adamas serves as the island's commercial hub. This is also where you'll find the boat tour operators.",
+    "aboutEn": "Adamas sits deep inside Milos Bay, one of the largest natural harbours in the Mediterranean. Ferries from Piraeus and the other Cyclades arrive here, and the town is the island's main base for practical things: car and quad rental, the bus station, banks, pharmacies and supermarkets. Day boats to Kleftiko and the south-west coast leave from the harbour.\n\nThe Mining Museum of Milos, a short walk from the port, tells the story of the minerals that shaped the island, from obsidian in the Stone Age to bentonite and perlite today. Papikinou beach is within walking distance, and the waterfront fills with tavernas and cafés in the evening. Adamas is the easiest place to stay if you do not plan to rent a car.",
     "highlights": [
       "Κεντρικό λιμάνι Μήλου",
       "Εκκλησία Κοιμήσεως Θεοτόκου",
@@ -105,6 +107,7 @@
     "taglineEn": "Catacombs, history and antiquity",
     "description": "Η Τρυπητή είναι ίσως το πιο ιστορικά φορτισμένο χωριό της Μήλου. Εδώ βρίσκονται οι περίφημες Κατακόμβες — ένα από τα σημαντικότερα χριστιανικά μνημεία της Ελλάδας — καθώς και το αρχαίο θέατρο απ' όπου θαυμάζεις τον κόλπο. Κοντά εδώ ανακαλύφθηκε το 1820 η Αφροδίτη της Μήλου.",
     "descriptionEn": "Tripiti is perhaps the most historically charged village in Milos. Here lie the famous Catacombs — one of the most important early Christian monuments in Greece — and an ancient theatre with views over the bay. Nearby, the Venus de Milo was discovered in 1820.",
+    "aboutEn": "Tripiti stands on a ridge between Plaka and the sea, and its whitewashed houses and windmills look down over Milos Bay. Below the village lie three of the most important sights on the island: the early Christian Catacombs, the Roman-era ancient theatre and the spot where a farmer found the Venus de Milo in 1820. All three are connected by footpaths.\n\nFrom the theatre, a path and a road lead down to the fishing village of Klima. Tripiti itself is quiet and residential, with a few tavernas and a terrace view at sunset. It is a short walk from Plaka, so many visitors combine the two in one afternoon.",
     "highlights": [
       "Κατακόμβες Μήλου (1ος–5ος αι. μ.Χ.)",
       "Αρχαίο Ρωμαϊκό Θέατρο",
@@ -121,7 +124,7 @@
     "area": "Central Milos",
     "coordinates": {
       "lat": 36.7386,
-      "lng": 24.4260
+      "lng": 24.426
     },
     "googleMapsUri": "https://maps.google.com/?q=Trypiti+Milos+Greece",
     "population": "502 (2021)",
@@ -149,8 +152,9 @@
     "nameEn": "Triovasalos",
     "tagline": "Παραδοσιακό χωριό της ενδοχώρας",
     "taglineEn": "Traditional inland village",
-    "description": "Ο Τριοβάσαλος είναι ένα από τα παραδοσιακά ορεινά χωριά της Μήλου, λίγο έξω από την Πλάκα. Ήρεμος και γνήσιος, με παραδοσιακά σπίτια και ατμοσφαιρικές πλατείες. Εδώ βρίσκεται η Ψητολατρεία, ένα από τα πιο αγαπημένα εστιατόρια του νησιού.",
-    "descriptionEn": "Triovasalos is one of the traditional inland villages of Milos, just outside Plaka. Quiet and genuine, with traditional houses and atmospheric squares. This is where you'll find Psitolatreia, one of the island's most beloved restaurants.",
+    "description": "Ο Τριοβάσαλος είναι ένα από τα παραδοσιακά ορεινά χωριά της Μήλου, λίγο έξω από την Πλάκα. Ήρεμος και γνήσιος, με παραδοσιακά σπίτια και ατμοσφαιρικές πλατείες. Εδώ βρίσκεται το Μπακάλικον Γαλάνης, ταβέρνα σε ένα παλιό μπακάλικο του χωριού.",
+    "descriptionEn": "Triovasalos is one of the traditional inland villages of Milos, just outside Plaka. Quiet and genuine, with traditional houses and atmospheric squares. This is where you'll find Bakalikon Galanis, a taverna in the village's old grocery shop.",
+    "aboutEn": "Triovasalos is one of the largest villages on Milos, a lived-in place where islanders outnumber visitors. It runs straight on from Plaka and Pera Triovasalos, so it is easy to wander from one to the next. The lanes are lined with traditional houses, small churches and a few shops that serve the locals year round.\n\nThe village is known for its Easter celebrations. On Easter Sunday, Triovasalos and Pera Triovasalos each burn an effigy of Judas, and the evening ends in a loud and friendly rivalry between the two neighbourhoods. Bakalikon Galanis, a meze taverna in the old village grocery, is here, along with several other tavernas. Prices are often lower than in Plaka.",
     "highlights": [
       "Παραδοσιακή αρχιτεκτονική",
       "Ήρεμη ατμόσφαιρα",
@@ -193,8 +197,9 @@
     "nameEn": " Pera Triovasalos",
     "tagline": "Παραδοσιακό χωριό της ενδοχώρας",
     "taglineEn": "Traditional inland village",
-    "description": "Ο Πέρα Τριοβάσαλος είναι ένα από τα παραδοσιακά χωριά της Μήλου, λίγο έξω από την Πλάκα. Ήρεμος και γνήσιος, με παραδοσιακά σπίτια και ατμοσφαιρικές πλατείες. Εδώ βρίσκεται η Ψητολατρεία, ένα από τα πιο αγαπημένα εστιατόρια του νησιού.",
-    "descriptionEn": "Pera Triovasalos is one of the traditional inland villages of Milos, just outside Plaka. Quiet and genuine, with traditional houses and atmospheric squares. This is where you'll find Psitolatreia, one of the island's most beloved restaurants.",
+    "description": "Ο Πέρα Τριοβάσαλος είναι ένα ήσυχο χωριό αμέσως μετά τον Τριοβάσαλο, ανάμεσα στην Πλάκα και τον Αδάμαντα. Τα δύο χωριά ενώνονται και είναι γνωστά για τον πασχαλινό τους ανταγωνισμό.",
+    "descriptionEn": "Pera Triovasalos is a quiet residential village just past Triovasalos, between Plaka and Adamas. The two villages run into each other and are known for their shared Easter rivalry.",
+    "aboutEn": "Pera Triovasalos means \"beyond Triovasalos\", and the village does sit just past its larger neighbour, on the road between Plaka and Adamas. In practice the two run into each other, and there is no clear line where one ends and the next begins. It is a residential village of whitewashed houses and quiet lanes, with few tourist shops.\n\nThe village comes alive at Easter. On Easter Sunday, Pera Triovasalos and Triovasalos each burn an effigy of Judas, and the old rivalry between the two neighbourhoods turns the evening into one of the liveliest nights of the year on Milos. The rest of the year it is a calm place to stay, close to Plaka but without the evening crowds. Psitolatreia, a casual grill house serving gyros, souvlaki and skewers, is in the village.",
     "highlights": [
       "Παραδοσιακή αρχιτεκτονική",
       "Ήρεμη ατμόσφαιρα",
@@ -239,6 +244,7 @@
     "taglineEn": "Fish tavernas, sea and Kimolos",
     "description": "Η Πολλώνια βρίσκεται στο βορειοανατολικό άκρο της Μήλου και είναι το πιο ζωντανό ψαροχώρι του νησιού. Με το γραφικό λιμανάκι, τις ψαροταβέρνες δίπλα στο νερό και την εύκολη πρόσβαση στην Κίμωλο (20 λεπτά με βαρκάκι), η Πολλώνια είναι ιδανική βάση για εξερεύνηση.",
     "descriptionEn": "Pollonia sits at the northeastern tip of Milos and is the island's most lively fishing village. With its picturesque harbour, waterfront fish tavernas and easy access to Kimolos (20 minutes by small boat), Pollonia makes an ideal base for exploring the area.",
+    "aboutEn": "Pollonia takes its name from Apollo, and has long been a fishing village. Today it is also one of the best places to eat on the island. The waterfront is lined with fish tavernas and cafés that look over the bay and the small harbour. It is a popular base for visitors who want a quieter stay than in Adamas.\n\nSmall ferries leave the harbour for Kimolos several times a day, and the crossing is short enough for a day trip. Pollonia Beach is right in the village. Papafragas, the ruins of ancient Phylakopi and the north coast beaches are a short drive to the west.",
     "highlights": [
       "Ψαροταβέρνες παραλία",
       "Φέρι για Κίμωλο",
@@ -290,6 +296,7 @@
     "taglineEn": "The island’s old capital",
     "description": "Η Ζεφυρία, γνωστή και ως Χώρα, ήταν για αιώνες η πρωτεύουσα της Μήλου. Εγκαταλείφθηκε στα τέλη του 18ου αιώνα μετά από επιδημίες και οι κάτοικοί της μετακινήθηκαν στα χωριά γύρω από την Πλάκα. Σήμερα είναι ένα ήσυχο χωριό στην ενδοχώρα, ανάμεσα σε χωράφια, με την εκκλησία της Παναγίας Πορτιανής να θυμίζει το παρελθόν του.",
     "descriptionEn": "Zefiria, also known as Chora, was the capital of Milos for centuries. It was abandoned in the late 18th century after a series of epidemics, and its people moved to the villages around Plaka. Today it is a quiet inland village surrounded by farmland, where the church of Panagia Portiani recalls its past.",
+    "aboutEn": "Zefiria is one of the oldest villages on Milos and was the island's capital for several centuries. It is said to have been abandoned after epidemics and political troubles in the late 18th century, when most of its people moved up to Plaka and the villages around it. The large church of Panagia Portiani is the clearest reminder of its past importance.\n\nToday Zefiria is a small, quiet village in the farmland at the centre of the island, with few visitors and a slower pace than the coast. Achivadolimni, the longest beach on Milos, is a short drive away, and there is a taverna on the edge of the village.",
     "highlights": [
       "Παλιά πρωτεύουσα του νησιού",
       "Εκκλησία Παναγίας Πορτιανής",
@@ -332,6 +339,7 @@
     "taglineEn": "The iconic syrmata over the water",
     "description": "Το Κλήμα είναι ένα από τα πιο φωτογενή χωριά της Μήλου. Τα περίφημα σύρματα — παραδοσιακές αλιευτικές αποθήκες χτισμένες απευθείας στη θάλασσα με κολυμπιστάρια στο ισόγειο και κατοικία από πάνω — δίνουν στο χωριό τον μοναδικό του χαρακτήρα. Τα χρωματιστά σύρματα αντανακλούν στο νερό δημιουργώντας ένα από τα πιο εικονικά τοπία του Αιγαίου.",
     "descriptionEn": "Klima is one of the most photogenic villages in Milos. The famous syrmata — traditional fishing boathouses built directly over the sea, with a garage at water level and living quarters above — give the village its unique character. Their colourful facades reflect in the water, creating one of the most iconic scenes in the Aegean.",
+    "aboutEn": "The syrmata of Klima were built by fishermen. Each house has a boat garage at sea level, painted in a bright colour, with simple living quarters above. Many have been restored and some can be rented as guesthouses. A night in one is one of the most memorable ways to stay on Milos.\n\nThe village is a single lane along the water, so leave the car at the top and walk down. You can swim off the rocks in front of the houses, and a fish taverna serves lunch by the sea. Above Klima are Tripiti, the ancient theatre and the Catacombs, linked by footpaths. Klima is small and gets busy, so visit early or late in the day.",
     "highlights": [
       "Παραδοσιακά σύρματα",
       "Αλιευτικές βάρκες",
@@ -368,8 +376,6 @@
       "astakas-milos"
     ]
   },
-  
-  
   {
     "slug": "mandrakia",
     "name": "Μανδράκια",
@@ -378,6 +384,7 @@
     "taglineEn": "A small harbour with colourful syrmata",
     "description": "Η Μανδράκια είναι ένα από τα πιο ειδυλλιακά χωριά της Μήλου. Όπως και το Κλήμα, έχει παραδοσιακά σύρματα χτισμένα στη θάλασσα, αλλά σε πιο περιορισμένη κλίμακα και με πιο ήρεμη ατμόσφαιρα. Ιδανικό για βόλτα και φωτογραφία.",
     "descriptionEn": "Mandrakia is one of the most idyllic villages in Milos. Like Klima, it has traditional syrmata boathouses built over the sea, but on a smaller scale and with an even quieter atmosphere. Perfect for a stroll and photography.",
+    "aboutEn": "Mandrakia is little more than a handful of syrmata around a narrow, rocky inlet on the north coast. Fishing boats are still pulled up into the boathouses, and the village has kept a working, unpolished feel. There is no sandy beach: people swim off the rocks, and only on calm days.\n\nThe village's taverna above the water is popular for long lunches, so it is worth booking in high season. The road down is narrow and parking is limited. Mandrakia is close to Sarakiniko and Firopotamos, and it is easy to visit all three in one morning.",
     "highlights": [
       "Σύρματα δίπλα στη θάλασσα",
       "Ήρεμη ατμόσφαιρα",
@@ -420,6 +427,7 @@
     "taglineEn": "Authentic and unspoiled",
     "description": "Ο Φυροπόταμος είναι ένα από τα λιγότερο γνωστά χωριά της Μήλου — και αυτό είναι ακριβώς η γοητεία του. Με σύρματα, μικρό φυσικό λιμάνι και ελάχιστους επισκέπτες ακόμα και τον Αύγουστο, ο Φυροπόταμος μοιάζει με την Μήλο που ήταν πριν τον τουρισμό.",
     "descriptionEn": "Firopotamos is one of the least-known villages in Milos — and that is precisely its charm. With syrmata boathouses, a small natural harbour and very few visitors even in August, Firopotamos feels like the Milos that existed before tourism.",
+    "aboutEn": "Firopotamos is a small bay on the north coast, a short drive from Plaka. A few syrmata line the water, and a small white chapel stands on the rocks at the mouth of the bay. The cove has a short sandy beach with shallow, clear water, popular with families.\n\nThere are no shops or tavernas, so bring what you need. Parking is limited and fills by late morning in summer. On calm days, when the meltemi is not blowing, Firopotamos is one of the most peaceful places to swim on this side of Milos.",
     "highlights": [
       "Αυθεντικά σύρματα",
       "Ελάχιστοι τουρίστες",

@@ -2,6 +2,7 @@ export interface Beach {
   slug: string;
   name: string | { el: string; en: string };
   description: string | { el: string; en: string };
+  about?: string;          // longer English text for the detail page; blank line = new paragraph
   location: { area: string; address: string };
   placeId: string | null;
   image: string | null;

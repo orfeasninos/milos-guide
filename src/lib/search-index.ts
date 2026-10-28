@@ -1,3 +1,4 @@
+import { readWeatherCache } from './weather-cache';
 import sightsRaw from '../data/sights.json';
 import beachesRaw from '../data/beaches.json';
 import villagesRaw from '../data/villages.json';
@@ -10,6 +11,26 @@ import type { SearchItem } from './search-match';
 const placeTypeEl: Record<string, string> = { restaurant: 'Εστιατόριο', cafe: 'Καφέ' };
 const stayTypeEl: Record<string, string> = { hotel: 'Ξενοδοχείο', studio: 'Στούντιο', villa: 'Βίλα' };
 
+// Current conditions as an emoji for the Weather entry, from the build-time cache so the
+// browser makes no extra request.
+function currentWeatherIcon(): string {
+  const w = readWeatherCache()?.weather;
+  // No cache locally or the fetch failed at deploy.
+  if (!w) return '☀️';
+  const code: number = w.current.weather_code;
+  // Times are local ISO strings without an offset, so plain string comparison works.
+  const i = w.daily.time.indexOf(w.current.time.slice(0, 10));
+  const night = i >= 0 && (w.current.time < w.daily.sunrise[i] || w.current.time >= w.daily.sunset[i]);
+  if (code === 0)  return night ? '🌙' : '☀️';
+  if (code === 1)  return night ? '🌙' : '🌤️';
+  if (code === 2)  return night ? '☁️' : '⛅';
+  if (code === 3)  return '☁️';
+  if (code <= 48)  return '🌫️';
+  if (code <= 67 || (code >= 80 && code <= 82)) return '🌧️';
+  if (code <= 86)  return '🌨️';
+  return '⛈️';
+}
+
 // Section and info pages. Listed first so "beaches" puts the Beaches page above every single beach.
 // Keywords mix English and Greek because typed queries come in both.
 const guidePages: { nameEn: string; nameEl: string; url: string; icon: string; logo?: string; keywords: string }[] = [
@@ -20,7 +41,7 @@ const guidePages: { nameEn: string; nameEl: string; url: string; icon: string; l
   { nameEn: 'Where to Stay',      nameEl: 'Διαμονή',            url: '/stays/',        icon: '🛏', keywords: 'hotels accommodation rooms villas studios ξενοδοχεια καταλυματα δωματια' },
   { nameEn: 'Map of Milos',       nameEl: 'Χάρτης της Μήλου',   url: '/map/',          icon: '🗺', logo: '/icons/milos-map.svg', keywords: 'map χαρτης' },
   { nameEn: 'How to Get to Milos', nameEl: 'Πώς θα έρθεις στη Μήλο', url: '/how-to-reach/', icon: '🚢', keywords: 'ferry boat flight plane airport port piraeus tickets car rental getting around πλοιο αεροπλανο πτηση αεροδρομιο λιμανι πειραιας εισιτηρια ενοικιαση αυτοκινητου' },
-  { nameEn: 'Weather',            nameEl: 'Καιρός',             url: '/weather/',      icon: '☀️', keywords: 'forecast wind meltemi sea temperature waves uv καιρος προγνωση ανεμος μελτεμι θαλασσα κυμα' },
+  { nameEn: 'Weather',            nameEl: 'Καιρός',             url: '/weather/',      icon: currentWeatherIcon(), keywords: 'forecast wind meltemi sea temperature waves uv climate month best time καιρος προγνωση ανεμος μελτεμι θαλασσα κυμα' },
   { nameEn: 'About Milos',        nameEl: 'Σχετικά με τη Μήλο', url: '/about/',        icon: 'ℹ️', keywords: 'history geography venus aphrodite when to visit seasons ιστορια γεωγραφια αφροδιτη εποχες' },
   { nameEn: 'Contact',            nameEl: 'Επικοινωνία',        url: '/contact/',      icon: '✉️', keywords: 'email contact partnership advertise επικοινωνια συνεργασια διαφημιση' },
 ];

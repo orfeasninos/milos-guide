@@ -39,7 +39,8 @@ export type Partner = {
   logo?: string;
 };
 
-export type Restaurant = (typeof restaurantsRaw)[number] & { partner?: Partner };
+// `about`: a longer description for free listings, written by hand, shown under the short one.
+export type Restaurant = (typeof restaurantsRaw)[number] & { partner?: Partner; about?: string };
 
 export const PARTNER_LABEL = 'Featured partner';
 

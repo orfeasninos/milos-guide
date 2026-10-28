@@ -1,0 +1,86 @@
+[
+  {
+    "slug": "january", "name": "January",
+    "hi": 14, "lo": 10, "sea": 17, "rainDays": 12, "northWindDays": 9,
+    "tag": "Off season",
+    "intro": "January is the wettest and quietest month on Milos. Days are mild by northern European standards, but rain comes in bursts and strong north winds can cancel ferries for a day or two. Most hotels, beach bars and many tavernas close for the winter; Adamas and Plaka keep a handful of places open for locals.",
+    "pack": "A waterproof jacket, a warm layer for the evenings and the ferry deck, and shoes that grip on wet rock."
+  },
+  {
+    "slug": "february", "name": "February",
+    "hi": 15, "lo": 11, "sea": 16, "rainDays": 8, "northWindDays": 8,
+    "tag": "Off season",
+    "intro": "February is still winter, with the coldest sea of the year, but the island starts turning green and almond trees flower. Expect a mix of bright, crisp days and grey, windy ones. Very few visitors, very few open businesses, and the landscape to yourself for walks and photography.",
+    "pack": "Layers, a windproof jacket and walking shoes. Swimming is only for the brave."
+  },
+  {
+    "slug": "march", "name": "March",
+    "hi": 16, "lo": 12, "sea": 17, "rainDays": 8, "northWindDays": 7,
+    "tag": "Wildflowers",
+    "intro": "March brings longer days and the first wildflowers across the hills, though rain and wind still come and go. It is a good month for hiking the old mining paths and seeing Sarakiniko and Kleftiko's cliffs from land without crowds. Hotels and restaurants mostly reopen from April onwards.",
+    "pack": "Layers, a light rain jacket and hiking shoes."
+  },
+  {
+    "slug": "april", "name": "April",
+    "hi": 19, "lo": 14, "sea": 17, "rainDays": 4, "northWindDays": 6,
+    "tag": "Spring",
+    "intro": "April is spring proper: green hills, wildflowers and mostly sunny days, with the odd shower. The sea is still cold for most people. The island wakes up through the month, and Greek Easter (often in April) brings a busy, festive weekend with services in every village.",
+    "pack": "T-shirts plus a sweater and light jacket for the evenings; a wetsuit top if you plan to swim."
+  },
+  {
+    "slug": "may", "name": "May",
+    "hi": 23, "lo": 18, "sea": 19, "rainDays": 3, "northWindDays": 5,
+    "tag": "Peaceful",
+    "intro": "May is warm, sunny and calm, one of the least windy months of the year. Most places are open, boat trips to Kleftiko start running, and the beaches are close to empty. The sea is refreshing rather than warm, so swims are short early in the month and easier by the end.",
+    "pack": "Summer clothes, a light layer for evenings, sun protection; the UV is already high."
+  },
+  {
+    "slug": "june", "name": "June",
+    "hi": 27, "lo": 22, "sea": 23, "rainDays": 1, "northWindDays": 5,
+    "tag": "Ideal",
+    "intro": "June is summer without the peak: hot, dry days, a warming sea and usually little wind. Everything is open, and boat tours run on most days. The north coast, including Sarakiniko, Papafragas and Firopotamos, is often calm. It gets busier towards the end of the month.",
+    "pack": "Swimwear, a hat, SPF 50 and water shoes for the rocky coves."
+  },
+  {
+    "slug": "july", "name": "July",
+    "hi": 29, "lo": 24, "sea": 26, "rainDays": 1, "northWindDays": 14,
+    "tag": "Meltemi",
+    "intro": "July is hot and almost rainless, and it is when the meltemi sets in: a dry north wind that can blow at 5–7 Beaufort for several days at a time. It keeps the heat bearable but sends waves onto the north-facing beaches and can cancel boat tours and small ferries. On meltemi days the south coast is calm, so check the wind before picking a beach.",
+    "pack": "Swimwear, a hat that stays on in wind, SPF 50 and a light layer for windy evenings."
+  },
+  {
+    "slug": "august", "name": "August",
+    "hi": 29, "lo": 25, "sea": 26, "rainDays": 1, "northWindDays": 14,
+    "tag": "Peak & windy",
+    "intro": "August is the busiest and joint-hottest month, with the warmest sea of the year. The meltemi blows on roughly half the days, sometimes strongly. On those days the north beaches get rough, while Paleochori, Firiplaka, Tsigrado and the rest of the south coast stay sheltered. Book accommodation, cars and boat trips well ahead.",
+    "pack": "Swimwear, a wind-proof hat, SPF 50, water shoes and booking confirmations."
+  },
+  {
+    "slug": "september", "name": "September",
+    "hi": 27, "lo": 22, "sea": 25, "rainDays": 2, "northWindDays": 9,
+    "tag": "Best month",
+    "intro": "September keeps the summer heat and the warm sea but loses the August crowds, and the meltemi eases through the month. For many people it is the best time to visit Milos. Prices drop after the first week, everything is still open, and boat trips run on most days.",
+    "pack": "Summer clothes, swimwear and a light layer for evenings late in the month."
+  },
+  {
+    "slug": "october", "name": "October",
+    "hi": 23, "lo": 19, "sea": 24, "rainDays": 3, "northWindDays": 11,
+    "tag": "Autumn",
+    "intro": "October is warm with a sea that still holds most of its summer heat, so swimming is pleasant. The first autumn rains arrive, and windy spells come and go. The island goes quiet in the second half, as hotels, beach bars and some tavernas close for the season and ferry schedules thin out.",
+    "pack": "Swimwear, a sweater and light jacket for evenings, and a flexible plan for windy days."
+  },
+  {
+    "slug": "november", "name": "November",
+    "hi": 19, "lo": 16, "sea": 21, "rainDays": 7, "northWindDays": 9,
+    "tag": "Quiet",
+    "intro": "November is mild but changeable, with rainy days becoming common. The sea is still swimmable for those used to cooler water. Most tourist businesses are closed, so it suits travellers who want empty landscapes and a local feel, and don't mind fewer ferries.",
+    "pack": "A rain jacket, layers and walking shoes."
+  },
+  {
+    "slug": "december", "name": "December",
+    "hi": 16, "lo": 12, "sea": 19, "rainDays": 10, "northWindDays": 9,
+    "tag": "Winter",
+    "intro": "December is winter on Milos: short days, frequent rain and gusty winds, but rarely cold. The island is lived-in rather than touristic, with Christmas celebrated in the villages. Ferry connections are limited and can be disrupted by weather.",
+    "pack": "A waterproof jacket, warm layers and some flexibility in your travel dates."
+  }
+]

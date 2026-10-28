@@ -6,3 +6,7 @@ export function metaDescription(text: string, max = 160): string {
   const cut = clean.slice(0, max - 1);
   return cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,.;:—–-]+$/, '') + '…';
 }
+
+// `about` texts are plain strings in the JSON; a blank line starts a new paragraph.
+export const paragraphs = (text?: string | null): string[] =>
+  text ? text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean) : [];

@@ -33,7 +33,8 @@ Node >= 22 (`.nvmrc`: 22).
 - `src/components/`: `home/*` and `beach/*` hold sections of the home page and the beach detail page. `SmartImage.astro` renders `<picture>` with AVIF/WebP srcsets when the variant files exist in `/public`.
 - Search: `src/lib/search-index.ts` builds the index (server-only), `src/lib/search-match.ts` does the client-side matching. `/search/` inlines the index. The header search box in `Layout` fetches `/search-index.json` (`src/pages/search-index.json.ts`) on first focus and shows results in a dropdown.
 - `src/pages/sitemap.xml.ts`: a hand-maintained sitemap. When you add a static page, add it to `statics` there.
-- `src/pages/weather.astro` + `src/scripts/weather.js` + `src/styles/weather.css`: the live forecast. It fetches Open-Meteo in the browser and falls back to `/weather-cache.json`.
+- `src/pages/weather.astro` + `src/scripts/weather.js` + `src/styles/weather.css`: the live forecast. It fetches Open-Meteo in the browser and falls back to `/weather-cache.json`. The hero, summary and 7-day cards are also prerendered from that cache at build (`src/lib/weather-cache.ts`, server-only), using the same formatters as the client (`src/lib/weather-format.js`).
+- `/weather/<month>/` (`src/pages/weather/[month].astro`): climate pages from `src/data/climate.json` (ERA5 averages; source notes in `src/lib/climate.ts`). The editorial text is hand-written in that JSON.
 - Maps (`/map`, the beaches map view) load Leaflet and markercluster from cdnjs at runtime. They are not npm dependencies.
 
 ## Conventions

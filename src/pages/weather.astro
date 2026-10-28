@@ -4,7 +4,55 @@ import SmartImage from '../components/SmartImage.astro';
 import beachesRaw from '../data/beaches.json';
 import { getArea, areaLabel, getBeachName } from '../lib/beaches';
 import { beachPhoto } from '../lib/public-files';
+import { readWeatherCache } from '../lib/weather-cache';
+import { heroValues, heroClass, wmoIcon, formatTime, forecastSummary, weekHtml } from '../lib/weather-format.js';
+import ClimateTable from '../components/weather/ClimateTable.astro';
+import { months, shelteredFromNorth } from '../lib/climate';
 import '../styles/weather.css';
+
+// Prerender the deploy's cached reading so the HTML carries real numbers (crawlers, first
+// paint); the client script replaces it with the live one. Without a cache: placeholders.
+const cache = readWeatherCache();
+const cacheToday = cache?.weather.current.time.slice(0, 10) ?? '';
+const hv: Record<string, string> = cache ? heroValues(cache.weather, cache.marine, cache.air) : {};
+const heroCls = cache ? heroClass(cache.weather.current.weather_code) : '';
+const heroIcon = cache ? wmoIcon(cache.weather.current.weather_code, Number(cache.weather.current.time.slice(11, 13))) : '';
+const summary = cache ? forecastSummary(cache.weather, cache.marine, cacheToday) : '';
+const week = cache ? weekHtml(cache.weather, cacheToday) : '';
+
+const byName = Object.fromEntries(months.map(m => [m.slug, m]));
+const { july: jul, august: aug, february: feb, january: jan, september: sep, december: dec } = byName;
+const sheltered = shelteredFromNorth();
+const shelteredLinks = sheltered.map(b => `<a href="/beaches/${b.slug}/">${b.name}</a>`).join(', ');
+
+// Answers stay in sync with climate.json; the same text feeds the FAQPage schema.
+const faq = [
+  {
+    q: 'Is Milos windy?',
+    a: `In July and August, often. The meltemi, a dry north wind, blows on about ${jul.northWindDays} days a month at 4 Beaufort or more, sometimes for several days in a row. May and June are the calmest months. In winter, strong northerlies and southerly gales come with passing storms.`,
+  },
+  {
+    q: 'Which beaches are best when the meltemi blows?',
+    a: `Beaches facing south are sheltered from a north wind: ${sheltered.map(b => b.name).join(', ')}. North-facing beaches such as Sarakiniko, Papafragas and Firopotamos get the waves. The beach picks above are ranked live against today's wind.`,
+    html: `Beaches facing south are sheltered from a north wind: ${shelteredLinks}. North-facing beaches such as <a href="/beaches/sarakiniko/">Sarakiniko</a>, Papafragas and Firopotamos get the waves. The beach picks above are ranked live against today's wind.`,
+  },
+  {
+    q: 'What is the sea temperature in Milos?',
+    a: `It peaks at about ${aug.sea}°C in August and stays at ${sep.sea}°C in September. The coldest water is in February, around ${feb.sea}°C. Most people find the sea comfortable from mid-June to October.`,
+  },
+  {
+    q: 'Does it rain in Milos?',
+    a: `Hardly at all in summer: June to August average about one rain day a month. Rain returns from October, and December and January are the wettest months with ${dec.rainDays}–${jan.rainDays} rain days each.`,
+  },
+  {
+    q: 'When is the best time to visit Milos for the weather?',
+    a: `June and September. Both are hot with a warm sea, less wind than July and August, and fewer crowds. May and October suit walkers and sightseers, with a cooler sea.`,
+  },
+];
+const faqJsonld = {
+  '@type': 'FAQPage',
+  mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
 
 // Every beach is rendered; the client ranks them by shelter from the live wind
 // (same `faces` logic as the WindBeaches widget) and shows the top picks.
@@ -22,50 +70,52 @@ const BEACHES_DATA = beachesRaw.map(b => ({
 
 <Layout
   lang="en"
-  title="Weather in Milos"
-  description="Current weather in Milos: wind, sea temperature, waves, UV, air quality and pollen, plus beach recommendations based on today's wind."
+  title="Weather in Milos Island: Today, Wind & 7-Day Forecast"
+  description="Weather in Milos today: live wind, sea temperature, waves and UV, a 7-day forecast, which beaches are sheltered from the wind, and the climate by month."
+  jsonld={faqJsonld}
 >
 
-<section class="weather-hero" id="weather-hero">
+<section class={`weather-hero ${heroCls}`} id="weather-hero">
   <div class="container">
-    <h1 class="hero-label">Milos weather · Live conditions</h1>
+    <h1 class="hero-label">Milos weather today · Live conditions</h1>
     <div class="hero-body">
       <div class="hero-left">
         <div class="hero-top">
-          <div class="hero-icon" id="hero-icon"></div>
-          <div class="hero-temp" id="hero-temp">–</div>
+          <div class="hero-icon" id="hero-icon" set:html={heroIcon}></div>
+          <div class="hero-temp" id="hero-temp">{hv['hero-temp'] ?? '–'}</div>
         </div>
-        <p class="hero-condition" id="hero-condition">Loading…</p>
-        <p class="hero-feels" id="hero-feels">&nbsp;</p>
+        <p class="hero-condition" id="hero-condition">{hv['hero-condition'] ?? 'Loading…'}</p>
+        <p class="hero-feels" id="hero-feels">{hv['hero-feels'] ?? ' '}</p>
       </div>
       <div class="hero-stats">
         <div class="hs-item">
           <span class="hs-lbl">Wind</span>
-          <span class="hs-val" id="hs-wind">–</span>
+          <span class="hs-val" id="hs-wind">{hv['hs-wind'] ?? '–'}</span>
         </div>
         <div class="hs-item">
           <span class="hs-lbl">Sea temp</span>
-          <span class="hs-val" id="hs-sea">–</span>
+          <span class="hs-val" id="hs-sea">{hv['hs-sea'] ?? '–'}</span>
         </div>
         <div class="hs-item">
           <span class="hs-lbl">Waves</span>
-          <span class="hs-val" id="hs-waves">–</span>
+          <span class="hs-val" id="hs-waves">{hv['hs-waves'] ?? '–'}</span>
         </div>
         <div class="hs-item">
           <span class="hs-lbl">UV index</span>
-          <span class="hs-val" id="hs-uv">–</span>
+          <span class="hs-val" id="hs-uv">{hv['hs-uv'] ?? '–'}</span>
         </div>
         <div class="hs-item">
           <span class="hs-lbl">Humidity</span>
-          <span class="hs-val" id="hs-humidity">–</span>
+          <span class="hs-val" id="hs-humidity">{hv['hs-humidity'] ?? '–'}</span>
         </div>
         <div class="hs-item">
           <span class="hs-lbl">Air quality</span>
-          <span class="hs-val" id="hs-aqi">–</span>
+          <span class="hs-val" id="hs-aqi">{hv['hs-aqi'] ?? '–'}</span>
         </div>
       </div>
     </div>
-    <p class="hero-updated" id="hero-updated"></p>
+    <p class="hero-summary" id="hero-summary">{summary}</p>
+    <p class="hero-updated" id="hero-updated">{cache && `Forecast from ${formatTime(cache.weather.current.time)} (Milos time)`}</p>
   </div>
 </section>
 
@@ -273,11 +323,71 @@ const BEACHES_DATA = beachesRaw.map(b => ({
       <div class="w-block">
         <p class="w-section-title">7-day outlook</p>
         <div class="w-week-scroll">
-          <div class="w-week" id="w-week"></div>
+          <div class="w-week" id="w-week" set:html={week}></div>
         </div>
       </div>
 
     </div>
+  </div>
+</section>
+
+<!-- Static guide: evergreen content for "milos weather" searches, which the live widgets alone don't give crawlers -->
+<section class="sec w-guide">
+  <div class="container">
+
+    <div class="w-guide-block" id="climate">
+      <span class="label">Climate</span>
+      <h2 class="sec-title">Milos weather by month</h2>
+      <p class="w-guide-lead">
+        Milos has a dry Mediterranean climate: hot, rainless summers cooled by the north wind,
+        and mild, wet, windy winters. Pick a month for what to expect, which beaches work and what to pack.
+      </p>
+      <ClimateTable />
+    </div>
+
+    <div class="w-guide-block" id="meltemi">
+      <span class="label">Wind</span>
+      <h2 class="sec-title">The meltemi and which beaches to pick</h2>
+      <div class="w-guide-cols">
+        <div class="w-guide-text">
+          <p>
+            The <strong>meltemi</strong> is the dry north wind of the Aegean summer. On Milos it blows on about
+            {jul.northWindDays} days in July and {aug.northWindDays} in August, usually at 4–6 Beaufort and sometimes
+            stronger, often for three or more days at a stretch. It keeps the heat down, but it decides your beach day.
+          </p>
+          <p>
+            Wind is reported by the direction it comes <em>from</em>. A north wind piles waves onto north-facing
+            beaches like Sarakiniko, Papafragas and Firopotamos, while the south coast stays flat. Boat tours to
+            Kleftiko are often cancelled or rerouted when it blows hard.
+          </p>
+          <p>
+            Every beach page on this site shows how exposed that beach is to today's wind, and the picks at the
+            top of this page are ranked against the live reading.
+          </p>
+        </div>
+        <div class="w-guide-card">
+          <p class="w-guide-card-title">Sheltered in a north wind</p>
+          <ul class="w-guide-list">
+            {sheltered.map(b => <li><a href={`/beaches/${b.slug}/`}>{b.name}</a></li>)}
+          </ul>
+          <a href="/beaches/" class="w-guide-more">All Milos beaches →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-guide-block" id="faq">
+      <span class="label">FAQ</span>
+      <h2 class="sec-title">Milos weather questions</h2>
+      <div class="w-faq">
+        {faq.map(f => (
+          <details class="w-faq-item">
+            <summary>{f.q}</summary>
+            <p set:html={f.html ?? f.a}></p>
+          </details>
+        ))}
+      </div>
+    </div>
+
   </div>
 </section>
 

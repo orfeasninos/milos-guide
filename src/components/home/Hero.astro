@@ -53,10 +53,6 @@ import SmartImage from '../SmartImage.astro';
       <a href="/sights/" class="btn-secondary">🏛 Sights</a>
       <a href="/map/" class="hero-cta-ghost">Map →</a>
     </div>
-    <div class="hero-no-ads">
-      <span class="hero-no-ads-dot" aria-hidden="true"></span>
-      No ads · No sponsored content
-    </div>
   </div>
 
   <div class="hero-stats container">
@@ -255,27 +251,6 @@ import SmartImage from '../SmartImage.astro';
   .hero-cta-ghost:hover {
     color: rgba(255, 255, 255, 0.85);
     border-color: rgba(255, 255, 255, 0.45);
-  }
-  /* No-ads badge */
-  .hero-no-ads {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-top: 1.6rem;
-    font-size: 0.64rem;
-    font-weight: 600;
-    letter-spacing: 0.11em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.25);
-    animation: fadeUp 0.7s ease 0.38s both;
-  }
-  .hero-no-ads-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--sea);
-    opacity: 0.6;
-    flex-shrink: 0;
   }
   /* Stats */
   .hero-stats {
