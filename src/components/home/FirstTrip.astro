@@ -1,0 +1,120 @@
+<!-- ══ FIRST TRIP ══ -->
+<!-- An opinionated plan instead of a list of categories: first-time visitors mostly want
+     to be told what to do, and each day links deep into the guide. -->
+<section class="sec sec-white" id="first-time">
+  <div class="container">
+    <div class="ft-head">
+      <span class="label">First time in Milos</span>
+      <h2 class="sec-title">Three days, if that's all you have</h2>
+      <p class="sec-sub">
+        Swap the days around to suit the wind. The box above tells you which coast is calm.
+      </p>
+    </div>
+
+    <ol class="ft-days">
+      <li class="ft-day">
+        <span class="ft-n">Day 1</span>
+        <h3 class="ft-title">The north coast and Plaka</h3>
+        <p>
+          Get to <a href="/beaches/sarakiniko/">Sarakiniko</a> before nine, while the white
+          rock is still cool and the car park is half empty. Then
+          <a href="/beaches/papafragas/">Papafragas</a>, a narrow inlet between cliffs on
+          the road east, and lunch by the water in
+          <a href="/villages/pollonia/">Pollonia</a>. In the evening drive up to
+          <a href="/villages/plaka/">Plaka</a>, climb to the
+          <a href="/sights/kastro-plaka/">Kastro</a> for sunset and eat in the lanes below.
+        </p>
+        <p class="ft-tip">Skip the north if the meltemi is blowing. Sarakiniko gets dangerous in big waves.</p>
+      </li>
+
+      <li class="ft-day">
+        <span class="ft-n">Day 2</span>
+        <h3 class="ft-title">Kleftiko by boat</h3>
+        <p>
+          There is no road to the south-west tip, so a full day on a boat from Adamas is the
+          only way to swim into the caves and arches of
+          <a href="/beaches/kleftiko/">Kleftiko</a>. Book a day or two ahead in summer, and
+          keep a back-up day free: tours get cancelled when the sea is rough.
+        </p>
+        <p class="ft-tip">The wind box above says whether today is a boat day.</p>
+      </li>
+
+      <li class="ft-day">
+        <span class="ft-n">Day 3</span>
+        <h3 class="ft-title">The south beaches and old Milos</h3>
+        <p>
+          The south coast stays calm when the north is wild.
+          <a href="/beaches/firiplaka/">Firiplaka</a> is the easy one with sand and a beach
+          bar, <a href="/beaches/tsigrado/">Tsigrado</a> next door is down a rope and a
+          ladder, and <a href="/beaches/paleochori/">Paleochori</a> has warm water bubbling
+          up from the seabed. Late afternoon, see the
+          <a href="/sights/catacombs/">catacombs</a> and the
+          <a href="/sights/ancient-theater/">ancient theatre</a>, then walk down to the
+          boathouses of <a href="/villages/klima/">Klima</a>.
+        </p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<style>
+  .ft-head {
+    max-width: 40rem;
+    margin-bottom: 2.5rem;
+  }
+  .ft-days {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .ft-day {
+    border-top: 2px solid var(--deep-blue);
+    padding-top: 1.25rem;
+  }
+  .ft-n {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sea);
+    margin-bottom: 0.3rem;
+  }
+  .ft-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .ft-day p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #374151;
+  }
+  .ft-day a {
+    color: var(--aegean);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(58, 155, 201, 0.4);
+    text-underline-offset: 3px;
+  }
+  .ft-day a:hover {
+    text-decoration-color: var(--sea);
+  }
+  .ft-day .ft-tip {
+    margin-top: 0.85rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--sand-dark);
+  }
+  @media (max-width: 900px) {
+    .ft-days {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

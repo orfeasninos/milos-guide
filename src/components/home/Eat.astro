@@ -1,0 +1,182 @@
+---
+import SmartImage from '../SmartImage.astro';
+import { restaurants, activePartner, placeType, PARTNER_LABEL } from '../../lib/restaurants';
+import { restaurantPhoto, existingPhotos } from '../../lib/public-files';
+
+// Paid partners only, Premium first (the list is already sorted that way). activePartner
+// drops expired listings at build, so the cron rebuild clears them without a JSON edit.
+const partners = restaurants
+  .filter(r => activePartner(r))
+  .slice(0, 3)
+  .map(r => ({
+    r,
+    kind: placeType(r),
+    photo: restaurantPhoto(r) ?? existingPhotos(activePartner(r)?.photos)[0] ?? null,
+  }));
+
+// Villages with the most places, for the "browse by village" links (filter via ?area=).
+const counts = Object.entries(
+  restaurants.reduce<Record<string, number>>((acc, r) => {
+    acc[r.location.area] = (acc[r.location.area] ?? 0) + 1;
+    return acc;
+  }, {}),
+).sort((a, b) => b[1] - a[1]).slice(0, 5);
+---
+<!-- ══ WHERE TO EAT ══ -->
+<section class="sec sec-sand">
+  <div class="container">
+    <div class="sec-hdr-row">
+      <div>
+        <span class="label">Food</span>
+        <h2 class="sec-title">Where to eat</h2>
+        <p class="sec-sub">Fish by the water in Pollonia and Klima, slow-cooked meat inland, late dinners in Plaka.</p>
+      </div>
+      <a href="/restaurants/" class="see-all">All {restaurants.length} places →</a>
+    </div>
+
+    {partners.length > 0 && (
+      <div class="eat-partners">
+        {partners.map(({ r, kind, photo }) => (
+          <a
+            href={`/restaurants/${r.slug}/`}
+            class="eat-card"
+            data-umami-event="restaurant-home"
+            data-umami-event-restaurant={r.slug}
+          >
+            <div class="eat-img">
+              {photo
+                ? <SmartImage src={photo} alt={r.name.en} width={600} height={400} class="eat-photo" sizes="(max-width: 900px) 100vw, 380px" />
+                : <span class="eat-ph" aria-hidden="true">{kind.icon}</span>}
+              <span class="eat-badge">{PARTNER_LABEL}</span>
+            </div>
+            <div class="eat-body">
+              <h3 class="eat-name">{r.name.en}</h3>
+              <p class="eat-sub">{r.cuisine.en} · {r.location.area}</p>
+              <p class="eat-desc">{r.description.en}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+    <div class="eat-areas">
+      <span class="eat-areas-label">By village:</span>
+      {counts.map(([area, n]) => (
+        <a href={`/restaurants/?area=${encodeURIComponent(area)}`} class="eat-area">{area} <span>{n}</span></a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* auto-fit: with two partners the cards share the row instead of leaving a hole. */
+  .eat-partners {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .eat-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    color: inherit;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+  .eat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .eat-img {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    background: var(--sand-dark);
+  }
+  :global(.eat-photo) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .eat-ph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+  }
+  .eat-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--deep-blue);
+  }
+  .eat-body {
+    padding: 1.1rem 1.25rem 1.3rem;
+  }
+  .eat-name {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--ink);
+  }
+  .eat-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0.15rem 0 0.6rem;
+  }
+  .eat-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: #374151;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .eat-areas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .eat-areas-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-right: 0.25rem;
+  }
+  .eat-area {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--deep-blue);
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--sand-dark);
+    background: var(--white);
+    border-radius: var(--radius-full);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .eat-area span {
+    color: var(--muted);
+    font-weight: 500;
+    margin-left: 0.15rem;
+  }
+  .eat-area:hover {
+    border-color: var(--sea);
+  }
+  @media (max-width: 900px) {
+    .eat-partners {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

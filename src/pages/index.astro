@@ -2,36 +2,63 @@
 import Layout from "../layouts/Layout.astro";
 import WindBeaches from "../components/WindBeaches.astro";
 import Hero from "../components/home/Hero.astro";
-import Explore from "../components/home/Explore.astro";
-import QuickFacts from "../components/home/QuickFacts.astro";
-import WhyDifferent from "../components/home/WhyDifferent.astro";
+import FirstTrip from "../components/home/FirstTrip.astro";
 import BeachTypes from "../components/home/BeachTypes.astro";
+import PlanTrip from "../components/home/PlanTrip.astro";
+import Eat from "../components/home/Eat.astro";
 import Villages from "../components/home/Villages.astro";
-import KnownPlaces from "../components/home/KnownPlaces.astro";
 import WhenToVisit from "../components/home/WhenToVisit.astro";
+
+// The island itself, so search engines can tie the guide to the place. Layout adds the
+// WebSite and BreadcrumbList nodes.
+const destinationJsonld = {
+  "@context": "https://schema.org",
+  "@type": "TouristDestination",
+  name: "Milos",
+  description: "A volcanic island in the south-west Cyclades, Greece, known for its 70+ beaches, sea caves and fishing villages.",
+  url: "https://milos.guide/",
+  geo: { "@type": "GeoCoordinates", latitude: 36.7, longitude: 24.43 },
+  containedInPlace: { "@type": "Place", name: "Cyclades, Greece" },
+  touristType: ["Beach lovers", "Families", "Couples", "Hikers"],
+};
 ---
 
 <Layout
   lang="en"
   title="Milos Guide: Beaches, Villages & Where to Stay"
   description="Milos Guide: an independent travel guide to Milos, Greece. Beaches, villages, tavernas, where to stay and which beach is sheltered from today's wind."
+  jsonld={destinationJsonld}
   preloadImageSrcset="/images/hero-beach-800w.avif 800w, /images/hero-beach-1200w.avif 1200w, /images/hero-beach-1920w.avif 1920w"
   preloadImageSizes="100vw"
 >
   <Hero />
-  <Explore />
 
   <!-- ══ WIND HELPER ══ -->
-  <section class="sec sec-sand" style="padding-top:0">
+  <!-- Straight after the hero: it's the one thing on the page that changes every day,
+       and the hero's main button jumps here. -->
+  <section class="sec sec-sand home-today" id="today">
     <div class="container">
-      <WindBeaches />
+      <WindBeaches title="Where to swim today" />
     </div>
   </section>
 
-  <QuickFacts />
-  <WhyDifferent />
+  <!-- Inspiration first, then the bookable decisions once people are hooked. -->
+  <FirstTrip />
   <BeachTypes />
+  <PlanTrip />
+  <Eat />
   <Villages />
-  <KnownPlaces />
   <WhenToVisit />
 </Layout>
+
+<style>
+  .home-today {
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+  }
+  /* The sticky header would otherwise cover the top of the box after the jump. */
+  #today,
+  #first-time {
+    scroll-margin-top: var(--header-h);
+  }
+</style>

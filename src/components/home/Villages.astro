@@ -1,81 +1,135 @@
-<!-- ══ VILLAGES ══ -->
-<section class="sec sec-sand">
+---
+import sightsData from '../../data/sights.json';
+
+// Short notes written for the homepage. Sarakiniko and Papafragas are left out: they're
+// in the sights data but already appear as beaches everywhere else on this page.
+const sights = [
+  { slug: 'kastro-plaka', note: 'The climb everyone makes for sunset' },
+  { slug: 'catacombs', note: 'Early Christian tombs cut into the rock' },
+  { slug: 'ancient-theater', note: 'Marble seats above the bay' },
+  { slug: 'klima-syrmata', note: 'Boathouses painted every colour' },
+  { slug: 'filakopi', note: 'A Bronze Age town on the north coast' },
+  { slug: 'archaeological-museum', note: 'Finds from Filakopi and a Venus de Milo replica' },
+].map(s => {
+  const d = sightsData.find(x => x.slug === s.slug)!;
+  return { ...s, name: d.nameEn, free: d.admission === 'free' };
+});
+
+const villages = [
+  { slug: 'plaka', name: 'Plaka', note: 'The hilltop capital. Sunset from the Kastro' },
+  { slug: 'tripiti', name: 'Tripiti', note: 'Windmills, catacombs and the ancient theatre' },
+  { slug: 'pollonia', name: 'Pollonia', note: 'Fish tavernas and the ferry to Kimolos' },
+  { slug: 'klima', name: 'Klima', note: 'Painted boathouses right on the water' },
+  { slug: 'mandrakia', name: 'Mandrakia', note: 'A tiny harbour, more boathouses, fewer people' },
+  { slug: 'firopotamos', name: 'Firopotamos', note: 'A white chapel on a cove, good for a swim' },
+];
+---
+<!-- ══ VILLAGES & SIGHTS ══ -->
+<section class="sec sec-white">
   <div class="container">
     <div class="sec-hdr-row">
       <div>
-        <span class="label">Villages</span>
-        <h2 class="sec-title">Milos beyond the beaches</h2>
+        <span class="label">Beyond the beach</span>
+        <h2 class="sec-title">Villages and sights</h2>
+        <p class="sec-sub">Most of them sit within a few kilometres of each other, between Plaka and the bay.</p>
       </div>
-      <a href="/villages/" class="see-all">All villages →</a>
     </div>
-    <div class="villages-grid">
-      <a href="/villages/plaka/" class="village-card"
-        ><span class="village-name">Plaka</span><span class="village-note"
-          >The capital, perched on a rock with panoramic views</span
-        ></a
-      >
-      <a href="/villages/tripiti/" class="village-card"
-        ><span class="village-name">Tripiti</span><span class="village-note"
-          >Catacombs, ancient theatre, atmospheric village</span
-        ></a
-      >
-      <a href="/villages/pollonia/" class="village-card"
-        ><span class="village-name">Pollonia</span><span class="village-note"
-          >North coast, fish tavernas and ferries to Kimolos</span
-        ></a
-      >
-      <a href="/villages/klima/" class="village-card"
-        ><span class="village-name">Klima</span><span class="village-note"
-          >The famous syrmata — fishing storehouses over the sea</span
-        ></a
-      >
-      <a href="/villages/mandrakia/" class="village-card"
-        ><span class="village-name">Mandrakia</span><span class="village-note"
-          >A small harbour with colourful syrmata</span
-        ></a
-      >
-      <a href="/villages/firopotamos/" class="village-card"
-        ><span class="village-name">Firopotamos</span><span
-          class="village-note"
-          >Quiet, authentic, far from the tourist trail</span
-        ></a
-      >
+
+    <div class="bb-cols">
+      <div>
+        <div class="bb-head">
+          <h3 class="bb-title">Villages</h3>
+          <a href="/villages/" class="see-all">All villages →</a>
+        </div>
+        <ul class="bb-list">
+          {villages.map(v => (
+            <li>
+              <a href={`/villages/${v.slug}/`} class="bb-item">
+                <span class="bb-name">{v.name}</span>
+                <span class="bb-note">{v.note}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div class="bb-head">
+          <h3 class="bb-title">Sights</h3>
+          <a href="/sights/" class="see-all">All sights →</a>
+        </div>
+        <ul class="bb-list">
+          {sights.map(s => (
+            <li>
+              <a href={`/sights/${s.slug}/`} class="bb-item">
+                <span class="bb-name">{s.name}{s.free && <span class="bb-free">Free</span>}</span>
+                <span class="bb-note">{s.note}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .villages-grid {
+  .bb-cols {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
   }
-  .village-card {
-    background: var(--white);
-    border: 1px solid var(--sand-dark);
-    border-radius: var(--radius-md);
-    padding: 1.5rem 1.25rem;
+  .bb-head {
     display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    transition:
-      transform 0.15s,
-      box-shadow 0.15s,
-      border-color 0.15s;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--deep-blue);
+    padding-bottom: 0.6rem;
   }
-  .village-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--sea);
-  }
-  .village-name {
+  .bb-title {
     font-family: var(--font-serif);
-    font-size: 1.15rem;
+    font-weight: 400;
+    font-size: 1.4rem;
     color: var(--deep-blue);
   }
-  .village-note {
-    font-size: 0.78rem;
+  .bb-list {
+    list-style: none;
+  }
+  .bb-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    color: inherit;
+    transition: padding-left 0.15s;
+  }
+  .bb-item:hover {
+    padding-left: 0.4rem;
+  }
+  .bb-name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .bb-item:hover .bb-name {
+    color: var(--aegean);
+  }
+  .bb-free {
+    margin-left: 0.5rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #047857;
+    vertical-align: 2px;
+  }
+  .bb-note {
+    font-size: 0.85rem;
     color: var(--muted);
-    line-height: 1.45;
+  }
+  @media (max-width: 768px) {
+    .bb-cols {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
   }
 </style>

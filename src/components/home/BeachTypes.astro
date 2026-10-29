@@ -13,19 +13,23 @@ const accessIcon: Record<string, string> = {
 
 const beachCategories = [
   {
-    title: "👨‍👩‍👧 For families",
+    title: "With kids",
+    note: "Shallow water and an easy walk from the car",
     filter: (b: Beach) => b.bestFor.includes("Families"),
   },
   {
-    title: "📸 For photos",
+    title: "For the photos",
+    note: "Go early, before the light flattens out",
     filter: (b: Beach) => b.bestFor.includes("Photography"),
   },
   {
-    title: "🔇 For peace & quiet",
+    title: "Quiet ones",
+    note: "Rough roads keep the crowds away",
     filter: (b: Beach) => b.bestFor.includes("Solitude"),
   },
   {
-    title: "⛵ Boat access only",
+    title: "Only by boat",
+    note: "On the Kleftiko day trips",
     filter: (b: Beach) => b.accessType === "boat",
   },
 ].map((cat) => ({
@@ -34,20 +38,24 @@ const beachCategories = [
 }));
 ---
 <!-- ══ BEACHES BY TYPE ══ -->
-<section class="sec sec-white">
+<section class="sec sec-sand">
   <div class="container">
     <div class="sec-hdr-row">
       <div>
         <span class="label">Beaches</span>
-        <h2 class="sec-title">Find your beach</h2>
+        <h2 class="sec-title">Pick a beach by what you want from it</h2>
       </div>
-      <a href="/beaches/" class="see-all">All beaches →</a>
+      <div class="bt-links">
+        <a href="/map/" class="see-all" data-umami-event="home-beaches-map">On the map →</a>
+        <a href="/beaches/" class="see-all">All {beachesData.length} beaches →</a>
+      </div>
     </div>
     <div class="beach-cat-grid">
       {
         beachCategories.map((cat) => (
           <div class="beach-cat">
-            <div class="beach-cat-title">{cat.title}</div>
+            <h3 class="beach-cat-title">{cat.title}</h3>
+            <p class="beach-cat-note">{cat.note}</p>
             <div class="beach-cat-list">
               {cat.beaches.map((b) => (
                 <a href={`/beaches/${b.slug}/`} class="beach-link">
@@ -66,9 +74,14 @@ const beachCategories = [
 </section>
 
 <style>
+  .bt-links {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
   .beach-cat-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
   }
   .beach-cat {
@@ -78,8 +91,13 @@ const beachCategories = [
   .beach-cat-title {
     font-family: var(--font-serif);
     font-size: 1.1rem;
+    font-weight: 400;
     color: var(--deep-blue);
-    margin-bottom: 1rem;
+  }
+  .beach-cat-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 0.2rem 0 0.75rem;
   }
   .beach-cat-list {
     display: flex;
@@ -107,7 +125,12 @@ const beachCategories = [
     color: var(--muted);
     flex-shrink: 0;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
+    .beach-cat-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
     .beach-cat-grid {
       grid-template-columns: 1fr;
     }

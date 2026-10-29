@@ -1,122 +1,150 @@
+---
+import { months, isWindy } from '../../lib/climate';
+
+// Same ERA5 averages as /weather/<month>/, so the homepage and the month pages never
+// disagree. "Now" is the month at build, which the cron rebuild keeps current.
+const nowSlug = new Date().toLocaleString('en', { timeZone: 'Europe/Athens', month: 'long' }).toLowerCase();
+const maxSea = Math.max(...months.map(m => m.sea));
+const minSea = Math.min(...months.map(m => m.sea));
+---
 <!-- ══ WHEN TO VISIT ══ -->
 <section class="sec sec-sand">
   <div class="container">
     <div class="sec-hdr-row">
       <div>
         <span class="label">When to visit</span>
-        <h2 class="sec-title">Every month has<br />its own character</h2>
+        <h2 class="sec-title">When to go</h2>
+        <p class="sec-sub">
+          June and September are the sweet spots: warm sea, fewer people. July and August
+          are the busiest, and the windiest.
+        </p>
       </div>
+      <a href="/weather/#climate" class="see-all">Month by month →</a>
     </div>
-    <div class="months-grid">
-      <div class="month-item">
-        <a class="month-name" href="/weather/may/">May</a>
-        <span class="month-tag">Peaceful</span>
-        <p class="month-desc">
-          Few crowds, wildflowers in bloom, ideal for exploring. Sea still
-          fresh.
-        </p>
-      </div>
-      <div class="month-item">
-        <a class="month-name" href="/weather/june/">June</a>
-        <span class="month-tag">Ideal</span>
-        <p class="month-desc">
-          The best balance. Warm sea, few crowds, everything open.
-        </p>
-      </div>
-      <div class="month-item">
-        <a class="month-name" href="/weather/july/">July</a>
-        <span class="month-tag">Peak season</span>
-        <p class="month-desc">
-          Lively atmosphere, but book everything well in advance.
-        </p>
-      </div>
-      <div class="month-item month-item--warn">
-        <a class="month-name" href="/weather/august/">August</a>
-        <span class="month-tag">Busy</span>
-        <p class="month-desc">
-          Meltemi winds affect which beaches are suitable each day. Very
-          crowded.
-        </p>
-      </div>
-      <div class="month-item">
-        <a class="month-name" href="/weather/september/">September</a>
-        <span class="month-tag">Best month</span>
-        <p class="month-desc">
-          Perhaps the perfect month. Warm sea, fewer crowds, lower prices.
-        </p>
-      </div>
-    </div>
-    <p class="meltemia-note">
-      ⚠️ <strong>Meltemi winds:</strong> The northern winds directly affect which
-      beaches are good each day — southern beaches (Paleochori, Fyriplaka) are sheltered,
-      while northern ones can have waves.
-      <a href="/weather/#climate" class="month-more">Milos weather month by month →</a>
+
+    <ol class="cal">
+      {months.map(m => (
+        <li>
+          <a
+            href={`/weather/${m.slug}/`}
+            class:list={['cal-m', { 'is-now': m.slug === nowSlug, 'is-best': m.tag === 'Best month' }]}
+            aria-label={`${m.name}: ${m.hi}°C by day, sea ${m.sea}°C${isWindy(m) ? ', often windy' : ''}`}
+          >
+            <span class="cal-name">{m.name.slice(0, 3)}</span>
+            <span class="cal-bar" style={`--h:${Math.round(25 + 75 * (m.sea - minSea) / (maxSea - minSea))}%`} aria-hidden="true"></span>
+            <span class="cal-sea">{m.sea}°</span>
+            <span class="cal-air">{m.hi}° air</span>
+            {isWindy(m) && <span class="cal-wind" title="Often windy">windy</span>}
+            {m.slug === nowSlug && <span class="cal-now">now</span>}
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="cal-key">Bars show average sea temperature. ERA5 averages for 2015 to 2024.</p>
+
+    <p class="meltemi-note">
+      <strong>About the meltemi:</strong> this north wind blows on and off all summer.
+      When it does, swim on the south coast (Paleochori, Firiplaka) and leave the north for a calm day.
     </p>
   </div>
 </section>
 
 <style>
-  .months-grid {
+  .cal {
+    list-style: none;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0.4rem;
   }
-  .month-item {
-    padding: 1.75rem 1.25rem;
-    border-right: 1px solid rgba(0, 0, 0, 0.08);
+  .cal-m {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.75rem 0.25rem 0.85rem;
+    border-radius: var(--radius-sm);
     background: var(--white);
+    color: inherit;
+    height: 100%;
+    transition: background 0.15s;
   }
-  .month-item:last-child {
-    border-right: none;
+  .cal-m:hover {
+    background: #fbf8f2;
   }
-  .month-item--warn .month-tag {
-    background: rgba(217, 119, 6, 0.12);
-    color: #92400e;
+  .cal-m.is-now {
+    outline: 2px solid var(--deep-blue);
+    outline-offset: -2px;
   }
-  .month-name {
-    display: block;
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
+  .cal-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--ink);
-    margin-bottom: 0.5rem;
   }
-  .month-tag {
-    display: inline-block;
+  .cal-bar {
+    width: 60%;
+    height: 56px;
+    display: flex;
+    align-items: flex-end;
+    background: linear-gradient(to top, var(--sea) var(--h), transparent var(--h));
+    border-radius: 3px;
+    opacity: 0.8;
+  }
+  .is-best .cal-bar {
+    background: linear-gradient(to top, var(--deep-blue) var(--h), transparent var(--h));
+  }
+  .cal-sea {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--deep-blue);
+    line-height: 1;
+  }
+  .cal-air {
+    font-size: 0.68rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .cal-wind {
     font-size: 0.6rem;
     font-weight: 700;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 0.6rem;
-    background: var(--sand-dark);
+    color: #92400e;
+  }
+  .cal-now {
+    position: absolute;
+    top: -0.55rem;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--deep-blue);
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+  }
+  .cal-key {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
     color: var(--muted);
   }
-  .month-desc {
-    font-size: 0.78rem;
-    color: var(--muted);
-    line-height: 1.55;
-  }
-  a.month-name:hover { color: var(--aegean); }
-  .month-more { display: inline-block; margin-left: 0.35rem; font-weight: 600; color: var(--deep-blue); }
-  .meltemia-note {
-    margin-top: 1.25rem;
-    font-size: 0.82rem;
-    color: var(--muted);
-    padding: 0 0.25rem;
+  .meltemi-note {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #374151;
+    max-width: 44rem;
   }
   @media (max-width: 900px) {
-    .months-grid {
-      grid-template-columns: 1fr 1fr;
+    .cal {
+      grid-template-columns: repeat(6, 1fr);
+      row-gap: 0.9rem;
     }
-    .month-item:nth-child(2n) {
-      border-right: none;
-    }
-    .month-item {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  @media (max-width: 480px) {
+    .cal {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>
