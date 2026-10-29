@@ -228,7 +228,10 @@ const schemas: object[] = [
         </ul>
         <div class="nav-icons">
           <!-- Without JS (or on Enter with no highlighted result) the form falls back to the /search/ page. -->
-          <form class="header-search" id="header-search" action={href('/search/')} method="get" role="search">
+          <!-- toolname/tooldescription: declarative WebMCP, so browser AI agents can call the search as a tool. -->
+          <form class="header-search" id="header-search" action={href('/search/')} method="get" role="search"
+            toolname="search_milos_guide"
+            tooldescription="Search Milos.guide for beaches, sights, villages, restaurants and places to stay on Milos island, Greece. Opens the results page.">
             <svg class="hs-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input
               id="hs-input"
@@ -237,6 +240,7 @@ const schemas: object[] = [
               name="q"
               placeholder={t('Search Milos…', 'Αναζήτηση…')}
               aria-label={t('Search beaches, sights, villages, food and stays', 'Αναζήτηση παραλιών, αξιοθέατων, χωριών, φαγητού και διαμονής')}
+              toolparamdescription="What to look for, e.g. a beach name, a village or 'sandy beach'"
               autocomplete="off"
               spellcheck="false"
               role="combobox"

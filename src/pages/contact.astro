@@ -24,10 +24,14 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- FORM -->
     <div class="contact-form-wrap">
-      <form class="contact-form" id="contact-form" novalidate>
+      <!-- toolname/tooldescription: declarative WebMCP, so browser AI agents can fill the form.
+           No toolautosubmit: the person still presses Send themselves. -->
+      <form class="contact-form" id="contact-form" novalidate
+        toolname="contact_milos_guide"
+        tooldescription="Send a message to the Milos.guide editors: suggestions, corrections, adding a restaurant or beach, or partnership enquiries.">
 
-        <!-- Honeypot -->
-        <input type="text" name="_trap" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <!-- Honeypot. The param description keeps agents from filling it and being dropped as spam. -->
+        <input type="text" name="_trap" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" toolparamdescription="Leave empty." />
 
         <div class="form-row">
           <label class="form-label" for="name">Your name</label>
@@ -37,6 +41,7 @@ import Layout from '../layouts/Layout.astro';
             type="text"
             class="form-input"
             placeholder="Name"
+            toolparamdescription="The sender's name"
             required
             autocomplete="name"
           />
@@ -51,6 +56,7 @@ import Layout from '../layouts/Layout.astro';
             type="email"
             class="form-input"
             placeholder="your@email.com"
+            toolparamdescription="Email address the reply should go to"
             required
             autocomplete="email"
           />
@@ -59,7 +65,7 @@ import Layout from '../layouts/Layout.astro';
 
         <div class="form-row">
           <label class="form-label" for="subject">Subject</label>
-          <select id="subject" name="subject" class="form-select" required>
+          <select id="subject" name="subject" class="form-select" required toolparamdescription="Topic of the message">
             <option value="" disabled selected>Choose a topic…</option>
             <option value="suggestion">Suggestion or feedback</option>
             <option value="correction">Correction or error</option>
@@ -78,6 +84,7 @@ import Layout from '../layouts/Layout.astro';
             class="form-input form-textarea"
             placeholder="Write your message here…"
             rows="5"
+            toolparamdescription="The message itself"
             required
           ></textarea>
           <span class="form-error" id="message-error"></span>
