@@ -207,7 +207,23 @@ function initMap() {
   map.addLayer(partnerGroup);
   // Fit every point: a fixed zoom 12 cut the island off on phones.
   map.fitBounds(clusterGroup.getBounds(), { padding: [24, 24] });
-  setTimeout(() => map.invalidateSize(), 300);
+
+  // An Edge 156 session showed this map at Mount Athos with a fully styled page: .map-page lost
+  // its 100dvh height, #map grew to the sidebar's full length (~8000px) and only its northern
+  // strip was on screen. innerHeight comes from the window, not CSS viewport units, so pin the
+  // height with it whenever the page ends up taller than the window.
+  const mapPage = document.querySelector('.map-page');
+  const keepInWindow = () => {
+    const pinned = !!mapPage.style.height;
+    if (!pinned && mapPage.offsetHeight <= window.innerHeight) return;
+    const headerH = document.getElementById('site-header')?.offsetHeight ?? 60;
+    mapPage.style.height = `${window.innerHeight - headerH}px`;
+    map.invalidateSize();
+    if (!pinned) map.fitBounds(clusterGroup.getBounds(), { padding: [24, 24] });
+  };
+  keepInWindow();
+  setTimeout(() => { map.invalidateSize(); keepInWindow(); }, 300);
+  window.addEventListener('resize', keepInWindow, { passive: true });
   applyFilter(); // sync initial state
 
   // Filter chips — multi-select toggle
