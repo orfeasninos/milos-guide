@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { KIWI_FLIGHTS_URL, KIWI_WIDGET_SRC, airlines } from '../lib/kiwi';
+import { RADICAL_STORAGE_URL } from '../lib/radicalstorage';
 ---
 
 <Layout
@@ -94,6 +95,25 @@ import { KIWI_FLIGHTS_URL, KIWI_WIDGET_SRC, airlines } from '../lib/kiwi';
           <span class="tip-icon">💡</span>
           <p><strong>Insider tip:</strong> The overnight ferry (departure ~21:00 from Piraeus, arrival ~04:00 in Milos) is the favourite choice of locals — you sleep on board and wake up in Milos. You save a full day of travel.</p>
         </div>
+
+        <h3>Late ferry after check-out?</h3>
+        <p>
+          Most rooms ask you to leave by 11:00, while many ferries leave Milos in the afternoon
+          or evening. Instead of dragging your bags around Adamas, leave them near the port and
+          spend the last hours at the beach.
+        </p>
+
+        <div class="widget-placeholder">
+          <div class="wp-icon">🧳</div>
+          <div>
+            <p class="wp-title">Luggage storage in Adamas</p>
+            <p class="wp-sub">Several drop-off points near the ferry port</p>
+          </div>
+          <a href={RADICAL_STORAGE_URL} target="_blank" rel="noopener sponsored" class="wp-btn" data-umami-event="radicalstorage" data-umami-event-placement="ferry-section">
+            Store your bags ↗
+          </a>
+        </div>
+        <p class="aff-note">Affiliate link: we may earn a commission if you book, at no extra cost to you.</p>
       </section>
 
       <!-- FLIGHT -->
@@ -267,6 +287,7 @@ import { KIWI_FLIGHTS_URL, KIWI_WIDGET_SRC, airlines } from '../lib/kiwi';
         <p class="toc-label">Useful links</p>
         <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="toc-link-btn">⚓ Ferry tickets</a>
         <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="kiwi-flights" data-umami-event-placement="sidebar">✈️ Flights to MLO</a>
+        <a href={RADICAL_STORAGE_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="radicalstorage" data-umami-event-placement="sidebar">🧳 Luggage storage</a>
       </div>
       <div class="toc-card">
         <p class="toc-label">Explore</p>
