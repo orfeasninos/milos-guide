@@ -62,7 +62,7 @@ const hasSingleWebp = !isExternal && !webpSrcset && publicFileExists(singleWebpP
     height={height}
     loading={isLCP ? 'eager' : 'lazy'}
     fetchpriority={isLCP ? 'high' : undefined}
-    decoding={isLCP ? 'sync' : 'async'}
+    decoding={isLCP ? undefined : 'async'}
     style={objectPosition ? `object-position:${objectPosition}` : undefined}
   />
 </picture>
