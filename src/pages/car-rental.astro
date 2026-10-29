@@ -1,0 +1,557 @@
+---
+import Layout from '../layouts/Layout.astro';
+import beachesData from '../data/beaches.json';
+import { CAR_RENTAL_URL } from '../lib/economybookings';
+
+// Built from the beach data so the lists stay in step with each beach page's "Rough road" badge.
+const roughRoad = beachesData.filter(b => b.accessType === 'road' && b.easyAccess === false);
+const byBoat = beachesData.filter(b => b.accessType === 'boat');
+---
+
+<Layout
+  lang="en"
+  title="Car Rental in Milos: Car, ATV or Scooter?"
+  description="Do you need a car in Milos? Car vs ATV vs scooter, dirt roads to the wild beaches, port and airport pickup, licences, insurance and parking tips."
+>
+
+<!-- HERO -->
+<section class="guide-hero">
+  <div class="container">
+    <p class="page-label">Travel guide</p>
+    <h1 class="page-title">Car Rental in Milos</h1>
+    <p class="page-desc">
+      Most of Milos' best beaches are nowhere near a bus stop. This guide covers whether you
+      need a car, when an ATV makes more sense, which roads to watch out for, and how to rent
+      without surprises.
+    </p>
+    <div class="guide-meta">
+      <span>🕐 6 min read</span>
+      <span>✍️ Milos.guide</span>
+      <span>📅 Updated 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<article class="guide-article sec sec-sand">
+  <div class="container guide-layout">
+
+    <div class="guide-body">
+
+      <!-- INTRO -->
+      <section class="guide-section">
+        <p class="guide-lead">
+          Short answer: yes, rent something. The bus links Adamas, Plaka, Tripiti and Pollonia,
+          but Sarakiniko at sunset, Tsigrado, Firiplaka and the whole wild west of the island
+          are only practical with your own wheels.
+        </p>
+
+        <div class="widget-placeholder">
+          <div class="wp-icon">🚗</div>
+          <div>
+            <p class="wp-title">Compare car rental prices in Milos</p>
+            <p class="wp-sub">Local and international agencies, pickup at the airport or the port</p>
+          </div>
+          <a href={CAR_RENTAL_URL} target="_blank" rel="noopener sponsored" class="wp-btn" data-umami-event="economybookings" data-umami-event-placement="car-rental-intro">
+            Search cars ↗
+          </a>
+        </div>
+        <p class="aff-note">Affiliate link: we may earn a commission if you book, at no extra cost to you.</p>
+      </section>
+
+      <!-- CHOOSE -->
+      <section class="guide-section" id="which">
+        <h2>🚗 Car, ATV or scooter?</h2>
+
+        <div class="transport-grid">
+          <div class="transport-item">
+            <span class="transport-icon">🚗</span>
+            <div>
+              <p class="transport-title">Car</p>
+              <p class="transport-desc">Best for families, groups and anyone staying more than a few days. Air conditioning, shade for your things, and safe on the main roads. A small car is easiest to park in July and August.</p>
+            </div>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🚙</span>
+            <div>
+              <p class="transport-title">4x4 / SUV</p>
+              <p class="transport-desc">Worth it if you plan to explore the west of the island, where most roads are dirt tracks. Costs more and books out first in peak season.</p>
+            </div>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🏍</span>
+            <div>
+              <p class="transport-title">ATV (quad)</p>
+              <p class="transport-desc">Popular with couples and good on rough tracks. Hot and dusty in midsummer, no luggage space, and tiring on longer drives. Usually rented directly from agencies in Adamas.</p>
+            </div>
+          </div>
+          <div class="transport-item">
+            <span class="transport-icon">🛵</span>
+            <div>
+              <p class="transport-title">Scooter</p>
+              <p class="transport-desc">Cheap and easy to park, fine for Adamas, Plaka and the paved beaches. Not for dirt roads, and the meltemi makes some stretches tiring.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="insider-tip">
+          <span class="tip-icon">🪪</span>
+          <p><strong>Check your licence.</strong> A car licence does not automatically let you ride a scooter or quad. Ask the agency what your licence covers before you sign: if you ride without the right category, the insurance won't pay out after an accident. Helmets are compulsory on scooters and quads.</p>
+        </div>
+      </section>
+
+      <!-- ROADS -->
+      <section class="guide-section" id="roads">
+        <h2>🛣 Roads and beaches</h2>
+
+        <p>
+          The east of Milos is easy driving: paved roads link Adamas, Plaka, Pollonia and the
+          popular beaches of the north and south coast. Distances are short. Adamas to Pollonia
+          or to Paleochori takes around 20 minutes.
+        </p>
+        <p>
+          The west is different. Past the main bay, most roads turn to dirt, there are no shops or
+          petrol stations, and mobile signal comes and goes. These beaches have a rough last
+          stretch:
+        </p>
+
+        <ul class="beach-chips">
+          {roughRoad.map(b => <li><a href={`/beaches/${b.slug}/`}>{b.name.en}</a></li>)}
+        </ul>
+
+        <p>
+          An ordinary car can manage many of them in dry weather if you drive slowly, but check the
+          track on foot before tackling a steep or rutted section. After winter rain some are only
+          passable with a 4x4.
+        </p>
+
+        <div class="insider-tip">
+          <span class="tip-icon">⚠️</span>
+          <p><strong>Read the insurance terms.</strong> Many rental contracts, even with full cover, exclude damage on unpaved roads, to tyres and to the underside of the car. If you plan to explore the west, ask about it before you book, or pick a company that allows dirt roads.</p>
+        </div>
+
+        <h3>No car needed</h3>
+        <p>
+          Some of the most famous spots can't be reached by road at all. For these you need a boat
+          trip from Adamas, so don't rent a car just for them:
+        </p>
+        <ul class="beach-chips">
+          {byBoat.map(b => <li><a href={`/beaches/${b.slug}/`}>{b.name.en}</a></li>)}
+        </ul>
+      </section>
+
+      <!-- PICKUP -->
+      <section class="guide-section" id="pickup">
+        <h2>📍 Picking up the car</h2>
+
+        <ul>
+          <li><strong>At the port (Adamas):</strong> most agencies have offices along the harbour and will meet your ferry, even late at night, if you give them your arrival time.</li>
+          <li><strong>At the airport (MLO):</strong> about 5 km from Adamas. Some companies have a desk, others bring the car to arrivals.</li>
+          <li><strong>At your hotel:</strong> many local agencies deliver and collect for free or for a small fee.</li>
+        </ul>
+
+        <h3>What you'll need</h3>
+        <ul>
+          <li>A driving licence held for at least one year (some companies ask for more).</li>
+          <li>Drivers are usually 21 or older, and under-25s often pay a young driver fee.</li>
+          <li>If your licence was issued outside the EU, bring an International Driving Permit. Many desks ask for it, and it's required by law for many non-EU licences.</li>
+          <li>A credit card in the main driver's name for the deposit. Debit cards are often not accepted.</li>
+        </ul>
+      </section>
+
+      <!-- TIPS -->
+      <section class="guide-section" id="tips">
+        <h2>📋 Tips for driving in Milos</h2>
+
+        <div class="tips-list">
+          <div class="tip-item">
+            <span class="tip-num">01</span>
+            <div>
+              <p class="tip-title">Book early for July and August</p>
+              <p class="tip-body">Milos has a limited number of rental cars. In peak season small cars and 4x4s sell out weeks ahead, and walk-in prices are much higher.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <span class="tip-num">02</span>
+            <div>
+              <p class="tip-title">Fill up before heading west</p>
+              <p class="tip-body">Petrol stations are around Adamas and on the main roads in the east. There is nothing on the dirt roads of the west.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <span class="tip-num">03</span>
+            <div>
+              <p class="tip-title">Park outside Plaka and arrive early at Sarakiniko</p>
+              <p class="tip-body">Plaka's lanes are pedestrian only, so use the car park at the edge of the village. Sarakiniko's parking fills up by late morning and again before sunset.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <span class="tip-num">04</span>
+            <div>
+              <p class="tip-title">Take photos at pickup</p>
+              <p class="tip-body">Photograph every side of the car, the wheels and the fuel gauge before you drive off, and again when you return it.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <span class="tip-num">05</span>
+            <div>
+              <p class="tip-title">Don't leave anything in the car</p>
+              <p class="tip-body">Theft is rare, but beach car parks are unattended. Keep valuables with you or out of sight.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="guide-cta">
+        <div class="cta-inner">
+          <h2>Book your car before you arrive</h2>
+          <p>
+            Compare prices from local and international agencies on Milos, and have the car
+            waiting for you at the port or the airport.
+          </p>
+          <div class="cta-btns">
+            <a href={CAR_RENTAL_URL} target="_blank" rel="noopener sponsored" class="btn-light" data-umami-event="economybookings" data-umami-event-placement="car-rental-cta">🚗 Search rental cars ↗</a>
+            <a href="/how-to-reach/" class="btn-outline">🚢 How to get to Milos</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SIDEBAR TOC -->
+    <aside class="guide-toc">
+      <div class="toc-card">
+        <p class="toc-label">Contents</p>
+        <a href="#which">🚗 Car, ATV or scooter?</a>
+        <a href="#roads">🛣 Roads and beaches</a>
+        <a href="#pickup">📍 Picking up the car</a>
+        <a href="#tips">📋 Driving tips</a>
+      </div>
+      <div class="toc-card">
+        <p class="toc-label">Useful links</p>
+        <a href={CAR_RENTAL_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="economybookings" data-umami-event-placement="car-rental-sidebar">🚗 Rental cars in Milos</a>
+      </div>
+      <div class="toc-card">
+        <p class="toc-label">Explore</p>
+        <a href="/beaches/">🏖 Beaches</a>
+        <a href="/map/">🗺 Island map</a>
+        <a href="/how-to-reach/">🚢 How to get here</a>
+        <a href="/weather/">🌤 Weather</a>
+      </div>
+    </aside>
+
+  </div>
+</article>
+
+</Layout>
+
+<style>
+/* Same look as /how-to-reach/; styles are scoped per page, so they are repeated here. */
+
+/* ── HERO ── */
+.guide-hero {
+  background: var(--white);
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.4rem;
+}
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--deep-blue);
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+.page-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 640px;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.guide-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ── LAYOUT ── */
+.guide-layout {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 4rem;
+  align-items: start;
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+/* ── BODY ── */
+.guide-lead {
+  font-size: 1.1rem;
+  line-height: 1.82;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  font-style: italic;
+  border-left: 3px solid var(--sea);
+  padding-left: 1.25rem;
+}
+
+.guide-section {
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.guide-section:last-of-type { border-bottom: none; }
+
+.guide-section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--deep-blue);
+  margin-bottom: 1rem;
+  margin-top: 0;
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+.guide-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 1.25rem 0 0.5rem;
+}
+.guide-section p {
+  font-size: 0.975rem;
+  line-height: 1.8;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+.guide-section ul {
+  margin: 0.5rem 0 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.guide-section ul li {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+/* Beach name chips */
+.guide-section ul.beach-chips {
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-left: 0;
+  gap: 0.45rem;
+}
+.beach-chips a {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: var(--aegean);
+  transition: border-color 0.15s;
+}
+.beach-chips a:hover { border-color: var(--aegean); }
+
+/* Affiliate box */
+.widget-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+.wp-icon { font-size: 2rem; flex-shrink: 0; }
+.wp-title { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem !important; line-height: 1.4 !important; }
+.wp-sub { font-size: 0.78rem !important; color: var(--muted) !important; margin: 0 !important; line-height: 1.5 !important; }
+.wp-btn {
+  margin-left: auto;
+  padding: 0.65rem 1.25rem;
+  background: var(--deep-blue);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.wp-btn:hover { background: var(--aegean); }
+
+.aff-note { font-size: 0.75rem !important; color: var(--muted) !important; line-height: 1.6 !important; margin: -0.75rem 0 1rem !important; }
+
+/* Insider tip */
+.insider-tip {
+  display: flex;
+  gap: 0.85rem;
+  background: rgba(58,155,201,0.07);
+  border: 1px solid rgba(58,155,201,0.2);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.tip-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+.insider-tip p { font-size: 0.9rem; color: var(--ink); line-height: 1.7; margin: 0; }
+
+/* Transport grid */
+.transport-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.transport-item {
+  display: flex;
+  gap: 0.85rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+}
+.transport-icon { font-size: 1.4rem; flex-shrink: 0; }
+.transport-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem !important; }
+.transport-desc { font-size: 0.8rem !important; color: var(--muted) !important; line-height: 1.55 !important; margin: 0 !important; }
+
+/* Tips list */
+.tips-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-top: 1rem; }
+.tip-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.tip-item:last-child { border-bottom: none; }
+.tip-item:nth-child(even) { background: var(--sand); }
+.tip-num {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+  line-height: 1.3;
+}
+.tip-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem !important; }
+.tip-body { font-size: 0.83rem !important; color: var(--muted) !important; line-height: 1.6 !important; margin: 0 !important; }
+
+/* CTA */
+.guide-cta { margin-top: 1rem; }
+.cta-inner {
+  background: var(--deep-blue);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  color: #fff;
+}
+.cta-inner h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+.cta-inner p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 1.75rem;
+}
+.cta-btns { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+.btn-light,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.78rem 1.55rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-light { background: #fff; color: var(--deep-blue); }
+.btn-light:hover { background: var(--sand); }
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.35);
+}
+.btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+
+/* ── SIDEBAR ── */
+.guide-toc {
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.toc-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.toc-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.65rem;
+}
+.toc-card a {
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 0.3rem 0;
+  border-left: 2px solid transparent;
+  padding-left: 0.65rem;
+  transition: color 0.15s, border-color 0.15s, padding-left 0.15s;
+}
+.toc-card a:hover { color: var(--aegean); border-color: var(--aegean); padding-left: 0.85rem; }
+.toc-link-btn {
+  display: block;
+  margin-top: 0.25rem;
+  padding: 0.55rem 0.85rem !important;
+  background: var(--sand);
+  border-radius: var(--radius-sm);
+  border-left: none !important;
+  font-size: 0.82rem !important;
+  color: var(--ink) !important;
+  font-weight: 500;
+}
+.toc-link-btn:hover { background: var(--sand-dark) !important; color: var(--ink) !important; padding-left: 0.85rem !important; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .transport-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .guide-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .guide-toc { position: static; }
+  .widget-placeholder { flex-direction: column; align-items: flex-start; }
+  .wp-btn { margin-left: 0; width: 100%; text-align: center; }
+  .cta-btns { flex-direction: column; }
+  .cta-inner { padding: 1.75rem 1.25rem; }
+}
+</style>

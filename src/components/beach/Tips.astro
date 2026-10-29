@@ -18,6 +18,7 @@ const { beach, access } = Astro.props;
           {beach.accessType === 'road' && (beach.easyAccess
             ? 'Paved road all the way — easy to reach by car or motorbike.'
             : 'The last stretch is a rough dirt road. A high-clearance vehicle or motorbike is recommended.')}
+          {beach.accessType === 'road' && <> <a href="/car-rental/">Renting a car in Milos →</a></>}
           {beach.accessType === 'hike' && 'Requires a hike over rough terrain. Wear sturdy footwear and bring plenty of water.'}
           {beach.accessType === 'boat' && 'Only reachable by sea. Book a daily boat tour from Adamas harbour, or arrive by private boat.'}
         </p>
@@ -180,4 +181,5 @@ const { beach, access } = Astro.props;
 .tip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
 .tip-title { font-size: .78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .2rem; }
 .tip-body { font-size: .9rem; color: var(--ink); margin: 0; line-height: 1.5; }
+.tip-body a { color: var(--aegean); font-weight: 500; }
 </style>

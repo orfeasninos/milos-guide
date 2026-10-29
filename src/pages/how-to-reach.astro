@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { KIWI_FLIGHTS_URL, KIWI_WIDGET_SRC, airlines } from '../lib/kiwi';
 import { RADICAL_STORAGE_URL } from '../lib/radicalstorage';
+import { HOW_TO_REACH_CARS_URL } from '../lib/economybookings';
 ---
 
 <Layout
@@ -186,7 +187,7 @@ import { RADICAL_STORAGE_URL } from '../lib/radicalstorage';
             <span class="transport-icon">🚗</span>
             <div>
               <p class="transport-title">Car rental</p>
-              <p class="transport-desc">The best option. Many agencies in Adamas and at the airport. Book ahead in August.</p>
+              <p class="transport-desc">The best option. Many agencies in Adamas and at the airport. Book ahead in August. <a href="/car-rental/">Car rental guide →</a></p>
             </div>
           </div>
           <div class="transport-item">
@@ -211,6 +212,21 @@ import { RADICAL_STORAGE_URL } from '../lib/radicalstorage';
             </div>
           </div>
         </div>
+
+        <div class="widget-placeholder">
+          <div class="wp-icon">🚗</div>
+          <div>
+            <p class="wp-title">Rent a car in Milos</p>
+            <p class="wp-sub">Compare agencies with pickup at the port or the airport</p>
+          </div>
+          <a href={HOW_TO_REACH_CARS_URL} target="_blank" rel="noopener sponsored" class="wp-btn" data-umami-event="economybookings" data-umami-event-placement="getting-around">
+            Search cars ↗
+          </a>
+        </div>
+        <p class="aff-note">
+          Affiliate link: we may earn a commission if you book, at no extra cost to you.
+          Car, ATV or scooter? Read our <a href="/car-rental/">car rental guide</a>.
+        </p>
       </section>
 
       <!-- TIPS -->
@@ -288,6 +304,7 @@ import { RADICAL_STORAGE_URL } from '../lib/radicalstorage';
         <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="toc-link-btn">⚓ Ferry tickets</a>
         <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="kiwi-flights" data-umami-event-placement="sidebar">✈️ Flights to MLO</a>
         <a href={RADICAL_STORAGE_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="radicalstorage" data-umami-event-placement="sidebar">🧳 Luggage storage</a>
+        <a href={HOW_TO_REACH_CARS_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="economybookings" data-umami-event-placement="sidebar">🚗 Car rental</a>
       </div>
       <div class="toc-card">
         <p class="toc-label">Explore</p>
@@ -502,6 +519,7 @@ if (kiwiBox?.dataset.src) {
 .transport-icon { font-size: 1.4rem; flex-shrink: 0; }
 .transport-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; }
 .transport-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.55; margin: 0; }
+.transport-desc a { color: var(--aegean); font-weight: 500; }
 
 /* Tips list */
 .tips-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; margin-top: 1rem; }

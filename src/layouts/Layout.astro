@@ -209,6 +209,7 @@ const schemas: object[] = [
   <slot name="head" />
 </head>
 <body>
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <a href="#main-content" class="skip-link">{t('Skip to content', 'Μετάβαση στο περιεχόμενο')}</a>
 
   <header class="site-header" id="site-header">
@@ -331,8 +332,14 @@ const header = document.getElementById('site-header');
 const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
 const nav = document.getElementById('main-nav');
 
-const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+const progress = document.getElementById('scroll-progress');
+const onScroll = () => {
+  header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  progress?.style.setProperty('transform', `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`);
+};
 window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll, { passive: true });
 onScroll();
 
 const setOpen = (open: boolean) => {
@@ -494,6 +501,9 @@ nav ul, nav ol { list-style: none; }
 :focus-visible { outline: 2px solid var(--sea); outline-offset: 3px; border-radius: 3px; }
 
 .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Reading progress: scaleX instead of width so scrolling never triggers layout */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; z-index: 201; height: 2px; background: var(--sea); transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; }
 
 /* ── Header ── */
 .site-header { position: sticky; top: 0; z-index: 200; background: rgba(255,255,255,0.92); -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%); border-bottom: 1px solid var(--border); transition: box-shadow 0.2s var(--ease), background 0.2s var(--ease); }

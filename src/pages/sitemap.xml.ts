@@ -19,6 +19,7 @@ const statics = [
   { en: '/stays/',        priority: '0.8' },
   { en: '/map/',          priority: '0.7' },
   { en: '/how-to-reach/', priority: '0.7' },
+  { en: '/car-rental/',   priority: '0.7' },
   { en: '/weather/',      priority: '0.8' },
   { en: '/about/',        priority: '0.6' },
   { en: '/search/',       priority: '0.5' },
