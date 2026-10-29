@@ -31,6 +31,10 @@ const destinationJsonld = {
   preloadImageSrcset="/images/hero-beach-800w.avif 800w, /images/hero-beach-1200w.avif 1200w, /images/hero-beach-1920w.avif 1920w"
   preloadImageSizes="100vw"
 >
+  <!-- The wind box fetches Open-Meteo as soon as its script runs; opening the connection
+       early takes the DNS/TLS handshake off that request. -->
+  <link slot="head" rel="preconnect" href="https://api.open-meteo.com" crossorigin />
+
   <Hero />
 
   <!-- ══ WIND HELPER ══ -->

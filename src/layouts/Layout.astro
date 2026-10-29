@@ -333,14 +333,17 @@ const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null
 const nav = document.getElementById('main-nav');
 
 const progress = document.getElementById('scroll-progress');
+// Reads before writes, and the first run waits for a frame: reading scrollHeight right after
+// toggling a class forced a synchronous layout during page load (PageSpeed "forced reflow").
 const onScroll = () => {
-  header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  const y = window.scrollY;
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  progress?.style.setProperty('transform', `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`);
+  header?.classList.toggle('is-scrolled', y > 8);
+  progress?.style.setProperty('transform', `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`);
 };
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', onScroll, { passive: true });
-onScroll();
+requestAnimationFrame(onScroll);
 
 const setOpen = (open: boolean) => {
   nav?.classList.toggle('is-open', open);
