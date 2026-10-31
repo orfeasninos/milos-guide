@@ -76,8 +76,11 @@ import { FERRYSCANNER_URL, FERRYSCANNER_WIDGET_SRC } from '../lib/ferryscanner';
 
         <h3>Can I arrive from other islands?</h3>
         <p>
-          Yes — Milos is connected to <strong>Santorini, Sifnos, Serifos, Kimolos</strong>
-          and other Cycladic islands. If you're island hopping, it fits perfectly into the route.
+          Yes — Milos is connected to <strong>Santorini, Sifnos, Serifos, Kimolos</strong>{' '}
+          and other Cycladic islands. If you're island hopping, it fits perfectly into the route:
+          choose "Multiple Routes" on{' '}
+          <a href={FERRYSCANNER_URL} target="_blank" rel="noopener sponsored" class="inline-aff" data-umami-event="ferryscanner" data-umami-event-placement="island-hopping">Ferryscanner ↗</a>{' '}
+          to book all your ferries at once.
         </p>
 
         <!-- Ferryscanner search box, Piraeus → Milos preset. loading="lazy" keeps it from
@@ -356,6 +359,7 @@ if (kiwiBox?.dataset.src) {
   }, { rootMargin: '400px' });
   io.observe(kiwiBox);
 }
+
 </script>
 
 </Layout>
@@ -488,6 +492,7 @@ if (kiwiBox?.dataset.src) {
 
 .aff-note { font-size: 0.75rem !important; color: var(--muted) !important; line-height: 1.6 !important; margin: -0.75rem 0 1rem !important; }
 .aff-note a { color: var(--aegean); border-bottom: 1px solid var(--sea); }
+.inline-aff { color: var(--aegean); font-weight: 500; border-bottom: 1px solid var(--sea); }
 
 /* Kiwi widget */
 .flight-widget { margin: 1.5rem 0; min-height: 96px; }
