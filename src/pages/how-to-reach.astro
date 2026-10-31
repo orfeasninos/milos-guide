@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { KIWI_FLIGHTS_URL, KIWI_WIDGET_SRC, airlines } from '../lib/kiwi';
 import { RADICAL_STORAGE_URL } from '../lib/radicalstorage';
 import { HOW_TO_REACH_CARS_URL } from '../lib/economybookings';
+import { FERRYSCANNER_URL, FERRYSCANNER_WIDGET_SRC } from '../lib/ferryscanner';
 ---
 
 <Layout
@@ -24,7 +25,7 @@ import { HOW_TO_REACH_CARS_URL } from '../lib/economybookings';
     <div class="guide-meta">
       <span>🕐 5 min read</span>
       <span>✍️ Milos.guide</span>
-      <span>📅 Updated 2025</span>
+      <span>📅 Updated 2026</span>
     </div>
   </div>
 </section>
@@ -79,18 +80,21 @@ import { HOW_TO_REACH_CARS_URL } from '../lib/economybookings';
           and other Cycladic islands. If you're island hopping, it fits perfectly into the route.
         </p>
 
-        <!-- FERRYHOPPER PLACEHOLDER -->
-        <div class="widget-placeholder">
-          <div class="wp-icon">⚓</div>
-          <div>
-            <p class="wp-title">Check schedules & book your ticket</p>
-            <p class="wp-sub">Compare companies, times and prices in real time</p>
-          </div>
-          <!-- FERRYHOPPER WIDGET / AFFILIATE LINK HERE -->
-          <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="wp-btn">
-            Search ferries ↗
-          </a>
+        <!-- Ferryscanner search box, Piraeus → Milos preset. loading="lazy" keeps it from
+             loading until the visitor scrolls near it. Clicks inside the iframe are invisible
+             to Umami; Ferryscanner's dashboard counts them. -->
+        <div class="ferry-widget">
+          <iframe
+            src={FERRYSCANNER_WIDGET_SRC}
+            title="Ferryscanner ferry search: Piraeus to Milos"
+            loading="lazy"
+            scrolling="no"
+          ></iframe>
         </div>
+        <p class="aff-note">
+          Affiliate widget: we may earn a commission if you book, at no extra cost to you.
+          Widget not loading? <a href={FERRYSCANNER_URL} target="_blank" rel="noopener sponsored" data-umami-event="ferryscanner" data-umami-event-placement="ferry-section">Search ferries on Ferryscanner</a>.
+        </p>
 
         <div class="insider-tip">
           <span class="tip-icon">💡</span>
@@ -282,7 +286,7 @@ import { HOW_TO_REACH_CARS_URL } from '../lib/economybookings';
             and start your holiday relaxed.
           </p>
           <div class="cta-btns">
-            <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="btn-dark">🚢 Ferry tickets</a>
+            <a href={FERRYSCANNER_URL} target="_blank" rel="noopener sponsored" class="btn-dark" data-umami-event="ferryscanner" data-umami-event-placement="cta">🚢 Ferry tickets</a>
             <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="btn-outline" data-umami-event="kiwi-flights" data-umami-event-placement="cta">✈️ Flight tickets</a>
           </div>
         </div>
@@ -301,7 +305,7 @@ import { HOW_TO_REACH_CARS_URL } from '../lib/economybookings';
       </div>
       <div class="toc-card">
         <p class="toc-label">Useful links</p>
-        <a href="https://www.ferryhopper.com/?utm_source=milos.guide" target="_blank" rel="noopener sponsored" class="toc-link-btn">⚓ Ferry tickets</a>
+        <a href={FERRYSCANNER_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="ferryscanner" data-umami-event-placement="sidebar">⚓ Ferry tickets</a>
         <a href={KIWI_FLIGHTS_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="kiwi-flights" data-umami-event-placement="sidebar">✈️ Flights to MLO</a>
         <a href={RADICAL_STORAGE_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="radicalstorage" data-umami-event-placement="sidebar">🧳 Luggage storage</a>
         <a href={HOW_TO_REACH_CARS_URL} target="_blank" rel="noopener sponsored" class="toc-link-btn" data-umami-event="economybookings" data-umami-event-placement="sidebar">🚗 Car rental</a>
@@ -487,6 +491,14 @@ if (kiwiBox?.dataset.src) {
 
 /* Kiwi widget */
 .flight-widget { margin: 1.5rem 0; min-height: 96px; }
+
+/* Ferryscanner widget. The iframe can't size itself to its content, so the heights are fixed,
+   measured from the rendered widget: one row on desktop, two rows on phones. */
+.ferry-widget { margin: 1.5rem 0; }
+.ferry-widget iframe { display: block; width: 100%; height: 210px; border: 0; }
+@media (max-width: 768px) {
+  .ferry-widget iframe { height: 200px; }
+}
 
 /* Insider tip */
 .insider-tip {
